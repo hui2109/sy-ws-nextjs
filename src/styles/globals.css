@@ -1,0 +1,21 @@
+@import "./iconfont/iconfont.css";
+@import "tailwindcss";
+
+html,
+body {
+    background: var(--ant-color-bg-layout, #f5f5f5);
+}
+
+/* 设置iconfont图标 [默认格式] */
+@layer base {
+    .iconfont {
+        font-family: "iconfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+
+

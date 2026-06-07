@@ -1,0 +1,1 @@
+export const appName = "省医电离排班站";

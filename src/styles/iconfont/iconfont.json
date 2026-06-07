@@ -1,0 +1,191 @@
+{
+  "id": "5191038",
+  "name": "排班程序",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "排班程序",
+  "glyphs": [
+    {
+      "icon_id": "46246070",
+      "name": "calendar_setting",
+      "font_class": "taskbeifen",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "6202655",
+      "name": "个人统计管理",
+      "font_class": "gerentongjiguanli",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
+      "icon_id": "6510091",
+      "name": "实例类型",
+      "font_class": "shilileixing",
+      "unicode": "e834",
+      "unicode_decimal": 59444
+    },
+    {
+      "icon_id": "6734898",
+      "name": "清空排班表",
+      "font_class": "qingkongpaibanbiao",
+      "unicode": "e6f4",
+      "unicode_decimal": 59124
+    },
+    {
+      "icon_id": "7333011",
+      "name": "发送提交",
+      "font_class": "fasongtijiao",
+      "unicode": "e693",
+      "unicode_decimal": 59027
+    },
+    {
+      "icon_id": "8094181",
+      "name": "导出",
+      "font_class": "daochu",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "8220766",
+      "name": "模块-开始排班",
+      "font_class": "mk-pbgl",
+      "unicode": "e816",
+      "unicode_decimal": 59414
+    },
+    {
+      "icon_id": "13135809",
+      "name": "批量设置",
+      "font_class": "piliangshezhi",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "19260687",
+      "name": "审核",
+      "font_class": "shenhe",
+      "unicode": "efeb",
+      "unicode_decimal": 61419
+    },
+    {
+      "icon_id": "23410257",
+      "name": "验收报备及核查-16px",
+      "font_class": "yanshoubaobeijihecha-16px",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "34330634",
+      "name": "其他统计",
+      "font_class": "qitatongji",
+      "unicode": "e7da",
+      "unicode_decimal": 59354
+    },
+    {
+      "icon_id": "998476",
+      "name": "人",
+      "font_class": "ai59",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
+      "icon_id": "5125295",
+      "name": "换班",
+      "font_class": "huanban",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "5560884",
+      "name": "修改班级信息",
+      "font_class": "xiugaibanjixinxi",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "19076064",
+      "name": "GOA图标_按月统计",
+      "font_class": "GOAtubiao_anyuetongji",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "19883445",
+      "name": "请假",
+      "font_class": "qingjia",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "33742950",
+      "name": "上半",
+      "font_class": "shangban",
+      "unicode": "e757",
+      "unicode_decimal": 59223
+    },
+    {
+      "icon_id": "33742952",
+      "name": "下半",
+      "font_class": "xiaban",
+      "unicode": "e758",
+      "unicode_decimal": 59224
+    },
+    {
+      "icon_id": "3876030",
+      "name": "people",
+      "font_class": "people",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "6561352",
+      "name": "预约",
+      "font_class": "yuyue",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "10885273",
+      "name": "多人",
+      "font_class": "duoren",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "13441688",
+      "name": "假勤申请",
+      "font_class": "jiaqinshenqing",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "17970826",
+      "name": "attend-checkin-record",
+      "font_class": "attend-checkin-record",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "23949507",
+      "name": "统计",
+      "font_class": "tongji",
+      "unicode": "ec62",
+      "unicode_decimal": 60514
+    },
+    {
+      "icon_id": "36987834",
+      "name": "期望排班",
+      "font_class": "qiwangpaiban",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "22447444",
+      "name": "员工排班",
+      "font_class": "yuangongpaiban",
+      "unicode": "e772",
+      "unicode_decimal": 59250
+    }
+  ]
+}
