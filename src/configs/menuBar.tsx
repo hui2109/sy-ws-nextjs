@@ -220,6 +220,7 @@ export const menuBar = [
                     className: "text-pink-600",
                     useSvg: false
                 },
+                children: []
             },
             {
                 title: "请假",
@@ -229,6 +230,7 @@ export const menuBar = [
                     className: "text-pink-600",
                     useSvg: false
                 },
+                children: []
             },
             {
                 title: "改班",
@@ -238,6 +240,7 @@ export const menuBar = [
                     className: "text-pink-600",
                     useSvg: false
                 },
+                children: []
             }
         ]
     },
@@ -306,6 +309,7 @@ export const menuBar = [
                             className: "",
                             useSvg: true
                         },
+                        children: []
                     }, {
                         title: "核查排班",
                         id: 'hechapaiban',
@@ -314,6 +318,7 @@ export const menuBar = [
                             className: "text-pink-600",
                             useSvg: false
                         },
+                        children: []
                     }, {
                         title: "提交排班",
                         id: 'tijiaopaiban',
@@ -322,6 +327,7 @@ export const menuBar = [
                             className: "",
                             useSvg: true
                         },
+                        children: []
                     }, {
                         title: "审核排班",
                         id: 'shenhepaiban',
@@ -330,6 +336,7 @@ export const menuBar = [
                             className: "",
                             useSvg: true
                         },
+                        children: []
                     }, {
                         title: "导出排班",
                         id: 'daochupaiban',
@@ -338,6 +345,7 @@ export const menuBar = [
                             className: "text-pink-600",
                             useSvg: false
                         },
+                        children: []
                     }]
             },
             {
@@ -357,6 +365,7 @@ export const menuBar = [
                             className: "text-pink-600",
                             useSvg: false
                         },
+                        children: []
                     }
                 ]
             }
