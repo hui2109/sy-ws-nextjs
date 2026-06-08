@@ -86,7 +86,7 @@ export const menuBar = [
                 id: 'yiyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-grey-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -96,7 +96,7 @@ export const menuBar = [
                 id: 'eryue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -106,7 +106,7 @@ export const menuBar = [
                 id: 'sanyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -116,7 +116,7 @@ export const menuBar = [
                 id: 'siyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -126,7 +126,7 @@ export const menuBar = [
                 id: 'wuyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -136,7 +136,7 @@ export const menuBar = [
                 id: 'liuyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -146,7 +146,7 @@ export const menuBar = [
                 id: 'qiyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -156,7 +156,7 @@ export const menuBar = [
                 id: 'bayue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -166,7 +166,7 @@ export const menuBar = [
                 id: 'jiuyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -176,7 +176,7 @@ export const menuBar = [
                 id: 'shiyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -186,7 +186,7 @@ export const menuBar = [
                 id: 'shiyiyue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -196,7 +196,7 @@ export const menuBar = [
                 id: 'shieryue',
                 icon: {
                     type: IconType.yigeyuefen,
-                    className: "text-pink-600",
+                    className: "text-orange-500",
                     useSvg: false
                 },
                 children: []
@@ -217,7 +217,7 @@ export const menuBar = [
                 id: 'huanban',
                 icon: {
                     type: IconType.huanban,
-                    className: "text-pink-600",
+                    className: "text-lime-500",
                     useSvg: false
                 },
                 children: []
@@ -227,7 +227,7 @@ export const menuBar = [
                 id: 'qingjia',
                 icon: {
                     type: IconType.qingjia,
-                    className: "text-pink-600",
+                    className: "text-lime-500",
                     useSvg: false
                 },
                 children: []
@@ -237,7 +237,7 @@ export const menuBar = [
                 id: 'gaiban',
                 icon: {
                     type: IconType.gaiban,
-                    className: "text-pink-600",
+                    className: "text-lime-500",
                     useSvg: false
                 },
                 children: []
@@ -258,7 +258,7 @@ export const menuBar = [
                 id: 'gerentongji',
                 icon: {
                     type: IconType.gerentongji,
-                    className: "text-pink-600",
+                    className: "text-sky-600",
                     useSvg: false
                 },
                 children: []
@@ -267,7 +267,7 @@ export const menuBar = [
                 id: 'qitatongji',
                 icon: {
                     type: IconType.qitatongji,
-                    className: "text-pink-600",
+                    className: "text-indigo-600",
                     useSvg: false
                 },
                 children: [
@@ -276,7 +276,7 @@ export const menuBar = [
                         id: 'xiujialeixing',
                         icon: {
                             type: IconType.xiujialeixing,
-                            className: "text-pink-600",
+                            className: "text-emerald-500",
                             useSvg: false
                         },
                     },
@@ -315,7 +315,7 @@ export const menuBar = [
                         id: 'hechapaiban',
                         icon: {
                             type: IconType.hechapaiban,
-                            className: "text-pink-600",
+                            className: "text-green-600",
                             useSvg: false
                         },
                         children: []
@@ -342,7 +342,7 @@ export const menuBar = [
                         id: 'daochupaiban',
                         icon: {
                             type: IconType.daochupaiban,
-                            className: "text-pink-600",
+                            className: "text-teal-600",
                             useSvg: false
                         },
                         children: []
@@ -362,7 +362,7 @@ export const menuBar = [
                         id: "piliangshezhi",
                         icon: {
                             type: IconType.piliangshezhi,
-                            className: "text-pink-600",
+                            className: "text-blue-800",
                             useSvg: false
                         },
                         children: []

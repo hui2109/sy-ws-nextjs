@@ -20,8 +20,12 @@ function buildMenuItems(items: MenuBarItem[] | undefined): MenuProps['items'] {
             : undefined;
         return {
             key: item.id,
-            icon: <IconFont type={item.icon.type} useSvg={item.icon.useSvg} className={item.icon.className}/>,
-            label: item.title,
+            label: (
+                <div className="!text-lg font-bold">
+                    <IconFont type={item.icon.type} useSvg={item.icon.useSvg} className={'me-2 ' + item.icon.className}/>
+                    <b>{item.title}</b>
+                </div>
+            ),
             children: subChildren,
         };
     });
