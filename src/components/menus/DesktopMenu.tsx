@@ -1,11 +1,12 @@
 "use client";
 
-import React, {useState} from 'react';
+import React from 'react';
 import type {MenuProps} from 'antd';
 import {Layout, Menu, theme, ConfigProvider} from 'antd';
 import {appName} from "@/configs/general";
 import {menuBar} from "@/configs/menuBar";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
+import {useMenuContext} from "@/components/hooks/MenuContext";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -31,17 +32,6 @@ function buildMenuItems(items: MenuBarItem[] | undefined): MenuProps['items'] {
     });
 }
 
-const topMenu: MenuProps['items'] = menuBar.map((item) => (
-    {
-        key: item.id,
-        label: (
-            <div className="!text-lg font-bold">
-                <IconFont type={item.icon.type} useSvg={item.icon.useSvg} className={'me-2 ' + item.icon.className}/>
-                <b>{item.title}</b>
-            </div>
-        ),
-    }));
-
 // 定值menuBar样式
 const menuBarStyle = {
     components: {
@@ -56,16 +46,29 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
     const {
         token: {colorBgContainer, borderRadiusLG},
     } = theme.useToken();
-
     const currentYear = new Date().getFullYear();
+    // 获取所有菜单上下文
+    const {activeTopId, setActiveTopId, setActiveSideId} = useMenuContext();
 
-    // 记录当前选中的顶部菜单项 id，默认为第一项
-    const [selectedTopKey, setSelectedTopKey] = useState<string>(menuBar[0].id);
-
+    // 获取顶部菜单栏
+    const topMenu: MenuProps['items'] = menuBar.map((item) => (
+        {
+            key: item.id,
+            label: (
+                <div className="!text-lg font-bold">
+                    <IconFont type={item.icon.type} useSvg={item.icon.useSvg} className={'me-2 ' + item.icon.className}/>
+                    <b>{item.title}</b>
+                </div>
+            ),
+        }));
+    // 当前选中的顶部菜单项
+    const selectedTopItem = menuBar.find((item) => item.id === activeTopId);
     // 根据选中的顶部菜单项，动态生成侧边栏菜单（核心）
     const sideMenu: MenuProps['items'] = buildMenuItems(
-        menuBar.find((item) => item.id === selectedTopKey)?.children as MenuBarItem[] | undefined
+        selectedTopItem?.children as MenuBarItem[] | undefined
     );
+    // 若 children 为空数组，则不显示侧边栏
+    const hasSider = (selectedTopItem?.children?.length ?? 0) > 0;
 
     return (
         <Layout>
@@ -83,7 +86,12 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                         defaultSelectedKeys={[menuBar[0].id]}
                         items={topMenu}
                         style={{flex: 1, minWidth: 0}}
-                        onSelect={({key}) => setSelectedTopKey(key)}
+                        onSelect={({key}) => {
+                            setActiveTopId(key);
+                            // 设置选中的侧边栏菜单项state
+                            const newTopItem = menuBar.find((item) => item.id === key);  // 用 key 查新项
+                            setActiveSideId(newTopItem?.children?.[0]?.id || '');
+                        }}
                     />
                 </ConfigProvider>
             </Header>
@@ -91,13 +99,16 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                 <Layout
                     style={{padding: '24px 0', background: colorBgContainer, borderRadius: borderRadiusLG}}
                 >
-                    <Sider style={{background: colorBgContainer}} width={180}>
-                        <Menu
-                            mode="inline"
-                            style={{height: '100%'}}
-                            items={sideMenu}
-                        />
-                    </Sider>
+                    {hasSider && (
+                        <Sider style={{background: colorBgContainer}} width={180}>
+                            <Menu
+                                mode="inline"
+                                style={{height: '100%'}}
+                                items={sideMenu}
+                                onSelect={({key}) => setActiveSideId(key)}
+                            />
+                        </Sider>
+                    )}
                     <Content className="px-[24px] !min-h-[80vh]">{children}</Content>
                 </Layout>
             </div>
