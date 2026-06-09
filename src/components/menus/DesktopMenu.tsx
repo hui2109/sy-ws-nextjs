@@ -85,7 +85,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
     const router = useRouter();
     const currentYear = new Date().getFullYear();
     // 获取所有菜单上下文
-    const {activeTopId, setActiveTopId, setActiveSideId} = useMenuContext();
+    const {activeTopId, activeSideId, setActiveTopId, setActiveSideId} = useMenuContext();
 
     // 获取顶部菜单栏
     const topMenu: MenuProps['items'] = menuBar.map((item) => (
@@ -120,7 +120,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                     <Menu
                         theme="dark"
                         mode="horizontal"
-                        defaultSelectedKeys={[menuBar[0].id]}
+                        selectedKeys={[activeTopId || menuBar[0].id]}
                         items={topMenu}
                         style={{flex: 1, minWidth: 0}}
                         onSelect={({key}) => {
@@ -143,12 +143,18 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                         <Sider style={{background: colorBgContainer}} width={180}>
                             <Menu
                                 mode="inline"
+                                selectedKeys={[activeSideId || '']}
+                                defaultOpenKeys={['kaishipaiban']}  // 开始排班 默认展开
+                                multiple={true}
                                 style={{height: '100%'}}
                                 items={sideMenu}
                                 onSelect={({key}) => {
                                     setActiveSideId(key);
                                     const target = getNearestURL(activeTopId, key);
                                     if (target) router.push(target);
+                                }}
+                                onDeselect={({keyPath}) => {
+                                    setActiveSideId(keyPath[keyPath.length - 1]);
                                 }}
                             />
                         </Sider>
