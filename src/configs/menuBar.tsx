@@ -1,9 +1,22 @@
 import {IconType} from "@/assets/icons/IconFont";
 
-export const menuBar = [
+export interface MenuBarItem {
+    title: string;
+    id: string;
+    path?: string;
+    icon: {
+        type: IconType;
+        className: string;
+        useSvg: boolean;
+    };
+    children: MenuBarItem[];
+}
+
+export const menuBar: MenuBarItem[] = [
     {
         title: "我的排班",
         id: 'wodepaiban',
+        path: '/mySchedule',
         icon: {
             type: IconType.wodepaiban,
             className: "text-green-300",
@@ -35,6 +48,7 @@ export const menuBar = [
     {
         title: "全科排班",
         id: 'quankepaiban',
+        path: '/allSchedule',
         icon: {
             type: IconType.quankepaiban,
             className: "text-green-800",
@@ -45,6 +59,7 @@ export const menuBar = [
     {
         title: "预约休假",
         id: 'yuyuexiejia',
+        path: '/leaveSchedule',
         icon: {
             type: IconType.yuyuexiejia,
             className: "text-yellow-400",
@@ -75,6 +90,7 @@ export const menuBar = [
     {
         title: "期望排班",
         id: 'qiwangpaiban',
+        path: '/expectSchedule',
         icon: {
             type: IconType.qiwangpaiban,
             className: "text-pink-600",
@@ -215,6 +231,7 @@ export const menuBar = [
             {
                 title: "换班",
                 id: 'huanban',
+                path: '/leaveApply/huanban',
                 icon: {
                     type: IconType.huanban,
                     className: "text-lime-500",
@@ -225,6 +242,7 @@ export const menuBar = [
             {
                 title: "请假",
                 id: 'qingjia',
+                path: '/leaveApply/qingjia',
                 icon: {
                     type: IconType.qingjia,
                     className: "text-lime-500",
@@ -235,6 +253,7 @@ export const menuBar = [
             {
                 title: "改班",
                 id: 'gaiban',
+                path: '/leaveApply/gaiban',
                 icon: {
                     type: IconType.gaiban,
                     className: "text-lime-500",
@@ -256,6 +275,7 @@ export const menuBar = [
             {
                 title: "个人统计",
                 id: 'gerentongji',
+                path: '/statistics/gerentongji',
                 icon: {
                     type: IconType.gerentongji,
                     className: "text-sky-600",
@@ -274,11 +294,13 @@ export const menuBar = [
                     {
                         title: "休假类型",
                         id: 'xiujialeixing',
+                        path: '/statistics/qitatongji/xiujialeixing',
                         icon: {
                             type: IconType.xiujialeixing,
                             className: "text-emerald-500",
                             useSvg: false
                         },
+                        children: []
                     },
                 ]
             }]
@@ -295,6 +317,7 @@ export const menuBar = [
             {
                 title: "开始排班",
                 id: 'kaishipaiban',
+                path: '/scheduleTools/start',
                 icon: {
                     type: IconType.kaishipaiban,
                     className: "text-pink-600",
@@ -351,6 +374,7 @@ export const menuBar = [
             {
                 title: "假期设置",
                 id: 'jiaqishezhi',
+                path: '/scheduleTools/holidaySettings',
                 icon: {
                     type: IconType.jiaqishezhi,
                     className: "text-pink-600",
