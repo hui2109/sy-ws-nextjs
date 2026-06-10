@@ -221,7 +221,7 @@ export const menuBar: MenuBarItem[] = [
     },
     {
         title: "假勤申请",
-        id: 'jiaqinshenqing',
+        id: 'leaveApply',
         icon: {
             type: IconType.jiaqinshenqing,
             className: "",
@@ -276,7 +276,7 @@ export const menuBar: MenuBarItem[] = [
     },
     {
         title: "统计",
-        id: 'tongji',
+        id: 'statistics',
         icon: {
             type: IconType.tongji,
             className: "",
@@ -318,7 +318,7 @@ export const menuBar: MenuBarItem[] = [
     },
     {
         title: "排班工具",
-        id: 'paibangongju',
+        id: 'scheduleTools',
         icon: {
             type: IconType.paibangongju,
             className: "",
