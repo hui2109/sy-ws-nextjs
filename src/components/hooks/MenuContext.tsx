@@ -1,9 +1,8 @@
 'use client';
 
-import React, {createContext, useContext, useEffect, useMemo, useState} from "react";
-import {menuBar} from "@/configs/menuBar";
-import {useRouter} from "next/navigation";
-import {getNearestURL} from "@/components/hooks/getActiveMenuID";
+import React, {createContext, useContext, useState} from "react";
+import {usePathname} from "next/navigation";
+import {getActiveMenuIDbyPathName} from "@/components/hooks/getActiveMenuID";
 import {ConfigProvider} from "antd";
 import locale from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
@@ -21,15 +20,9 @@ interface MenuContextValue {
 const MenuContext = createContext<MenuContextValue | null>(null);
 
 export function MenuProvider({children}: { children: React.ReactNode }) {
-    const router = useRouter();
-    const [activeTopId, setActiveTopId] = useState<string>(menuBar[6].id);
-    const [activeSideId, setActiveSideId] = useState<string>(menuBar[6]?.children?.[0]?.id || '');
-    const activeURL = useMemo(() => getNearestURL(activeTopId, activeSideId), [activeTopId, activeSideId]);
-
-    useEffect(() => {
-        if (activeURL) router.push(activeURL);
-        // console.log('xx', activeURL);
-    }, [activeURL, router])
+    const pathName = usePathname();
+    const [activeTopId, setActiveTopId] = useState<string>(() => getActiveMenuIDbyPathName(pathName)[0]);
+    const [activeSideId, setActiveSideId] = useState<string>(() => getActiveMenuIDbyPathName(pathName)[1]);
 
     return (
         <ConfigProvider locale={locale}>

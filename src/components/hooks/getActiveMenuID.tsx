@@ -36,3 +36,23 @@ export function getNearestURL(activeTopId: string | null, activeSideId: string |
 
     return findPathById(topItem, null) ?? topItem.path ?? null;
 }
+
+export function getActiveMenuIDbyPathName(pathname: string): (string)[] {
+    const pathSegments = pathname.split('/');
+    let activeTopId: string | null;
+    let activeSideId: string | null;
+
+    if (pathSegments.length < 2) {
+        activeTopId = menuBar[0].id;
+        activeSideId = menuBar[0].children?.[0].id;
+    } else if (pathSegments.length === 2) {
+        activeTopId = pathSegments[1];
+        activeSideId = getFarthestURL(activeTopId);
+    } else {
+        activeTopId = pathSegments[1];
+        activeSideId = pathSegments.at(-1) || getFarthestURL(activeTopId);
+    }
+    // console.log('zzyuu');
+
+    return [activeTopId, activeSideId || ''];
+}
