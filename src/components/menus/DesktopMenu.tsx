@@ -31,7 +31,6 @@ function buildMenuItems(items: MenuBarItem[] | undefined): MenuProps['items'] {
     });
 }
 
-
 // 定值menuBar样式
 const menuBarStyle = {
     components: {
@@ -109,7 +108,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                         <Sider style={{background: colorBgContainer}} width={180}>
                             <Menu
                                 mode="inline"
-                                selectedKeys={[activeSideId || '']}
+                                selectedKeys={[activeSideId || menuBar[0]?.children?.[0]?.id || '']}
                                 defaultOpenKeys={['start']}  // 开始排班 默认展开
                                 multiple={true}
                                 style={{height: '100%'}}

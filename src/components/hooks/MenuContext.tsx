@@ -4,6 +4,12 @@ import React, {createContext, useContext, useEffect, useMemo, useState} from "re
 import {menuBar} from "@/configs/menuBar";
 import {useRouter} from "next/navigation";
 import {getNearestURL} from "@/components/hooks/getActiveMenuID";
+import {ConfigProvider} from "antd";
+import locale from 'antd/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+
+dayjs.locale('zh-cn');
 
 interface MenuContextValue {
     activeTopId: string | null;    // 当前高亮的顶部菜单 id
@@ -26,14 +32,16 @@ export function MenuProvider({children}: { children: React.ReactNode }) {
     }, [activeURL, router])
 
     return (
-        <MenuContext value={{
-            activeTopId,
-            activeSideId,
-            setActiveTopId,
-            setActiveSideId,
-        }}>
-            {children}
-        </MenuContext>
+        <ConfigProvider locale={locale}>
+            <MenuContext value={{
+                activeTopId,
+                activeSideId,
+                setActiveTopId,
+                setActiveSideId,
+            }}>
+                {children}
+            </MenuContext>
+        </ConfigProvider>
     );
 }
 

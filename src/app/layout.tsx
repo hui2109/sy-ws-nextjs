@@ -4,6 +4,7 @@ import DesktopMenu from '@/components/menus/DesktopMenu';
 import '@/styles/globals.css';
 import {MenuProvider} from "@/components/hooks/MenuContext";
 
+
 export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
         <html lang="en">
