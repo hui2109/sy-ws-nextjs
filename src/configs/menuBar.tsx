@@ -15,7 +15,7 @@ export interface MenuBarItem {
 export const menuBar: MenuBarItem[] = [
     {
         title: "我的排班",
-        id: 'wodepaiban',
+        id: 'mySchedule',
         path: '/mySchedule',
         icon: {
             type: IconType.wodepaiban,
@@ -47,7 +47,7 @@ export const menuBar: MenuBarItem[] = [
     },
     {
         title: "全科排班",
-        id: 'quankepaiban',
+        id: 'allSchedule',
         path: '/allSchedule',
         icon: {
             type: IconType.quankepaiban,
@@ -58,7 +58,7 @@ export const menuBar: MenuBarItem[] = [
     },
     {
         title: "预约休假",
-        id: 'yuyuexiejia',
+        id: 'leaveSchedule',
         path: '/leaveSchedule',
         icon: {
             type: IconType.yuyuexiejia,
@@ -89,7 +89,7 @@ export const menuBar: MenuBarItem[] = [
     },
     {
         title: "期望排班",
-        id: 'qiwangpaiban',
+        id: 'expectSchedule',
         path: '/expectSchedule',
         icon: {
             type: IconType.qiwangpaiban,
@@ -260,6 +260,17 @@ export const menuBar: MenuBarItem[] = [
                     useSvg: false
                 },
                 children: []
+            },
+            {
+                title: "待审核",
+                id: 'daishenhe',
+                path: '/leaveApply/daishenhe',
+                icon: {
+                    type: IconType.daishenhe,
+                    className: "",
+                    useSvg: true
+                },
+                children: []
             }
         ]
     },
@@ -316,7 +327,7 @@ export const menuBar: MenuBarItem[] = [
         children: [
             {
                 title: "开始排班",
-                id: 'kaishipaiban',
+                id: 'start',
                 path: '/scheduleTools/start',
                 icon: {
                     type: IconType.kaishipaiban,
@@ -373,7 +384,7 @@ export const menuBar: MenuBarItem[] = [
             },
             {
                 title: "假期设置",
-                id: 'jiaqishezhi',
+                id: 'holidaySettings',
                 path: '/scheduleTools/holidaySettings',
                 icon: {
                     type: IconType.jiaqishezhi,

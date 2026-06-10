@@ -1,10 +1,9 @@
 import React from 'react';
-import {Button} from 'antd';
+import DateJump from "@/components/datePickers/DateJump";
 
-const Home = () => (
-    <div className="App">
-        <Button type="primary">start</Button>
-    </div>
-);
 
-export default Home;
+export default function Start() {
+    return (
+        <DateJump picker={'month'}/>
+    )
+};

@@ -42,4 +42,5 @@ export enum IconType {
     'daochupaiban' = 'icon-daochu',
     'jiaqishezhi' = 'icon-taskbeifen',
     'piliangshezhi' = 'icon-piliangshezhi',
+    'daishenhe' = 'icon-daishenhe'
 }

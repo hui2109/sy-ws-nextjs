@@ -8,6 +8,7 @@ import {menuBar, MenuBarItem} from "@/configs/menuBar";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import {useMenuContext} from "@/components/hooks/MenuContext";
 import {useRouter} from 'next/navigation';
+import {getFarthestURL, getNearestURL} from "@/components/hooks/getActiveMenuID";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -30,43 +31,6 @@ function buildMenuItems(items: MenuBarItem[] | undefined): MenuProps['items'] {
     });
 }
 
-function getFarthestURL(activeTopId: string): string | null {
-    const topItem = menuBar.find((item) => item.id === activeTopId);
-    if (!topItem) return null;
-
-    function findDeepestPath(item: MenuBarItem): string | null {
-        if (item.children?.[0]) {
-            const childPath = findDeepestPath(item.children[0]);
-            if (childPath) return childPath;
-        }
-        return item.path ?? null;
-    }
-
-    return findDeepestPath(topItem);
-}
-
-function getNearestURL(activeTopId: string | null, activeSideId: string): string | null {
-    const topItem = menuBar.find((item) => item.id === activeTopId);
-    if (!topItem) return null;
-
-    function findPathById(item: MenuBarItem, nearestAncestorPath: string | null): string | null {
-        const currentPath = item.path ?? nearestAncestorPath;
-
-        if (item.id === activeSideId) {
-            return item.path ?? nearestAncestorPath;
-        }
-        if (item.children) {
-            for (const child of item.children) {
-                const found = findPathById(child, currentPath);
-                if (found) return found;
-            }
-        }
-        return null;
-    }
-
-    return findPathById(topItem, null) ?? topItem.path ?? null;
-}
-
 
 // 定值menuBar样式
 const menuBarStyle = {
@@ -86,6 +50,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
     const currentYear = new Date().getFullYear();
     // 获取所有菜单上下文
     const {activeTopId, activeSideId, setActiveTopId, setActiveSideId} = useMenuContext();
+    // console.log(activeTopId, activeSideId);
 
     // 获取顶部菜单栏
     const topMenu: MenuProps['items'] = menuBar.map((item) => (
@@ -106,6 +71,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
     );
     // 若 children 为空数组，则不显示侧边栏
     const hasSider = (selectedTopItem?.children?.length ?? 0) > 0;
+
 
     return (
         <Layout>
@@ -144,7 +110,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                             <Menu
                                 mode="inline"
                                 selectedKeys={[activeSideId || '']}
-                                defaultOpenKeys={['kaishipaiban']}  // 开始排班 默认展开
+                                defaultOpenKeys={['start']}  // 开始排班 默认展开
                                 multiple={true}
                                 style={{height: '100%'}}
                                 items={sideMenu}
