@@ -3,7 +3,7 @@
 import React from 'react';
 import type {MenuProps} from 'antd';
 import {ConfigProvider, Layout, Menu, theme} from 'antd';
-import {appName} from "@/configs/general";
+import {AppName} from "@/configs/general";
 import {menuBar, MenuBarItem} from "@/configs/menuBar";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import {useMenuContext} from "@/components/hooks/MenuContext";
@@ -77,7 +77,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
             <Header className="flex items-center !px-[80px]">
                 <div className="flex items-center me-4">
                     <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
-                    <span className="text-pink-600 text-xl font-bold">{appName}</span>
+                    <span className="text-pink-600 text-xl font-bold">{AppName}</span>
                 </div>
                 <ConfigProvider
                     theme={menuBarStyle}
