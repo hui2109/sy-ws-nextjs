@@ -36,7 +36,7 @@ model Person {
   workNumber   String   @unique
   phoneNumber  String
   createdAt    DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3) @default(now())
 
   scheduleAssignments             ScheduleAssignment[]
   vacationRules                   VacationRule[]
@@ -57,7 +57,7 @@ model BanType {
   description String
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3) @default(now())
 
   workSchedules            WorkSchedule[]
   vacationRules            VacationRule[]
@@ -72,7 +72,7 @@ model WorkSchedule {
   workDate  DateTime       @db.Date
   status    ScheduleStatus @default(DRAFT)
   createdAt DateTime       @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime       @updatedAt @db.Timestamptz(3)
+  updatedAt DateTime       @updatedAt @db.Timestamptz(3) @default(now())
   banTypeId Int
 
   scheduleAssignments ScheduleAssignment[]
@@ -89,7 +89,7 @@ model VacationRule {
   availableHalfDays Int
   isHidden          Boolean  @default(false)
   createdAt         DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt         DateTime @updatedAt @db.Timestamptz(3)
+  updatedAt         DateTime @updatedAt @db.Timestamptz(3) @default(now())
   personId          Int
   banTypeId         Int
 
@@ -104,7 +104,7 @@ model LeaveAppointment {
   sequenceNumber  Int
   appointmentDate DateTime @db.Date
   createdAt       DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3) @default(now())
   personId        Int
   banTypeId       Int
 
@@ -119,7 +119,7 @@ model ExpectedSchedule {
   sequenceNumber  Int
   appointmentDate DateTime @db.Date
   createdAt       DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3) @default(now())
   personId        Int
   banTypeId       Int
 
@@ -136,7 +136,7 @@ model ShiftScheduleApply {
   reason         String?
   status         ApplyStatus @default(SUBMITTED)
   createdAt      DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt      DateTime    @updatedAt @db.Timestamptz(3)
+  updatedAt      DateTime    @updatedAt @db.Timestamptz(3) @default(now())
   applicantId    Int
   targetPersonId Int
 
@@ -167,7 +167,7 @@ model AskOffApply {
   reason    String?
   status    ApplyStatus @default(SUBMITTED)
   createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3) @default(now())
   personId  Int
   banTypeId Int
 
@@ -195,7 +195,7 @@ model ChangeScheduleApply {
   reason    String?
   status    ApplyStatus @default(SUBMITTED)
   createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3) @default(now())
   personId  Int
 
   items ChangeScheduleApplyItem[]
