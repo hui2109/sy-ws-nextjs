@@ -1,0 +1,234 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ScheduleStatus {
+  PUBLISHED
+  PENDING_REVIEW
+  DRAFT
+}
+
+enum ApplyStatus {
+  APPROVED
+  REJECTED
+  PENDING_REVIEW
+  SUBMITTED
+}
+
+model Person {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  avatar       String
+  name         String
+  weight       Float    @default(0.5)
+  hireDate     DateTime @db.Date
+  workNumber   String   @unique
+  phoneNumber  String
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+
+  scheduleAssignments             ScheduleAssignment[]
+  vacationRules                   VacationRule[]
+  leaveAppointments               LeaveAppointment[]
+  expectedSchedules               ExpectedSchedule[]
+  shiftScheduleAppliesAsApplicant ShiftScheduleApply[]  @relation("ShiftApplicant")
+  shiftScheduleAppliesAsTarget    ShiftScheduleApply[]  @relation("ShiftTargetPerson")
+  askOffApplies                   AskOffApply[]
+  changeScheduleApplies           ChangeScheduleApply[]
+}
+
+model BanType {
+  id          Int      @id @default(autoincrement())
+  banCode     String   @unique
+  banName     String
+  startTime   DateTime @db.Time(0)
+  endTime     DateTime @db.Time(0)
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+
+  workSchedules            WorkSchedule[]
+  vacationRules            VacationRule[]
+  leaveAppointments        LeaveAppointment[]
+  expectedSchedules        ExpectedSchedule[]
+  askOffApplies            AskOffApply[]
+  changeScheduleApplyItems ChangeScheduleApplyItem[]
+}
+
+model WorkSchedule {
+  id        Int            @id @default(autoincrement())
+  workDate  DateTime       @db.Date
+  status    ScheduleStatus @default(DRAFT)
+  createdAt DateTime       @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime       @updatedAt @db.Timestamptz(3)
+  banTypeId Int
+
+  scheduleAssignments ScheduleAssignment[]
+
+  banType BanType @relation(fields: [banTypeId], references: [id])
+
+  @@unique([workDate, banTypeId])
+}
+
+model VacationRule {
+  id                Int      @id @default(autoincrement())
+  startDate         DateTime @db.Date
+  endDate           DateTime @db.Date
+  availableHalfDays Int
+  isHidden          Boolean  @default(false)
+  createdAt         DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt         DateTime @updatedAt @db.Timestamptz(3)
+  personId          Int
+  banTypeId         Int
+
+  person  Person  @relation(fields: [personId], references: [id])
+  banType BanType @relation(fields: [banTypeId], references: [id])
+
+  @@unique([startDate, endDate, personId, banTypeId])
+}
+
+model LeaveAppointment {
+  id              Int      @id @default(autoincrement())
+  sequenceNumber  Int
+  appointmentDate DateTime @db.Date
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  personId        Int
+  banTypeId       Int
+
+  person  Person  @relation(fields: [personId], references: [id])
+  banType BanType @relation(fields: [banTypeId], references: [id])
+
+  @@unique([appointmentDate, personId])
+}
+
+model ExpectedSchedule {
+  id              Int      @id @default(autoincrement())
+  sequenceNumber  Int
+  appointmentDate DateTime @db.Date
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  personId        Int
+  banTypeId       Int
+
+  person  Person  @relation(fields: [personId], references: [id])
+  banType BanType @relation(fields: [banTypeId], references: [id])
+
+  @@unique([appointmentDate, personId])
+}
+
+model ShiftScheduleApply {
+  id             Int         @id @default(autoincrement())
+  startDate      DateTime    @db.Date
+  endDate        DateTime    @db.Date
+  reason         String?
+  status         ApplyStatus @default(SUBMITTED)
+  createdAt      DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime    @updatedAt @db.Timestamptz(3)
+  applicantId    Int
+  targetPersonId Int
+
+  items ShiftScheduleApplyItem[]
+
+  applicant    Person @relation("ShiftApplicant", fields: [applicantId], references: [id])
+  targetPerson Person @relation("ShiftTargetPerson", fields: [targetPersonId], references: [id])
+}
+
+model ShiftScheduleApplyItem {
+  id                         Int @id @default(autoincrement())
+  shiftScheduleApplyId       Int
+  myScheduleAssignmentId     Int
+  targetScheduleAssignmentId Int
+
+  shiftScheduleApply       ShiftScheduleApply @relation(fields: [shiftScheduleApplyId], references: [id], onDelete: Cascade)
+  myScheduleAssignment     ScheduleAssignment @relation("ShiftMyScheduleAssignment", fields: [myScheduleAssignmentId], references: [id])
+  targetScheduleAssignment ScheduleAssignment @relation("ShiftTargetScheduleAssignment", fields: [targetScheduleAssignmentId], references: [id])
+
+  @@unique([shiftScheduleApplyId, myScheduleAssignmentId])
+  @@unique([shiftScheduleApplyId, targetScheduleAssignmentId])
+}
+
+model AskOffApply {
+  id        Int         @id @default(autoincrement())
+  startDate DateTime    @db.Date
+  endDate   DateTime    @db.Date
+  reason    String?
+  status    ApplyStatus @default(SUBMITTED)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+  personId  Int
+  banTypeId Int
+
+  items AskOffApplyItem[]
+
+  person  Person  @relation(fields: [personId], references: [id])
+  banType BanType @relation(fields: [banTypeId], references: [id])
+}
+
+model AskOffApplyItem {
+  id                   Int @id @default(autoincrement())
+  askOffApplyId        Int
+  scheduleAssignmentId Int
+
+  askOffApply        AskOffApply        @relation(fields: [askOffApplyId], references: [id], onDelete: Cascade)
+  scheduleAssignment ScheduleAssignment @relation(fields: [scheduleAssignmentId], references: [id])
+
+  @@unique([askOffApplyId, scheduleAssignmentId])
+}
+
+model ChangeScheduleApply {
+  id        Int         @id @default(autoincrement())
+  startDate DateTime    @db.Date
+  endDate   DateTime    @db.Date
+  reason    String?
+  status    ApplyStatus @default(SUBMITTED)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+  personId  Int
+
+  items ChangeScheduleApplyItem[]
+
+  person Person @relation(fields: [personId], references: [id])
+}
+
+model ChangeScheduleApplyItem {
+  id                      Int      @id @default(autoincrement())
+  changeScheduleApplyId   Int
+  oldScheduleAssignmentId Int
+  newWorkDate             DateTime @db.Date
+  newBanTypeId            Int
+
+  changeScheduleApply   ChangeScheduleApply @relation(fields: [changeScheduleApplyId], references: [id], onDelete: Cascade)
+  oldScheduleAssignment ScheduleAssignment  @relation(fields: [oldScheduleAssignmentId], references: [id])
+  newBanType            BanType             @relation(fields: [newBanTypeId], references: [id])
+
+  @@unique([changeScheduleApplyId, oldScheduleAssignmentId])
+}
+
+model ScheduleAssignment {
+  id             Int @id @default(autoincrement())
+  personId       Int
+  workScheduleId Int
+
+  person       Person       @relation(fields: [personId], references: [id])
+  workSchedule WorkSchedule @relation(fields: [workScheduleId], references: [id])
+
+  shiftItemsAsMine      ShiftScheduleApplyItem[]  @relation("ShiftMyScheduleAssignment")
+  shiftItemsAsTarget    ShiftScheduleApplyItem[]  @relation("ShiftTargetScheduleAssignment")
+  askOffApplyItems      AskOffApplyItem[]
+  changeApplyItemsAsOld ChangeScheduleApplyItem[]
+
+  @@unique([personId, workScheduleId])
+}
