@@ -1,9 +1,13 @@
 import React from 'react';
 import ScheduleTable from "@/components/tables/ScheduleTable";
+import DateJump from "@/components/dateSelects/DateJump";
 
 
 export default function Start() {
     return (
-        <ScheduleTable></ScheduleTable>
+        <>
+            <DateJump picker={"month"}></DateJump>
+            <ScheduleTable></ScheduleTable>
+        </>
     )
 };

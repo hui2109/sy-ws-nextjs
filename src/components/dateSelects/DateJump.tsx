@@ -11,6 +11,8 @@ export default function DateJump({picker}: { picker: Picker }) {
     const [current, setCurrent] = useState<dayjs.Dayjs>(dayjs());
     const [open, setOpen] = useState<boolean>(false);  // 控制弹出层
 
+    console.log(current.format('YYYY-MM-DD'))
+
     function onChange(date: dayjs.Dayjs | null): void {
         if (date) setCurrent(date);
     }
