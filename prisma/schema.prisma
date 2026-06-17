@@ -36,6 +36,7 @@ model Person {
   workNumber   String   @unique
   phoneNumber  String
   isActive     Boolean  @default(true)
+  displayOrder Int      @default(-1)
   createdAt    DateTime @default(now()) @db.Timestamptz(3)
   updatedAt    DateTime @updatedAt @db.Timestamptz(3) @default(now())
 
