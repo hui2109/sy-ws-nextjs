@@ -92,6 +92,8 @@ export const PersonScalarFieldEnum = {
   hireDate: 'hireDate',
   workNumber: 'workNumber',
   phoneNumber: 'phoneNumber',
+  isActive: 'isActive',
+  displayOrder: 'displayOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

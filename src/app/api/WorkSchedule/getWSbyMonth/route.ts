@@ -28,6 +28,7 @@ async function queryDB(date: Dayjs): Promise<PersonDateBansMap> {
                     person: {
                         select: {
                             name: true,
+                            displayOrder: true
                         },
                     },
                 },
@@ -39,26 +40,27 @@ async function queryDB(date: Dayjs): Promise<PersonDateBansMap> {
     });
 
     const MonthSchedule: PersonDateBansMap = {};
+    const orderMap = new Map<string, number>();  // 记录每个人的 displayOrder
 
     for (const schedule of workSchedules) {
         const dateString: string = dayjs.utc(schedule.workDate).format("YYYY-MM-DD");
         const banName = schedule.banType.banName;
 
-        for (const assignment of schedule.scheduleAssignments) {
-            const personName = assignment.person.name;
+        for (const {person} of schedule.scheduleAssignments) {
+            orderMap.set(person.name, person.displayOrder);  // ← 顺手记录
 
-            if (!MonthSchedule[personName]) {
-                MonthSchedule[personName] = {};
-            }
-
-            if (!MonthSchedule[personName][dateString]) {
-                MonthSchedule[personName][dateString] = [];
-            }
-            MonthSchedule[personName][dateString].push(banName);
+            if (!MonthSchedule[person.name]) MonthSchedule[person.name] = {};
+            if (!MonthSchedule[person.name][dateString]) MonthSchedule[person.name][dateString] = [];
+            MonthSchedule[person.name][dateString].push(banName);
         }
     }
 
-    return MonthSchedule
+    // 按 displayOrder 重建对象
+    return Object.fromEntries(
+        [...orderMap.entries()]
+            .sort(([, a], [, b]) => a - b)
+            .map(([name]) => [name, MonthSchedule[name]])
+    );
 }
 
 export async function POST(request: NextRequest) {

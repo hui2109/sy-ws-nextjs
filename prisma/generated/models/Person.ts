@@ -29,11 +29,13 @@ export type AggregatePerson = {
 export type PersonAvgAggregateOutputType = {
   id: number | null
   weight: number | null
+  displayOrder: number | null
 }
 
 export type PersonSumAggregateOutputType = {
   id: number | null
   weight: number | null
+  displayOrder: number | null
 }
 
 export type PersonMinAggregateOutputType = {
@@ -46,6 +48,8 @@ export type PersonMinAggregateOutputType = {
   hireDate: Date | null
   workNumber: string | null
   phoneNumber: string | null
+  isActive: boolean | null
+  displayOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +64,8 @@ export type PersonMaxAggregateOutputType = {
   hireDate: Date | null
   workNumber: string | null
   phoneNumber: string | null
+  isActive: boolean | null
+  displayOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -74,6 +80,8 @@ export type PersonCountAggregateOutputType = {
   hireDate: number
   workNumber: number
   phoneNumber: number
+  isActive: number
+  displayOrder: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -83,11 +91,13 @@ export type PersonCountAggregateOutputType = {
 export type PersonAvgAggregateInputType = {
   id?: true
   weight?: true
+  displayOrder?: true
 }
 
 export type PersonSumAggregateInputType = {
   id?: true
   weight?: true
+  displayOrder?: true
 }
 
 export type PersonMinAggregateInputType = {
@@ -100,6 +110,8 @@ export type PersonMinAggregateInputType = {
   hireDate?: true
   workNumber?: true
   phoneNumber?: true
+  isActive?: true
+  displayOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,6 +126,8 @@ export type PersonMaxAggregateInputType = {
   hireDate?: true
   workNumber?: true
   phoneNumber?: true
+  isActive?: true
+  displayOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -128,6 +142,8 @@ export type PersonCountAggregateInputType = {
   hireDate?: true
   workNumber?: true
   phoneNumber?: true
+  isActive?: true
+  displayOrder?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -229,6 +245,8 @@ export type PersonGroupByOutputType = {
   hireDate: Date
   workNumber: string
   phoneNumber: string
+  isActive: boolean
+  displayOrder: number
   createdAt: Date
   updatedAt: Date
   _count: PersonCountAggregateOutputType | null
@@ -266,6 +284,8 @@ export type PersonWhereInput = {
   hireDate?: Prisma.DateTimeFilter<"Person"> | Date | string
   workNumber?: Prisma.StringFilter<"Person"> | string
   phoneNumber?: Prisma.StringFilter<"Person"> | string
+  isActive?: Prisma.BoolFilter<"Person"> | boolean
+  displayOrder?: Prisma.IntFilter<"Person"> | number
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentListRelationFilter
@@ -288,6 +308,8 @@ export type PersonOrderByWithRelationInput = {
   hireDate?: Prisma.SortOrder
   workNumber?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   scheduleAssignments?: Prisma.ScheduleAssignmentOrderByRelationAggregateInput
@@ -313,6 +335,8 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   weight?: Prisma.FloatFilter<"Person"> | number
   hireDate?: Prisma.DateTimeFilter<"Person"> | Date | string
   phoneNumber?: Prisma.StringFilter<"Person"> | string
+  isActive?: Prisma.BoolFilter<"Person"> | boolean
+  displayOrder?: Prisma.IntFilter<"Person"> | number
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentListRelationFilter
@@ -335,6 +359,8 @@ export type PersonOrderByWithAggregationInput = {
   hireDate?: Prisma.SortOrder
   workNumber?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PersonCountOrderByAggregateInput
@@ -357,6 +383,8 @@ export type PersonScalarWhereWithAggregatesInput = {
   hireDate?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   workNumber?: Prisma.StringWithAggregatesFilter<"Person"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"Person"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"Person"> | boolean
+  displayOrder?: Prisma.IntWithAggregatesFilter<"Person"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
 }
@@ -370,6 +398,8 @@ export type PersonCreateInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -392,6 +422,8 @@ export type PersonUncheckedCreateInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -413,6 +445,8 @@ export type PersonUpdateInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -435,6 +469,8 @@ export type PersonUncheckedUpdateInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -457,6 +493,8 @@ export type PersonCreateManyInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -470,6 +508,8 @@ export type PersonUpdateManyMutationInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -484,6 +524,8 @@ export type PersonUncheckedUpdateManyInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -498,6 +540,8 @@ export type PersonCountOrderByAggregateInput = {
   hireDate?: Prisma.SortOrder
   workNumber?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -505,6 +549,7 @@ export type PersonCountOrderByAggregateInput = {
 export type PersonAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weight?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
 }
 
 export type PersonMaxOrderByAggregateInput = {
@@ -517,6 +562,8 @@ export type PersonMaxOrderByAggregateInput = {
   hireDate?: Prisma.SortOrder
   workNumber?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -531,6 +578,8 @@ export type PersonMinOrderByAggregateInput = {
   hireDate?: Prisma.SortOrder
   workNumber?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -538,6 +587,7 @@ export type PersonMinOrderByAggregateInput = {
 export type PersonSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weight?: Prisma.SortOrder
+  displayOrder?: Prisma.SortOrder
 }
 
 export type PersonScalarRelationFilter = {
@@ -559,6 +609,10 @@ export type FloatFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -690,6 +744,8 @@ export type PersonCreateWithoutVacationRulesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -711,6 +767,8 @@ export type PersonUncheckedCreateWithoutVacationRulesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -747,6 +805,8 @@ export type PersonUpdateWithoutVacationRulesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -768,6 +828,8 @@ export type PersonUncheckedUpdateWithoutVacationRulesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -788,6 +850,8 @@ export type PersonCreateWithoutLeaveAppointmentsInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -809,6 +873,8 @@ export type PersonUncheckedCreateWithoutLeaveAppointmentsInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -845,6 +911,8 @@ export type PersonUpdateWithoutLeaveAppointmentsInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -866,6 +934,8 @@ export type PersonUncheckedUpdateWithoutLeaveAppointmentsInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -886,6 +956,8 @@ export type PersonCreateWithoutExpectedSchedulesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -907,6 +979,8 @@ export type PersonUncheckedCreateWithoutExpectedSchedulesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -943,6 +1017,8 @@ export type PersonUpdateWithoutExpectedSchedulesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -964,6 +1040,8 @@ export type PersonUncheckedUpdateWithoutExpectedSchedulesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -984,6 +1062,8 @@ export type PersonCreateWithoutShiftScheduleAppliesAsApplicantInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1005,6 +1085,8 @@ export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1030,6 +1112,8 @@ export type PersonCreateWithoutShiftScheduleAppliesAsTargetInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1051,6 +1135,8 @@ export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1087,6 +1173,8 @@ export type PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1108,6 +1196,8 @@ export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1139,6 +1229,8 @@ export type PersonUpdateWithoutShiftScheduleAppliesAsTargetInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1160,6 +1252,8 @@ export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1180,6 +1274,8 @@ export type PersonCreateWithoutAskOffAppliesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1201,6 +1297,8 @@ export type PersonUncheckedCreateWithoutAskOffAppliesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1237,6 +1335,8 @@ export type PersonUpdateWithoutAskOffAppliesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1258,6 +1358,8 @@ export type PersonUncheckedUpdateWithoutAskOffAppliesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1278,6 +1380,8 @@ export type PersonCreateWithoutChangeScheduleAppliesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1299,6 +1403,8 @@ export type PersonUncheckedCreateWithoutChangeScheduleAppliesInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1335,6 +1441,8 @@ export type PersonUpdateWithoutChangeScheduleAppliesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1356,6 +1464,8 @@ export type PersonUncheckedUpdateWithoutChangeScheduleAppliesInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1376,6 +1486,8 @@ export type PersonCreateWithoutScheduleAssignmentsInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
@@ -1397,6 +1509,8 @@ export type PersonUncheckedCreateWithoutScheduleAssignmentsInput = {
   hireDate: Date | string
   workNumber: string
   phoneNumber: string
+  isActive?: boolean
+  displayOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
@@ -1433,6 +1547,8 @@ export type PersonUpdateWithoutScheduleAssignmentsInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
@@ -1454,6 +1570,8 @@ export type PersonUncheckedUpdateWithoutScheduleAssignmentsInput = {
   hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workNumber?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
@@ -1569,6 +1687,8 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   hireDate?: boolean
   workNumber?: boolean
   phoneNumber?: boolean
+  isActive?: boolean
+  displayOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   scheduleAssignments?: boolean | Prisma.Person$scheduleAssignmentsArgs<ExtArgs>
@@ -1592,6 +1712,8 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   hireDate?: boolean
   workNumber?: boolean
   phoneNumber?: boolean
+  isActive?: boolean
+  displayOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
@@ -1606,6 +1728,8 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   hireDate?: boolean
   workNumber?: boolean
   phoneNumber?: boolean
+  isActive?: boolean
+  displayOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
@@ -1620,11 +1744,13 @@ export type PersonSelectScalar = {
   hireDate?: boolean
   workNumber?: boolean
   phoneNumber?: boolean
+  isActive?: boolean
+  displayOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "passwordHash" | "avatar" | "name" | "weight" | "hireDate" | "workNumber" | "phoneNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "passwordHash" | "avatar" | "name" | "weight" | "hireDate" | "workNumber" | "phoneNumber" | "isActive" | "displayOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scheduleAssignments?: boolean | Prisma.Person$scheduleAssignmentsArgs<ExtArgs>
   vacationRules?: boolean | Prisma.Person$vacationRulesArgs<ExtArgs>
@@ -1661,6 +1787,8 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     hireDate: Date
     workNumber: string
     phoneNumber: string
+    isActive: boolean
+    displayOrder: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["person"]>
@@ -2103,6 +2231,8 @@ export interface PersonFieldRefs {
   readonly hireDate: Prisma.FieldRef<"Person", 'DateTime'>
   readonly workNumber: Prisma.FieldRef<"Person", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Person", 'String'>
+  readonly isActive: Prisma.FieldRef<"Person", 'Boolean'>
+  readonly displayOrder: Prisma.FieldRef<"Person", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Person", 'DateTime'>
 }

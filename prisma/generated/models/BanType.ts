@@ -481,10 +481,6 @@ export type BanTypeScalarRelationFilter = {
   isNot?: Prisma.BanTypeWhereInput
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type BanTypeCreateNestedOneWithoutWorkSchedulesInput = {
   create?: Prisma.XOR<Prisma.BanTypeCreateWithoutWorkSchedulesInput, Prisma.BanTypeUncheckedCreateWithoutWorkSchedulesInput>
   connectOrCreate?: Prisma.BanTypeCreateOrConnectWithoutWorkSchedulesInput
