@@ -1,6 +1,9 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/connectionsDB/prisma";
 import dayjs, {Dayjs} from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 // {'叶荣': {'2026-06-01': ['S1'], '2026-06-02': ['S1', 'JD']}}
 type PersonDateBansMap = Record<string, Record<string, string[]>>;
@@ -38,7 +41,7 @@ async function queryDB(date: Dayjs): Promise<PersonDateBansMap> {
     const MonthSchedule: PersonDateBansMap = {};
 
     for (const schedule of workSchedules) {
-        const dateString: string = dayjs(schedule.workDate).format("YYYY-MM-DD");
+        const dateString: string = dayjs.utc(schedule.workDate).format("YYYY-MM-DD");
         const banName = schedule.banType.banName;
 
         for (const assignment of schedule.scheduleAssignments) {
@@ -61,7 +64,7 @@ async function queryDB(date: Dayjs): Promise<PersonDateBansMap> {
 export async function POST(request: NextRequest) {
     const body = await request.json();
     try {
-        const data = await queryDB(dayjs(body));
+        const data = await queryDB(dayjs.utc(body));
         return NextResponse.json({success: true, data}, {status: 200});
     } catch (error) {
         console.error(error);
