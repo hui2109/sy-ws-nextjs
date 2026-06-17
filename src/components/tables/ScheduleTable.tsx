@@ -1,21 +1,29 @@
 'use client';
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Table} from 'antd';
-import {getTableData} from "@/utils/getTableData";
+import {Dayjs} from "dayjs";
+import {getScheduleTableData, IScheduleTableData} from "@/app/api/utils/getScheduleTableData";
 
-interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
+interface IScheduleTableProps {
+    current: Dayjs;
 }
 
-export default function ScheduleTable() {
-    const {columns, dataSource} = getTableData();
+export default function ScheduleTable({current}: IScheduleTableProps) {
+    const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
+    const [loading, setLoading] = useState(true);
+    const {dataSource, columns} = scheduleTableData;
+
+    useEffect(() => {
+        getScheduleTableData(current).then(data => {
+            setScheduleTableData(data);
+            setLoading(false);
+        });
+    }, [current]);
 
     return (
         <Table
+            loading={loading}
             columns={columns}
             dataSource={dataSource}
             scroll={{x: 'max-content', y: 600}}
@@ -24,7 +32,7 @@ export default function ScheduleTable() {
                 // console.log(currentPageData);
                 return (
                     <div className='text-center text-2xl text-blue-600 font-bold'>
-                        2026年6月 放疗技术组排班表
+                        {current.format('YYYY年M月')} 放疗技术组排班表
                     </div>
                 );
             }}
@@ -40,3 +48,4 @@ export default function ScheduleTable() {
         />
     );
 }
+

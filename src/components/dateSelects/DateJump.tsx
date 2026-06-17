@@ -1,19 +1,22 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 import {Button, DatePicker, Space} from 'antd';
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 
 type Picker = 'month' | 'year';
 
-export default function DateJump({picker}: { picker: Picker }) {
+interface IDateJumpProps {
+    picker: Picker;
+    current: Dayjs;
+    setCurrent: Dispatch<SetStateAction<Dayjs>>;
+}
+
+export default function DateJump({picker, current, setCurrent}: IDateJumpProps) {
     const format = picker === 'month' ? 'YYYY年M月' : 'YYYY年';
-    const [current, setCurrent] = useState<dayjs.Dayjs>(dayjs());
     const [open, setOpen] = useState<boolean>(false);  // 控制弹出层
 
-    console.log(current.format('YYYY-MM-DD'))
-
-    function onChange(date: dayjs.Dayjs | null): void {
+    function onChange(date: Dayjs | null): void {
         if (date) setCurrent(date);
     }
 
