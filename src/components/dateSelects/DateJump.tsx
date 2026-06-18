@@ -46,24 +46,23 @@ export default function DateJump({picker, current, setCurrent}: IDateJumpProps) 
 
     return (
         <Space>
-            <Button type="primary" onClick={handlePreClick}>
+            <Button type="primary" onClick={handlePreClick} size="small">
                 {picker === 'month' ? '上个月' : '上一年'}
             </Button>
             <DatePicker
                 value={current}                      // 受控日期模式
                 open={open}                          // 受控弹出层
-                // onOpenChange={setOpen}               // 点击输入框、外部点击时同步
-                onOpenChange={() => {
-                    setOpen(!open)
-                }}               // 点击输入框、外部点击时同步
+                onOpenChange={setOpen}               // 点击输入框、外部点击时同步
                 onChange={onChange}
                 picker={picker}
                 format={format}
                 inputReadOnly={true}
                 allowClear={false}
                 renderExtraFooter={() => extraFooter}
+                size="small"
+                classNames={{input: 'text-center'}}
             />
-            <Button type="primary" onClick={handleNexClick}>
+            <Button type="primary" onClick={handleNexClick} size="small">
                 {picker === 'month' ? '下个月' : '下一年'}
             </Button>
         </Space>

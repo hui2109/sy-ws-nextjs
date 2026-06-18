@@ -286,10 +286,10 @@ export type BanTypeOrderByWithRelationInput = {
 export type BanTypeWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   banCode?: string
+  banName?: string
   AND?: Prisma.BanTypeWhereInput | Prisma.BanTypeWhereInput[]
   OR?: Prisma.BanTypeWhereInput[]
   NOT?: Prisma.BanTypeWhereInput | Prisma.BanTypeWhereInput[]
-  banName?: Prisma.StringFilter<"BanType"> | string
   startTime?: Prisma.DateTimeFilter<"BanType"> | Date | string
   endTime?: Prisma.DateTimeFilter<"BanType"> | Date | string
   description?: Prisma.StringFilter<"BanType"> | string
@@ -303,7 +303,7 @@ export type BanTypeWhereUniqueInput = Prisma.AtLeast<{
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
   askOffApplies?: Prisma.AskOffApplyListRelationFilter
   changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemListRelationFilter
-}, "id" | "banCode">
+}, "id" | "banCode" | "banName">
 
 export type BanTypeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

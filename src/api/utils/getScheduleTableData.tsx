@@ -1,7 +1,8 @@
 import {Dayjs} from "dayjs";
 import {Badge, TableColumnsType} from "antd";
 import {getWSbyMonth} from "../WorkSchedule/getWSbyMonth";
-import {Weekdays} from "@/configs/general";
+import {getBanTypeColorMap} from "../BanType/getBanTypeColorMap";
+import {LatterBantype, Weekdays} from "@/configs/general";
 
 export interface IScheduleTableData {
     dataSource: { key: string, name: string, [date: string]: string[] | string }[];
@@ -10,6 +11,7 @@ export interface IScheduleTableData {
 
 export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableData> {
     const dbData = await getWSbyMonth(date.format('YYYY-MM-DD'));
+    const banTypeColorMap = await getBanTypeColorMap();
     const dataSource = Object.entries(dbData).map(([personName, scheduleInfo]) => {
         const rowData: { key: string, name: string, [date: string]: string[] | string } = {
             key: personName,
@@ -17,7 +19,7 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
         };
 
         for (const [string_date, bansList] of Object.entries(scheduleInfo)) {
-            rowData[string_date] = bansList.join('.');
+            rowData[string_date] = sortBanTypeList(bansList);
         }
 
         return rowData;
@@ -25,11 +27,11 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
 
     return {
         dataSource,
-        columns: getColumns(date)
+        columns: getColumns(date, banTypeColorMap)
     }
 }
 
-function getColumns(date: Dayjs): TableColumnsType {
+function getColumns(date: Dayjs, banTypeColorMap: Record<string, string>): TableColumnsType {
     const daysInMonth = Array.from(
         {length: date.daysInMonth()},
         (_, i) => date.date(i + 1)
@@ -45,14 +47,23 @@ function getColumns(date: Dayjs): TableColumnsType {
                 </div>
             ),
             dataIndex: index,
-            render: (text: string) => {
+            render: (text?: Array<string>) => {
+                if (!text) return (
+                    <div className="italic text-gray-300">null</div>
+                );
+
                 return (
-                    <Badge
-                        count={text}
-                        color='blue'
-                        classNames={{indicator: '!rounded-lg !font-bold'}}
-                        // styles={{indicator: {borderRadius: '6px'}}}
-                    />
+                    <div className='flex flex-col justify-center items-center gap-1'>
+                        {text.map(banType => (
+                                <Badge
+                                    key={banType}
+                                    count={banType}
+                                    color={banTypeColorMap[banType]}
+                                    classNames={{indicator: '!rounded-lg !font-bold'}}
+                                />
+                            )
+                        )}
+                    </div>
                 )
             },
             onCell: (record) => ({
@@ -81,4 +92,26 @@ function getColumns(date: Dayjs): TableColumnsType {
         }
     });
     return columns;
+}
+
+function sortBanTypeList(bansList: string[]): string[] {
+    const latterBanTypeOrder = new Map<string, number>(
+        LatterBantype.map((item, index) => [item, index])
+    );
+    const normalList: string[] = [];
+    const latterList: string[] = [];
+
+    bansList.forEach((item) => {
+        if (latterBanTypeOrder.has(item)) {
+            latterList.push(item);
+        } else {
+            normalList.push(item);
+        }
+    });
+
+    latterList.sort((a, b) => {
+        return latterBanTypeOrder.get(a)! - latterBanTypeOrder.get(b)!;
+    });
+
+    return [...normalList, ...latterList];
 }

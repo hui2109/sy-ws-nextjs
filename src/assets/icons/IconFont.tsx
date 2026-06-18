@@ -7,7 +7,7 @@ const AntIconFont = createFromIconfontCN({
 });
 
 export function IconFont({type, className, useSvg = false}
-                         : { type: string; className?: string, useSvg?: boolean }) {
+                         : { type: string, className?: string, useSvg?: boolean }) {
     if (useSvg) {
         return <AntIconFont type={type} className={className ?? ''}/>
     } else {
@@ -42,5 +42,6 @@ export enum IconType {
     'daochupaiban' = 'icon-daochu',
     'jiaqishezhi' = 'icon-taskbeifen',
     'piliangshezhi' = 'icon-piliangshezhi',
-    'daishenhe' = 'icon-daishenhe'
+    'daishenhe' = 'icon-daishenhe',
+    'xiangpica' = 'icon-xiangpica',
 }
