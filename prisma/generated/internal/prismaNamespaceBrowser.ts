@@ -110,7 +110,8 @@ export const BanTypeScalarFieldEnum = {
   description: 'description',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  color: 'color'
 } as const
 
 export type BanTypeScalarFieldEnum = (typeof BanTypeScalarFieldEnum)[keyof typeof BanTypeScalarFieldEnum]

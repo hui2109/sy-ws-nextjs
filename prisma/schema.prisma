@@ -60,6 +60,7 @@ model BanType {
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now()) @db.Timestamptz(3)
   updatedAt   DateTime @updatedAt @db.Timestamptz(3) @default(now())
+  color       String   @default("red")
 
   workSchedules            WorkSchedule[]
   vacationRules            VacationRule[]

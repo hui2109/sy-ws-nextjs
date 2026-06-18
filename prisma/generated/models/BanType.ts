@@ -44,6 +44,7 @@ export type BanTypeMinAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  color: string | null
 }
 
 export type BanTypeMaxAggregateOutputType = {
@@ -56,6 +57,7 @@ export type BanTypeMaxAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  color: string | null
 }
 
 export type BanTypeCountAggregateOutputType = {
@@ -68,6 +70,7 @@ export type BanTypeCountAggregateOutputType = {
   isActive: number
   createdAt: number
   updatedAt: number
+  color: number
   _all: number
 }
 
@@ -90,6 +93,7 @@ export type BanTypeMinAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  color?: true
 }
 
 export type BanTypeMaxAggregateInputType = {
@@ -102,6 +106,7 @@ export type BanTypeMaxAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  color?: true
 }
 
 export type BanTypeCountAggregateInputType = {
@@ -114,6 +119,7 @@ export type BanTypeCountAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  color?: true
   _all?: true
 }
 
@@ -213,6 +219,7 @@ export type BanTypeGroupByOutputType = {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  color: string
   _count: BanTypeCountAggregateOutputType | null
   _avg: BanTypeAvgAggregateOutputType | null
   _sum: BanTypeSumAggregateOutputType | null
@@ -248,6 +255,7 @@ export type BanTypeWhereInput = {
   isActive?: Prisma.BoolFilter<"BanType"> | boolean
   createdAt?: Prisma.DateTimeFilter<"BanType"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BanType"> | Date | string
+  color?: Prisma.StringFilter<"BanType"> | string
   workSchedules?: Prisma.WorkScheduleListRelationFilter
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
@@ -266,6 +274,7 @@ export type BanTypeOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   workSchedules?: Prisma.WorkScheduleOrderByRelationAggregateInput
   vacationRules?: Prisma.VacationRuleOrderByRelationAggregateInput
   leaveAppointments?: Prisma.LeaveAppointmentOrderByRelationAggregateInput
@@ -287,6 +296,7 @@ export type BanTypeWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"BanType"> | boolean
   createdAt?: Prisma.DateTimeFilter<"BanType"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BanType"> | Date | string
+  color?: Prisma.StringFilter<"BanType"> | string
   workSchedules?: Prisma.WorkScheduleListRelationFilter
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
@@ -305,6 +315,7 @@ export type BanTypeOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   _count?: Prisma.BanTypeCountOrderByAggregateInput
   _avg?: Prisma.BanTypeAvgOrderByAggregateInput
   _max?: Prisma.BanTypeMaxOrderByAggregateInput
@@ -325,6 +336,7 @@ export type BanTypeScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"BanType"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BanType"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"BanType"> | Date | string
+  color?: Prisma.StringWithAggregatesFilter<"BanType"> | string
 }
 
 export type BanTypeCreateInput = {
@@ -336,6 +348,7 @@ export type BanTypeCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
@@ -354,6 +367,7 @@ export type BanTypeUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
@@ -371,6 +385,7 @@ export type BanTypeUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
@@ -389,6 +404,7 @@ export type BanTypeUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -407,6 +423,7 @@ export type BanTypeCreateManyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
 }
 
 export type BanTypeUpdateManyMutationInput = {
@@ -418,6 +435,7 @@ export type BanTypeUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type BanTypeUncheckedUpdateManyInput = {
@@ -430,6 +448,7 @@ export type BanTypeUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type BanTypeCountOrderByAggregateInput = {
@@ -442,6 +461,7 @@ export type BanTypeCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
 }
 
 export type BanTypeAvgOrderByAggregateInput = {
@@ -458,6 +478,7 @@ export type BanTypeMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
 }
 
 export type BanTypeMinOrderByAggregateInput = {
@@ -470,6 +491,7 @@ export type BanTypeMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
 }
 
 export type BanTypeSumOrderByAggregateInput = {
@@ -574,6 +596,7 @@ export type BanTypeCreateWithoutWorkSchedulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
@@ -591,6 +614,7 @@ export type BanTypeUncheckedCreateWithoutWorkSchedulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
@@ -623,6 +647,7 @@ export type BanTypeUpdateWithoutWorkSchedulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
@@ -640,6 +665,7 @@ export type BanTypeUncheckedUpdateWithoutWorkSchedulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -656,6 +682,7 @@ export type BanTypeCreateWithoutVacationRulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
@@ -673,6 +700,7 @@ export type BanTypeUncheckedCreateWithoutVacationRulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
@@ -705,6 +733,7 @@ export type BanTypeUpdateWithoutVacationRulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
@@ -722,6 +751,7 @@ export type BanTypeUncheckedUpdateWithoutVacationRulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -738,6 +768,7 @@ export type BanTypeCreateWithoutLeaveAppointmentsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
@@ -755,6 +786,7 @@ export type BanTypeUncheckedCreateWithoutLeaveAppointmentsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
@@ -787,6 +819,7 @@ export type BanTypeUpdateWithoutLeaveAppointmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
@@ -804,6 +837,7 @@ export type BanTypeUncheckedUpdateWithoutLeaveAppointmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -820,6 +854,7 @@ export type BanTypeCreateWithoutExpectedSchedulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
@@ -837,6 +872,7 @@ export type BanTypeUncheckedCreateWithoutExpectedSchedulesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
@@ -869,6 +905,7 @@ export type BanTypeUpdateWithoutExpectedSchedulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
@@ -886,6 +923,7 @@ export type BanTypeUncheckedUpdateWithoutExpectedSchedulesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -902,6 +940,7 @@ export type BanTypeCreateWithoutAskOffAppliesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
@@ -919,6 +958,7 @@ export type BanTypeUncheckedCreateWithoutAskOffAppliesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
@@ -951,6 +991,7 @@ export type BanTypeUpdateWithoutAskOffAppliesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
@@ -968,6 +1009,7 @@ export type BanTypeUncheckedUpdateWithoutAskOffAppliesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -984,6 +1026,7 @@ export type BanTypeCreateWithoutChangeScheduleApplyItemsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
@@ -1001,6 +1044,7 @@ export type BanTypeUncheckedCreateWithoutChangeScheduleApplyItemsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  color?: string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
@@ -1033,6 +1077,7 @@ export type BanTypeUpdateWithoutChangeScheduleApplyItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
@@ -1050,6 +1095,7 @@ export type BanTypeUncheckedUpdateWithoutChangeScheduleApplyItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
@@ -1143,6 +1189,7 @@ export type BanTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  color?: boolean
   workSchedules?: boolean | Prisma.BanType$workSchedulesArgs<ExtArgs>
   vacationRules?: boolean | Prisma.BanType$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.BanType$leaveAppointmentsArgs<ExtArgs>
@@ -1162,6 +1209,7 @@ export type BanTypeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  color?: boolean
 }, ExtArgs["result"]["banType"]>
 
 export type BanTypeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1174,6 +1222,7 @@ export type BanTypeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  color?: boolean
 }, ExtArgs["result"]["banType"]>
 
 export type BanTypeSelectScalar = {
@@ -1186,9 +1235,10 @@ export type BanTypeSelectScalar = {
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  color?: boolean
 }
 
-export type BanTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "banCode" | "banName" | "startTime" | "endTime" | "description" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["banType"]>
+export type BanTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "banCode" | "banName" | "startTime" | "endTime" | "description" | "isActive" | "createdAt" | "updatedAt" | "color", ExtArgs["result"]["banType"]>
 export type BanTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workSchedules?: boolean | Prisma.BanType$workSchedulesArgs<ExtArgs>
   vacationRules?: boolean | Prisma.BanType$vacationRulesArgs<ExtArgs>
@@ -1221,6 +1271,7 @@ export type $BanTypePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    color: string
   }, ExtArgs["result"]["banType"]>
   composites: {}
 }
@@ -1659,6 +1710,7 @@ export interface BanTypeFieldRefs {
   readonly isActive: Prisma.FieldRef<"BanType", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"BanType", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"BanType", 'DateTime'>
+  readonly color: Prisma.FieldRef<"BanType", 'String'>
 }
     
 

@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import {Table} from 'antd';
 import {Dayjs} from "dayjs";
-import {getScheduleTableData, IScheduleTableData} from "@/app/api/utils/getScheduleTableData";
+import {getScheduleTableData, IScheduleTableData} from "@/api/utils/getScheduleTableData";
 
 interface IScheduleTableProps {
     current: Dayjs;

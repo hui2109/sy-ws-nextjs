@@ -18,6 +18,78 @@ function parseSqliteTime(value: string) {
     ));
 }
 
+function getBanTypeColor() {
+    return {
+        'NA': '#e9ecef',
+
+        // 1系列班次（蓝色系 - 适中饱和度）
+        '1A': '#5b9bd5',
+        '1B': '#4472c4',
+        '1C': '#2f5597',
+
+        // 2系列班次（绿色系 - 适中饱和度）
+        '2A': '#70ad47',
+        '2B': '#548235',
+        '2C': '#375623',
+
+        // 3系列班次（粉色系 - 适中饱和度）
+        '3A': '#b85798',
+        '3B': '#9a4480',
+        '3C': '#7c3168',
+
+        // S系列班次（橙色系 - 适中饱和度）
+        'S1': '#d97532',
+        'S2': '#c65911',
+        'S2-A': '#e0812e',
+        'S2-B': '#8f3f0d',
+
+        // N系列夜班（紫色系 - 适中饱和度）
+        'N1': '#8e44ad',
+        'N2': '#7d3c98',
+
+        // 培训相关（棕色系 - 适中饱和度）
+        '进修': '#bf9000',
+        '培训': '#a67c00',
+        '机动': '#8d6700',
+
+        // 休息（淡灰色系）
+        '休息': '#adb5bd',
+
+        // 休假类（鲜艳突出色系）
+        '放射假': '#0d6efd',
+        '年假': '#198754',
+        '病假': '#fd7e14',
+        '事假': '#ffc107',
+        '婚假': '#d63384',
+        '产假': '#dc3545',
+        '陪产假': '#6610f2',
+        '育儿假': '#0dcaf0',
+        '丧假': '#6c757d',
+        '补假': '#20c997',
+        '调休假': '#ee4e09',
+        '其他假': '#e83e8c',
+
+        // 加班类（红色系 - 适中饱和度）
+        'OAE': '#d63384',
+        'OBE': '#c2185b',
+        'OCE': '#ad1457',
+        'OAF': '#e91e63',
+        'OBF': '#f06292',
+        'OCF': '#f8bbd9',
+
+        // 实习班
+        'T1A': '#ba68c8',  // 淡紫色
+        'T1B': '#ab47bc',  // 稍深
+        'T2A': '#9c27b0',  // 标准紫色
+        'T2B': '#8e24aa',  // 原色
+        'T3A': '#7b1fa2',  // 深紫
+        'T3B': '#6a1b9a',  // 更深
+        'TS1': '#4a148c',  // 深夜紫
+        'TS2': '#311b92',  // 蓝紫
+        'PHY': '#ff7043'   // 橙色系偏亮
+    };
+}
+
 
 async function migrateToPerson() {
     const personnel = sqlite
@@ -142,8 +214,21 @@ async function migrateToVacationRule() {
     }
 }
 
-migrateToVacationRule().catch(
-    (reason) => {
-        console.log(reason, 'xxyyzz')
+async function migrateToBanTypeColor() {
+    const banTypeColorMap = getBanTypeColor();
+    const allBanTypes = await prisma.banType.findMany({
+        select: {id: true, banName: true},
+    });
+
+    for (const banType of allBanTypes) {
+        const color = banTypeColorMap[banType.banName as keyof typeof banTypeColorMap];
+        if (color) {
+            await prisma.banType.update({
+                where: {id: banType.id},
+                data: {color},
+            });
+        }
     }
-);
+}
+
+migrateToBanTypeColor();

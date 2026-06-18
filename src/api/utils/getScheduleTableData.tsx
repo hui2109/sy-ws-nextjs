@@ -10,11 +10,6 @@ export interface IScheduleTableData {
 
 export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableData> {
     const dbData = await getWSbyMonth(date.format('YYYY-MM-DD'));
-    const daysInMonth = Array.from(
-        {length: date.daysInMonth()},
-        (_, i) => date.date(i + 1)
-    );
-
     const dataSource = Object.entries(dbData).map(([personName, scheduleInfo]) => {
         const rowData: { key: string, name: string, [date: string]: string[] | string } = {
             key: personName,
@@ -22,11 +17,23 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
         };
 
         for (const [string_date, bansList] of Object.entries(scheduleInfo)) {
-            rowData[string_date] = bansList;
+            rowData[string_date] = bansList.join('.');
         }
 
         return rowData;
     });
+
+    return {
+        dataSource,
+        columns: getColumns(date)
+    }
+}
+
+function getColumns(date: Dayjs): TableColumnsType {
+    const daysInMonth = Array.from(
+        {length: date.daysInMonth()},
+        (_, i) => date.date(i + 1)
+    );
 
     const columns: TableColumnsType = daysInMonth.map(day => {
         const index = day.format('YYYY-MM-DD');
@@ -38,14 +45,17 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
                 </div>
             ),
             dataIndex: index,
-            render: (text: string, record, index) => {
+            render: (text: string) => {
                 return (
-                    <Badge count={text} color='blue' onClick={() => {
-                        // console.log(text, record, index);
-                    }}/>
+                    <Badge
+                        count={text}
+                        color='blue'
+                        classNames={{indicator: '!rounded-lg !font-bold'}}
+                        // styles={{indicator: {borderRadius: '6px'}}}
+                    />
                 )
             },
-            onCell: (record, ix) => ({
+            onCell: (record) => ({
                 style: {cursor: 'pointer'},
                 onClick: () => {
                     console.log(record.name, day, record[index])
@@ -70,9 +80,5 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
             )
         }
     });
-
-    return {
-        dataSource,
-        columns,
-    }
+    return columns;
 }
