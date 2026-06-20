@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Table} from 'antd';
+import {Table} from 'antd';
 import {getScheduleTableData, IScheduleTableData} from "@/api/utils/getScheduleTableData";
 import DateJump from "@/components/dateSelects/DateJump";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";

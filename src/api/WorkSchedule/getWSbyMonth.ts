@@ -22,6 +22,7 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
         },
         select: {
             workDate: true,
+            status: true,
             banType: {
                 select: {
                     banName: true,
