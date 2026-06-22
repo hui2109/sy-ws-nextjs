@@ -10,7 +10,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 enum ScheduleStatus {
@@ -157,8 +156,8 @@ model ShiftScheduleApplyItem {
   targetScheduleAssignmentId Int
 
   shiftScheduleApply       ShiftScheduleApply @relation(fields: [shiftScheduleApplyId], references: [id], onDelete: Cascade)
-  myScheduleAssignment     ScheduleAssignment @relation("ShiftMyScheduleAssignment", fields: [myScheduleAssignmentId], references: [id])
-  targetScheduleAssignment ScheduleAssignment @relation("ShiftTargetScheduleAssignment", fields: [targetScheduleAssignmentId], references: [id])
+  myScheduleAssignment     ScheduleAssignment @relation("ShiftMyScheduleAssignment", fields: [myScheduleAssignmentId], references: [id], onDelete: Cascade)
+  targetScheduleAssignment ScheduleAssignment @relation("ShiftTargetScheduleAssignment", fields: [targetScheduleAssignmentId], references: [id], onDelete: Cascade)
 
   @@unique([shiftScheduleApplyId, myScheduleAssignmentId])
   @@unique([shiftScheduleApplyId, targetScheduleAssignmentId])
@@ -187,7 +186,7 @@ model AskOffApplyItem {
   scheduleAssignmentId Int
 
   askOffApply        AskOffApply        @relation(fields: [askOffApplyId], references: [id], onDelete: Cascade)
-  scheduleAssignment ScheduleAssignment @relation(fields: [scheduleAssignmentId], references: [id])
+  scheduleAssignment ScheduleAssignment @relation(fields: [scheduleAssignmentId], references: [id], onDelete: Cascade)
 
   @@unique([askOffApplyId, scheduleAssignmentId])
 }
@@ -215,7 +214,7 @@ model ChangeScheduleApplyItem {
   newBanTypeId            Int
 
   changeScheduleApply   ChangeScheduleApply @relation(fields: [changeScheduleApplyId], references: [id], onDelete: Cascade)
-  oldScheduleAssignment ScheduleAssignment  @relation(fields: [oldScheduleAssignmentId], references: [id])
+  oldScheduleAssignment ScheduleAssignment  @relation(fields: [oldScheduleAssignmentId], references: [id], onDelete: Cascade)
   newBanType            BanType             @relation(fields: [newBanTypeId], references: [id])
 
   @@unique([changeScheduleApplyId, oldScheduleAssignmentId])
@@ -227,7 +226,7 @@ model ScheduleAssignment {
   workScheduleId Int
 
   person       Person       @relation(fields: [personId], references: [id])
-  workSchedule WorkSchedule @relation(fields: [workScheduleId], references: [id])
+  workSchedule WorkSchedule @relation(fields: [workScheduleId], references: [id], onDelete: Cascade)
 
   shiftItemsAsMine      ShiftScheduleApplyItem[]  @relation("ShiftMyScheduleAssignment")
   shiftItemsAsTarget    ShiftScheduleApplyItem[]  @relation("ShiftTargetScheduleAssignment")

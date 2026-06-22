@@ -7,6 +7,7 @@ import DateJump from "@/components/dateSelects/DateJump";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
+import ClearTableModal from "@/components/tables/ClearTableModal";
 
 export default function ScheduleTable() {
     const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
@@ -21,22 +22,25 @@ export default function ScheduleTable() {
     }, [current]);
 
     return (
-        <Table
-            loading={loading}
-            columns={scheduleTableData.columns}
-            dataSource={scheduleTableData.dataSource}
-            scroll={{x: 'max-content', y: 600}}
-            pagination={false}
-            title={() => ScheduleTableTools()}
-            footer={() => ''}
-            column={{align: 'center'}}
-            size={'large'}
-            bordered
-            classNames={{
-                footer: '!p-2',
-                title: '!p-3',
-            }}
-        />
+        <>
+            <Table
+                loading={loading}
+                columns={scheduleTableData.columns}
+                dataSource={scheduleTableData.dataSource}
+                scroll={{x: 'max-content', y: 600}}
+                pagination={false}
+                title={() => ScheduleTableTools()}
+                footer={() => ''}
+                column={{align: 'center'}}
+                size={'large'}
+                bordered
+                classNames={{
+                    footer: '!p-2',
+                    title: '!p-3',
+                }}
+            />
+            <ScheduleTableSideMenuModal/>
+        </>
     );
 }
 
@@ -50,6 +54,16 @@ function ScheduleTableTools() {
             <ToggleButton clickedButtonColor='volcano'>显示上周期</ToggleButton>
             <ToggleButton clickedButtonColor='magenta' icon={<IconFont type={IconType.xiangpica}/>}/>
         </div>
+    )
+}
+
+function ScheduleTableSideMenuModal() {
+    const {current} = useContext(CurrentDateContext);
+
+    return (
+        <>
+            <ClearTableModal current={current}/>
+        </>
     )
 }
 

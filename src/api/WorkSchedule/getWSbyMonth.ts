@@ -63,7 +63,7 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
         }
     }
 
-    if (monthStatus.has('DRAFT')) {
+    if (monthStatus.has('DRAFT') || monthStatus.size === 0) {
         MonthSchedule['monthStatus'] = ScheduleStatus.DRAFT;
     } else if (monthStatus.has('PENDING_REVIEW')) {
         MonthSchedule['monthStatus'] = ScheduleStatus.PENDING_REVIEW;
