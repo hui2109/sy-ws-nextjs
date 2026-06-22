@@ -2,7 +2,7 @@ import {Dayjs} from "dayjs";
 import {Badge, TableColumnsType} from "antd";
 import {getWSbyMonth} from "../WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "../BanType/getBanTypeColorMap";
-import {LatterBantype, Weekdays} from "@/configs/general";
+import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
 
 export interface IScheduleTableData {
     dataSource: { key: string, name: string, [date: string]: string[] | string }[];
@@ -12,7 +12,9 @@ export interface IScheduleTableData {
 export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableData> {
     const dbData = await getWSbyMonth(date.format('YYYY-MM-DD'));
     const banTypeColorMap = await getBanTypeColorMap();
-    const dataSource = Object.entries(dbData).map(([personName, scheduleInfo]) => {
+    const {monthStatus, ...personRecord} = dbData;
+
+    const dataSource = Object.entries(personRecord).map(([personName, scheduleInfo]) => {
         const rowData: { key: string, name: string, [date: string]: string[] | string } = {
             key: personName,
             name: personName,
@@ -27,11 +29,11 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
 
     return {
         dataSource,
-        columns: getColumns(date, banTypeColorMap)
+        columns: getColumns(date, monthStatus as string, banTypeColorMap)
     }
 }
 
-function getColumns(date: Dayjs, banTypeColorMap: Record<string, string>): TableColumnsType {
+function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<string, string>): TableColumnsType {
     const daysInMonth = Array.from(
         {length: date.daysInMonth()},
         (_, i) => date.date(i + 1)
@@ -75,11 +77,7 @@ function getColumns(date: Dayjs, banTypeColorMap: Record<string, string>): Table
         }
     });
     columns.unshift({
-        title: (
-            <div className='font-bold text-green-600'>
-                已发布
-            </div>
-        ),
+        title: getMonthStatusBadge(monthStatus),
         dataIndex: "name",
         fixed: 'start',
         width: 80,
@@ -114,4 +112,21 @@ function sortBanTypeList(bansList: string[]): string[] {
     });
 
     return [...normalList, ...latterList];
+}
+
+function getMonthStatusBadge(monthStatus: string) {
+    const monthStatusColorMap: Record<string, string> = {
+        [ScheduleStatus.DRAFT]: '#f5222d',
+        [ScheduleStatus.PENDING_REVIEW]: '#faad14',
+        [ScheduleStatus.PUBLISHED]: '#52c41a',
+    };
+
+    return (
+        <Badge
+            count={monthStatus}
+            color={monthStatusColorMap[monthStatus] ?? 'blue'}
+            classNames={{indicator: '!rounded-lg !font-bold !text-[14px]'}}
+            size='medium'
+        />
+    );
 }

@@ -4,11 +4,12 @@ import {prisma} from "@/connectionsDB/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import {getValidStaff} from "./getValidStaff";
+import {ScheduleStatus} from "@/configs/general";
 
 dayjs.extend(utc);
 
 // {'叶荣': {'2026-06-01': ['S1'], '2026-06-02': ['S1', 'JD']}}
-export type PersonDateBansMap = Record<string, Record<string, string[]>>;
+export type PersonDateBansMap = Record<string, Record<string, string[]> | string>;
 
 export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
     const date = dayjs.utc(dt);
@@ -44,21 +45,31 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
         },
     });
 
+    const monthStatus = new Set<string>();
     const MonthSchedule: PersonDateBansMap = Object.fromEntries(staffList.map(staffName => [staffName, {}]));
     for (const schedule of workSchedules) {
         const dateString: string = dayjs.utc(schedule.workDate).format("YYYY-MM-DD");
         const banName = schedule.banType.banName;
+        monthStatus.add(schedule.status);
 
         for (const {person} of schedule.scheduleAssignments) {
-            if (MonthSchedule[person.name]) {
-                if (!MonthSchedule[person.name][dateString]) {
-                    MonthSchedule[person.name][dateString] = [];
+            const personRecord = MonthSchedule[person.name] as Record<string, string[]>;
+            if (personRecord) {
+                if (!personRecord[dateString]) {
+                    personRecord[dateString] = [];
                 }
-                MonthSchedule[person.name][dateString].push(banName);
+                personRecord[dateString].push(banName);
             }
         }
     }
 
+    if (monthStatus.has('DRAFT')) {
+        MonthSchedule['monthStatus'] = ScheduleStatus.DRAFT;
+    } else if (monthStatus.has('PENDING_REVIEW')) {
+        MonthSchedule['monthStatus'] = ScheduleStatus.PENDING_REVIEW;
+    } else {
+        MonthSchedule['monthStatus'] = ScheduleStatus.PUBLISHED;
+    }
     return MonthSchedule
 }
 
