@@ -2,17 +2,17 @@ import {Modal} from 'antd';
 import {useMenuContext} from "@/components/hooks/MenuContext";
 import {usePathname} from "next/navigation";
 import {Dayjs} from "dayjs";
-import {clearWSbyMonth} from "@/api/WorkSchedule/clearWSbyMonth";
+import {submitWSbyMonth} from "@/api/WorkSchedule/submitWSbyMonth";
 
-export default function ClearTableModal({current, refresh}: { current: Dayjs, refresh: () => void }) {
+export default function SubmitTableModal({current, refresh}: { current: Dayjs, refresh: () => void }) {
     const {activeSideId, setActiveSideId, notification} = useMenuContext();
+    const isModalOpen = activeSideId === 'tijiaopaiban';
     const pathName = usePathname();
-    const isModalOpen = activeSideId === 'qingkongpaiban';
     const closeModal = () => setActiveSideId(pathName.split('/').at(-1) as string);
 
     const handleOk = async () => {
-        await clearWSbyMonth(current.format('YYYY-MM-DD'));
-        notification.success({title: '本月排班已清空', description: `${current.format("YYYY年M月")} 的所有排班已清空!`})
+        await submitWSbyMonth(current.format('YYYY-MM-DD'));
+        notification.success({title: '本月排班已提交', description: `${current.format("YYYY年M月")} 的所有排班已提交!`})
         closeModal();
         refresh();
     };
@@ -24,17 +24,17 @@ export default function ClearTableModal({current, refresh}: { current: Dayjs, re
     return (
         <>
             <Modal
-                title={`确定要清空 ${current.format("YYYY年M月")} 的所有排班吗?`}
+                title={`确定要提交 ${current.format("YYYY年M月")} 的所有排班吗?`}
                 closable={true}
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                okText="确定清除"
+                okText="确定提交"
                 cancelText="点错了"
-                okButtonProps={{danger: true}}
+                okButtonProps={{type: "primary"}}
                 classNames={{body: 'min-h-3'}}
             >
             </Modal>
         </>
     );
-};
+}

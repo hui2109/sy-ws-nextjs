@@ -8,18 +8,20 @@ import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import ClearTableModal from "@/components/tables/ClearTableModal";
+import SubmitTableModal from "@/components/tables/SubmitTableModal";
 
 export default function ScheduleTable() {
     const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
     const [loading, setLoading] = useState(true);
-    const {current} = useContext(CurrentDateContext);
+    const {current, refreshKey} = useContext(CurrentDateContext);
 
     useEffect(() => {
         getScheduleTableData(current).then(data => {
             setScheduleTableData(data);
             setLoading(false);
         });
-    }, [current]);
+        return () => setLoading(true);
+    }, [current, refreshKey]);
 
     return (
         <>
@@ -58,11 +60,12 @@ function ScheduleTableTools() {
 }
 
 function ScheduleTableSideMenuModal() {
-    const {current} = useContext(CurrentDateContext);
+    const {current, refresh} = useContext(CurrentDateContext);
 
     return (
         <>
-            <ClearTableModal current={current}/>
+            <ClearTableModal current={current} refresh={refresh}/>
+            <SubmitTableModal current={current} refresh={refresh}/>
         </>
     )
 }

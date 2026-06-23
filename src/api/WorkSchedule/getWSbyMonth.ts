@@ -9,7 +9,9 @@ import {ScheduleStatus} from "@/configs/general";
 dayjs.extend(utc);
 
 // {'叶荣': {'2026-06-01': ['S1'], '2026-06-02': ['S1', 'JD']}}
-export type PersonDateBansMap = Record<string, Record<string, string[]> | string>;
+export type PersonDateBansMap = Record<string, Record<string, string[]> | string> & {
+    monthStatus: string;
+};
 
 export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
     const date = dayjs.utc(dt);
@@ -46,7 +48,10 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
     });
 
     const monthStatus = new Set<string>();
-    const MonthSchedule: PersonDateBansMap = Object.fromEntries(staffList.map(staffName => [staffName, {}]));
+    const MonthSchedule: PersonDateBansMap = {
+        ...Object.fromEntries(staffList.map(staffName => [staffName, {}])),
+        monthStatus: '',
+    };
     for (const schedule of workSchedules) {
         const dateString: string = dayjs.utc(schedule.workDate).format("YYYY-MM-DD");
         const banName = schedule.banType.banName;
