@@ -9,7 +9,13 @@ export interface IScheduleTableData {
     columns: TableColumnsType;
 }
 
-export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableData> {
+export interface IScheduleCellInfo {
+    name: string;
+    day: Dayjs;
+    bans: string[] | undefined;
+}
+
+export async function getScheduleTableData(date: Dayjs, onCellClick?: (info: IScheduleCellInfo) => void): Promise<IScheduleTableData> {
     const dbData = await getWSbyMonth(date.format('YYYY-MM-DD'));
     const banTypeColorMap = await getBanTypeColorMap();
     const {monthStatus, ...personRecord} = dbData;
@@ -29,11 +35,11 @@ export async function getScheduleTableData(date: Dayjs): Promise<IScheduleTableD
 
     return {
         dataSource,
-        columns: getColumns(date, monthStatus as string, banTypeColorMap)
+        columns: getColumns(date, monthStatus, banTypeColorMap, onCellClick)
     }
 }
 
-function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<string, string>): TableColumnsType {
+function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<string, string>, onCellClick?: (info: IScheduleCellInfo) => void): TableColumnsType {
     const daysInMonth = Array.from(
         {length: date.daysInMonth()},
         (_, i) => date.date(i + 1)
@@ -71,7 +77,12 @@ function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<st
             onCell: (record) => ({
                 style: {cursor: 'pointer'},
                 onClick: () => {
-                    console.log(record.name, day, record[index])
+                    console.log(record.name, day, record[index]);
+                    onCellClick?.({
+                        name: record.name,
+                        day,
+                        bans: record[index]
+                    });
                 }
             })
         }

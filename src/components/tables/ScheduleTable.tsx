@@ -2,7 +2,7 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 import {Table} from 'antd';
-import {getScheduleTableData, IScheduleTableData} from "@/api/utils/getScheduleTableData";
+import {getScheduleTableData, IScheduleCellInfo, IScheduleTableData} from "@/api/utils/getScheduleTableData";
 import DateJump from "@/components/dateSelects/DateJump";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import ToggleButton from "@/components/buttons/ToggleButton";
@@ -10,14 +10,22 @@ import {IconFont, IconType} from "@/assets/icons/IconFont";
 import ClearTableModal from "@/components/tables/ClearTableModal";
 import SubmitTableModal from "@/components/tables/SubmitTableModal";
 import AuditTableModal from "@/components/tables/AuditTableModal";
+import PaiBanModal from "@/components/tables/PaiBanModal";
 
 export default function ScheduleTable() {
     const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
     const [loading, setLoading] = useState(true);
     const {current, refreshKey} = useContext(CurrentDateContext);
 
+    const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
+    const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo | null>(null);
+    const handleScheduleTableCellClick = (info: IScheduleCellInfo) => {
+        setSelectedCell(info);
+        setIsPaiBanModalOpen(true);
+    };
+
     useEffect(() => {
-        getScheduleTableData(current).then(data => {
+        getScheduleTableData(current, handleScheduleTableCellClick).then(data => {
             setScheduleTableData(data);
             setLoading(false);
         });
@@ -42,7 +50,8 @@ export default function ScheduleTable() {
                     title: '!p-3',
                 }}
             />
-            <ScheduleTableSideMenuModal/>
+            <ScheduleTableSideMenuModals/>
+            <PaiBanModal isModalOpen={isPaiBanModalOpen} cellInfo={selectedCell} onClose={() => setIsPaiBanModalOpen(false)}/>
         </>
     );
 }
@@ -60,7 +69,7 @@ function ScheduleTableTools() {
     )
 }
 
-function ScheduleTableSideMenuModal() {
+function ScheduleTableSideMenuModals() {
     const {current, refresh} = useContext(CurrentDateContext);
 
     return (
