@@ -25,7 +25,7 @@ export function MenuProvider({children}: { children: React.ReactNode }) {
     const pathName = usePathname();
     const [activeTopId, setActiveTopId] = useState<string>(() => getActiveMenuIDbyPathName(pathName)[0]);
     const [activeSideId, setActiveSideId] = useState<string>(() => getActiveMenuIDbyPathName(pathName)[1]);
-    const [api, contextHolder] = notification.useNotification({placement: "topRight", showProgress: true, pauseOnHover: true, duration: 1.5});
+    const [api, contextHolder] = notification.useNotification({placement: "topRight", showProgress: true, pauseOnHover: true, duration: 2.3});
 
     return (
         <ConfigProvider locale={locale}>

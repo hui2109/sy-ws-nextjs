@@ -9,6 +9,7 @@ import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import ClearTableModal from "@/components/tables/ClearTableModal";
 import SubmitTableModal from "@/components/tables/SubmitTableModal";
+import AuditTableModal from "@/components/tables/AuditTableModal";
 
 export default function ScheduleTable() {
     const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
@@ -66,6 +67,7 @@ function ScheduleTableSideMenuModal() {
         <>
             <ClearTableModal current={current} refresh={refresh}/>
             <SubmitTableModal current={current} refresh={refresh}/>
+            <AuditTableModal current={current} refresh={refresh}/>
         </>
     )
 }
