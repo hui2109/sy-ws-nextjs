@@ -51,7 +51,7 @@ export default function ScheduleTable() {
                 }}
             />
             <ScheduleTableSideMenuModals/>
-            <PaiBanModal isModalOpen={isPaiBanModalOpen} cellInfo={selectedCell} onClose={() => setIsPaiBanModalOpen(false)}/>
+            <PaiBanModal isModalOpen={isPaiBanModalOpen} selectedCell={selectedCell} onClose={() => setIsPaiBanModalOpen(false)}/>
         </>
     );
 }

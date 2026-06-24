@@ -1,6 +1,7 @@
 import {Table} from "antd";
+import {IScheduleCellInfo} from "@/api/utils/getScheduleTableData";
 
-export default function VacationTable() {
+export default function VacationTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
     const dataSource = [{
         key: '假A',
         days: 3,

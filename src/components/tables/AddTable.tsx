@@ -1,4 +1,5 @@
 import {Table} from "antd";
+import {IScheduleCellInfo} from "@/api/utils/getScheduleTableData";
 
 interface IAddTableData {
     key: string;
@@ -7,7 +8,7 @@ interface IAddTableData {
     newBan?: string;
 }
 
-export default function AddTable() {
+export default function AddTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
     const dataSource = [{
         key: '1',
         already: '3A 补假',

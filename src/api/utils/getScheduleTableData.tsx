@@ -3,6 +3,7 @@ import {Badge, TableColumnsType} from "antd";
 import {getWSbyMonth} from "../WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "../BanType/getBanTypeColorMap";
 import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
+import NullText from "@/components/utils/NullText";
 
 export interface IScheduleTableData {
     dataSource: { key: string, name: string, [date: string]: string[] | string }[];
@@ -56,9 +57,7 @@ function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<st
             ),
             dataIndex: index,
             render: (text?: Array<string>) => {
-                if (!text) return (
-                    <div className="italic text-gray-300">null</div>
-                );
+                if (!text) return <NullText/>;
 
                 return (
                     <div className='flex flex-col justify-center items-center gap-1'>
@@ -77,7 +76,7 @@ function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<st
             onCell: (record) => ({
                 style: {cursor: 'pointer'},
                 onClick: () => {
-                    console.log(record.name, day, record[index]);
+                    // console.log(record.name, day, record[index]);
                     onCellClick?.({
                         name: record.name,
                         day,

@@ -7,12 +7,12 @@ import AddTable from "@/components/tables/AddTable";
 
 interface IPaiBanModalProps {
     isModalOpen: boolean;
-    cellInfo: IScheduleCellInfo | null;
+    selectedCell: IScheduleCellInfo | null;
     onClose: () => void;
 }
 
-export default function PaiBanModal({isModalOpen, cellInfo, onClose}: IPaiBanModalProps) {
-    if (!cellInfo) {
+export default function PaiBanModal({isModalOpen, selectedCell, onClose}: IPaiBanModalProps) {
+    if (!selectedCell) {
         return null;
     }
 
@@ -21,7 +21,7 @@ export default function PaiBanModal({isModalOpen, cellInfo, onClose}: IPaiBanMod
             title={(
                 <>
                     <div className={'text-blue-600 font-bold'}>
-                        {`排班: ${cellInfo.name} ${cellInfo.day.format("M月D日")} (${Weekdays[cellInfo.day.day()]})`}
+                        {`排班: ${selectedCell.name} ${selectedCell.day.format("M月D日")} (${Weekdays[selectedCell.day.day()]})`}
                     </div>
                     <Divider classNames={{root: '!my-3'}}/>
                 </>
@@ -32,9 +32,9 @@ export default function PaiBanModal({isModalOpen, cellInfo, onClose}: IPaiBanMod
             onCancel={onClose}
         >
             <div className={'flex flex-col gap-4'}>
-                <ExpectTable></ExpectTable>
-                <VacationTable></VacationTable>
-                <AddTable></AddTable>
+                <ExpectTable selectedCell={selectedCell}/>
+                <VacationTable selectedCell={selectedCell}/>
+                <AddTable selectedCell={selectedCell}/>
             </div>
         </Modal>
     );
