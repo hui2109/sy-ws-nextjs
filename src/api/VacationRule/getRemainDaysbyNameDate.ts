@@ -4,6 +4,7 @@ import "dotenv/config";
 import {prisma} from "@/connectionsDB/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import {getWSbyNameDateBanName} from "@/api/WorkSchedule/getWSbyNameDateBanName";
 
 dayjs.extend(utc);
 
@@ -51,50 +52,5 @@ export default async function getRemainDaysbyNameDate(name: string, current_date
     return banNameRemainDaysMap;
 }
 
-export async function getWSbyNameDateBanName(name: string, startDate: Date, endDate: Date, banName: string) {
-    return prisma.workSchedule.findMany({
-        where: {
-            workDate: {
-                gte: startDate,
-                lte: endDate
-            },
-            banType: {
-                banName: banName
-            },
-            scheduleAssignments: {
-                some: {
-                    person: {
-                        name: name
-                    }
-                }
-            },
-            status: "PUBLISHED"
-        },
-        select: {
-            workDate: true,
-            banType: {
-                select: {
-                    banName: true,
-                    color: true
-                }
-            },
-            scheduleAssignments: {
-                where: {
-                    person: {
-                        name: name
-                    }
-                },
-                select: {
-                    person: {
-                        select: {
-                            name: true
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-// npx tsx src/api/VacationRule/getRemainDays.ts
+// npx tsx src/api/VacationRule/getRemainDaysbyNameDate.ts
 // getRemainDaysbyNameDate('张旭辉', '2026-06-25');

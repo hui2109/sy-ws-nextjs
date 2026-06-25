@@ -3,8 +3,8 @@
 import {prisma} from "@/connectionsDB/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {getValidStaff} from "./getValidStaff";
 import {ScheduleStatus} from "@/configs/general";
+import {getValidStaff} from "@/api/Person/getValidStaff";
 
 dayjs.extend(utc);
 
