@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import {Table} from "antd";
-import getExpectTableData, {IExpectTableData} from "@/components/tables/ExpectTable/getExpectTableData";
+import getExpectTableData, {IExpectTableData} from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTable/getExpectTableData";
 import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
 
 export default function ExpectTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {

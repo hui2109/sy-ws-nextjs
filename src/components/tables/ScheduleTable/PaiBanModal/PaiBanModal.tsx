@@ -1,8 +1,8 @@
 import {Divider, Modal} from "antd";
 import {Weekdays} from "@/configs/general";
-import ExpectTable from "@/components/tables/ExpectTable/ExpectTable";
-import AddTable from "@/components/tables/AddTable/AddTable";
-import VacationTable from "@/components/tables/VacationTable/VacationTable";
+import ExpectTable from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTable/ExpectTable";
+import AddTable from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/AddTable";
+import VacationTable from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/VacationTable";
 import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
 
 interface IPaiBanModalProps {

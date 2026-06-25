@@ -2,14 +2,14 @@
 
 import React, {useContext, useEffect, useState} from "react";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
-import ClearTableModal from "@/components/tables/ClearTableModal/ClearTableModal";
-import AuditTableModal from "@/components/tables/AuditTableModal/AuditTableModal";
+import ClearTableModal from "@/components/tables/ScheduleTable/ClearTableModal/ClearTableModal";
+import AuditTableModal from "@/components/tables/ScheduleTable/AuditTableModal/AuditTableModal";
 import {Table} from "antd";
-import PaiBanModal from "@/components/tables/PaiBanModal/PaiBanModal";
+import PaiBanModal from "@/components/tables/ScheduleTable/PaiBanModal/PaiBanModal";
 import DateJump from "@/components/dateSelects/DateJump";
 import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
-import SubmitTableModal from "@/components/tables/SubmitTableModal/SubmitTableModal";
+import SubmitTableModal from "@/components/tables/ScheduleTable/SubmitTableModal/SubmitTableModal";
 import {getScheduleTableData, IScheduleCellInfo, IScheduleTableData} from "@/components/tables/ScheduleTable/getScheduleTableData";
 
 export default function ScheduleTable() {
