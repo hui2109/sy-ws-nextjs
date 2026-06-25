@@ -1,39 +1,25 @@
 import {Table} from "antd";
 import {IScheduleCellInfo} from "@/api/utils/getScheduleTableData";
+import {useEffect, useState} from "react";
+import getVacationTableData, {IVacationTableData} from "@/api/utils/getVacationTableData";
 
 export default function VacationTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
-    const dataSource = [{
-        key: '假A',
-        days: 3,
-    }, {
-        key: '假B',
-        days: 2,
-    }, {
-        key: '假C',
-        days: 6,
-    }
-    ]
+    const [loading, setLoading] = useState(true);
+    const [vacationTableData, setvacationTableData] = useState<IVacationTableData>({dataSource: [], columns: []});
 
-    const columns = [
-        {
-            title: '',
-            dataIndex: 'key',
-            width: 80,
-            onCell: () => ({
-                style: {background: '#fafafa', fontWeight: 600}
-            }),
-        },
-        {
-            title: '假期剩余天数',
-            dataIndex: 'days',
-        }
-    ]
+    useEffect(() => {
+        getVacationTableData(selectedCell.name, selectedCell.day).then(data => {
+            setvacationTableData(data);
+            setLoading(false);
+        });
+        return () => setLoading(true);
+    }, [selectedCell.name, selectedCell.day])
 
     return (
         <Table
-            loading={false}
-            columns={columns}
-            dataSource={dataSource}
+            loading={loading}
+            columns={vacationTableData.columns}
+            dataSource={vacationTableData.dataSource}
             pagination={false}
             column={{align: 'center'}}
             size={"small"}

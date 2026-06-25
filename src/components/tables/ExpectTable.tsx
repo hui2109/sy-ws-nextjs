@@ -18,17 +18,15 @@ export default function ExpectTable({selectedCell}: { selectedCell: IScheduleCel
     }, [selectedCell.name, selectedCell.day])
 
     return (
-        <div style={{borderRadius: 8, overflow: 'hidden'}}>
-            <Table
-                loading={loading}
-                columns={expectTableData.columns}
-                dataSource={expectTableData.dataSource}
-                pagination={false}
-                column={{align: 'center'}}
-                size={"small"}
-                bordered
-            />
-        </div>
+        <Table
+            loading={loading}
+            columns={expectTableData.columns}
+            dataSource={expectTableData.dataSource}
+            pagination={false}
+            column={{align: 'center'}}
+            size={"small"}
+            bordered
+        />
     );
 
 }

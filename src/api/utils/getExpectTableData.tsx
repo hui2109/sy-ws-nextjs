@@ -1,7 +1,7 @@
 import {Dayjs} from "dayjs";
 import findLeaveppointmentbyNameDate from "@/api/LeaveAppointment/findLeaveppointmentbyNameDate";
 import findExpectedSchedulebyNameDate from "@/api/ExpectedSchedule/findExpectedSchedulebyNameDate";
-import findExpectedSchedulebyDateBantype from "@/api/ExpectedSchedule/findExpectedSchedulebyDateBantype";
+import findExpectedSchedulebyDateBanName from "@/api/ExpectedSchedule/findExpectedSchedulebyDateBanName";
 import findLeaveppointmentbyDate from "@/api/LeaveAppointment/findLeaveppointmentbyDate";
 import NullText from "@/components/utils/NullText";
 import React from "react";
@@ -36,9 +36,9 @@ export default async function getExpectTableData(name: string, date: Dayjs): Pro
     const expectedSchedule = await findExpectedSchedulebyNameDate(name, formatDate);
     const leaveAppointment = await findLeaveppointmentbyNameDate(name, formatDate);
     // 期望排班 [其他人] 查询
-    let othersExpectSchedule: Awaited<ReturnType<typeof findExpectedSchedulebyDateBantype>> = null;
+    let othersExpectSchedule: Awaited<ReturnType<typeof findExpectedSchedulebyDateBanName>> = null;
     if (expectedSchedule) {
-        othersExpectSchedule = await findExpectedSchedulebyDateBantype(formatDate, expectedSchedule.banName, name);
+        othersExpectSchedule = await findExpectedSchedulebyDateBanName(formatDate, expectedSchedule.banName, name);
     }
     // 期望休假 [其他人] 查询
     let othersLeaveAppointment: Awaited<ReturnType<typeof findLeaveppointmentbyDate>> = null;

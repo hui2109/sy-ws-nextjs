@@ -6,7 +6,7 @@ import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 
-export default async function findExpectedSchedulebyDateBantype(dt: string, banType: string, name: string) {
+export default async function findExpectedSchedulebyDateBanName(dt: string, banName: string, name: string) {
     const date = dayjs.utc(dt);
     const appointments = await prisma.expectedSchedule.findMany({
         where: {
@@ -14,7 +14,7 @@ export default async function findExpectedSchedulebyDateBantype(dt: string, banT
                 equals: date.toDate(),
             },
             banType: {
-                banName: banType
+                banName: banName
             },
             person: {
                 name: {not: name}
