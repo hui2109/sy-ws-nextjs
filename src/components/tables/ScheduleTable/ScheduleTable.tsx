@@ -1,16 +1,16 @@
 'use client';
 
-import React, {useContext, useEffect, useState} from 'react';
-import {Table} from 'antd';
-import {getScheduleTableData, IScheduleCellInfo, IScheduleTableData} from "@/api/utils/getScheduleTableData";
-import DateJump from "@/components/dateSelects/DateJump";
+import React, {useContext, useEffect, useState} from "react";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import ClearTableModal from "@/components/tables/ClearTableModal/ClearTableModal";
+import AuditTableModal from "@/components/tables/AuditTableModal/AuditTableModal";
+import {Table} from "antd";
+import PaiBanModal from "@/components/tables/PaiBanModal/PaiBanModal";
+import DateJump from "@/components/dateSelects/DateJump";
 import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
-import ClearTableModal from "@/components/tables/ClearTableModal";
-import SubmitTableModal from "@/components/tables/SubmitTableModal";
-import AuditTableModal from "@/components/tables/AuditTableModal";
-import PaiBanModal from "@/components/tables/PaiBanModal";
+import SubmitTableModal from "@/components/tables/SubmitTableModal/SubmitTableModal";
+import {getScheduleTableData, IScheduleCellInfo, IScheduleTableData} from "@/components/tables/ScheduleTable/getScheduleTableData";
 
 export default function ScheduleTable() {
     const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
@@ -80,4 +80,3 @@ function ScheduleTableSideMenuModals() {
         </>
     )
 }
-

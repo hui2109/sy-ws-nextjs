@@ -1,9 +1,9 @@
 'use client';
 
 import React, {useState} from 'react';
-import ScheduleTable from "@/components/tables/ScheduleTable";
 import dayjs from "dayjs";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import ScheduleTable from "@/components/tables/ScheduleTable/ScheduleTable";
 
 export default function Start() {
     const [current, setCurrent] = useState<dayjs.Dayjs>(dayjs());

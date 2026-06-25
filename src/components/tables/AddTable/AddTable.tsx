@@ -1,5 +1,5 @@
 import {Table} from "antd";
-import {IScheduleCellInfo} from "@/api/utils/getScheduleTableData";
+import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
 
 interface IAddTableData {
     key: string;

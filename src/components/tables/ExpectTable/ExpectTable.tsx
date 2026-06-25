@@ -1,9 +1,9 @@
 'use client';
 
-import {Table} from "antd";
 import React, {useEffect, useState} from "react";
-import getExpectTableData, {IExpectTableData} from "@/api/utils/getExpectTableData";
-import {IScheduleCellInfo} from "@/api/utils/getScheduleTableData";
+import {Table} from "antd";
+import getExpectTableData, {IExpectTableData} from "@/components/tables/ExpectTable/getExpectTableData";
+import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
 
 export default function ExpectTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
     const [loading, setLoading] = useState(true);

@@ -1,7 +1,7 @@
 import {Dayjs} from "dayjs";
-import React from "react";
-import {Badge, TableColumnsType} from "antd";
 import getRemainDaysbyNameDate from "@/api/VacationRule/getRemainDaysbyNameDate";
+import {Badge, TableColumnsType} from "antd";
+import React from "react";
 
 export interface IVacationTableData {
     dataSource: { key: string, days: number, color: string }[],

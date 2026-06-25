@@ -1,7 +1,7 @@
-import {Table} from "antd";
-import {IScheduleCellInfo} from "@/api/utils/getScheduleTableData";
 import {useEffect, useState} from "react";
-import getVacationTableData, {IVacationTableData} from "@/api/utils/getVacationTableData";
+import {Table} from "antd";
+import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
+import getVacationTableData, {IVacationTableData} from "@/components/tables/VacationTable/getVacationTableData";
 
 export default function VacationTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
     const [loading, setLoading] = useState(true);

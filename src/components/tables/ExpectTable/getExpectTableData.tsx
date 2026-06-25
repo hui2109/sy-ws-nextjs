@@ -1,11 +1,11 @@
+import React from "react";
+import {Badge, TableColumnsType} from "antd";
 import {Dayjs} from "dayjs";
-import findLeaveppointmentbyNameDate from "@/api/LeaveAppointment/findLeaveppointmentbyNameDate";
 import findExpectedSchedulebyNameDate from "@/api/ExpectedSchedule/findExpectedSchedulebyNameDate";
+import findLeaveppointmentbyNameDate from "@/api/LeaveAppointment/findLeaveppointmentbyNameDate";
 import findExpectedSchedulebyDateBanName from "@/api/ExpectedSchedule/findExpectedSchedulebyDateBanName";
 import findLeaveppointmentbyDate from "@/api/LeaveAppointment/findLeaveppointmentbyDate";
 import NullText from "@/components/utils/NullText";
-import React from "react";
-import {Badge, TableColumnsType} from "antd";
 
 export interface IExpectTableData {
     dataSource: {
@@ -27,7 +27,6 @@ export interface IOthersLeaveAppointmentData {
     banName: string;
     color: string;
 }
-
 
 export default async function getExpectTableData(name: string, date: Dayjs): Promise<IExpectTableData> {
     const dataSource: IExpectTableData['dataSource'] = [];

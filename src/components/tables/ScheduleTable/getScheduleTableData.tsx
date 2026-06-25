@@ -1,8 +1,8 @@
-import {Dayjs} from "dayjs";
 import {Badge, TableColumnsType} from "antd";
-import {getWSbyMonth} from "../WorkSchedule/getWSbyMonth";
-import {getBanTypeColorMap} from "../BanType/getBanTypeColorMap";
 import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
+import {Dayjs} from "dayjs";
+import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
+import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import NullText from "@/components/utils/NullText";
 
 export interface IScheduleTableData {
