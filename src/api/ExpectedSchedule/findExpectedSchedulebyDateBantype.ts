@@ -38,7 +38,7 @@ export default async function findExpectedSchedulebyDateBantype(dt: string, banT
     }
 
     return appointments.map(({sequenceNumber, person}) => ({
-        sequenceNumber: sequenceNumber,
+        sequenceNumber: String(sequenceNumber),
         name: person.name
     }))
 }

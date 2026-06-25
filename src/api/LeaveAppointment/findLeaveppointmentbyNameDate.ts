@@ -34,7 +34,7 @@ export default async function findLeaveppointmentbyNameDate(name: string, dt: st
 
     return {
         banName: appointments[0].banType.banName,
-        sequenceNumber: appointments[0].sequenceNumber,
+        sequenceNumber: String(appointments[0].sequenceNumber),
         color: appointments[0].banType.color,
     }
 }

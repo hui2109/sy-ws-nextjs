@@ -2,7 +2,7 @@ import {Dayjs} from "dayjs";
 import findLeaveppointmentbyNameDate from "@/api/LeaveAppointment/findLeaveppointmentbyNameDate";
 import findExpectedSchedulebyNameDate from "@/api/ExpectedSchedule/findExpectedSchedulebyNameDate";
 import findExpectedSchedulebyDateBantype from "@/api/ExpectedSchedule/findExpectedSchedulebyDateBantype";
-import findLeaveppointmentbyDateBantype from "@/api/LeaveAppointment/findLeaveppointmentbyDateBantype";
+import findLeaveppointmentbyDate from "@/api/LeaveAppointment/findLeaveppointmentbyDate";
 import NullText from "@/components/utils/NullText";
 import React from "react";
 import {Badge, TableColumnsType} from "antd";
@@ -10,19 +10,19 @@ import {Badge, TableColumnsType} from "antd";
 export interface IExpectTableData {
     dataSource: {
         key: string;
-        expectPaiBan: string | IOthersExpectScheduleData[] | number | React.ReactNode;
-        expectXiuJia: string | IOthersLeaveAppointmentData[] | number | React.ReactNode;
+        expectPaiBan: string | IOthersExpectScheduleData[] | React.ReactNode;
+        expectXiuJia: string | IOthersLeaveAppointmentData[] | React.ReactNode;
     }[];
     columns: TableColumnsType;
 }
 
 export interface IOthersExpectScheduleData {
-    sequenceNumber: number;
+    sequenceNumber: string;
     name: string;
 }
 
 export interface IOthersLeaveAppointmentData {
-    sequenceNumber: number;
+    sequenceNumber: string;
     name: string;
     banName: string;
     color: string;
@@ -41,9 +41,9 @@ export default async function getExpectTableData(name: string, date: Dayjs): Pro
         othersExpectSchedule = await findExpectedSchedulebyDateBantype(formatDate, expectedSchedule.banName, name);
     }
     // 期望休假 [其他人] 查询
-    let othersLeaveAppointment: Awaited<ReturnType<typeof findLeaveppointmentbyDateBantype>> = null;
+    let othersLeaveAppointment: Awaited<ReturnType<typeof findLeaveppointmentbyDate>> = null;
     if (leaveAppointment) {
-        othersLeaveAppointment = await findLeaveppointmentbyDateBantype(formatDate, name);
+        othersLeaveAppointment = await findLeaveppointmentbyDate(formatDate, name);
     }
 
     const expectedScheduleBanColor = expectedSchedule?.color;
@@ -82,7 +82,7 @@ function getColumns(expectedScheduleBanColor: string | undefined, leaveAppointme
         {
             title: '期望排班',
             dataIndex: 'expectPaiBan',
-            render: (text: string | IOthersExpectScheduleData[] | number | React.ReactNode) => {
+            render: (text: string | IOthersExpectScheduleData[] | React.ReactNode) => {
                 if (Array.isArray(text)) {
                     return text.map((item: IOthersExpectScheduleData) => (
                         <Badge
@@ -93,7 +93,7 @@ function getColumns(expectedScheduleBanColor: string | undefined, leaveAppointme
                         />
                     ));
                 }
-                if (typeof text === 'string' || typeof text === 'number') {
+                if (typeof text === 'string') {
                     return (
                         <Badge
                             count={text}
@@ -108,7 +108,7 @@ function getColumns(expectedScheduleBanColor: string | undefined, leaveAppointme
         {
             title: '期望休假',
             dataIndex: 'expectXiuJia',
-            render: (text: string | IOthersLeaveAppointmentData[] | number | React.ReactNode) => {
+            render: (text: string | IOthersLeaveAppointmentData[] | React.ReactNode) => {
                 if (Array.isArray(text)) {
                     return (
                         <div className='flex flex-col justify-center items-center gap-1'>
@@ -123,7 +123,7 @@ function getColumns(expectedScheduleBanColor: string | undefined, leaveAppointme
                         </div>
                     )
                 }
-                if (typeof text === 'string' || typeof text === 'number') {
+                if (typeof text === 'string') {
                     return (
                         <Badge
                             count={text}

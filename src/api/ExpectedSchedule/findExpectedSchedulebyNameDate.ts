@@ -34,7 +34,7 @@ export default async function findExpectedSchedulebyNameDate(name: string, dt: s
 
     return {
         banName: appointments[0].banType.banName,
-        sequenceNumber: appointments[0].sequenceNumber,
+        sequenceNumber: String(appointments[0].sequenceNumber),
         color: appointments[0].banType.color,
     }
 }

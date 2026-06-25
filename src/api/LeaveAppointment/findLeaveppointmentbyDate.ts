@@ -6,7 +6,7 @@ import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 
-export default async function findLeaveppointmentbyDateBantype(dt: string, name: string) {
+export default async function findLeaveppointmentbyDate(dt: string, name: string) {
     const date = dayjs.utc(dt);
     const appointments = await prisma.leaveAppointment.findMany({
         where: {
@@ -41,7 +41,7 @@ export default async function findLeaveppointmentbyDateBantype(dt: string, name:
     }
 
     return appointments.map(({sequenceNumber, person, banType}) => ({
-        sequenceNumber: sequenceNumber,
+        sequenceNumber: String(sequenceNumber),
         name: person.name,
         banName: banType.banName,
         color: banType.color,
