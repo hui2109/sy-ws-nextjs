@@ -4,14 +4,16 @@ import ExpectTable from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTab
 import AddTable from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/AddTable";
 import VacationTable from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/VacationTable";
 import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
+import React, {Dispatch, SetStateAction} from "react";
 
-interface IPaiBanModalProps {
+export interface IPaiBanModalProps {
     isModalOpen: boolean;
-    selectedCell: IScheduleCellInfo | null;
     onClose: () => void;
+    selectedCell: IScheduleCellInfo;
+    setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>;
 }
 
-export default function PaiBanModal({isModalOpen, selectedCell, onClose}: IPaiBanModalProps) {
+export default function PaiBanModal({isModalOpen, onClose, selectedCell, setSelectedCell}: IPaiBanModalProps) {
     if (!selectedCell) {
         return null;
     }
@@ -30,11 +32,12 @@ export default function PaiBanModal({isModalOpen, selectedCell, onClose}: IPaiBa
             open={isModalOpen}
             onOk={onClose}
             onCancel={onClose}
+            footer={(_, {OkBtn}) => <OkBtn/>}
         >
             <div className={'flex flex-col gap-4'}>
                 <ExpectTable selectedCell={selectedCell}/>
                 <VacationTable selectedCell={selectedCell}/>
-                <AddTable selectedCell={selectedCell}/>
+                <AddTable selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
             </div>
         </Modal>
     );

@@ -11,14 +11,15 @@ import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import SubmitTableModal from "@/components/tables/ScheduleTable/SubmitTableModal/SubmitTableModal";
 import {getScheduleTableData, IScheduleCellInfo, IScheduleTableData} from "@/components/tables/ScheduleTable/getScheduleTableData";
+import dayjs from "dayjs";
 
 export default function ScheduleTable() {
     const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
     const [loading, setLoading] = useState(true);
-    const {current, refreshKey} = useContext(CurrentDateContext);
+    const {current, refreshKey, refresh} = useContext(CurrentDateContext);
 
     const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
-    const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo | null>(null);
+    const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo>({name: '', day: dayjs(), bans: []});
     const handleScheduleTableCellClick = (info: IScheduleCellInfo) => {
         setSelectedCell(info);
         setIsPaiBanModalOpen(true);
@@ -51,7 +52,15 @@ export default function ScheduleTable() {
                 }}
             />
             <ScheduleTableSideMenuModals/>
-            <PaiBanModal isModalOpen={isPaiBanModalOpen} selectedCell={selectedCell} onClose={() => setIsPaiBanModalOpen(false)}/>
+            <PaiBanModal
+                isModalOpen={isPaiBanModalOpen}
+                onClose={() => {
+                    setIsPaiBanModalOpen(false);
+                    refresh();
+                }}
+                selectedCell={selectedCell}
+                setSelectedCell={setSelectedCell}
+            />
         </>
     );
 }
