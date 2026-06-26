@@ -325,13 +325,13 @@ export type PersonOrderByWithRelationInput = {
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   username?: string
+  name?: string
   workNumber?: string
   AND?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
   OR?: Prisma.PersonWhereInput[]
   NOT?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
   passwordHash?: Prisma.StringFilter<"Person"> | string
   avatar?: Prisma.StringFilter<"Person"> | string
-  name?: Prisma.StringFilter<"Person"> | string
   weight?: Prisma.FloatFilter<"Person"> | number
   hireDate?: Prisma.DateTimeFilter<"Person"> | Date | string
   phoneNumber?: Prisma.StringFilter<"Person"> | string
@@ -347,7 +347,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyListRelationFilter
   askOffApplies?: Prisma.AskOffApplyListRelationFilter
   changeScheduleApplies?: Prisma.ChangeScheduleApplyListRelationFilter
-}, "id" | "username" | "workNumber">
+}, "id" | "username" | "name" | "workNumber">
 
 export type PersonOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
