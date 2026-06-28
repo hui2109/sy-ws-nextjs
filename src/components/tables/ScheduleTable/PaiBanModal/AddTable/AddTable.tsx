@@ -1,25 +1,19 @@
 import {Table} from "antd";
 import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
-import {Dispatch, SetStateAction, useEffect, useState} from "react";
-import getAddTableData, {IAddTableData} from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/getAddTableData";
+import {Dispatch, SetStateAction} from "react";
+import useAddTableData from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/useAddTableData";
 
-export default function AddTable({selectedCell, setSelectedCell}: { selectedCell: IScheduleCellInfo, setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>> }) {
-    const [loading, setLoading] = useState(true);
-    const [addTableData, setAddTableData] = useState<IAddTableData>({dataSource: [], columns: []});
-
-    useEffect(() => {
-        getAddTableData(selectedCell, setSelectedCell).then(data => {
-            setAddTableData(data);
-            setLoading(false);
-        });
-        return () => setLoading(true);
-    }, [selectedCell, setSelectedCell])
+export default function AddTable({selectedCell, setSelectedCell}: {
+    selectedCell: IScheduleCellInfo;
+    setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>;
+}) {
+    const {dataSource, columns, loading} = useAddTableData(selectedCell, setSelectedCell);
 
     return (
         <Table
             loading={loading}
-            columns={addTableData.columns}
-            dataSource={addTableData.dataSource}
+            columns={columns}
+            dataSource={dataSource}
             pagination={false}
             column={{align: 'center'}}
             size={"small"}
