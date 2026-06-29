@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {Badge, Checkbox, InputNumber, Select, TableColumnsType} from "antd";
 import NullText from "@/components/utils/NullText";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
@@ -22,7 +22,8 @@ export interface IAddTableData {
 export default function useAddTableData(): IAddTableData {
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string>>({});
     const [validBanNames, setValidBanNames] = useState<string[]>([]);
-    const [duplicateCheck, setDuplicateCheck] = useState(false);
+    const [duplicateCheck, setDuplicateCheck] = useState(true);
+    const [duplicateNum, setDuplicateNum] = useState(5);
     const [loading, setLoading] = useState(true);
     const {selectedCell} = useContext(SelectedCellContext);
 
@@ -67,12 +68,20 @@ export default function useAddTableData(): IAddTableData {
                                     key={item}
                                     banName={item}
                                     banTypeColorMap={banTypeColorMap}
+                                    duplicateCheck={duplicateCheck}
+                                    duplicateNum={duplicateNum}
                                 />
                             ))}
                         </div>
                     );
                 }
-                return <Duplicate text={data}/>;
+                return <Duplicate
+                    text={data}
+                    duplicateCheck={duplicateCheck}
+                    duplicateNum={duplicateNum}
+                    setDuplicateCheck={setDuplicateCheck}
+                    setDuplicateNum={setDuplicateNum}
+                />;
             }
         },
         {
@@ -94,6 +103,8 @@ export default function useAddTableData(): IAddTableData {
                     placeholder={text}
                     validBanNames={validBanNames}
                     banTypeColorMap={banTypeColorMap}
+                    duplicateCheck={duplicateCheck}
+                    duplicateNum={duplicateNum}
                 />
             ),
         },
@@ -102,27 +113,43 @@ export default function useAddTableData(): IAddTableData {
     return {dataSource, columns, loading};
 }
 
-function Duplicate({text}: { text: string }) {
+function Duplicate({text, duplicateCheck, duplicateNum, setDuplicateCheck, setDuplicateNum}: {
+    text: string;
+    duplicateCheck: boolean;
+    duplicateNum: number;
+    setDuplicateCheck: Dispatch<SetStateAction<boolean>>;
+    setDuplicateNum: Dispatch<SetStateAction<number>>;
+}) {
     return (
-        <Checkbox>
-            {text + ' '}
+        <div className='flex items-center justify-center gap-2'>
+            <Checkbox
+                checked={duplicateCheck}
+                onChange={(e) => setDuplicateCheck(e.target.checked)}
+            >
+                {text}
+            </Checkbox>
             <InputNumber
+                value={duplicateNum}
+                onChange={(value) => setDuplicateNum(value ?? 5)}
                 mode='spinner'
                 min={2}
                 max={10}
-                defaultValue={5}
                 style={{width: 100}}
                 size='small'
+                disabled={!duplicateCheck}
             />
-            {' 次'}
-        </Checkbox>
+            <span>次</span>
+        </div>
     );
 }
 
-function SelectBan({placeholder, validBanNames, banTypeColorMap}: {
+
+function SelectBan({placeholder, validBanNames, banTypeColorMap, duplicateCheck, duplicateNum}: {
     placeholder: string;
     validBanNames: string[];
     banTypeColorMap: Record<string, string>;
+    duplicateCheck: boolean;
+    duplicateNum: number;
 }) {
     const options = validBanNames.map((item: string) => ({
         label: (
@@ -153,26 +180,38 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap}: {
             options={options}
             classNames={{popup: {listItem: 'text-center'}}}
             onChange={(value) => {
-                creactWSRecord(format_date, selectedCell.name, value).then(() => {
-                    setSelectedCell((prev) => {
-                        const bans = new Set(prev.bans ?? []);
-                        bans.add(value);
-                        return {...prev, bans: Array.from(bans)};
-                    });
-                    setSelectedValue(null);
-                    notification.success({
-                        title: '排班已保存',
-                        description: `${selectedCell.name} 的 ${format_date} 的 ${value} 排班已保存!`
-                    });
-                });
+                const dates = duplicateCheck
+                    ? Array.from({length: duplicateNum}, (_, i) =>
+                        selectedCell.day.add(i, 'day').format('YYYY-MM-DD'))
+                    : [format_date];
+
+                dates.forEach((date, i) =>
+                    creactWSRecord(date, selectedCell.name, value).then(() => {
+                        if (i !== 0) return;
+                        setSelectedCell((prev) => {
+                            const bans = new Set(prev.bans ?? []);
+                            bans.add(value);
+                            return {...prev, bans: Array.from(bans)};
+                        });
+                        setSelectedValue(null);
+                        notification.success({
+                            title: '排班已保存',
+                            description: dates.length === 1
+                                ? `${selectedCell.name} 的 ${dates[0]} 的 ${value} 排班已保存!`
+                                : `${selectedCell.name} 的 ${dates[0]} 至 ${dates.at(-1)} 的 ${value} 排班已保存!`
+                        });
+                    })
+                );
             }}
         />
     );
 }
 
-function ClickableBadge({banName, banTypeColorMap}: {
+function ClickableBadge({banName, banTypeColorMap, duplicateCheck, duplicateNum}: {
     banName: string;
     banTypeColorMap: Record<string, string>;
+    duplicateCheck: boolean;
+    duplicateNum: number;
 }) {
     const {selectedCell, setSelectedCell} = useContext(SelectedCellContext);
     const format_date = selectedCell.day.format('YYYY-MM-DD');
@@ -185,18 +224,29 @@ function ClickableBadge({banName, banTypeColorMap}: {
             color={banTypeColorMap[banName]}
             classNames={{indicator: '!rounded-lg !font-bold cursor-pointer'}}
             onClick={() => {
-                deleteWSRecord(format_date, banName, selectedCell.name).then(() => {
-                    setSelectedCell((prev) => {
-                        const bans = new Set(prev.bans ?? []);
-                        bans.delete(banName);
-                        return {...prev, bans: Array.from(bans)};
-                    });
-                    notification.warning({
-                        title: '排班已删除',
-                        description: `${selectedCell.name} 的 ${format_date} 的 ${banName} 排班已删除!`
-                    });
-                });
+                const dates = duplicateCheck
+                    ? Array.from({length: duplicateNum}, (_, i) =>
+                        selectedCell.day.add(i, 'day').format('YYYY-MM-DD'))
+                    : [format_date];
+
+                dates.forEach((date, i) =>
+                    deleteWSRecord(date, banName, selectedCell.name).then(() => {
+                        if (i !== 0) return;
+                        setSelectedCell((prev) => {
+                            const bans = new Set(prev.bans ?? []);
+                            bans.delete(banName);
+                            return {...prev, bans: Array.from(bans)};
+                        });
+                        notification.warning({
+                            title: '排班已删除',
+                            description: dates.length === 1
+                                ? `${selectedCell.name} 的 ${dates[0]} 的 ${banName} 排班已删除!`
+                                : `${selectedCell.name} 的 ${dates[0]} 至 ${dates.at(-1)} 的 ${banName} 排班已删除!`
+                        });
+                    })
+                );
             }}
+
         />
     );
 }
