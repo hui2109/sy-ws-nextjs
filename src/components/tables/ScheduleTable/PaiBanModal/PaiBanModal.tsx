@@ -3,18 +3,18 @@ import {Weekdays} from "@/configs/general";
 import ExpectTable from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTable/ExpectTable";
 import AddTable from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/AddTable";
 import VacationTable from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/VacationTable";
-import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
-import React, {Dispatch, SetStateAction} from "react";
+import React, {useContext} from "react";
+import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IPaiBanModalProps {
     isModalOpen: boolean;
     onClose: () => void;
-    selectedCell: IScheduleCellInfo;
-    setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>;
 }
 
-export default function PaiBanModal({isModalOpen, onClose, selectedCell, setSelectedCell}: IPaiBanModalProps) {
-    if (!selectedCell) {
+export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
+    const {selectedCell} = useContext(SelectedCellContext);
+
+    if (!selectedCell.name) {
         return null;
     }
 
@@ -35,9 +35,9 @@ export default function PaiBanModal({isModalOpen, onClose, selectedCell, setSele
             footer={(_, {OkBtn}) => <OkBtn/>}
         >
             <div className={'flex flex-col gap-4'}>
-                <ExpectTable selectedCell={selectedCell}/>
-                <VacationTable selectedCell={selectedCell}/>
-                <AddTable selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
+                <ExpectTable/>
+                <VacationTable/>
+                <AddTable/>
             </div>
         </Modal>
     );

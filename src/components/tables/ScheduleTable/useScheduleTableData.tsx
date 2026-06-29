@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from "react";
 import {Badge, TableColumnsType} from "antd";
 import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
 import {Dayjs} from "dayjs";
@@ -6,8 +7,9 @@ import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import NullText from "@/components/utils/NullText";
 
 export interface IScheduleTableData {
-    dataSource: { key: string, name: string, [date: string]: string[] | string }[];
+    dataSource: { key: string; name: string; [date: string]: string[] | string }[];
     columns: TableColumnsType;
+    loading: boolean;
 }
 
 export interface IScheduleCellInfo {
@@ -16,13 +18,49 @@ export interface IScheduleCellInfo {
     bans: string[] | undefined;
 }
 
-export async function getScheduleTableData(date: Dayjs, onCellClick?: (info: IScheduleCellInfo) => void): Promise<IScheduleTableData> {
-    const dbData = await getWSbyMonth(date.format('YYYY-MM-DD'));
-    const banTypeColorMap = await getBanTypeColorMap();
+type AsyncState = {
+    dbData: Awaited<ReturnType<typeof getWSbyMonth>>;
+    banTypeColorMap: Record<string, string>;
+};
+
+export default function useScheduleTableData(
+    date: Dayjs,
+    refreshKey: number,
+    onCellClick: (info: IScheduleCellInfo) => void
+): IScheduleTableData {
+    const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    const formatDate = date.format('YYYY-MM-DD');
+
+    useEffect(() => {
+        let isMounted = true;
+
+        Promise.all([
+            getWSbyMonth(formatDate),
+            getBanTypeColorMap(),
+        ]).then(([dbData, banTypeColorMap]) => {
+            if (isMounted) {
+                setAsyncState({dbData, banTypeColorMap});
+                setLoading(false);
+            }
+        });
+
+        return () => {
+            isMounted = false;
+            setLoading(true);
+        };
+    }, [formatDate, refreshKey]);
+
+    if (!asyncState) {
+        return {dataSource: [], columns: [], loading};
+    }
+
+    const {dbData, banTypeColorMap} = asyncState;
     const {monthStatus, ...personRecord} = dbData;
 
     const dataSource = Object.entries(personRecord).map(([personName, scheduleInfo]) => {
-        const rowData: { key: string, name: string, [date: string]: string[] | string } = {
+        const rowData: { key: string; name: string; [date: string]: string[] | string } = {
             key: personName,
             name: personName,
         };
@@ -34,13 +72,17 @@ export async function getScheduleTableData(date: Dayjs, onCellClick?: (info: ISc
         return rowData;
     });
 
-    return {
-        dataSource,
-        columns: getColumns(date, monthStatus, banTypeColorMap, onCellClick)
-    }
+    const columns = getColumns(date, monthStatus, banTypeColorMap, onCellClick);
+
+    return {dataSource, columns, loading};
 }
 
-function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<string, string>, onCellClick?: (info: IScheduleCellInfo) => void): TableColumnsType {
+function getColumns(
+    date: Dayjs,
+    monthStatus: string,
+    banTypeColorMap: Record<string, string>,
+    onCellClick: (info: IScheduleCellInfo) => void
+): TableColumnsType {
     const daysInMonth = Array.from(
         {length: date.daysInMonth()},
         (_, i) => date.date(i + 1)
@@ -62,43 +104,39 @@ function getColumns(date: Dayjs, monthStatus: string, banTypeColorMap: Record<st
                 return (
                     <div className='flex flex-col justify-center items-center gap-1'>
                         {text.map(banType => (
-                                <Badge
-                                    key={banType}
-                                    count={banType}
-                                    color={banTypeColorMap[banType]}
-                                    classNames={{indicator: '!rounded-lg !font-bold'}}
-                                />
-                            )
-                        )}
+                            <Badge
+                                key={banType}
+                                count={banType}
+                                color={banTypeColorMap[banType]}
+                                classNames={{indicator: '!rounded-lg !font-bold'}}
+                            />
+                        ))}
                     </div>
-                )
+                );
             },
             onCell: (record) => ({
                 style: {cursor: 'pointer'},
                 onClick: () => {
-                    // console.log(record.name, day, record[index]);
-                    onCellClick?.({
+                    onCellClick({
                         name: record.name,
                         day,
-                        bans: record[index]
+                        bans: record[index] ?? [],
                     });
-                }
-            })
-        }
+                },
+            }),
+        };
     });
+
     columns.unshift({
         title: getMonthStatusBadge(monthStatus),
-        dataIndex: "name",
+        dataIndex: 'name',
         fixed: 'start',
         width: 80,
-        render: (text) => {
-            return (
-                <div className='font-bold'>
-                    {text}
-                </div>
-            )
-        }
+        render: (text) => (
+            <div className='font-bold'>{text}</div>
+        ),
     });
+
     return columns;
 }
 
@@ -117,9 +155,7 @@ function sortBanTypeList(bansList: string[]): string[] {
         }
     });
 
-    latterList.sort((a, b) => {
-        return latterBanTypeOrder.get(a)! - latterBanTypeOrder.get(b)!;
-    });
+    latterList.sort((a, b) => latterBanTypeOrder.get(a)! - latterBanTypeOrder.get(b)!);
 
     return [...normalList, ...latterList];
 }

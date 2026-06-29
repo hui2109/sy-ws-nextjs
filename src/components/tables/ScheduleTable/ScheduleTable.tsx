@@ -1,6 +1,4 @@
-'use client';
-
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useState} from "react";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import ClearTableModal from "@/components/tables/ScheduleTable/ClearTableModal/ClearTableModal";
 import AuditTableModal from "@/components/tables/ScheduleTable/AuditTableModal/AuditTableModal";
@@ -10,35 +8,28 @@ import DateJump from "@/components/dateSelects/DateJump";
 import ToggleButton from "@/components/buttons/ToggleButton";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import SubmitTableModal from "@/components/tables/ScheduleTable/SubmitTableModal/SubmitTableModal";
-import {getScheduleTableData, IScheduleCellInfo, IScheduleTableData} from "@/components/tables/ScheduleTable/getScheduleTableData";
+import useScheduleTableData, {IScheduleCellInfo} from "@/components/tables/ScheduleTable/useScheduleTableData";
 import dayjs from "dayjs";
+import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export default function ScheduleTable() {
-    const [scheduleTableData, setScheduleTableData] = useState<IScheduleTableData>({dataSource: [], columns: []});
-    const [loading, setLoading] = useState(true);
     const {current, refreshKey, refresh} = useContext(CurrentDateContext);
-
     const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo>({name: '', day: dayjs(), bans: []});
-    const handleScheduleTableCellClick = (info: IScheduleCellInfo) => {
+
+    const handleScheduleTableCellClick = useCallback((info: IScheduleCellInfo) => {
         setSelectedCell(info);
         setIsPaiBanModalOpen(true);
-    };
+    }, []);
 
-    useEffect(() => {
-        getScheduleTableData(current, handleScheduleTableCellClick).then(data => {
-            setScheduleTableData(data);
-            setLoading(false);
-        });
-        return () => setLoading(true);
-    }, [current, refreshKey]);
+    const {dataSource, columns, loading} = useScheduleTableData(current, refreshKey, handleScheduleTableCellClick);
 
     return (
         <>
             <Table
                 loading={loading}
-                columns={scheduleTableData.columns}
-                dataSource={scheduleTableData.dataSource}
+                columns={columns}
+                dataSource={dataSource}
                 scroll={{x: 'max-content', y: 600}}
                 pagination={false}
                 title={() => ScheduleTableTools()}
@@ -52,15 +43,15 @@ export default function ScheduleTable() {
                 }}
             />
             <ScheduleTableSideMenuModals/>
-            <PaiBanModal
-                isModalOpen={isPaiBanModalOpen}
-                onClose={() => {
-                    setIsPaiBanModalOpen(false);
-                    refresh();
-                }}
-                selectedCell={selectedCell}
-                setSelectedCell={setSelectedCell}
-            />
+            <SelectedCellContext value={{selectedCell, setSelectedCell}}>
+                <PaiBanModal
+                    isModalOpen={isPaiBanModalOpen}
+                    onClose={() => {
+                        setIsPaiBanModalOpen(false);
+                        refresh();
+                    }}
+                />
+            </SelectedCellContext>
         </>
     );
 }
@@ -75,7 +66,7 @@ function ScheduleTableTools() {
             <ToggleButton clickedButtonColor='volcano'>显示上周期</ToggleButton>
             <ToggleButton clickedButtonColor='magenta' icon={<IconFont type={IconType.xiangpica}/>}/>
         </div>
-    )
+    );
 }
 
 function ScheduleTableSideMenuModals() {
@@ -87,5 +78,5 @@ function ScheduleTableSideMenuModals() {
             <SubmitTableModal current={current} refresh={refresh}/>
             <AuditTableModal current={current} refresh={refresh}/>
         </>
-    )
+    );
 }

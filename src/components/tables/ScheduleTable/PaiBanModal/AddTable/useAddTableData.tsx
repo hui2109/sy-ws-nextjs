@@ -1,12 +1,12 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Badge, Checkbox, InputNumber, Select, TableColumnsType} from "antd";
 import NullText from "@/components/utils/NullText";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
-import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
 import creactWSRecord from "@/api/WorkSchedule/creactWSRecord";
 import {useMenuContext} from "@/components/hooks/MenuContext";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
+import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IAddTableData {
     dataSource: {
@@ -19,14 +19,12 @@ export interface IAddTableData {
     loading: boolean
 }
 
-export default function useAddTableData(
-    selectedCell: IScheduleCellInfo,
-    setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>
-): IAddTableData {
+export default function useAddTableData(): IAddTableData {
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string>>({});
     const [validBanNames, setValidBanNames] = useState<string[]>([]);
     const [duplicateCheck, setDuplicateCheck] = useState(false);
     const [loading, setLoading] = useState(true);
+    const {selectedCell} = useContext(SelectedCellContext);
 
     useEffect(() => {
         Promise.all([getBanTypeColorMap(), getValidBanNames()])
@@ -69,8 +67,6 @@ export default function useAddTableData(
                                     key={item}
                                     banName={item}
                                     banTypeColorMap={banTypeColorMap}
-                                    selectedCell={selectedCell}
-                                    setSelectedCell={setSelectedCell}
                                 />
                             ))}
                         </div>
@@ -98,8 +94,6 @@ export default function useAddTableData(
                     placeholder={text}
                     validBanNames={validBanNames}
                     banTypeColorMap={banTypeColorMap}
-                    selectedCell={selectedCell}
-                    setSelectedCell={setSelectedCell}
                 />
             ),
         },
@@ -125,12 +119,10 @@ function Duplicate({text}: { text: string }) {
     );
 }
 
-function SelectBan({placeholder, validBanNames, banTypeColorMap, selectedCell, setSelectedCell}: {
+function SelectBan({placeholder, validBanNames, banTypeColorMap}: {
     placeholder: string;
     validBanNames: string[];
     banTypeColorMap: Record<string, string>;
-    selectedCell: IScheduleCellInfo;
-    setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>
 }) {
     const options = validBanNames.map((item: string) => ({
         label: (
@@ -145,6 +137,7 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap, selectedCell, s
 
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const {notification} = useMenuContext();
+    const {selectedCell, setSelectedCell} = useContext(SelectedCellContext);
     const format_date = selectedCell.day.format('YYYY-MM-DD');
 
     return (
@@ -177,12 +170,11 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap, selectedCell, s
     );
 }
 
-function ClickableBadge({banName, banTypeColorMap, selectedCell, setSelectedCell}: {
+function ClickableBadge({banName, banTypeColorMap}: {
     banName: string;
     banTypeColorMap: Record<string, string>;
-    selectedCell: IScheduleCellInfo;
-    setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>
 }) {
+    const {selectedCell, setSelectedCell} = useContext(SelectedCellContext);
     const format_date = selectedCell.day.format('YYYY-MM-DD');
     const {notification} = useMenuContext();
 

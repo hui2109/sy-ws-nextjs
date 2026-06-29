@@ -1,32 +1,19 @@
-'use client';
-
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Table} from "antd";
-import getExpectTableData, {IExpectTableData} from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTable/getExpectTableData";
-import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
+import useExpectTableData from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTable/useExpectTableData";
 
-export default function ExpectTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
-    const [loading, setLoading] = useState(true);
-    const [expectTableData, setExpectTableData] = useState<IExpectTableData>({dataSource: [], columns: []});
-
-    useEffect(() => {
-        getExpectTableData(selectedCell.name, selectedCell.day).then(data => {
-            setExpectTableData(data);
-            setLoading(false);
-        });
-        return () => setLoading(true);
-    }, [selectedCell.name, selectedCell.day])
+export default function ExpectTable() {
+    const {dataSource, columns, loading} = useExpectTableData();
 
     return (
         <Table
             loading={loading}
-            columns={expectTableData.columns}
-            dataSource={expectTableData.dataSource}
+            columns={columns}
+            dataSource={dataSource}
             pagination={false}
             column={{align: 'center'}}
             size={"small"}
             bordered
         />
     );
-
 }

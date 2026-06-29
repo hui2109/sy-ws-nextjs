@@ -1,30 +1,18 @@
-import {useEffect, useState} from "react";
 import {Table} from "antd";
-import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/getScheduleTableData";
-import getVacationTableData, {IVacationTableData} from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/getVacationTableData";
+import useVacationTableData from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/useVacationTableData";
 
-export default function VacationTable({selectedCell}: { selectedCell: IScheduleCellInfo }) {
-    const [loading, setLoading] = useState(true);
-    const [vacationTableData, setvacationTableData] = useState<IVacationTableData>({dataSource: [], columns: []});
-
-    useEffect(() => {
-        getVacationTableData(selectedCell.name, selectedCell.day).then(data => {
-            setvacationTableData(data);
-            setLoading(false);
-        });
-        return () => setLoading(true);
-    }, [selectedCell.name, selectedCell.day])
+export default function VacationTable() {
+    const {dataSource, columns, loading} = useVacationTableData();
 
     return (
         <Table
             loading={loading}
-            columns={vacationTableData.columns}
-            dataSource={vacationTableData.dataSource}
+            columns={columns}
+            dataSource={dataSource}
             pagination={false}
             column={{align: 'center'}}
             size={"small"}
             bordered
         />
     );
-
 }
