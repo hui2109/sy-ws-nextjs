@@ -1,10 +1,14 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import {Badge, TableColumnsType} from "antd";
 import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
 import {Dayjs} from "dayjs";
 import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import NullText from "@/components/utils/NullText";
+import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
+import {useMenuContext} from "@/components/hooks/MenuContext";
+import {NotificationInstance} from "antd/es/notification/interface";
+import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -31,18 +35,18 @@ type AsyncState = {
 };
 
 export default function useScheduleTableData(
-    currDate: Dayjs,
-    refreshKey: number,
     stToolStatus: IScheduleTableTools,
     onCellClick: (info: IScheduleCellInfo) => void
 ): IScheduleTableData {
+    const {current, refreshKey, refresh} = useContext(CurrentDateContext);
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
     const [loading, setLoading] = useState(true);
+    const {notification} = useMenuContext();
 
     // ✅ Effect 1：只管当月数据，showPrevMonth 变化时完全不触发
     useEffect(() => {
         let isMounted = true;
-        const formatCurrDate = currDate.format('YYYY-MM-DD');
+        const formatCurrDate = current.format('YYYY-MM-DD');
 
         Promise.all([
             getWSbyMonth(formatCurrDate),
@@ -58,7 +62,7 @@ export default function useScheduleTableData(
             isMounted = false;
             setLoading(true);
         };
-    }, [currDate, refreshKey]);
+    }, [current, refreshKey]);
 
     // ✅ Effect 2：只管上月数据，当月数据变化时不重新请求上月
     useEffect(() => {
@@ -67,7 +71,7 @@ export default function useScheduleTableData(
         }
 
         let isMounted = true;
-        const formatPrevDate = currDate.subtract(1, 'month').format('YYYY-MM-DD');
+        const formatPrevDate = current.subtract(1, 'month').format('YYYY-MM-DD');
 
         getWSbyMonth(formatPrevDate).then(dbDataPrev => {
             if (isMounted) {
@@ -78,7 +82,7 @@ export default function useScheduleTableData(
         return () => {
             isMounted = false;
         };
-    }, [currDate, stToolStatus.showPrevMonth]);
+    }, [current, stToolStatus.showPrevMonth]);
 
     const nameBansMap = asyncState?.dbDataCurr?.nameBansMap;
     const dataSource = useMemo(() => {
@@ -102,7 +106,7 @@ export default function useScheduleTableData(
     const {dbDataCurr, dbDataPrev, banTypeColorMap} = asyncState;
     const {monthStatus} = dbDataCurr;
     const effectiveDbDataPrev = stToolStatus.showPrevMonth ? dbDataPrev : null;
-    const columns = getColumns(currDate, monthStatus, banTypeColorMap, effectiveDbDataPrev, onCellClick);
+    const columns = getColumns(current, monthStatus, banTypeColorMap, effectiveDbDataPrev, stToolStatus.eraser, notification, refresh, onCellClick);
 
     return {dataSource, columns, loading};
 }
@@ -111,7 +115,10 @@ function getColumns(
     date: Dayjs,
     monthStatus: string,
     banTypeColorMap: Record<string, string>,
-    dbDataPrev: AsyncState['dbDataPrev'],
+    effectiveDbDataPrev: AsyncState['dbDataPrev'],
+    eraser: boolean,
+    notification: NotificationInstance,
+    refresh: () => void,
     onCellClick: (info: IScheduleCellInfo) => void
 ): TableColumnsType {
     const daysInMonth = Array.from(
@@ -131,11 +138,11 @@ function getColumns(
             dataIndex: index,
             render: (text: Array<string> | undefined, record) => {
                 if (!text) {
-                    if (!dbDataPrev) {
+                    if (!effectiveDbDataPrev) {
                         // 证明不是 显示上周期 的模式
                         return <NullText/>
                     }
-                    const {nameBansMap} = dbDataPrev;
+                    const {nameBansMap} = effectiveDbDataPrev;
                     const banList = nameBansMap[record.name][currDateToPreDate(day)];
 
                     if (!banList) {
@@ -151,7 +158,6 @@ function getColumns(
                             ))}
                         </div>
                     )
-
                 }
 
                 return (
@@ -170,11 +176,29 @@ function getColumns(
             onCell: (record) => ({
                 style: {cursor: 'pointer'},
                 onClick: () => {
-                    onCellClick({
-                        name: record.name,
-                        day,
-                        bans: record[index] ?? [],
-                    });
+                    if (eraser) {
+                        // 橡皮擦模式: 点击单元格, 直接清空单元格里的所有排程
+                        if (record[index]) {
+                            const banList: Array<string> = record[index];
+                            banList.forEach((banName, i) =>
+                                deleteWSRecord(index, banName, record.name).then(() => {
+                                    if (i === banList.length - 1) {
+                                        notification.warning({
+                                            title: '排班已删除',
+                                            description: `${record.name} 的 ${index} 的 ${banList.join('、')} 排班已删除!`
+                                        });
+                                        refresh();
+                                    }
+                                })
+                            );
+                        }
+                    } else {
+                        onCellClick({
+                            name: record.name,
+                            day,
+                            bans: record[index] ?? [],
+                        });
+                    }
                 },
             }),
         };

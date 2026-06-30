@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export default function ScheduleTable() {
-    const {current, refreshKey, refresh} = useContext(CurrentDateContext);
+    const {refresh} = useContext(CurrentDateContext);
     const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo>({name: '', day: dayjs(), bans: []});
     const [stToolStatus, setStToolStatus] = useState<IScheduleTableTools>({autoSchedule: false, showPrevMonth: false, eraser: false});
@@ -22,7 +22,7 @@ export default function ScheduleTable() {
         setIsPaiBanModalOpen(true);
     }, []);
 
-    const {dataSource, columns, loading} = useScheduleTableData(current, refreshKey, stToolStatus, handleScheduleTableCellClick);
+    const {dataSource, columns, loading} = useScheduleTableData(stToolStatus, handleScheduleTableCellClick);
 
     return (
         <>
