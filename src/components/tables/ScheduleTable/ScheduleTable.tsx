@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useCallback, useContext, useState} from "react";
+import React, {Dispatch, SetStateAction, useCallback, useContext, useEffect, useState} from "react";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import ClearTableModal from "@/components/tables/ScheduleTable/ClearTableModal/ClearTableModal";
 import AuditTableModal from "@/components/tables/ScheduleTable/AuditTableModal/AuditTableModal";
@@ -62,42 +62,77 @@ export default function ScheduleTable() {
 
 function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: IScheduleTableTools, setStToolStatus: Dispatch<SetStateAction<IScheduleTableTools>> }) {
     const {current, setCurrent} = useContext(CurrentDateContext);
+    const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            setCursorPos({
+                x: e.clientX,
+                y: e.clientY,
+            });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [stToolStatus.eraser]);
 
     return (
-        <div className='flex justify-center items-center gap-2'>
-            <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
-            <Button
-                color={stToolStatus.autoSchedule ? 'green' : 'default'}
-                variant={stToolStatus.autoSchedule ? 'solid' : 'outlined'}
-                onClick={() => setStToolStatus(prev => ({
-                    ...prev,
-                    autoSchedule: !prev.autoSchedule
-                }))}
-            >
-                自动排班
-            </Button>
-            <Button
-                color={stToolStatus.showPrevMonth ? 'volcano' : 'default'}
-                variant={stToolStatus.showPrevMonth ? 'solid' : 'outlined'}
-                onClick={() => setStToolStatus(prev => ({
-                    ...prev,
-                    showPrevMonth: !prev.showPrevMonth
-                }))}
-            >
-                显示上周期
-            </Button>
-            <Button
-                color={stToolStatus.eraser ? 'magenta' : 'default'}
-                variant={stToolStatus.eraser ? 'solid' : 'outlined'}
-                icon={<IconFont type={IconType.xiangpica}/>}
-                onClick={() => setStToolStatus(prev => ({
-                    ...prev,
-                    eraser: !prev.eraser
-                }))}
-            />
-        </div>
+        <>
+            <div className='flex justify-center items-center gap-2'>
+                <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
+                <Button
+                    color={stToolStatus.autoSchedule ? 'green' : 'default'}
+                    variant={stToolStatus.autoSchedule ? 'solid' : 'outlined'}
+                    onClick={() => setStToolStatus(prev => ({
+                        ...prev,
+                        autoSchedule: !prev.autoSchedule
+                    }))}
+                >
+                    自动排班
+                </Button>
+                <Button
+                    color={stToolStatus.showPrevMonth ? 'volcano' : 'default'}
+                    variant={stToolStatus.showPrevMonth ? 'solid' : 'outlined'}
+                    onClick={() => setStToolStatus(prev => ({
+                        ...prev,
+                        showPrevMonth: !prev.showPrevMonth
+                    }))}
+                >
+                    显示上周期
+                </Button>
+                <Button
+                    color={stToolStatus.eraser ? 'magenta' : 'default'}
+                    variant={stToolStatus.eraser ? 'solid' : 'outlined'}
+                    icon={<IconFont type={IconType.xiangpica}/>}
+                    onClick={() => {
+                        setStToolStatus(prev => ({
+                            ...prev,
+                            eraser: !prev.eraser
+                        }));
+                    }}
+                />
+            </div>
+
+            {stToolStatus.eraser && (
+                <div
+                    className="pointer-events-none fixed z-[9999] text-xl"
+                    style={{
+                        left: cursorPos.x,
+                        top: cursorPos.y,
+                        transform: 'translate(-2px, -2px)',
+                        color: 'magenta'
+                    }}
+                >
+                    <IconFont type={IconType.xiangpica}/>
+                </div>
+            )}
+        </>
     );
 }
+
 
 function ScheduleTableSideMenuModals() {
     const {current, refresh} = useContext(CurrentDateContext);

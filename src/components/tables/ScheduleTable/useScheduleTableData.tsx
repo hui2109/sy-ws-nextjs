@@ -174,7 +174,7 @@ function getColumns(
                 );
             },
             onCell: (record) => ({
-                style: {cursor: 'pointer'},
+                style: {cursor: eraser ? 'none' : 'pointer'},
                 onClick: () => {
                     if (eraser) {
                         // 橡皮擦模式: 点击单元格, 直接清空单元格里的所有排程
