@@ -1,10 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Badge, TableColumnsType} from "antd";
 import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
 import {Dayjs} from "dayjs";
 import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import NullText from "@/components/utils/NullText";
+
+export interface IScheduleTableTools {
+    autoSchedule: boolean;
+    showPrevMonth: boolean;
+    eraser: boolean;
+}
 
 export interface IScheduleTableData {
     dataSource: { key: string; name: string; [date: string]: string[] | string }[];
@@ -19,29 +25,31 @@ export interface IScheduleCellInfo {
 }
 
 type AsyncState = {
-    dbData: Awaited<ReturnType<typeof getWSbyMonth>>;
+    dbDataCurr: Awaited<ReturnType<typeof getWSbyMonth>>;
+    dbDataPrev: Awaited<ReturnType<typeof getWSbyMonth>> | null;
     banTypeColorMap: Record<string, string>;
 };
 
 export default function useScheduleTableData(
-    date: Dayjs,
+    currDate: Dayjs,
     refreshKey: number,
+    stToolStatus: IScheduleTableTools,
     onCellClick: (info: IScheduleCellInfo) => void
 ): IScheduleTableData {
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const formatDate = date.format('YYYY-MM-DD');
-
+    // ✅ Effect 1：只管当月数据，showPrevMonth 变化时完全不触发
     useEffect(() => {
         let isMounted = true;
+        const formatCurrDate = currDate.format('YYYY-MM-DD');
 
         Promise.all([
-            getWSbyMonth(formatDate),
+            getWSbyMonth(formatCurrDate),
             getBanTypeColorMap(),
-        ]).then(([dbData, banTypeColorMap]) => {
+        ]).then(([dbDataCurr, banTypeColorMap]) => {
             if (isMounted) {
-                setAsyncState({dbData, banTypeColorMap});
+                setAsyncState(prev => ({...prev, dbDataCurr, banTypeColorMap, dbDataPrev: prev?.dbDataPrev ?? null}));
                 setLoading(false);
             }
         });
@@ -50,29 +58,51 @@ export default function useScheduleTableData(
             isMounted = false;
             setLoading(true);
         };
-    }, [formatDate, refreshKey]);
+    }, [currDate, refreshKey]);
 
-    if (!asyncState) {
-        return {dataSource: [], columns: [], loading};
-    }
-
-    const {dbData, banTypeColorMap} = asyncState;
-    const {monthStatus, ...personRecord} = dbData;
-
-    const dataSource = Object.entries(personRecord).map(([personName, scheduleInfo]) => {
-        const rowData: { key: string; name: string; [date: string]: string[] | string } = {
-            key: personName,
-            name: personName,
-        };
-
-        for (const [string_date, bansList] of Object.entries(scheduleInfo)) {
-            rowData[string_date] = sortBanTypeList(bansList);
+    // ✅ Effect 2：只管上月数据，当月数据变化时不重新请求上月
+    useEffect(() => {
+        if (!stToolStatus.showPrevMonth) {
+            return;
         }
 
-        return rowData;
-    });
+        let isMounted = true;
+        const formatPrevDate = currDate.subtract(1, 'month').format('YYYY-MM-DD');
 
-    const columns = getColumns(date, monthStatus, banTypeColorMap, onCellClick);
+        getWSbyMonth(formatPrevDate).then(dbDataPrev => {
+            if (isMounted) {
+                setAsyncState(prev => prev ? {...prev, dbDataPrev} : null);
+            }
+        });
+
+        return () => {
+            isMounted = false;
+        };
+    }, [currDate, stToolStatus.showPrevMonth]);
+
+    const nameBansMap = asyncState?.dbDataCurr?.nameBansMap;
+    const dataSource = useMemo(() => {
+        if (!nameBansMap) return [];
+        return Object.entries(nameBansMap).map(([personName, scheduleInfo]) => {
+            const rowData: { key: string; name: string; [date: string]: string[] | string } = {
+                key: personName,
+                name: personName,
+            };
+            for (const [string_date, bansList] of Object.entries(scheduleInfo)) {
+                rowData[string_date] = sortBanTypeList(bansList);
+            }
+            return rowData;
+        });
+    }, [nameBansMap]);
+
+    if (!asyncState) {
+        return {dataSource, columns: [], loading};
+    }
+
+    const {dbDataCurr, dbDataPrev, banTypeColorMap} = asyncState;
+    const {monthStatus} = dbDataCurr;
+    const effectiveDbDataPrev = stToolStatus.showPrevMonth ? dbDataPrev : null;
+    const columns = getColumns(currDate, monthStatus, banTypeColorMap, effectiveDbDataPrev, onCellClick);
 
     return {dataSource, columns, loading};
 }
@@ -81,6 +111,7 @@ function getColumns(
     date: Dayjs,
     monthStatus: string,
     banTypeColorMap: Record<string, string>,
+    dbDataPrev: AsyncState['dbDataPrev'],
     onCellClick: (info: IScheduleCellInfo) => void
 ): TableColumnsType {
     const daysInMonth = Array.from(
@@ -98,8 +129,30 @@ function getColumns(
                 </div>
             ),
             dataIndex: index,
-            render: (text?: Array<string>) => {
-                if (!text) return <NullText/>;
+            render: (text: Array<string> | undefined, record) => {
+                if (!text) {
+                    if (!dbDataPrev) {
+                        // 证明不是 显示上周期 的模式
+                        return <NullText/>
+                    }
+                    const {nameBansMap} = dbDataPrev;
+                    const banList = nameBansMap[record.name][currDateToPreDate(day)];
+
+                    if (!banList) {
+                        return <NullText/>;
+                    }
+                    return (
+                        <div className='flex flex-col justify-center items-center gap-1'>
+                            {banList.map(banType => (
+                                <NullText
+                                    key={banType}
+                                    text={banType}
+                                />
+                            ))}
+                        </div>
+                    )
+
+                }
 
                 return (
                     <div className='flex flex-col justify-center items-center gap-1'>
@@ -175,4 +228,10 @@ function getMonthStatusBadge(monthStatus: string) {
             size='medium'
         />
     );
+}
+
+function currDateToPreDate(currDate: Dayjs): string {
+    const preDate = currDate.subtract(1, 'month');
+    const daysLeft = currDate.date() - currDate.startOf('month').date();
+    return preDate.endOf('month').subtract(daysLeft, 'day').format('YYYY-MM-DD');
 }

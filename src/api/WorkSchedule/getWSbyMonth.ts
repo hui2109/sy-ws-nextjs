@@ -9,8 +9,9 @@ import {getValidStaff} from "@/api/Person/getValidStaff";
 dayjs.extend(utc);
 
 // {'叶荣': {'2026-06-01': ['S1'], '2026-06-02': ['S1', 'JD']}}
-export type PersonDateBansMap = Record<string, Record<string, string[]> | string> & {
+export type PersonDateBansMap = {
     monthStatus: string;
+    nameBansMap: Record<string, Record<string, string[]>>
 };
 
 export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
@@ -49,8 +50,8 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
 
     const monthStatus = new Set<string>();
     const MonthSchedule: PersonDateBansMap = {
-        ...Object.fromEntries(staffList.map(staffName => [staffName, {}])),
         monthStatus: '',
+        nameBansMap: Object.fromEntries(staffList.map(staffName => [staffName, {}]))
     };
     for (const schedule of workSchedules) {
         const dateString: string = dayjs.utc(schedule.workDate).format("YYYY-MM-DD");
@@ -58,7 +59,7 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
         monthStatus.add(schedule.status);
 
         for (const {person} of schedule.scheduleAssignments) {
-            const personRecord = MonthSchedule[person.name] as Record<string, string[]>;
+            const personRecord = MonthSchedule.nameBansMap[person.name];
             if (personRecord) {
                 if (!personRecord[dateString]) {
                     personRecord[dateString] = [];
