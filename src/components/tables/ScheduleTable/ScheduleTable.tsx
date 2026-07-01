@@ -1,12 +1,9 @@
 import React, {Dispatch, SetStateAction, useCallback, useContext, useEffect, useState} from "react";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
-import ClearTableModal from "@/components/tables/ScheduleTable/ClearTableModal/ClearTableModal";
-import AuditTableModal from "@/components/tables/ScheduleTable/AuditTableModal/AuditTableModal";
 import {Button, Table} from "antd";
 import PaiBanModal from "@/components/tables/ScheduleTable/PaiBanModal/PaiBanModal";
 import DateJump from "@/components/dateSelects/DateJump";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
-import SubmitTableModal from "@/components/tables/ScheduleTable/SubmitTableModal/SubmitTableModal";
 import useScheduleTableData, {IScheduleCellInfo, IScheduleTableTools} from "@/components/tables/ScheduleTable/useScheduleTableData";
 import dayjs from "dayjs";
 import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
@@ -46,7 +43,6 @@ export default function ScheduleTable() {
                     title: '!p-3',
                 }}
             />
-            <ScheduleTableSideMenuModals/>
             <SelectedCellContext value={{selectedCell, setSelectedCell}}>
                 <PaiBanModal
                     isModalOpen={isPaiBanModalOpen}
@@ -129,19 +125,6 @@ function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: ISc
                     <IconFont type={IconType.xiangpica}/>
                 </div>
             )}
-        </>
-    );
-}
-
-
-function ScheduleTableSideMenuModals() {
-    const {current, refresh} = useContext(CurrentDateContext);
-
-    return (
-        <>
-            <ClearTableModal current={current} refresh={refresh}/>
-            <SubmitTableModal current={current} refresh={refresh}/>
-            <AuditTableModal current={current} refresh={refresh}/>
         </>
     );
 }

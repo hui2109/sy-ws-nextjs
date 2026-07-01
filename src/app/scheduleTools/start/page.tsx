@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import dayjs from "dayjs";
 import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import ScheduleTable from "@/components/tables/ScheduleTable/ScheduleTable";
+import ScheduleTableSideMenuModals from "@/components/tables/ScheduleTable/STSideMenuModals/ScheduleTableSideMenuModals";
 
 export default function Start() {
     const [current, setCurrent] = useState<dayjs.Dayjs>(dayjs());
@@ -16,6 +17,7 @@ export default function Start() {
                 {current.format('YYYY年M月')} 放疗技术组排班表
             </div>
             <ScheduleTable/>
+            <ScheduleTableSideMenuModals/>
         </CurrentDateContext>
     )
 };
