@@ -27,7 +27,7 @@ export default function ScheduleTable() {
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 600}}
+                scroll={{x: 'max-content', y: 750}}
                 pagination={false}
                 title={() =>
                     <ScheduleTableTools
@@ -61,6 +61,10 @@ function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: ISc
     const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
 
     useEffect(() => {
+        if (!stToolStatus.eraser) {
+            return;
+        }
+
         const handleMouseMove = (e: MouseEvent) => {
             setCursorPos({
                 x: e.clientX,

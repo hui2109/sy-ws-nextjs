@@ -17,76 +17,77 @@ interface MenuBarItem {
 export const topMenuBar: MenuProps['items'] = [
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/mySchedule' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.wodepaiban} useSvg={false} className={'me-2 !text-green-300'}/>
-                <Link href='/mySchedule' className="!text-inherit"><b>我的排班</b></Link>
-            </div>
+                <b>我的排班</b>
+            </Link>
         ),
         key: '/mySchedule',
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/allSchedule' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.quankepaiban} useSvg={false} className={'me-2 !text-green-800'}/>
-                <Link href='/allSchedule' className="!text-inherit"><b>全科排班</b></Link>
-            </div>
+                <b>全科排班</b>
+            </Link>
         ),
         key: '/allSchedule',
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/leaveSchedule' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.yuyuexiejia} useSvg={false} className={'me-2 !text-yellow-400'}/>
-                <Link href='/leaveSchedule' className="!text-inherit"><b>预约休假</b></Link>
-            </div>
+                <b>预约休假</b>
+            </Link>
         ),
         key: '/leaveSchedule',
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/expectSchedule' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.qiwangpaiban} useSvg={false} className={'me-2 !text-pink-600'}/>
-                <Link href='/expectSchedule' className="!text-inherit"><b>期望排班</b></Link>
-            </div>
+                <b>期望排班</b>
+            </Link>
         ),
         key: '/expectSchedule',
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/leaveApply' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.jiaqinshenqing} useSvg={true} className={'me-2'}/>
-                <Link href='/leaveApply' className="!text-inherit"><b>假勤申请</b></Link>
-            </div>
+                <b>假勤申请</b>
+            </Link>
         ),
         key: '/leaveApply',
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/statistics' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.tongji} useSvg={true} className={'me-2'}/>
-                <Link href='/statistics' className="!text-inherit"><b>统计</b></Link>
-            </div>
+                <b>统计</b>
+            </Link>
         ),
         key: '/statistics',
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/scheduleTools' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.paibangongju} useSvg={true} className={'me-2'}/>
-                <Link href='/scheduleTools' className="!text-inherit"><b>排班工具</b></Link>
-            </div>
+                <b>排班工具</b>
+            </Link>
         ),
         key: '/scheduleTools',
     }
 ]
 
+
 export const scheduleToolsMenuBar: MenuProps['items'] = [
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/scheduleTools/start' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.kaishipaiban} useSvg={false} className={'me-2 !text-pink-600'}/>
-                <Link href='/scheduleTools/start' className="!text-inherit"><b>开始排班</b></Link>
-            </div>
+                <b>开始排班</b>
+            </Link>
         ),
         key: '/scheduleTools/start',
         children: [
@@ -139,10 +140,10 @@ export const scheduleToolsMenuBar: MenuProps['items'] = [
     },
     {
         label: (
-            <div className="!text-lg font-bold">
+            <Link href='/scheduleTools/holidaySettings' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.jiaqishezhi} useSvg={false} className={'me-2 !text-pink-600'}/>
-                <Link href='/scheduleTools/holidaySettings' className="!text-inherit"><b>假期设置</b></Link>
-            </div>
+                <b>假期设置</b>
+            </Link>
         ),
         key: '/scheduleTools/holidaySettings',
     }

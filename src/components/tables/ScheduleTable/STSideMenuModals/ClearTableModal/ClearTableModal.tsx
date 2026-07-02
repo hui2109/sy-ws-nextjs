@@ -6,7 +6,7 @@ import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalConte
 
 export default function ClearTableModal() {
     const {notification} = useAppContext();
-    const {isModalOpen, setIsModalOpen, modalKey} = useSTSideMenuModalContext();
+    const {setIsModalOpen} = useSTSideMenuModalContext();
     const {current, refresh} = useCurrentDateContext();
 
     const handleOk = async () => {
@@ -25,7 +25,7 @@ export default function ClearTableModal() {
             <Modal
                 title={`确定要清空 ${current.format("YYYY年M月")} 的所有排班吗?`}
                 closable={true}
-                open={modalKey === 'qingkongpaiban' && isModalOpen}
+                open={true}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 okText="确定清除"

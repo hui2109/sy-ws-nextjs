@@ -1,5 +1,3 @@
-import {Dayjs} from "dayjs";
-
-export default function ExportTableModal({current}: { current: Dayjs }) {
+export default function ExportTableModal() {
     return null;
 }

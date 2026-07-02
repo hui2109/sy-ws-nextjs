@@ -30,7 +30,7 @@ export default function ScheduleToolsLayout({children}: { children: ReactNode })
                 />
             </Sider>
             <Content className="pl-[24px] !min-h-[80vh]">
-                <STSideMenuModalContext value={{isModalOpen, setIsModalOpen, modalKey}}>
+                <STSideMenuModalContext value={{isModalOpen, setIsModalOpen, modalKey, setModalKey}}>
                     {children}
                 </STSideMenuModalContext>
             </Content>

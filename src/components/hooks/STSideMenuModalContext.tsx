@@ -4,6 +4,7 @@ interface ISTSideMenuModalContext {
     isModalOpen: boolean,
     setIsModalOpen: Dispatch<SetStateAction<boolean>>,
     modalKey: string,
+    setModalKey: Dispatch<SetStateAction<string>>,
 }
 
 export const STSideMenuModalContext = createContext<ISTSideMenuModalContext | null>(null);

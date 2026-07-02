@@ -1,30 +1,45 @@
-import {Dayjs} from "dayjs";
-import {useEffect, useState} from "react";
-import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
+import React from "react";
+import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
+import {Modal, Table} from "antd";
+import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useTransformSTData} from "@/components/tables/ScheduleTable/STSideMenuModals/CheckTableModal/useTransformSTData";
 
-export default function CheckTableModal({current}: { current: Dayjs }) {
+export default function CheckTableModal() {
+    const {current} = useCurrentDateContext();
+    const {setIsModalOpen} = useSTSideMenuModalContext();
+    const {dataSource, columns, loading} = useTransformSTData();
 
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
-    const [dbData, setDbData] = useState<Awaited<ReturnType<typeof getWSbyMonth>> | null>(null);
-
-    useEffect(() => {
-        let isMounted = true;
-        const formatCurrDate = current.format('YYYY-MM-DD');
-
-        getWSbyMonth(formatCurrDate).then(dbData => {
-            if (isMounted) {
-                setDbData(dbData);
-            }
-        });
-
-        return () => {
-            isMounted = false;
-        };
-    }, [current]);
-
-    if (!dbData) {
-        return null;
-    }
-
-
+    return (
+        <>
+            <Modal
+                title={`核查 ${current.format("YYYY年M月")} 的所有排班`}
+                closable={true}
+                open={true}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                okText="确定"
+                classNames={{body: 'min-h-3'}}
+                footer={(_, {OkBtn}) => <OkBtn/>}
+                width={'80%'}
+            >
+                <Table
+                    loading={loading}
+                    columns={columns}
+                    dataSource={dataSource}
+                    scroll={{x: 'max-content', y: 800}}
+                    pagination={false}
+                    column={{align: 'center'}}
+                    size={'middle'}
+                    bordered
+                />
+            </Modal>
+        </>
+    );
 }

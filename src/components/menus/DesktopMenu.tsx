@@ -33,7 +33,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                     />
                 </ConfigProvider>
             </Header>
-            <Content className="pt-[36px] px-[50px] pb-[30px]">
+            <Content className="pt-[36px] px-[50px] pb-[10px]">
                 <div className={'min-h-[80vh] p-4'}
                      style={{
                          background: colorBgContainer,
