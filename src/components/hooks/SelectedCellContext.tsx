@@ -1,5 +1,5 @@
-import {createContext, Dispatch, SetStateAction} from "react";
-import dayjs, {Dayjs} from "dayjs";
+import {createContext, Dispatch, SetStateAction, useContext} from "react";
+import {Dayjs} from "dayjs";
 
 export interface IScheduleCellInfo {
     name: string;
@@ -10,8 +10,12 @@ export interface IScheduleCellInfo {
 export const SelectedCellContext = createContext<{
     selectedCell: IScheduleCellInfo;
     setSelectedCell: Dispatch<SetStateAction<IScheduleCellInfo>>;
-}>({
-    selectedCell: {name: '', day: dayjs(), bans: undefined},
-    setSelectedCell: () => {
+} | null>(null);
+
+export function useSelectedCellContext() {
+    const context = useContext(SelectedCellContext);
+    if (!context) {
+        throw new Error("useSelectedCellContext must be used within a SelectedCellContext");
     }
-})
+    return context;
+}

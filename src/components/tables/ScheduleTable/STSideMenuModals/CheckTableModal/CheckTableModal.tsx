@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 
 export default function CheckTableModal({current}: { current: Dayjs }) {
+
+
     const [dbData, setDbData] = useState<Awaited<ReturnType<typeof getWSbyMonth>> | null>(null);
 
     useEffect(() => {

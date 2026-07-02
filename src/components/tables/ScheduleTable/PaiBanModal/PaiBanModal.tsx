@@ -3,8 +3,8 @@ import {Weekdays} from "@/configs/general";
 import ExpectTable from "@/components/tables/ScheduleTable/PaiBanModal/ExpectTable/ExpectTable";
 import AddTable from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/AddTable";
 import VacationTable from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/VacationTable";
-import React, {useContext} from "react";
-import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import React from "react";
+import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IPaiBanModalProps {
     isModalOpen: boolean;
@@ -12,7 +12,7 @@ export interface IPaiBanModalProps {
 }
 
 export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
-    const {selectedCell} = useContext(SelectedCellContext);
+    const {selectedCell} = useSelectedCellContext();
 
     if (!selectedCell.name) {
         return null;

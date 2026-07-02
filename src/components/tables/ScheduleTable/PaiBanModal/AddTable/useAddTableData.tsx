@@ -1,12 +1,12 @@
-import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {Badge, Checkbox, InputNumber, Select, TableColumnsType} from "antd";
 import NullText from "@/components/utils/NullText";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
 import creactWSRecord from "@/api/WorkSchedule/creactWSRecord";
-import {useMenuContext} from "@/components/hooks/MenuContext";
+import {useAppContext} from "@/components/hooks/AppProvider";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
-import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IAddTableData {
     dataSource: {
@@ -25,7 +25,7 @@ export default function useAddTableData(): IAddTableData {
     const [duplicateCheck, setDuplicateCheck] = useState(true);
     const [duplicateNum, setDuplicateNum] = useState(5);
     const [loading, setLoading] = useState(true);
-    const {selectedCell} = useContext(SelectedCellContext);
+    const {selectedCell} = useSelectedCellContext();
 
     useEffect(() => {
         Promise.all([getBanTypeColorMap(), getValidBanNames()])
@@ -163,8 +163,8 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap, duplicateCheck,
     }));
 
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
-    const {notification} = useMenuContext();
-    const {selectedCell, setSelectedCell} = useContext(SelectedCellContext);
+    const {notification} = useAppContext();
+    const {selectedCell, setSelectedCell} = useSelectedCellContext();
     const format_date = selectedCell.day.format('YYYY-MM-DD');
 
     return (
@@ -213,9 +213,9 @@ function ClickableBadge({banName, banTypeColorMap, duplicateCheck, duplicateNum}
     duplicateCheck: boolean;
     duplicateNum: number;
 }) {
-    const {selectedCell, setSelectedCell} = useContext(SelectedCellContext);
+    const {selectedCell, setSelectedCell} = useSelectedCellContext();
     const format_date = selectedCell.day.format('YYYY-MM-DD');
-    const {notification} = useMenuContext();
+    const {notification} = useAppContext();
 
     return (
         <Badge

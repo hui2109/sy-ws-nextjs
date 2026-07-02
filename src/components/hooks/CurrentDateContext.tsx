@@ -1,5 +1,5 @@
-import {createContext, Dispatch, SetStateAction} from "react";
-import dayjs, {Dayjs} from "dayjs";
+import {createContext, Dispatch, SetStateAction, useContext} from "react";
+import {Dayjs} from "dayjs";
 
 
 export const CurrentDateContext = createContext<{
@@ -7,11 +7,12 @@ export const CurrentDateContext = createContext<{
     setCurrent: Dispatch<SetStateAction<Dayjs>>;
     refreshKey: number;
     refresh: () => void;
-}>({
-    current: dayjs(),
-    setCurrent: () => {
-    },
-    refreshKey: 0,
-    refresh: () => {
+} | null>(null);
+
+export function useCurrentDateContext() {
+    const context = useContext(CurrentDateContext);
+    if (!context) {
+        throw new Error("useCurrentDateContext must be used within a CurrentDateContext");
     }
-});
+    return context;
+}

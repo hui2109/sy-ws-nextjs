@@ -1,11 +1,2 @@
 @import "./iconfont/iconfont.css";
 @import "tailwindcss";
-
-html,
-body {
-    background: var(--ant-color-bg-layout, #f5f5f5);
-}
-
-
-
-

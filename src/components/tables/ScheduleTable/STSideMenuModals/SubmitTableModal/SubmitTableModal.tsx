@@ -1,24 +1,23 @@
-import {Dayjs} from "dayjs";
-import {useMenuContext} from "@/components/hooks/MenuContext";
-import {usePathname} from "next/navigation";
+import {useAppContext} from "@/components/hooks/AppProvider";
 import {submitWSbyMonth} from "@/api/WorkSchedule/submitWSbyMonth";
 import {Modal} from "antd";
+import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
+import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
 
-export default function SubmitTableModal({current, refresh}: { current: Dayjs, refresh: () => void }) {
-    const {activeSideId, setActiveSideId, notification} = useMenuContext();
-    const isModalOpen = activeSideId === 'tijiaopaiban';
-    const pathName = usePathname();
-    const closeModal = () => setActiveSideId(pathName.split('/').at(-1) as string);
+export default function SubmitTableModal() {
+    const {notification} = useAppContext();
+    const {isModalOpen, setIsModalOpen, modalKey} = useSTSideMenuModalContext();
+    const {current, refresh} = useCurrentDateContext();
 
     const handleOk = async () => {
         await submitWSbyMonth(current.format('YYYY-MM-DD'));
         notification.success({title: '本月排班已提交', description: `${current.format("YYYY年M月")} 的所有排班已提交!`})
-        closeModal();
+        setIsModalOpen(false);
         refresh();
     };
 
     const handleCancel = () => {
-        closeModal();
+        setIsModalOpen(false);
     };
 
     return (
@@ -26,7 +25,7 @@ export default function SubmitTableModal({current, refresh}: { current: Dayjs, r
             <Modal
                 title={`确定要提交 ${current.format("YYYY年M月")} 的所有排班吗?`}
                 closable={true}
-                open={isModalOpen}
+                open={modalKey === 'tijiaopaiban' && isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 okText="确定提交"

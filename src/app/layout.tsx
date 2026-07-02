@@ -2,19 +2,22 @@ import React from "react";
 import {AntdRegistry} from '@ant-design/nextjs-registry';
 import DesktopMenu from '@/components/menus/DesktopMenu';
 import '@/styles/globals.css';
-import {MenuProvider} from "@/components/hooks/MenuContext";
+import {AppProvider} from "@/components/hooks/AppProvider";
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 
+dayjs.locale('zh-cn');
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
         <html lang="en">
         <body>
         <AntdRegistry>
-            <MenuProvider>
+            <AppProvider>
                 <DesktopMenu>
                     {children}
                 </DesktopMenu>
-            </MenuProvider>
+            </AppProvider>
         </AntdRegistry>
         </body>
         </html>

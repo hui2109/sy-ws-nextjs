@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Badge, TableColumnsType} from "antd";
 import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
 import {Dayjs} from "dayjs";
@@ -6,9 +6,9 @@ import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import NullText from "@/components/utils/NullText";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
-import {useMenuContext} from "@/components/hooks/MenuContext";
+import {useAppContext} from "@/components/hooks/AppProvider";
 import {NotificationInstance} from "antd/es/notification/interface";
-import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -38,10 +38,10 @@ export default function useScheduleTableData(
     stToolStatus: IScheduleTableTools,
     onCellClick: (info: IScheduleCellInfo) => void
 ): IScheduleTableData {
-    const {current, refreshKey, refresh} = useContext(CurrentDateContext);
+    const {current, refreshKey, refresh} = useCurrentDateContext();
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
     const [loading, setLoading] = useState(true);
-    const {notification} = useMenuContext();
+    const {notification} = useAppContext();
 
     // ✅ Effect 1：只管当月数据，showPrevMonth 变化时完全不触发
     useEffect(() => {

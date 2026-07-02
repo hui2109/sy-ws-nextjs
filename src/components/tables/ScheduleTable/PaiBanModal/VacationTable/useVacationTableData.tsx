@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import getRemainDaysbyNameDate from "@/api/VacationRule/getRemainDaysbyNameDate";
 import {Badge, TableColumnsType} from "antd";
-import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IVacationTableData {
     dataSource: { key: string; days: number; color: string }[];
@@ -36,7 +36,7 @@ export default function useVacationTableData(): IVacationTableData {
     const [dataSource, setDataSource] = useState<IVacationTableData['dataSource']>([]);
     const [loading, setLoading] = useState(true);
 
-    const {selectedCell} = useContext(SelectedCellContext);
+    const {selectedCell} = useSelectedCellContext();
     const {name, day} = selectedCell;
     const formatDate = day.format('YYYY-MM-DD');
 

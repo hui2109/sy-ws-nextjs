@@ -1,5 +1,5 @@
-import React, {Dispatch, SetStateAction, useCallback, useContext, useEffect, useState} from "react";
-import {CurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
+import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
 import {Button, Table} from "antd";
 import PaiBanModal from "@/components/tables/ScheduleTable/PaiBanModal/PaiBanModal";
 import DateJump from "@/components/dateSelects/DateJump";
@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export default function ScheduleTable() {
-    const {refresh} = useContext(CurrentDateContext);
+    const {refresh} = useCurrentDateContext();
     const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo>({name: '', day: dayjs(), bans: []});
     const [stToolStatus, setStToolStatus] = useState<IScheduleTableTools>({autoSchedule: false, showPrevMonth: false, eraser: false});
@@ -57,7 +57,7 @@ export default function ScheduleTable() {
 }
 
 function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: IScheduleTableTools, setStToolStatus: Dispatch<SetStateAction<IScheduleTableTools>> }) {
-    const {current, setCurrent} = useContext(CurrentDateContext);
+    const {current, setCurrent} = useCurrentDateContext();
     const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
 
     useEffect(() => {

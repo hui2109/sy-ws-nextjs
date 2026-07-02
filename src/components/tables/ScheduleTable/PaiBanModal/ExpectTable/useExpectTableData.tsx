@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Badge, TableColumnsType} from "antd";
 import findExpectedSchedulebyNameDate from "@/api/ExpectedSchedule/findExpectedSchedulebyNameDate";
 import findLeaveppointmentbyNameDate from "@/api/LeaveAppointment/findLeaveppointmentbyNameDate";
 import findExpectedSchedulebyDateBanName from "@/api/ExpectedSchedule/findExpectedSchedulebyDateBanName";
 import findLeaveppointmentbyDate from "@/api/LeaveAppointment/findLeaveppointmentbyDate";
 import NullText from "@/components/utils/NullText";
-import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IExpectTableData {
     dataSource: {
@@ -47,7 +47,7 @@ export default function useExpectTableData(): IExpectTableData {
     const [asyncState, setAsyncState] = useState<AsyncState>(initialAsyncState);
     const [loading, setLoading] = useState(true);
 
-    const {selectedCell} = useContext(SelectedCellContext);
+    const {selectedCell} = useSelectedCellContext();
     const {name, day} = selectedCell;
     const formatDate = day.format('YYYY-MM-DD');
 
