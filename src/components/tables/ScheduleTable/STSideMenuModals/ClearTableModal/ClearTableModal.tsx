@@ -1,13 +1,13 @@
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {clearWSbyMonth} from "@/api/WorkSchedule/clearWSbyMonth";
 import {Modal} from "antd";
-import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
 
 export default function ClearTableModal() {
     const {notification} = useAppContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
-    const {current, refresh} = useCurrentDateContext();
+    const {current, refresh} = useScheduleTableContext();
 
     const handleOk = async () => {
         await clearWSbyMonth(current.format('YYYY-MM-DD'));

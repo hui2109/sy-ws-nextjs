@@ -1,7 +1,7 @@
 import type {ColumnsType} from 'antd/es/table';
 import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {useEffect, useState} from "react";
-import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
 import dayjs from "dayjs";
 import {Weekdays} from "@/configs/general";
@@ -15,7 +15,7 @@ interface IBanTableRow {
 }
 
 export function useTransformSTData() {
-    const {current} = useCurrentDateContext();
+    const {current} = useScheduleTableContext();
     const {modalKey} = useSTSideMenuModalContext();
     const [dbData, setDbData] = useState<Awaited<ReturnType<typeof getWSbyMonth>> | null>(null);
     const [loading, setLoading] = useState<boolean>(true);

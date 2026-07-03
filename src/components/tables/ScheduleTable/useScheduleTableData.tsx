@@ -8,7 +8,7 @@ import NullText from "@/components/utils/NullText";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {NotificationInstance} from "antd/es/notification/interface";
-import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -38,7 +38,7 @@ export default function useScheduleTableData(
     stToolStatus: IScheduleTableTools,
     onCellClick: (info: IScheduleCellInfo) => void
 ): IScheduleTableData {
-    const {current, refreshKey, refresh} = useCurrentDateContext();
+    const {current, refreshKey, refresh} = useScheduleTableContext();
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
     const [loading, setLoading] = useState(true);
     const {notification} = useAppContext();

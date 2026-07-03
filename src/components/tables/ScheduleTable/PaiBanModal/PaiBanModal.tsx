@@ -14,10 +14,6 @@ export interface IPaiBanModalProps {
 export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
     const {selectedCell} = useSelectedCellContext();
 
-    if (!selectedCell.name) {
-        return null;
-    }
-
     return (
         <Modal
             title={(

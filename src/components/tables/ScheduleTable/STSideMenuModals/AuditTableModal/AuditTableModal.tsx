@@ -2,12 +2,12 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 import {auditWSbyMonth} from "@/api/WorkSchedule/auditWSbyMonth";
 import {Modal} from "antd";
 import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
-import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 
 export default function AuditTableModal() {
     const {notification} = useAppContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
-    const {current, refresh} = useCurrentDateContext();
+    const {current, refresh} = useScheduleTableContext();
 
     const handleOk = async () => {
         await auditWSbyMonth(current.format('YYYY-MM-DD'));

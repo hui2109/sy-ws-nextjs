@@ -2,12 +2,12 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 import {submitWSbyMonth} from "@/api/WorkSchedule/submitWSbyMonth";
 import {Modal} from "antd";
 import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
-import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 
 export default function SubmitTableModal() {
     const {notification} = useAppContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
-    const {current, refresh} = useCurrentDateContext();
+    const {current, refresh} = useScheduleTableContext();
 
     const handleOk = async () => {
         await submitWSbyMonth(current.format('YYYY-MM-DD'));

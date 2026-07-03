@@ -1,11 +1,11 @@
 import React from "react";
 import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
 import {Modal, Table} from "antd";
-import {useCurrentDateContext} from "@/components/hooks/CurrentDateContext";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {useTransformSTData} from "@/components/tables/ScheduleTable/STSideMenuModals/CheckTableModal/useTransformSTData";
 
 export default function CheckTableModal() {
-    const {current} = useCurrentDateContext();
+    const {current} = useScheduleTableContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
     const {dataSource, columns, loading} = useTransformSTData();
 
