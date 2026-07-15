@@ -73,12 +73,6 @@ export default function useHSTableData(showHiddenRules: boolean) {
         }
     }, []);
 
-    const handleSave = (row: IRuleData) => {
-        setRuleData(prev =>
-            prev.map(item => item.key === row.key ? {...item, ...row} : item)
-        );
-    };
-
     const columns: EditableColumn[] = useMemo(() => {
         const filtersSetObj = {
             name_set: new Set<string>(),
@@ -175,6 +169,12 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, [ruleData, banTypeColorMap]);
 
     const renderedColumns = useMemo(() => {
+        const handleSave = (row: IRuleData) => {
+            setRuleData(prev =>
+                prev.map(item => item.key === row.key ? {...item, ...row} : item)
+            );
+        };
+
         return columns.map((col) => {
             if (!col.editable) {
                 return col;
