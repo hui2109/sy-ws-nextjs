@@ -231,4 +231,5 @@ async function migrateToBanTypeColor() {
     }
 }
 
-migrateToBanTypeColor();
+// migreateToWorkSchedule();
+// migrateToWPL();

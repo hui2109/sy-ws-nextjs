@@ -1,10 +1,9 @@
-import React from 'react';
-import {Button} from 'antd';
+'use client';
 
-const Home = () => (
-    <div className="App">
-        <Button type="primary">holidaySettings</Button>
-    </div>
-);
+import HSTable from "@/components/tables/HolidaySettingTable/HSTable";
 
-export default Home;
+export default function HolidaySettings() {
+    return (
+        <HSTable/>
+    );
+}
