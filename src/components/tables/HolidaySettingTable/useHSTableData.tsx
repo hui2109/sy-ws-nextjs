@@ -1,14 +1,15 @@
 'use client';
 
 import getAllRules from "@/api/VacationRule/getAllRules";
-import React, {useEffect, useMemo, useState} from "react";
-import {Checkbox, Popconfirm, Space} from "antd";
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useState} from "react";
+import {Badge, Checkbox, Popconfirm, Space} from "antd";
 import type {ColumnType} from 'antd/es/table';
 import dayjs from "dayjs";
 import {getValidStaff} from "@/api/Person/getValidStaff";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
 import deleteRule from "@/api/VacationRule/deleteRule";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 
 export interface IRuleData {
     key: number
@@ -32,20 +33,14 @@ export default function useHSTableData(showHiddenRules: boolean) {
     const [loading, setLoading] = useState(true);
     const [validStaffs, setValidStaffs] = useState<Array<string>>([]);
     const [validBanNames, setValidBanNames] = useState<Array<string>>([]);
-    const {notification} = useAppContext();
+    const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string>>({});
 
     useEffect(() => {
         let isMounted = true;
 
-        Promise.all([
-            getAllRules(showHiddenRules),
-            getValidStaff(),
-            getValidBanNames(),
-        ]).then(([rules, validStaffs, validBanNames]) => {
+        getAllRules(showHiddenRules).then(rules => {
             if (isMounted) {
                 setRuleData(sortRuleData(rules));
-                setValidStaffs(validStaffs);
-                setValidBanNames(validBanNames.filter(banName => banName.endsWith('假') && !['补假', '调休假'].includes(banName)));
                 setLoading(false);
             }
         })
@@ -55,6 +50,28 @@ export default function useHSTableData(showHiddenRules: boolean) {
             setLoading(true);
         }
     }, [showHiddenRules]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        Promise.all([
+            getValidStaff(),
+            getValidBanNames(),
+            getBanTypeColorMap(),
+        ]).then(([validStaffs, validBanNames, banTypeColorMap]) => {
+            if (isMounted) {
+                setValidStaffs(validStaffs);
+                setValidBanNames(validBanNames.filter(banName => banName.endsWith('假') && !['补假', '调休假'].includes(banName)));
+                setBanTypeColorMap(banTypeColorMap);
+                setLoading(false);
+            }
+        })
+
+        return () => {
+            isMounted = false;
+            setLoading(true);
+        }
+    }, []);
 
     const handleSave = (row: IRuleData) => {
         setRuleData(prev =>
@@ -78,18 +95,6 @@ export default function useHSTableData(showHiddenRules: boolean) {
             filtersSetObj.enabled_set.add(dt.enabled);
         });
 
-        const handleDelete = (value: IRuleData) => {
-            deleteRule(value.key).then(() => {
-                setRuleData(prev =>
-                    prev.filter(item => item.key !== value.key)
-                );
-                notification.warning({
-                    title: '假期规则已删除',
-                    description: `${value.name} 的 ${value.banName} 规则 (${value.startDate}至${value.endDate} ${value.available_days} 天) 已删除!`
-                })
-            })
-        }
-
         return [
             // id 列不需要展示, 是隐藏数据
             {
@@ -105,6 +110,13 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 filters: Array.from(filtersSetObj.banName_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.banName.indexOf(value as string) === 0,
                 editable: true,
+                render: (value) => (
+                    <Badge
+                        count={value}
+                        color={banTypeColorMap[value]}
+                        classNames={{indicator: '!rounded-lg !font-bold'}}
+                    />
+                )
             },
             {
                 title: '开始日期',
@@ -157,18 +169,10 @@ export default function useHSTableData(showHiddenRules: boolean) {
             },
             {
                 title: '操作',
-                render: (value: IRuleData) => {
-                    return (
-                        <Space size="medium">
-                            <Popconfirm title="确定要删除吗? (不可撤销!)" onConfirm={() => handleDelete(value)} okButtonProps={{color: 'danger', variant: 'solid'}}>
-                                <a>删除?</a>
-                            </Popconfirm>
-                        </Space>
-                    )
-                },
+                render: (value: IRuleData) => <Operations value={value} setRuleData={setRuleData}/>,
             },
         ];
-    }, [ruleData, notification]);
+    }, [ruleData, banTypeColorMap]);
 
     const renderedColumns = useMemo(() => {
         return columns.map((col) => {
@@ -188,6 +192,29 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, [columns, validStaffs, validBanNames]);
 
     return {ruleData, renderedColumns, loading};
+}
+
+function Operations({value, setRuleData}: { value: IRuleData, setRuleData: Dispatch<SetStateAction<IRuleData[]>> }) {
+    const {notification} = useAppContext();
+    const handleDelete = (value: IRuleData) => {
+        deleteRule(value.key).then(() => {
+            setRuleData(prev =>
+                prev.filter(item => item.key !== value.key)
+            );
+            notification.warning({
+                title: '假期规则已删除',
+                description: `${value.name} 的 ${value.banName} 规则 (${value.startDate}至${value.endDate} ${value.available_days} 天) 已删除!`
+            })
+        })
+    }
+
+    return (
+        <Space size="medium">
+            <Popconfirm title="确定要删除吗? (不可撤销!)" onConfirm={() => handleDelete(value)} okButtonProps={{color: 'danger', variant: 'solid'}}>
+                <a>删除?</a>
+            </Popconfirm>
+        </Space>
+    )
 }
 
 function sortRuleData(rules: Awaited<ReturnType<typeof getAllRules>>): IRuleData[] {
