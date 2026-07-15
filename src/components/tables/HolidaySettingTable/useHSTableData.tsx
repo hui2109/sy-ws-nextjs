@@ -90,7 +90,10 @@ export default function useHSTableData(showHiddenRules: boolean) {
         });
 
         return [
-            // id 列不需要展示, 是隐藏数据
+            {
+                title: '编号',
+                render: (_value, _record, index) => index + 1
+            },
             {
                 title: '姓名',
                 dataIndex: 'name',
