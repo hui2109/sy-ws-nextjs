@@ -14,7 +14,7 @@ export default function Start() {
 
     return (
         <ScheduleTableContext value={{current, setCurrent, refreshKey, refresh, scheduleTableRef}}>
-            <div className='text-center text-2xl text-blue-600 font-bold mb-1' id='scheduleTableTitle'>
+            <div className='text-center text-2xl text-blue-600 font-bold mb-1' id='BigCurrentTableTitle'>
                 {current.format('YYYY年M月')} 放疗技术组排班表
             </div>
             <ScheduleTable/>

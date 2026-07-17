@@ -5,7 +5,7 @@ export async function exportCurrentTable(scheduleTableRef: RefObject<HTMLDivElem
     const container = scheduleTableRef.current;
     if (!container) return;
 
-    const scheduleTableTitle = document.querySelector<HTMLElement>('#scheduleTableTitle');
+    const scheduleTableTitle = document.querySelector<HTMLElement>('#BigCurrentTableTitle');
     if (!scheduleTableTitle) return;
 
     // 1. 整体 clone 表格容器，不碰原始 DOM

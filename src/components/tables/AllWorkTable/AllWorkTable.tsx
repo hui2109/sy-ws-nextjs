@@ -52,24 +52,35 @@ function AllWorkTableTools({allWorkTableRef}: { allWorkTableRef: RefObject<HTMLD
     const [isDownloadModalOpen, setIsDownloadModalOpen] = useState<boolean>(false);
 
     return (
-        <div className='flex justify-center items-center gap-2'>
-            <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
-            <Button
-                color='magenta'
-                variant='solid'
-                size='small'
-                onClick={() => setIsOverViewModalOpen(true)}
-            >
-                班种总览
-            </Button>
-            <Button
-                color='green'
-                variant='solid'
-                size='small'
-                onClick={() => setIsDownloadModalOpen(true)}
-            >
-                下载排班
-            </Button>
+        <div className='grid grid-cols-3 items-center w-full'>
+            {/* 左侧占位，保持三栏等宽，暂时留空 */}
+            <div/>
+
+            {/* 中间列：DateJump 居中 */}
+            <div className='flex justify-center'>
+                <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
+            </div>
+
+            {/* 右侧列：按钮靠右 */}
+            <div className='flex items-center justify-end gap-3'>
+                <Button
+                    color='magenta'
+                    variant='solid'
+                    size='small'
+                    onClick={() => setIsOverViewModalOpen(true)}
+                >
+                    班种总览
+                </Button>
+                <Button
+                    color='green'
+                    variant='solid'
+                    size='small'
+                    onClick={() => setIsDownloadModalOpen(true)}
+                >
+                    下载排班
+                </Button>
+            </div>
+
             <OverviewTableModal
                 isModalOpen={isOverViewModalOpen}
                 onClose={() => {
