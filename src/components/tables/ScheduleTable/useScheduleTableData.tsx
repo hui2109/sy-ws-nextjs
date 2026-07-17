@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {Badge, TableColumnsType} from "antd";
-import {LatterBantype, ScheduleStatus, Weekdays} from "@/configs/general";
+import {Weekdays} from "@/configs/general";
 import {Dayjs} from "dayjs";
 import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
@@ -9,6 +9,8 @@ import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {NotificationInstance} from "antd/es/notification/interface";
 import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
+import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
+import {getMonthStatusBadge} from "@/components/utils/getMonthStatusBadge";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -40,7 +42,7 @@ export default function useScheduleTableData(
 ): IScheduleTableData {
     const {current, refreshKey, refresh} = useScheduleTableContext();
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
     const {notification} = useAppContext();
 
     // ✅ Effect 1：只管当月数据，showPrevMonth 变化时完全不触发
@@ -215,43 +217,6 @@ function getColumns(
     });
 
     return columns;
-}
-
-function sortBanTypeList(bansList: string[]): string[] {
-    const latterBanTypeOrder = new Map<string, number>(
-        LatterBantype.map((item, index) => [item, index])
-    );
-    const normalList: string[] = [];
-    const latterList: string[] = [];
-
-    bansList.forEach((item) => {
-        if (latterBanTypeOrder.has(item)) {
-            latterList.push(item);
-        } else {
-            normalList.push(item);
-        }
-    });
-
-    latterList.sort((a, b) => latterBanTypeOrder.get(a)! - latterBanTypeOrder.get(b)!);
-
-    return [...normalList, ...latterList];
-}
-
-function getMonthStatusBadge(monthStatus: string) {
-    const monthStatusColorMap: Record<string, string> = {
-        [ScheduleStatus.DRAFT]: '#f5222d',
-        [ScheduleStatus.PENDING_REVIEW]: '#faad14',
-        [ScheduleStatus.PUBLISHED]: '#52c41a',
-    };
-
-    return (
-        <Badge
-            count={monthStatus}
-            color={monthStatusColorMap[monthStatus] ?? 'blue'}
-            classNames={{indicator: '!rounded-lg !font-bold !text-[14px]'}}
-            size='medium'
-        />
-    );
 }
 
 function currDateToPreDate(currDate: Dayjs): string {

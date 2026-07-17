@@ -12,6 +12,7 @@ export enum ScheduleStatus {
     PUBLISHED = "已发布",
     PENDING_REVIEW = "待审核",
     DRAFT = "草稿",
+    NODATA = '无数据'
 }
 
 export enum ApplyStatus {

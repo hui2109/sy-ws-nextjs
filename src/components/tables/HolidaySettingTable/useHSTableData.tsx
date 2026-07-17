@@ -33,7 +33,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
     const [loading, setLoading] = useState(true);
     const [validStaffs, setValidStaffs] = useState<Array<string>>([]);
     const [validBanNames, setValidBanNames] = useState<Array<string>>([]);
-    const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string>>({});
+    const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
 
     useEffect(() => {
         let isMounted = true;
@@ -74,6 +74,10 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, []);
 
     const columns: EditableColumn[] = useMemo(() => {
+        if (!banTypeColorMap) {
+            return [];
+        }
+
         const filtersSetObj = {
             name_set: new Set<string>(),
             banName_set: new Set<string>(),
@@ -172,6 +176,10 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, [ruleData, banTypeColorMap]);
 
     const renderedColumns = useMemo(() => {
+        if (columns.length === 0 || validStaffs.length === 0 || validBanNames.length === 0) {
+            return [];
+        }
+
         const handleSave = (row: IRuleData) => {
             setRuleData(prev =>
                 prev.map(item => item.key === row.key ? {...item, ...row} : item)

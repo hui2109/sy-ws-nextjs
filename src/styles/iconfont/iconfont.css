@@ -1,127 +1,131 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 5191038 */
-  src: url('iconfont.woff2?t=1781796751461') format('woff2'),
-       url('iconfont.woff?t=1781796751461') format('woff'),
-       url('iconfont.ttf?t=1781796751461') format('truetype');
+    font-family: "iconfont"; /* Project id 5191038 */
+    src: url('iconfont.woff2?t=1784187958546') format('woff2'),
+    url('iconfont.woff?t=1784187958546') format('woff'),
+    url('iconfont.ttf?t=1784187958546') format('truetype');
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-info:before {
+    content: "\e63d";
 }
 
 .icon-xiangpica:before {
-  content: "\e612";
+    content: "\e612";
 }
 
 .icon-daishenhe:before {
-  content: "\e639";
+    content: "\e639";
 }
 
 .icon-taskbeifen:before {
-  content: "\e601";
+    content: "\e601";
 }
 
 .icon-gerentongjiguanli:before {
-  content: "\e66f";
+    content: "\e66f";
 }
 
 .icon-shilileixing:before {
-  content: "\e834";
+    content: "\e834";
 }
 
 .icon-qingkongpaibanbiao:before {
-  content: "\e6f4";
+    content: "\e6f4";
 }
 
 .icon-fasongtijiao:before {
-  content: "\e693";
+    content: "\e693";
 }
 
 .icon-daochu:before {
-  content: "\e645";
+    content: "\e645";
 }
 
 .icon-mk-pbgl:before {
-  content: "\e816";
+    content: "\e816";
 }
 
 .icon-piliangshezhi:before {
-  content: "\e608";
+    content: "\e608";
 }
 
 .icon-shenhe:before {
-  content: "\efeb";
+    content: "\efeb";
 }
 
 .icon-yanshoubaobeijihecha-16px:before {
-  content: "\e618";
+    content: "\e618";
 }
 
 .icon-qitatongji:before {
-  content: "\e7da";
+    content: "\e7da";
 }
 
 .icon-ai59:before {
-  content: "\e6b1";
+    content: "\e6b1";
 }
 
 .icon-huanban:before {
-  content: "\e600";
+    content: "\e600";
 }
 
 .icon-xiugaibanjixinxi:before {
-  content: "\e623";
+    content: "\e623";
 }
 
 .icon-GOAtubiao_anyuetongji:before {
-  content: "\e603";
+    content: "\e603";
 }
 
 .icon-qingjia:before {
-  content: "\e637";
+    content: "\e637";
 }
 
 .icon-shangban:before {
-  content: "\e757";
+    content: "\e757";
 }
 
 .icon-xiaban:before {
-  content: "\e758";
+    content: "\e758";
 }
 
 .icon-people:before {
-  content: "\e695";
+    content: "\e695";
 }
 
 .icon-yuyue:before {
-  content: "\e627";
+    content: "\e627";
 }
 
 .icon-duoren:before {
-  content: "\e60e";
+    content: "\e60e";
 }
 
 .icon-jiaqinshenqing:before {
-  content: "\e63c";
+    content: "\e63c";
 }
 
 .icon-attend-checkin-record:before {
-  content: "\e617";
+    content: "\e617";
 }
 
 .icon-tongji:before {
-  content: "\ec62";
+    content: "\ec62";
 }
 
 .icon-qiwangpaiban:before {
-  content: "\e6a4";
+    content: "\e6a4";
 }
 
 .icon-yuangongpaiban:before {
-  content: "\e772";
+    content: "\e772";
 }
 

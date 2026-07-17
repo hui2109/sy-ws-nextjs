@@ -14,9 +14,9 @@ export type PersonDateBansMap = {
     nameBansMap: Record<string, Record<string, string[]>>
 };
 
-export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
+export async function getWSbyMonth(dt: string, onlyValidStaff: boolean = true): Promise<PersonDateBansMap> {
     const date = dayjs.utc(dt);
-    const staffList = await getValidStaff();
+    const staffList = await getValidStaff(onlyValidStaff);
     const workSchedules = await prisma.workSchedule.findMany({
         where: {
             workDate: {
@@ -68,8 +68,9 @@ export async function getWSbyMonth(dt: string): Promise<PersonDateBansMap> {
             }
         }
     }
-
-    if (monthStatus.has('DRAFT') || monthStatus.size === 0) {
+    if (monthStatus.size === 0) {
+        MonthSchedule['monthStatus'] = ScheduleStatus.NODATA;
+    } else if (monthStatus.has('DRAFT')) {
         MonthSchedule['monthStatus'] = ScheduleStatus.DRAFT;
     } else if (monthStatus.has('PENDING_REVIEW')) {
         MonthSchedule['monthStatus'] = ScheduleStatus.PENDING_REVIEW;

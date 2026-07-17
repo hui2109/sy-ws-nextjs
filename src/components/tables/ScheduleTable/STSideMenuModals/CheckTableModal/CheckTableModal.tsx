@@ -17,29 +17,27 @@ export default function CheckTableModal() {
     };
 
     return (
-        <>
-            <Modal
-                title={`核查 ${current.format("YYYY年M月")} 的所有排班`}
-                closable={true}
-                open={true}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                okText="确定"
-                classNames={{body: 'min-h-3'}}
-                footer={(_, {OkBtn}) => <OkBtn/>}
-                width={'80%'}
-            >
-                <Table
-                    loading={loading}
-                    columns={columns}
-                    dataSource={dataSource}
-                    scroll={{x: 'max-content', y: 800}}
-                    pagination={false}
-                    column={{align: 'center'}}
-                    size={'middle'}
-                    bordered
-                />
-            </Modal>
-        </>
+        <Modal
+            title={`核查 ${current.format("YYYY年M月")} 的所有排班`}
+            closable={true}
+            open={true}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            okText="确定"
+            classNames={{body: 'min-h-3'}}
+            footer={(_, {OkBtn}) => <OkBtn/>}
+            width={'80%'}
+        >
+            <Table
+                loading={loading}
+                columns={columns}
+                dataSource={dataSource}
+                scroll={{x: 'max-content', y: 800}}
+                pagination={false}
+                column={{align: 'center'}}
+                size={'middle'}
+                bordered
+            />
+        </Modal>
     );
 }

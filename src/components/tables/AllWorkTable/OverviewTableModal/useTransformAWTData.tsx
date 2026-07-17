@@ -1,22 +1,18 @@
-import {getWSbyMonth, PersonDateBansMap} from "@/api/WorkSchedule/getWSbyMonth";
 import {useEffect, useState} from "react";
-import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
-import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
+import {getWSbyMonth, PersonDateBansMap} from "@/api/WorkSchedule/getWSbyMonth";
 import {getTransformTableData} from "@/components/utils/getTransformTableData";
+import {useCurrentContext} from "@/components/hooks/CurrentContext";
 
-export function useTransformSTData() {
-    const {current} = useScheduleTableContext();
-    const {modalKey} = useSTSideMenuModalContext();
+export default function useTransformAWTData() {
+    const {current} = useCurrentContext();
     const [dbData, setDbData] = useState<PersonDateBansMap | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         let isMounted = true;
-        if (modalKey !== 'hechapaiban') {
-            return;
-        }
+
         const formatCurrDate = current.format('YYYY-MM-DD');
-        getWSbyMonth(formatCurrDate).then(dbData => {
+        getWSbyMonth(formatCurrDate, false).then(dbData => {
             if (isMounted) {
                 setDbData(dbData);
                 setLoading(false);
@@ -26,7 +22,7 @@ export function useTransformSTData() {
             isMounted = false;
             setLoading(true);
         };
-    }, [current, modalKey]);
+    }, [current]);
 
     if (!dbData) {
         return {dataSource: [], columns: [], loading};
@@ -34,4 +30,3 @@ export function useTransformSTData() {
 
     return {...getTransformTableData(dbData, current), loading};
 }
-
