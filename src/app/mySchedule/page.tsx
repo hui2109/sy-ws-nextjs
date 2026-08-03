@@ -1,10 +1,7 @@
-import React from 'react';
-import {Button} from 'antd';
+import MyWorkCalendar from "@/components/tables/MyWorkCalendar/MyWorkCalendar";
 
-const Home = () => (
-    <div className="App">
-        <Button type="primary">mySchedule</Button>
-    </div>
-);
-
-export default Home;
+export default function mySchedule() {
+    return (
+        <MyWorkCalendar/>
+    )
+}

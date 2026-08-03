@@ -2,6 +2,6 @@
 
 import {redirect} from 'next/navigation';
 
-export default function ScheduleToolsPage() {
+export default function ScheduleTools() {
     redirect('/scheduleTools/start');
 }

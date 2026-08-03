@@ -1,10 +1,7 @@
-import React from 'react';
-import {Button} from 'antd';
+'use client';
 
-const Home = () => (
-    <div className="App">
-        <Button type="primary">Button</Button>
-    </div>
-);
+import {redirect} from 'next/navigation';
 
-export default Home;
+export default function App() {
+    redirect('/mySchedule');
+}
