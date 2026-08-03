@@ -21,3 +21,5 @@ export enum ApplyStatus {
     PENDING_REVIEW = "待审核",
     SUBMITTED = "已提交",
 }
+
+export const BanNamesForExcludePartner = ['休息'];

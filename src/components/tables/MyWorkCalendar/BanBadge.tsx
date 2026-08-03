@@ -2,6 +2,7 @@ import {Badge, Popover} from "antd";
 import {Dayjs} from "dayjs";
 import React, {Dispatch, SetStateAction} from "react";
 import {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
+import {BanNamesForExcludePartner} from "@/configs/general";
 
 interface IBanBadge {
     banName: string,
@@ -17,7 +18,7 @@ export default function BanBadge({banName, banColor, names, currentUser, current
     const filteredNames = names.filter(item => item !== currentUser);
     let banBadgeNames: React.JSX.Element | null;
 
-    if (filteredNames.length === 0) {
+    if (filteredNames.length === 0 || BanNamesForExcludePartner.includes(banName)) {
         banBadgeNames = null;
     } else if (filteredNames.length <= 2) {
         banBadgeNames = (
