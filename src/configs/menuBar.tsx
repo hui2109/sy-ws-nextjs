@@ -42,15 +42,16 @@ export const topMenuBar: MenuProps['items'] = [
         ),
         key: '/leaveSchedule',
     },
-    {
-        label: (
-            <Link href='/expectSchedule' className="!text-lg font-bold !text-inherit block">
-                <IconFont type={IconType.qiwangpaiban} useSvg={false} className={'me-2 !text-pink-600'}/>
-                <b>期望排班</b>
-            </Link>
-        ),
-        key: '/expectSchedule',
-    },
+    // 期望排班功能取消
+    // {
+    //     label: (
+    //         <Link href='/expectSchedule' className="!text-lg font-bold !text-inherit block">
+    //             <IconFont type={IconType.qiwangpaiban} useSvg={false} className={'me-2 !text-pink-600'}/>
+    //             <b>期望排班</b>
+    //         </Link>
+    //     ),
+    //     key: '/expectSchedule',
+    // },
     {
         label: (
             <Link href='/leaveApply' className="!text-lg font-bold !text-inherit block">
