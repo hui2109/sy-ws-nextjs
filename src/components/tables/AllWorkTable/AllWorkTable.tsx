@@ -1,4 +1,4 @@
-import {Button, Table} from "antd";
+import {Button, Col, Row, Table} from "antd";
 import React, {RefObject, useCallback, useRef, useState} from "react";
 import useAllWorkTableData, {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
@@ -48,52 +48,66 @@ export default function AllWorkTable() {
 
 function AllWorkTableTools({allWorkTableRef}: { allWorkTableRef: RefObject<HTMLDivElement | null> }) {
     const {current, setCurrent} = useCurrentContext();
-    const [isOverViewModalOpen, setIsOverViewModalOpen] = useState<boolean>(false);
+    const [isOverviewModalOpen, setIsOverviewModalOpen] = useState<boolean>(false);
     const [isDownloadModalOpen, setIsDownloadModalOpen] = useState<boolean>(false);
 
     return (
-        <div className='grid grid-cols-3 items-center w-full'>
-            {/* 左侧占位，保持三栏等宽，暂时留空 */}
-            <div/>
+        <>
+            <Row align="middle" justify='center'>
+                {/* 左侧占位 */}
+                <Col span={8}/>
 
-            {/* 中间列：DateJump 居中 */}
-            <div className='flex justify-center'>
-                <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
-            </div>
+                {/* 中间：严格居中 */}
+                <Col span={8}>
+                    <Row justify='center'>
+                        <Col>
+                            <DateJump
+                                picker="month"
+                                current={current}
+                                setCurrent={setCurrent}
+                            />
+                        </Col>
+                    </Row>
+                </Col>
 
-            {/* 右侧列：按钮靠右 */}
-            <div className='flex items-center justify-end gap-3'>
-                <Button
-                    color='magenta'
-                    variant='solid'
-                    size='small'
-                    onClick={() => setIsOverViewModalOpen(true)}
-                >
-                    班种总览
-                </Button>
-                <Button
-                    color='green'
-                    variant='solid'
-                    size='small'
-                    onClick={() => setIsDownloadModalOpen(true)}
-                >
-                    下载排班
-                </Button>
-            </div>
+                {/* 右侧：按钮靠右 */}
+                <Col span={8}>
+                    <Row justify="end" align="middle" gutter={12}>
+                        <Col>
+                            <Button
+                                color="magenta"
+                                variant="solid"
+                                size="small"
+                                onClick={() => setIsOverviewModalOpen(true)}
+                            >
+                                班种总览
+                            </Button>
+                        </Col>
+
+                        <Col>
+                            <Button
+                                color="green"
+                                variant="solid"
+                                size="small"
+                                onClick={() => setIsDownloadModalOpen(true)}
+                            >
+                                下载排班
+                            </Button>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
 
             <OverviewTableModal
-                isModalOpen={isOverViewModalOpen}
-                onClose={() => {
-                    setIsOverViewModalOpen(false);
-                }}
+                isModalOpen={isOverviewModalOpen}
+                onClose={() => setIsOverviewModalOpen(false)}
             />
+
             <DownloadTableModal
                 isModalOpen={isDownloadModalOpen}
-                onClose={() => {
-                    setIsDownloadModalOpen(false);
-                }}
+                onClose={() => setIsDownloadModalOpen(false)}
                 allWorkTableRef={allWorkTableRef}
             />
-        </div>
+        </>
     );
 }
