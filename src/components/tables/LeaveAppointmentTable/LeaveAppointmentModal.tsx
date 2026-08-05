@@ -83,7 +83,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
                 case 'Unique constraint':
                     notification.error({
                         title: '预约休假保存失败',
-                        description: `${selectedStaff} 的 ${selectedBanName} 预约 (${startDate} 至 ${endDate}) 保存失败! 因为 ${selectedStaff} 在该时间段内已有相同预约!`
+                        description: `${selectedStaff} 的 ${selectedBanName} 预约 (${startDate} 至 ${endDate} 共 ${add_number + 1} 天) 保存失败! 因为 ${selectedStaff} 在该时间段内已有相同预约!`
                     })
                     break;
                 default:
@@ -98,6 +98,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
 
     function onCancel() {
         if (!selectedCell || !selectedCell?.name) return;
+
         const startDate = selectedCell.day.format("YYYY-MM-DD");
         const add_number = duplicateCheck ? duplicateNum - 1 : 0;
         const endDate = selectedCell.day.add(add_number, 'day').format("YYYY-MM-DD");
