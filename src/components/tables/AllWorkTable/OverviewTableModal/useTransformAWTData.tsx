@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {getWSbyMonth, PersonDateBansMap} from "@/api/WorkSchedule/getWSbyMonth";
 import {getTransformTableData} from "@/components/utils/getTransformTableData";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
+import {ScheduleStatus} from "@/configs/general";
 
 export default function useTransformAWTData() {
     const {current} = useCurrentContext();
@@ -24,7 +25,8 @@ export default function useTransformAWTData() {
         };
     }, [current]);
 
-    if (!dbData) {
+    // 未发布的排班 不能查看
+    if (!dbData || dbData.monthStatus !== ScheduleStatus.PUBLISHED) {
         return {dataSource: [], columns: [], loading};
     }
 
