@@ -35,4 +35,14 @@ export async function deleteWSRecord(dt: string, banName: string, name: string) 
             workScheduleId: workSchedule.id,
         }
     });
+
+    // 当workSchedule下没有任何的scheduleAssignment时，将此workSchedule也删了
+    await prisma.workSchedule.deleteMany({
+        where: {
+            id: workSchedule.id,
+            scheduleAssignments: {
+                none: {},
+            },
+        }
+    })
 }
