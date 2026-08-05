@@ -6,6 +6,7 @@ export const LatterBantype = ['OAE', 'OAF',
     'T1A', 'T1B',
     'T2A', 'T2B',
     'T3A', 'T3B',
+    '事假', '病假', '丧假', '婚假', '产假', '陪产假', '育儿假', '其他假',
     '补假', '休息']
 
 export enum ScheduleStatus {

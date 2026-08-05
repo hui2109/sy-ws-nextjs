@@ -2,7 +2,7 @@ import {Button, Col, Row, Table} from "antd";
 import React, {RefObject, useCallback, useRef, useState} from "react";
 import useAllWorkTableData, {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
-import DateJump from "@/components/dateSelects/DateJump";
+import DateJump from "@/components/utils/DateJump";
 import BanTypeInfoModal from "@/components/tables/AllWorkTable/BanTypeInfoModal/BanTypeInfoModal";
 import OverviewTableModal from "@/components/tables/AllWorkTable/OverviewTableModal/OverviewTableModal";
 import DownloadTableModal from "@/components/tables/AllWorkTable/DownloadTableModal/DownloadTableModal";

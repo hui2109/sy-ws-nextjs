@@ -1,5 +1,5 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {Badge, Checkbox, InputNumber, Select, TableColumnsType} from "antd";
+import React, {useEffect, useState} from "react";
+import {Badge, Select, TableColumnsType} from "antd";
 import NullText from "@/components/utils/NullText";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
@@ -7,6 +7,7 @@ import creactWSRecord from "@/api/WorkSchedule/creactWSRecord";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
 import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import {DuplicateCheck} from "@/components/utils/DuplicateCheck";
 
 export interface IAddTableData {
     dataSource: {
@@ -75,7 +76,7 @@ export default function useAddTableData(): IAddTableData {
                         </div>
                     );
                 }
-                return <Duplicate
+                return <DuplicateCheck
                     text={data}
                     duplicateCheck={duplicateCheck}
                     duplicateNum={duplicateNum}
@@ -112,37 +113,6 @@ export default function useAddTableData(): IAddTableData {
 
     return {dataSource, columns, loading};
 }
-
-function Duplicate({text, duplicateCheck, duplicateNum, setDuplicateCheck, setDuplicateNum}: {
-    text: string;
-    duplicateCheck: boolean;
-    duplicateNum: number;
-    setDuplicateCheck: Dispatch<SetStateAction<boolean>>;
-    setDuplicateNum: Dispatch<SetStateAction<number>>;
-}) {
-    return (
-        <div className='flex items-center justify-center gap-2'>
-            <Checkbox
-                checked={duplicateCheck}
-                onChange={(e) => setDuplicateCheck(e.target.checked)}
-            >
-                {text}
-            </Checkbox>
-            <InputNumber
-                value={duplicateNum}
-                onChange={(value) => setDuplicateNum(value ?? 5)}
-                mode='spinner'
-                min={2}
-                max={10}
-                style={{width: 100}}
-                size='small'
-                disabled={!duplicateCheck}
-            />
-            <span>次</span>
-        </div>
-    );
-}
-
 
 function SelectBan({placeholder, validBanNames, banTypeColorMap, duplicateCheck, duplicateNum}: {
     placeholder: string;

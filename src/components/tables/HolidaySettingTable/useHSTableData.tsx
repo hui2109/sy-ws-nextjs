@@ -10,6 +10,7 @@ import getValidBanNames from "@/api/BanType/getValidBanNames";
 import deleteRule from "@/api/VacationRule/deleteRule";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
+import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
 
 export interface IRuleData {
     key: number
@@ -61,7 +62,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
         ]).then(([validStaffs, validBanNames, banTypeColorMap]) => {
             if (isMounted) {
                 setValidStaffs(validStaffs);
-                setValidBanNames(validBanNames.filter(banName => banName.endsWith('假') && !['补假', '调休假'].includes(banName)));
+                setValidBanNames(filteredRelaxBanNames(validBanNames));
                 setBanTypeColorMap(banTypeColorMap);
                 setLoading(false);
             }
