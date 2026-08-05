@@ -3,7 +3,7 @@ import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import {Badge, TableColumnsType} from "antd";
-import {Weekdays} from "@/configs/general";
+import {ScheduleStatus, Weekdays} from "@/configs/general";
 import NullText from "@/components/utils/NullText";
 import {getMonthStatusBadge} from "@/components/utils/getMonthStatusBadge";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
@@ -56,24 +56,27 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
 
     if (!DBData || !banTypeColorMap) return {dataSource: [], columns: [], loading};
 
-    const dataSource = Object.entries(DBData.nameBansMap)
-        .filter(([, scheduleInfo]) => Object.keys(scheduleInfo).length > 0)
-        .map(([personName, scheduleInfo]) => {
-            const rowData: {
-                key: string;
-                name: string;
-                [date: string]: string[] | string;
-            } = {
-                key: personName,
-                name: personName,
-            };
+    // 只有审核了的排班, 才能被看到
+    const dataSource = (DBData.monthStatus === ScheduleStatus.PUBLISHED) ?
+        Object.entries(DBData.nameBansMap)
+            .filter(([, scheduleInfo]) => Object.keys(scheduleInfo).length > 0)
+            .map(([personName, scheduleInfo]) => {
+                const rowData: {
+                    key: string;
+                    name: string;
+                    [date: string]: string[] | string;
+                } = {
+                    key: personName,
+                    name: personName,
+                };
 
-            for (const [stringDate, bansList] of Object.entries(scheduleInfo)) {
-                rowData[stringDate] = sortBanTypeList(bansList);
-            }
+                for (const [stringDate, bansList] of Object.entries(scheduleInfo)) {
+                    rowData[stringDate] = sortBanTypeList(bansList);
+                }
 
-            return rowData;
-        });
+                return rowData;
+            })
+        : [];
 
     const daysInMonth = Array.from(
         {length: current.daysInMonth()},

@@ -35,12 +35,23 @@ export default async function getPersonAllWSbyNameMonth(dt: string, name: string
                     banName: true
                 }
             },
-            workDate: true
+            workDate: true,
+            status: true
         },
         orderBy: {
             workDate: "asc",
         },
     });
+    const personAllWSDateBansNamesMap: PersonAllWSDateBansNamesMap = {[name]: {}};
+
+    // 如果当月排班未发布, 则直接返回空对象
+    const monthStatus = new Set<string>();
+    workSchedules.forEach((workSchedule) => {
+        monthStatus.add(workSchedule.status);
+    });
+    if (monthStatus.size !== 1 || !monthStatus.has('PUBLISHED')) {
+        return personAllWSDateBansNamesMap;
+    }
 
     // 然后根据workSchedule ID查找对应的排班记录
     const scheduleAssignmentsNames: Array<{ person: { name: string } }[]> = [];
@@ -61,7 +72,6 @@ export default async function getPersonAllWSbyNameMonth(dt: string, name: string
         )
     }
 
-    const personAllWSDateBansNamesMap: PersonAllWSDateBansNamesMap = {[name]: {}};
     for (let i = 0; i < workSchedules.length; i++) {
         const workSchedule = workSchedules[i];
         const dateString: string = dayjs.utc(workSchedule.workDate).format("YYYY-MM-DD");
