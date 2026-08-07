@@ -17,23 +17,28 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
 
     return (
         <Layout>
-            <Header className="flex items-center !px-[80px]">
-                <div className="flex items-center me-4">
-                    <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
-                    <span className="text-pink-600 text-xl font-bold">{AppName}</span>
+            <Header
+                className="flex items-center justify-center !px-0 shadow-md"
+            >
+                <div className="flex items-center w-full max-w-[1300px] mx-auto px-6">
+                    <div className="flex items-center me-4 ms-[30px]">
+                        <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
+                        <span className="text-pink-600 text-xl font-bold tracking-wide">{AppName}</span>
+                    </div>
+                    <ConfigProvider theme={menuBarStyle}>
+                        <Menu
+                            theme="dark"
+                            mode="horizontal"
+                            selectedKeys={['/' + pathname.split('/')[1]]}
+                            defaultSelectedKeys={['/scheduleTools']}
+                            items={topMenuBar}
+                            style={{flex: 1, minWidth: 0, background: 'transparent'}}
+                        />
+                    </ConfigProvider>
                 </div>
-                <ConfigProvider theme={menuBarStyle}>
-                    <Menu
-                        theme="dark"
-                        mode="horizontal"
-                        selectedKeys={['/' + pathname.split('/')[1]]}
-                        defaultSelectedKeys={['/scheduleTools']}
-                        items={topMenuBar}
-                        style={{flex: 1, minWidth: 0}}
-                    />
-                </ConfigProvider>
             </Header>
-            <Content className="pt-[36px] px-[50px] pb-[10px]">
+
+            <Content className="pt-[18px] pb-[10px] max-w-[1300px] mx-auto w-full">
                 <div className={'min-h-[80vh] p-4'}
                      style={{
                          background: colorBgContainer,

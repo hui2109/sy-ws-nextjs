@@ -42,7 +42,7 @@ export async function login(loginFormValues: ILoginFormValues) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        maxAge: 60 * 60 * 24 * 7, // 7 天，需和 token 有效期一致
+        maxAge: 60 * 60 * 24, // 1 天，需和 token 有效期一致
     });
 
     return {
