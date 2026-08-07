@@ -1,4 +1,4 @@
-export const AppName = "小张排班";
+export const AppName = "放疗排班";
 export const Weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 export const LatterBantype = ['OAE', 'OAF',
     'OBE', 'OBF',
