@@ -43,7 +43,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                     {children}
                 </div>
             </Content>
-            <Footer className="text-center !px-[50px] !py-[0px]">Powered by NextJS ©{currentYear} Created by Xuhui Zhang</Footer>
+            <Footer className="text-center !px-[50px] !py-[0px]">Powered by NextJS © {currentYear} Created by Xuhui Zhang</Footer>
         </Layout>
     );
 };

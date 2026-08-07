@@ -54,7 +54,7 @@ export const topMenuBar: MenuProps['items'] = [
     // },
     {
         label: (
-            <Link href='/src/app/(main)/leaveApply' className="!text-lg font-bold !text-inherit block">
+            <Link href='/leaveApply' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.jiaqinshenqing} useSvg={true} className={'me-2'}/>
                 <b>假勤申请</b>
             </Link>
@@ -63,7 +63,7 @@ export const topMenuBar: MenuProps['items'] = [
     },
     {
         label: (
-            <Link href='/src/app/(main)/statistics' className="!text-lg font-bold !text-inherit block">
+            <Link href='/statistics' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.tongji} useSvg={true} className={'me-2'}/>
                 <b>统计</b>
             </Link>
@@ -85,7 +85,7 @@ export const topMenuBar: MenuProps['items'] = [
 export const scheduleToolsMenuBar: MenuProps['items'] = [
     {
         label: (
-            <Link href='/src/app/(main)/scheduleTools/start' className="!text-lg font-bold !text-inherit block">
+            <Link href='/scheduleTools/start' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.kaishipaiban} useSvg={false} className={'me-2 !text-pink-600'}/>
                 <b>开始排班</b>
             </Link>
@@ -141,7 +141,7 @@ export const scheduleToolsMenuBar: MenuProps['items'] = [
     },
     {
         label: (
-            <Link href='/src/app/(main)/scheduleTools/holidaySettings' className="!text-lg font-bold !text-inherit block">
+            <Link href='/scheduleTools/holidaySettings' className="!text-lg font-bold !text-inherit block">
                 <IconFont type={IconType.jiaqishezhi} useSvg={false} className={'me-2 !text-pink-600'}/>
                 <b>假期设置</b>
             </Link>

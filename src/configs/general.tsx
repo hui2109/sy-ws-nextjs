@@ -1,4 +1,4 @@
-export const AppName = "省医电离排班站";
+export const AppName = "小张排班";
 export const Weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 export const LatterBantype = ['OAE', 'OAF',
     'OBE', 'OBF',
@@ -24,3 +24,5 @@ export enum ApplyStatus {
 }
 
 export const BanNamesForExcludePartner = ['休息'];
+
+export const PSPrefix = 'syfl'
