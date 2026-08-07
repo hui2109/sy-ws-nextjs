@@ -7,6 +7,7 @@ import {IconFont, IconType} from "@/assets/icons/IconFont";
 import {usePathname} from 'next/navigation';
 import dayjs from "dayjs";
 import {menuBarStyle, topMenuBar} from "@/configs/menuBar";
+import Link from "next/link";
 
 const {Header, Content, Footer} = Layout;
 
@@ -21,10 +22,12 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                 className="flex items-center justify-center !px-0 shadow-md"
             >
                 <div className="flex items-center w-full max-w-[1300px] mx-auto px-6">
-                    <div className="flex items-center me-4 ms-[30px]">
-                        <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
-                        <span className="text-pink-600 text-xl font-bold tracking-wide">{AppName}</span>
-                    </div>
+                    <Link href='/'>
+                        <div className="flex items-center me-4 ms-[30px]">
+                            <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
+                            <span className="text-pink-600 text-xl font-bold tracking-wide">{AppName}</span>
+                        </div>
+                    </Link>
                     <ConfigProvider theme={menuBarStyle}>
                         <Menu
                             theme="dark"
