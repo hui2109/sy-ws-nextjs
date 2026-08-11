@@ -46,7 +46,7 @@ export default function Login() {
                 notification.success({
                     title: "登录成功",
                     description:
-                        `${LoginStatus.SUCCESS}! ` + `欢迎您, ${res.name} !`,
+                        `欢迎您, ${res.name} !`,
                 });
                 router.push("/");
                 break;
