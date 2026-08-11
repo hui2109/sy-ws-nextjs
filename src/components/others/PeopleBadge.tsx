@@ -8,7 +8,7 @@ export interface IBanTableRow {
     [banName: string]: string[] | string;
 }
 
-export function getPeopleBadge(personNames: string[], record: IBanTableRow, banName: string) {
+export function PeopleBadge(personNames: string[], record: IBanTableRow, banName: string) {
     const length = personNames.length;
     const currDate = dayjs(record.date);
 

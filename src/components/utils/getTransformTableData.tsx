@@ -1,6 +1,6 @@
 import {PersonDateBansMap} from "@/api/WorkSchedule/getWSbyMonth";
 import dayjs, {Dayjs} from "dayjs";
-import {getPeopleBadge, IBanTableRow} from "@/components/utils/getPeopleBadge";
+import {IBanTableRow, PeopleBadge} from "@/components/others/PeopleBadge";
 import type {ColumnsType} from "antd/es/table";
 import {Weekdays} from "@/configs/general";
 
@@ -65,7 +65,7 @@ export function getTransformTableData(dbData: PersonDateBansMap, current: Dayjs)
         ...sortedBanNames.map((banName) => ({
             title: banName,
             dataIndex: banName,
-            render: (personNames: string[], record: IBanTableRow) => getPeopleBadge(personNames, record, banName),
+            render: (personNames: string[], record: IBanTableRow) => PeopleBadge(personNames, record, banName),
         })),
     ];
 

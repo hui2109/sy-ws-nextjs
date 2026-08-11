@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from 
 import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {Button, Table} from "antd";
 import PaiBanModal from "@/components/tables/ScheduleTable/PaiBanModal/PaiBanModal";
-import DateJump from "@/components/utils/DateJump";
+import DateJump from "@/components/others/DateJump";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import useScheduleTableData, {IScheduleCellInfo, IScheduleTableTools} from "@/components/tables/ScheduleTable/useScheduleTableData";
 import dayjs from "dayjs";

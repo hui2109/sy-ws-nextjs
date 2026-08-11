@@ -4,8 +4,8 @@ import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import {Badge, TableColumnsType} from "antd";
 import {ScheduleStatus, Weekdays} from "@/configs/general";
-import NullText from "@/components/utils/NullText";
-import {getMonthStatusBadge} from "@/components/utils/getMonthStatusBadge";
+import NullText from "@/components/others/NullText";
+import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import {Dayjs} from "dayjs";
 
@@ -118,7 +118,7 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
     });
 
     columns.unshift({
-        title: getMonthStatusBadge(DBData.monthStatus),
+        title: MonthStatusBadge(DBData.monthStatus),
         dataIndex: 'name',
         fixed: 'start',
         width: 80,

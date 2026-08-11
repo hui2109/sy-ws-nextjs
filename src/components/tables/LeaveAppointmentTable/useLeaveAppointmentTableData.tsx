@@ -4,7 +4,7 @@ import getLeaveAppointmentbyDate, {ILeaveAppointmentData} from "@/api/LeaveAppoi
 import React, {useEffect, useState} from "react";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import {Badge, TableColumnsType} from "antd";
-import NullText from "@/components/utils/NullText";
+import NullText from "@/components/others/NullText";
 import {Weekdays} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
 

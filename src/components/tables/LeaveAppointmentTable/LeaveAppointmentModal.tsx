@@ -2,7 +2,7 @@ import {ILATableCellInfo} from "@/components/tables/LeaveAppointmentTable/useLea
 import {Badge, Button, Col, Divider, Modal, Popconfirm, Row, Select} from "antd";
 import {Weekdays} from "@/configs/general";
 import React, {useEffect, useState} from "react";
-import {DuplicateCheck} from "@/components/utils/DuplicateCheck";
+import {DuplicateCheck} from "@/components/others/DuplicateCheck";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
 import {getValidStaff} from "@/api/Person/getValidStaff";
 import saveLeaveAppointments, {ILeaveAppointmentData} from "@/api/LeaveAppointment/saveLeaveAppointments";

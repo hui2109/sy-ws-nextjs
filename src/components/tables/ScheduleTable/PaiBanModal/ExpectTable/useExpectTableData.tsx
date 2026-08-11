@@ -4,7 +4,7 @@ import findExpectedSchedulebyNameDate from "@/api/ExpectedSchedule/findExpectedS
 import findLeaveppointmentbyNameDate from "@/api/LeaveAppointment/findLeaveppointmentbyNameDate";
 import findExpectedSchedulebyDateBanName from "@/api/ExpectedSchedule/findExpectedSchedulebyDateBanName";
 import findLeaveppointmentbyDate from "@/api/LeaveAppointment/findLeaveppointmentbyDate";
-import NullText from "@/components/utils/NullText";
+import NullText from "@/components/others/NullText";
 import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
 
 export interface IExpectTableData {

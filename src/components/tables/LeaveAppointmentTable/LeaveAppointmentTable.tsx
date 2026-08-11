@@ -1,7 +1,7 @@
 import {Table} from "antd";
 import React, {useCallback, useState} from "react";
 import useLeaveAppointmentTableData, {ILATableCellInfo} from "@/components/tables/LeaveAppointmentTable/useLeaveAppointmentTableData";
-import DateJump from "@/components/utils/DateJump";
+import DateJump from "@/components/others/DateJump";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import LeaveAppointmentModal from "@/components/tables/LeaveAppointmentTable/LeaveAppointmentModal";
 

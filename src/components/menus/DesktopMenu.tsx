@@ -8,11 +8,13 @@ import {usePathname} from 'next/navigation';
 import dayjs from "dayjs";
 import {menuBarStyle, topMenuBar} from "@/configs/menuBar";
 import Link from "next/link";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 const {Header, Content, Footer} = Layout;
 
 export default function DesktopMenu({children}: { children: React.ReactNode }): React.ReactNode {
     const {token: {colorBgContainer, borderRadiusLG}} = theme.useToken();
+    const {currentUser} = useAppContext();
     const pathname = usePathname();
     const currentYear = dayjs().year();
 
@@ -38,6 +40,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                             style={{flex: 1, minWidth: 0, background: 'transparent'}}
                         />
                     </ConfigProvider>
+                    <div>{currentUser}</div>
                 </div>
             </Header>
 

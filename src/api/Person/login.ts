@@ -16,6 +16,7 @@ export async function login(loginFormValues: ILoginFormValues) {
     if (!person) {
         return {
             status: LoginStatus.NOT_FOUND,
+            name: '',
         };
     }
 
@@ -27,6 +28,7 @@ export async function login(loginFormValues: ILoginFormValues) {
     if (!passwordMatched) {
         return {
             status: LoginStatus.VERIFY_ERROR,
+            name: '',
         };
     }
 

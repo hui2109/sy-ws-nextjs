@@ -1,7 +1,7 @@
 import {ScheduleStatus} from "@/configs/general";
 import {Badge} from "antd";
 
-export function getMonthStatusBadge(monthStatus: string) {
+export function MonthStatusBadge(monthStatus: string) {
     const monthStatusColorMap: Record<string, string> = {
         [ScheduleStatus.NODATA]: '#5810db',
         [ScheduleStatus.DRAFT]: '#f5222d',

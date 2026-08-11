@@ -4,13 +4,13 @@ import {Weekdays} from "@/configs/general";
 import {Dayjs} from "dayjs";
 import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
-import NullText from "@/components/utils/NullText";
+import NullText from "@/components/others/NullText";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {NotificationInstance} from "antd/es/notification/interface";
 import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
-import {getMonthStatusBadge} from "@/components/utils/getMonthStatusBadge";
+import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -207,7 +207,7 @@ function getColumns(
     });
 
     columns.unshift({
-        title: getMonthStatusBadge(monthStatus),
+        title: MonthStatusBadge(monthStatus),
         dataIndex: 'name',
         fixed: 'start',
         width: 80,

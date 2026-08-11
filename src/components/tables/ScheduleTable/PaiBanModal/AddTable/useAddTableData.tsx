@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Badge, Select, TableColumnsType} from "antd";
-import NullText from "@/components/utils/NullText";
+import NullText from "@/components/others/NullText";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
 import creactWSRecord from "@/api/WorkSchedule/creactWSRecord";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {deleteWSRecord} from "@/api/WorkSchedule/deleteWSRecord";
 import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
-import {DuplicateCheck} from "@/components/utils/DuplicateCheck";
+import {DuplicateCheck} from "@/components/others/DuplicateCheck";
 
 export interface IAddTableData {
     dataSource: {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, {createContext, useContext} from "react";
+import React, {createContext, Dispatch, SetStateAction, useContext, useState} from "react";
 import {ConfigProvider, notification} from "antd";
 import locale from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
@@ -11,18 +11,23 @@ dayjs.locale('zh-cn');
 
 interface IAppContext {
     notification: NotificationInstance;
+    currentUser: string;
+    setCurrentUser: Dispatch<SetStateAction<string>>;
 }
 
 export const AppContext = createContext<IAppContext | null>(null);
 
 export function AppProvider({children}: { children: React.ReactNode }) {
     const [api, contextHolder] = notification.useNotification({placement: "topRight", showProgress: true, pauseOnHover: true, duration: 2.3});
+    const [currentUser, setCurrentUser] = useState<string>('');
 
     return (
         <ConfigProvider locale={locale}>
             {contextHolder}
             <AppContext value={{
-                notification: api
+                notification: api,
+                currentUser,
+                setCurrentUser
             }}>
                 {children}
             </AppContext>

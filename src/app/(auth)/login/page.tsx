@@ -16,7 +16,7 @@ const {Title, Text} = Typography;
 
 export default function Login() {
     const router = useRouter();
-    const {notification} = useAppContext();
+    const {notification, setCurrentUser} = useAppContext();
     const [loading, setLoading] = useState(false);
     const currentYear = dayjs().year();
 
@@ -43,6 +43,7 @@ export default function Login() {
                 break;
 
             case LoginStatus.SUCCESS:
+                setCurrentUser(res.name);
                 notification.success({
                     title: "登录成功",
                     description:
