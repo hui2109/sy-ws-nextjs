@@ -8,8 +8,8 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 import {IconFont, IconType} from "@/assets/icons/IconFont";
 import {AppName} from "@/configs/general";
 import dayjs from "dayjs";
-import {login} from "@/api/Person/login";
-import {ILoginFormValues, LoginStatus} from "@/api/Person/types/login.types";
+import {login} from "@/api/SessionToken/login";
+import {ILoginFormValues, LoginStatus} from "@/api/SessionToken/types/login.types";
 import Link from "next/link";
 
 const {Title, Text} = Typography;

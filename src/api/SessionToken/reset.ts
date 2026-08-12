@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import {prisma} from "@/connectionsDB/prisma";
-import {IResetFormValues, ResetStatus} from "@/api/Person/types/reset.types";
+import {IResetFormValues, ResetStatus} from "@/api/SessionToken/types/reset.types";
 import {PSPrefix} from "@/configs/general";
 
 export async function reset(resetFormValues: IResetFormValues) {

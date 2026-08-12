@@ -3,7 +3,7 @@
 import bcrypt from "bcryptjs";
 import {cookies} from "next/headers";
 import {prisma} from "@/connectionsDB/prisma";
-import {ILoginFormValues, LoginStatus} from "@/api/Person/types/login.types";
+import {ILoginFormValues, LoginStatus} from "@/api/SessionToken/types/login.types";
 import {createSessionToken} from "@/api/SessionToken/session";
 
 export async function login(loginFormValues: ILoginFormValues) {

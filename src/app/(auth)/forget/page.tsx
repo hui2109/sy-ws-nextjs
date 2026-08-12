@@ -9,8 +9,8 @@ import {IconFont, IconType} from "@/assets/icons/IconFont";
 import {AppName} from "@/configs/general";
 import dayjs from "dayjs";
 import Link from "next/link";
-import {reset} from "@/api/Person/reset";
-import {IResetFormValues, ResetStatus} from "@/api/Person/types/reset.types";
+import {reset} from "@/api/SessionToken/reset";
+import {IResetFormValues, ResetStatus} from "@/api/SessionToken/types/reset.types";
 
 const {Title, Text} = Typography;
 
