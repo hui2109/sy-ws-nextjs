@@ -43,6 +43,7 @@ export default function Login() {
                 break;
 
             case LoginStatus.SUCCESS:
+                if (!res.name) break;
                 setCurrentUser(res.name);
                 notification.success({
                     title: "登录成功",

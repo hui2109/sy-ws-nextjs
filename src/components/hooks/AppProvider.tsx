@@ -11,15 +11,15 @@ dayjs.locale('zh-cn');
 
 interface IAppContext {
     notification: NotificationInstance;
-    currentUser: string;
-    setCurrentUser: Dispatch<SetStateAction<string>>;
+    currentUser: string | null;
+    setCurrentUser: Dispatch<SetStateAction<string | null>>;
 }
 
 export const AppContext = createContext<IAppContext | null>(null);
 
-export function AppProvider({children}: { children: React.ReactNode }) {
+export function AppProvider({initialUser, children}: { initialUser: string | null; children: React.ReactNode }) {
     const [api, contextHolder] = notification.useNotification({placement: "topRight", showProgress: true, pauseOnHover: true, duration: 2.3});
-    const [currentUser, setCurrentUser] = useState<string>('');
+    const [currentUser, setCurrentUser] = useState<string | null>(initialUser);
 
     return (
         <ConfigProvider locale={locale}>

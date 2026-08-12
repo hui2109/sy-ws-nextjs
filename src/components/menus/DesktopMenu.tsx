@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import {menuBarStyle, topMenuBar} from "@/configs/menuBar";
 import Link from "next/link";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import UserDropDown from "@/components/others/UserDropDown";
 
 const {Header, Content, Footer} = Layout;
 
@@ -40,7 +41,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                             style={{flex: 1, minWidth: 0, background: 'transparent'}}
                         />
                     </ConfigProvider>
-                    <div>{currentUser}</div>
+                    {currentUser && <UserDropDown/>}
                 </div>
             </Header>
 
