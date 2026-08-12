@@ -50,6 +50,7 @@ export type PersonMinAggregateOutputType = {
   phoneNumber: string | null
   isActive: boolean | null
   displayOrder: number | null
+  role: $Enums.Role | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +67,7 @@ export type PersonMaxAggregateOutputType = {
   phoneNumber: string | null
   isActive: boolean | null
   displayOrder: number | null
+  role: $Enums.Role | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -82,6 +84,7 @@ export type PersonCountAggregateOutputType = {
   phoneNumber: number
   isActive: number
   displayOrder: number
+  role: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -112,6 +115,7 @@ export type PersonMinAggregateInputType = {
   phoneNumber?: true
   isActive?: true
   displayOrder?: true
+  role?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -128,6 +132,7 @@ export type PersonMaxAggregateInputType = {
   phoneNumber?: true
   isActive?: true
   displayOrder?: true
+  role?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -144,6 +149,7 @@ export type PersonCountAggregateInputType = {
   phoneNumber?: true
   isActive?: true
   displayOrder?: true
+  role?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -247,6 +253,7 @@ export type PersonGroupByOutputType = {
   phoneNumber: string
   isActive: boolean
   displayOrder: number
+  role: $Enums.Role
   createdAt: Date
   updatedAt: Date
   _count: PersonCountAggregateOutputType | null
@@ -286,6 +293,7 @@ export type PersonWhereInput = {
   phoneNumber?: Prisma.StringFilter<"Person"> | string
   isActive?: Prisma.BoolFilter<"Person"> | boolean
   displayOrder?: Prisma.IntFilter<"Person"> | number
+  role?: Prisma.EnumRoleFilter<"Person"> | $Enums.Role
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentListRelationFilter
@@ -310,6 +318,7 @@ export type PersonOrderByWithRelationInput = {
   phoneNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   scheduleAssignments?: Prisma.ScheduleAssignmentOrderByRelationAggregateInput
@@ -337,6 +346,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   phoneNumber?: Prisma.StringFilter<"Person"> | string
   isActive?: Prisma.BoolFilter<"Person"> | boolean
   displayOrder?: Prisma.IntFilter<"Person"> | number
+  role?: Prisma.EnumRoleFilter<"Person"> | $Enums.Role
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentListRelationFilter
@@ -361,6 +371,7 @@ export type PersonOrderByWithAggregationInput = {
   phoneNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PersonCountOrderByAggregateInput
@@ -385,6 +396,7 @@ export type PersonScalarWhereWithAggregatesInput = {
   phoneNumber?: Prisma.StringWithAggregatesFilter<"Person"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Person"> | boolean
   displayOrder?: Prisma.IntWithAggregatesFilter<"Person"> | number
+  role?: Prisma.EnumRoleWithAggregatesFilter<"Person"> | $Enums.Role
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
 }
@@ -400,6 +412,7 @@ export type PersonCreateInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -424,6 +437,7 @@ export type PersonUncheckedCreateInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -447,6 +461,7 @@ export type PersonUpdateInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -471,6 +486,7 @@ export type PersonUncheckedUpdateInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -495,6 +511,7 @@ export type PersonCreateManyInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -510,6 +527,7 @@ export type PersonUpdateManyMutationInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -526,6 +544,7 @@ export type PersonUncheckedUpdateManyInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -542,6 +561,7 @@ export type PersonCountOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -564,6 +584,7 @@ export type PersonMaxOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -580,6 +601,7 @@ export type PersonMinOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -621,6 +643,10 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: $Enums.Role
 }
 
 export type PersonCreateNestedOneWithoutVacationRulesInput = {
@@ -746,6 +772,7 @@ export type PersonCreateWithoutVacationRulesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -769,6 +796,7 @@ export type PersonUncheckedCreateWithoutVacationRulesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -807,6 +835,7 @@ export type PersonUpdateWithoutVacationRulesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -830,6 +859,7 @@ export type PersonUncheckedUpdateWithoutVacationRulesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -852,6 +882,7 @@ export type PersonCreateWithoutLeaveAppointmentsInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -875,6 +906,7 @@ export type PersonUncheckedCreateWithoutLeaveAppointmentsInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -913,6 +945,7 @@ export type PersonUpdateWithoutLeaveAppointmentsInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -936,6 +969,7 @@ export type PersonUncheckedUpdateWithoutLeaveAppointmentsInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -958,6 +992,7 @@ export type PersonCreateWithoutExpectedSchedulesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -981,6 +1016,7 @@ export type PersonUncheckedCreateWithoutExpectedSchedulesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1019,6 +1055,7 @@ export type PersonUpdateWithoutExpectedSchedulesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1042,6 +1079,7 @@ export type PersonUncheckedUpdateWithoutExpectedSchedulesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1064,6 +1102,7 @@ export type PersonCreateWithoutShiftScheduleAppliesAsApplicantInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1087,6 +1126,7 @@ export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1114,6 +1154,7 @@ export type PersonCreateWithoutShiftScheduleAppliesAsTargetInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1137,6 +1178,7 @@ export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1175,6 +1217,7 @@ export type PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1198,6 +1241,7 @@ export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1231,6 +1275,7 @@ export type PersonUpdateWithoutShiftScheduleAppliesAsTargetInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1254,6 +1299,7 @@ export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1276,6 +1322,7 @@ export type PersonCreateWithoutAskOffAppliesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1299,6 +1346,7 @@ export type PersonUncheckedCreateWithoutAskOffAppliesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1337,6 +1385,7 @@ export type PersonUpdateWithoutAskOffAppliesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1360,6 +1409,7 @@ export type PersonUncheckedUpdateWithoutAskOffAppliesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1382,6 +1432,7 @@ export type PersonCreateWithoutChangeScheduleAppliesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
@@ -1405,6 +1456,7 @@ export type PersonUncheckedCreateWithoutChangeScheduleAppliesInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1443,6 +1495,7 @@ export type PersonUpdateWithoutChangeScheduleAppliesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1466,6 +1519,7 @@ export type PersonUncheckedUpdateWithoutChangeScheduleAppliesInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1488,6 +1542,7 @@ export type PersonCreateWithoutScheduleAssignmentsInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
@@ -1511,6 +1566,7 @@ export type PersonUncheckedCreateWithoutScheduleAssignmentsInput = {
   phoneNumber: string
   isActive?: boolean
   displayOrder?: number
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
@@ -1549,6 +1605,7 @@ export type PersonUpdateWithoutScheduleAssignmentsInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
@@ -1572,6 +1629,7 @@ export type PersonUncheckedUpdateWithoutScheduleAssignmentsInput = {
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
@@ -1689,6 +1747,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   phoneNumber?: boolean
   isActive?: boolean
   displayOrder?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   scheduleAssignments?: boolean | Prisma.Person$scheduleAssignmentsArgs<ExtArgs>
@@ -1714,6 +1773,7 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phoneNumber?: boolean
   isActive?: boolean
   displayOrder?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
@@ -1730,6 +1790,7 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phoneNumber?: boolean
   isActive?: boolean
   displayOrder?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
@@ -1746,11 +1807,12 @@ export type PersonSelectScalar = {
   phoneNumber?: boolean
   isActive?: boolean
   displayOrder?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "passwordHash" | "avatar" | "name" | "weight" | "hireDate" | "workNumber" | "phoneNumber" | "isActive" | "displayOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "passwordHash" | "avatar" | "name" | "weight" | "hireDate" | "workNumber" | "phoneNumber" | "isActive" | "displayOrder" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scheduleAssignments?: boolean | Prisma.Person$scheduleAssignmentsArgs<ExtArgs>
   vacationRules?: boolean | Prisma.Person$vacationRulesArgs<ExtArgs>
@@ -1789,6 +1851,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     phoneNumber: string
     isActive: boolean
     displayOrder: number
+    role: $Enums.Role
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["person"]>
@@ -2233,6 +2296,7 @@ export interface PersonFieldRefs {
   readonly phoneNumber: Prisma.FieldRef<"Person", 'String'>
   readonly isActive: Prisma.FieldRef<"Person", 'Boolean'>
   readonly displayOrder: Prisma.FieldRef<"Person", 'Int'>
+  readonly role: Prisma.FieldRef<"Person", 'Role'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Person", 'DateTime'>
 }

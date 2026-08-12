@@ -26,3 +26,12 @@ export const ApplyStatus = {
 } as const
 
 export type ApplyStatus = (typeof ApplyStatus)[keyof typeof ApplyStatus]
+
+
+export const Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  SUPERADMIN: 'SUPERADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]

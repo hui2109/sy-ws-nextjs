@@ -25,6 +25,12 @@ enum ApplyStatus {
   SUBMITTED
 }
 
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
 model Person {
   id           Int      @id @default(autoincrement())
   username     String   @unique
@@ -37,6 +43,7 @@ model Person {
   phoneNumber  String
   isActive     Boolean  @default(true)
   displayOrder Int      @default(-1)
+  role         Role     @default(USER)
   createdAt    DateTime @default(now()) @db.Timestamptz(3)
   updatedAt    DateTime @default(now()) @updatedAt @db.Timestamptz(3)
 
