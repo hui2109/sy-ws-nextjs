@@ -26,18 +26,12 @@ export default function UserDropDown() {
     }, []);
 
     useEffect(() => {
-        let isMounted = true;
         if (!currentUser) return;
 
         getAvatar(currentUser).then(r => {
-            if (isMounted) {
-                setCurrentAvatarUrl(r)
-            }
-        })
+            setCurrentAvatarUrl(r)
+        });
 
-        return () => {
-            isMounted = false;
-        };
     }, [currentUser]);
 
     if (!currentUser) return null;
