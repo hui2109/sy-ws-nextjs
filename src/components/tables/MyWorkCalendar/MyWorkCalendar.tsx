@@ -12,18 +12,19 @@ import BanBadge from "@/components/tables/MyWorkCalendar/BanBadge";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import BanTypeInfoModal from "@/components/tables/AllWorkTable/BanTypeInfoModal/BanTypeInfoModal";
 import {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 dayjs.extend(dayLocaleData);
 dayjs.locale('zh-cn');
 
 export default function MyWorkCalendar() {
+    const {currentUser} = useAppContext();
     const [current, setCurrent] = useState<Dayjs>(dayjs());
     const [myWorkData, setMyWorkData] = useState<PersonAllWSDateBansNamesMap | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
     const [monthsFetched, setMonthsFetched] = useState<Array<string>>([]);
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<IWorkTableCellInfo | null>(null);
-    const currentUser = '张旭辉';
 
     useEffect(() => {
         let isMounted = true;
@@ -41,6 +42,7 @@ export default function MyWorkCalendar() {
 
     useEffect(() => {
         let isMounted = true;
+        if (!currentUser) return;
         if (monthsFetched.includes(current.format('YYYY-MM'))) {
             return;
         }
@@ -63,9 +65,9 @@ export default function MyWorkCalendar() {
         return () => {
             isMounted = false;
         };
-    }, [current, monthsFetched]);
+    }, [current, currentUser, monthsFetched]);
 
-    if (!myWorkData || !banTypeColorMap) return;
+    if (!myWorkData || !banTypeColorMap || !currentUser) return;
 
     const fullCellRender = (value: Dayjs, info: CellRenderInfo<Dayjs>) => {
         // 解析班种数据
