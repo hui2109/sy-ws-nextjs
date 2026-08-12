@@ -18,14 +18,14 @@ interface ILeaveAppointmentModal {
 }
 
 export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCell}: ILeaveAppointmentModal) {
+    const {notification, currentUser} = useAppContext();
     const {current, setCurrent} = useCurrentContext();
     const [duplicateCheck, setDuplicateCheck] = useState(true);
     const [duplicateNum, setDuplicateNum] = useState(5);
     const [validStaffs, setValidStaffs] = useState<Array<string>>([]);
     const [validBanNames, setValidBanNames] = useState<Array<string>>([]);
-    const [selectedStaff, setSelectedStaff] = useState<string | null>(null);
+    const [selectedStaff, setSelectedStaff] = useState<string | null>(currentUser);
     const [selectedBanName, setSelectedBanName] = useState<string | null>(null);
-    const {notification} = useAppContext();
 
     useEffect(() => {
         let isMounted = true;
@@ -136,7 +136,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
             onCancel={onClose}
             footer={(_, {OkBtn}) => (
                 <div className='flex items-center justify-between'>
-                    {selectedCell?.name ?
+                    {(selectedCell?.name && currentUser && selectedCell.name === currentUser) ?
                         <Popconfirm
                             title="确定要取消预约吗?"
                             onConfirm={() => {
