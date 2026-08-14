@@ -10,6 +10,7 @@ import {menuBarStyle, topMenuBar} from "@/configs/menuBar";
 import Link from "next/link";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import UserDropDown from "@/components/others/UserDropDown";
+import ThemeDropDown from "@/components/others/ThemeDropDown";
 
 const {Header, Content, Footer} = Layout;
 
@@ -41,6 +42,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                             style={{flex: 1, minWidth: 0, background: 'transparent'}}
                         />
                     </ConfigProvider>
+                    {currentUser && <ThemeDropDown/>}
                     {currentUser && <UserDropDown/>}
                 </div>
             </Header>

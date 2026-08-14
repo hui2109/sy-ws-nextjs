@@ -172,7 +172,7 @@ export default function UserDropDown() {
             >
                 <button
                     type="button"
-                    className="ml-2 flex h-[54px] cursor-pointer items-center gap-2 border-0 bg-transparent px-3 text-white focus:outline-none"
+                    className="flex h-[54px] cursor-pointer items-center gap-2 border-0 bg-transparent px-3 text-white focus:outline-none"
                 >
                     <span className="relative inline-flex h-[36px] w-[36px]">
                         <Avatar
