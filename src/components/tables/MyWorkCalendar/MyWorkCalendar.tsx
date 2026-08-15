@@ -18,7 +18,8 @@ dayjs.extend(dayLocaleData);
 dayjs.locale('zh-cn');
 
 export default function MyWorkCalendar() {
-    const {currentUser} = useAppContext();
+    const {currentUser, resolvedTheme} = useAppContext();
+    const isDark = resolvedTheme === 'dark';
     const [current, setCurrent] = useState<Dayjs>(dayjs());
     const [myWorkData, setMyWorkData] = useState<PersonAllWSDateBansNamesMap | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
@@ -84,10 +85,10 @@ export default function MyWorkCalendar() {
             'text-center relative flex min-h-[112px] flex-col overflow-hidden rounded-xl border p-2',
             'transition-all duration-200',
             isCurrentMonth
-                ? 'border-slate-200 hover:border-blue-300 hover:shadow-md'
-                : 'border-transparent bg-slate-50/70 opacity-15',
+                ? isDark ? 'border-slate-700 hover:border-blue-500 hover:shadow-md' : 'border-slate-200 hover:border-blue-300 hover:shadow-md'
+                : isDark ? 'border-transparent bg-slate-800/40 opacity-15' : 'border-transparent bg-slate-50/70 opacity-15',
             isSelected
-                ? '!border-blue-500'
+                ? isDark ? '!border-blue-400' : '!border-blue-500'
                 : '',
         ].join(' ');
 
@@ -95,8 +96,12 @@ export default function MyWorkCalendar() {
             'flex h-8 min-w-8 items-center justify-center rounded-full px-2',
             'text-sm font-semibold transition-colors',
             isToday
-                ? isSelected ? 'bg-green-600 text-white ring-1 ring-green-300' : 'bg-green-100 text-green-700 ring-1 ring-green-300'
-                : isSelected ? 'bg-blue-600 text-white' : 'text-gray-950'
+                ? isSelected
+                    ? isDark ? 'bg-green-500 text-white ring-1 ring-green-400' : 'bg-green-600 text-white ring-1 ring-green-300'
+                    : isDark ? 'bg-green-900/40 text-green-300 ring-1 ring-green-700' : 'bg-green-100 text-green-700 ring-1 ring-green-300'
+                : isSelected
+                    ? isDark ? 'bg-blue-500 text-white' : 'bg-blue-600 text-white'
+                    : isDark ? 'text-slate-200' : 'text-gray-950'
             ,
         ].join(' ');
 
@@ -142,24 +147,24 @@ export default function MyWorkCalendar() {
                 </div>
 
                 {isToday && (
-                    <span className="absolute right-2 top-2 text-[10px] font-medium text-green-600">今天</span>
+                    <span className={`absolute right-2 top-2 text-[10px] font-medium ${isDark ? 'text-green-400' : 'text-green-600'}`}>今天</span>
                 )}
 
                 {banNames.length > 1 && (
-                    <span className="absolute right-2 top-2 text-[10px] font-medium text-red-600">{banNames.length} 个班!</span>
+                    <span className={`absolute right-2 top-2 text-[10px] font-medium ${isDark ? 'text-red-400' : 'text-red-600'}`}>{banNames.length} 个班!</span>
                 )}
             </div>
         );
     };
 
     return (
-        <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm p-5">
+        <div className={`overflow-hidden rounded-2xl border shadow-sm p-5 ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
             <Calendar
                 value={current}
                 onSelect={(date) => setCurrent(date)}
                 fullCellRender={fullCellRender}
                 classNames={{
-                    content: '[&_thead_tr_th]:text-center [&_thead_tr_th]:!px-2 [&_thead_tr_th]:!text-amber-600 [&_thead_tr_th]:!font-bold'
+                    content: `[&_thead_tr_th]:text-center [&_thead_tr_th]:!px-2 [&_thead_tr_th]:!font-bold ${isDark ? '[&_thead_tr_th]:!text-amber-400' : '[&_thead_tr_th]:!text-amber-600'}`
                 }}
                 headerRender={({value, onChange}) => {
                     // value代表被选中的日期
@@ -184,12 +189,12 @@ export default function MyWorkCalendar() {
                         }));
 
                     return (
-                        <div className="mb-2 flex rounded-xl border border-slate-100 bg-slate-50/80 p-3 items-center justify-between">
+                        <div className={`mb-2 flex rounded-xl border p-5 items-center justify-between ${isDark ? 'border-slate-700 bg-slate-800/60' : 'border-slate-100 bg-slate-50/80'}`}>
                             <div>
-                                <div className="text-lg font-semibold text-slate-800">
+                                <div className={`text-lg font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
                                     {value.format('YYYY 年 M 月')}
                                 </div>
-                                <div className="mt-0.5 text-xs text-slate-500">
+                                <div className={`mt-0.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                                     {currentUser} 的个人排班表
                                 </div>
                             </div>

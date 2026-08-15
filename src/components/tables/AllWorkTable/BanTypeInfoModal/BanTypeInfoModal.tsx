@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
 import {Weekdays} from "@/configs/general";
 import getBanTypeInfos, {IBanTypeInfo} from "@/api/BanType/getBanTypeInfos";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 interface IBanTypeInfoModal {
     isModalOpen: boolean;
@@ -13,6 +14,8 @@ interface IBanTypeInfoModal {
 }
 
 export default function BanTypeInfoModal({isModalOpen, onClose, selectedCell}: IBanTypeInfoModal) {
+    const {resolvedTheme} = useAppContext();
+    const isDark = resolvedTheme === 'dark';
     const [loading, setLoading] = useState<boolean>(true);
     const [banTypeInfos, setBanTypeInfos] = useState<IBanTypeInfo[]>([]);
 
@@ -39,9 +42,9 @@ export default function BanTypeInfoModal({isModalOpen, onClose, selectedCell}: I
         <Modal
             loading={loading}
             title={
-                <div className='flex items-center gap-2 border-b border-slate-100 pb-3'>
-                    <span className='flex h-7 w-7 items-center justify-center rounded-full bg-blue-50'>
-                        <IconFont type={IconType.info} useSvg={false} className='!text-base !text-blue-600'/>
+                <div className={`flex items-center gap-2 border-b pb-3 ${isDark ? 'border-slate-700' : 'border-slate-100'}`}>
+                    <span className={`flex h-7 w-7 items-center justify-center rounded-full ${isDark ? 'bg-blue-900/40' : 'bg-blue-50'}`}>
+                        <IconFont type={IconType.info} useSvg={false} className={isDark ? '!text-base !text-blue-400' : '!text-base !text-blue-600'}/>
                     </span>
                     <b className='text-base'>班种详细信息</b>
                 </div>
@@ -56,13 +59,13 @@ export default function BanTypeInfoModal({isModalOpen, onClose, selectedCell}: I
             centered
         >
             <div className='flex flex-col gap-4 pt-1'>
-                <div className='flex flex-col gap-2 rounded-lg bg-slate-50 px-4 py-3'>
-                    <div className='flex items-center gap-2 text-sm text-slate-700'>
-                        <UserOutlined className='text-slate-400'/>
+                <div className={`flex flex-col gap-2 rounded-lg px-4 py-3 ${isDark ? 'bg-slate-800/60' : 'bg-slate-50'}`}>
+                    <div className={`flex items-center gap-2 text-sm ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+                        <UserOutlined className={isDark ? 'text-slate-500' : 'text-slate-400'}/>
                         <span>{selectedCell.name}</span>
                     </div>
-                    <div className='flex items-center gap-2 text-sm text-slate-700'>
-                        <CalendarOutlined className='text-slate-400'/>
+                    <div className={`flex items-center gap-2 text-sm ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+                        <CalendarOutlined className={isDark ? 'text-slate-500' : 'text-slate-400'}/>
                         <span>
                             {selectedCell.day.format('YYYY年M月D日') + '（' + Weekdays[selectedCell.day.day()] + '）'}
                         </span>
@@ -84,6 +87,9 @@ export default function BanTypeInfoModal({isModalOpen, onClose, selectedCell}: I
 }
 
 function BanTypeInfoCard({banTypeInfo}: { banTypeInfo: IBanTypeInfo }) {
+    const {resolvedTheme} = useAppContext();
+    const isDark = resolvedTheme === 'dark';
+
     return (
         <Card
             size='small'
@@ -98,15 +104,15 @@ function BanTypeInfoCard({banTypeInfo}: { banTypeInfo: IBanTypeInfo }) {
                     classNames={{indicator: '!rounded-lg !font-bold'}}
                 />
 
-                <div className='flex items-center gap-1.5 text-sm text-slate-600'>
-                    <ClockCircleOutlined className='text-slate-400'/>
+                <div className={`flex items-center gap-1.5 text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <ClockCircleOutlined className={isDark ? 'text-slate-500' : 'text-slate-400'}/>
                     <span>{banTypeInfo.startTime}</span>
-                    <span className='text-taupe-800'>→</span>
+                    <span className={isDark ? 'text-slate-400' : 'text-taupe-800'}>→</span>
                     <span>{banTypeInfo.endTime}</span>
                 </div>
 
-                <div className='flex items-start gap-1.5 text-sm text-slate-500'>
-                    <FileTextOutlined className='mt-0.5 shrink-0 text-slate-400'/>
+                <div className={`flex items-start gap-1.5 text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <FileTextOutlined className={`mt-0.5 shrink-0 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}/>
                     <span className='leading-snug'>{banTypeInfo.description}</span>
                 </div>
             </div>

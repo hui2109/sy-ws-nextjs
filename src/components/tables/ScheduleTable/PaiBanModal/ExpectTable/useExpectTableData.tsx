@@ -118,9 +118,7 @@ function getColumns(
             title: '',
             dataIndex: 'key',
             width: 80,
-            onCell: () => ({
-                style: {background: '#fafafa', fontWeight: 600},
-            }),
+            onCell: () => ({style: {fontWeight: 600}}),
         },
         {
             title: '期望排班',

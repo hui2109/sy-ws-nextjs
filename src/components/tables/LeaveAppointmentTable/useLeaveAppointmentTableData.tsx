@@ -7,6 +7,7 @@ import {Badge, TableColumnsType} from "antd";
 import NullText from "@/components/others/NullText";
 import {Weekdays} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 export interface ILATableCellInfo {
     sequence: number,
@@ -121,14 +122,18 @@ export default function useLeaveAppointmentTableData(onCellClick: (info: ILATabl
 }
 
 function LeaveAppointmentBadge({name, banName, color}: ILeaveAppointmentData) {
+    const {resolvedTheme} = useAppContext();
+    const isDark = resolvedTheme === 'dark';
+
     return (
-        <div className="inline-flex flex-col items-center justify-center gap-1.5
-        rounded-xl border border-slate-200 bg-white px-3 py-2
+        <div className={`inline-flex flex-col items-center justify-center gap-1.5
+        rounded-xl border px-3 py-2
         shadow-[0_4px_12px_rgba(15,23,42,0.12)]
         transition-all duration-200
         hover:-translate-y-0.5
-        hover:shadow-[0_8px_20px_rgba(15,23,42,0.16)]">
-            <span className="text-sm font-medium text-slate-700">
+        hover:shadow-[0_8px_20px_rgba(15,23,42,0.16)]
+        ${isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}`}>
+            <span className={`text-sm font-medium ${isDark ? 'text-slate-100' : 'text-slate-700'}`}>
               {name}
             </span>
 

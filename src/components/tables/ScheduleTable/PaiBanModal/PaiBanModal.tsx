@@ -5,6 +5,7 @@ import AddTable from "@/components/tables/ScheduleTable/PaiBanModal/AddTable/Add
 import VacationTable from "@/components/tables/ScheduleTable/PaiBanModal/VacationTable/VacationTable";
 import React from "react";
 import {useSelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 export interface IPaiBanModalProps {
     isModalOpen: boolean;
@@ -13,12 +14,13 @@ export interface IPaiBanModalProps {
 
 export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
     const {selectedCell} = useSelectedCellContext();
+    const {resolvedTheme} = useAppContext();
 
     return (
         <Modal
             title={(
                 <>
-                    <div className={'text-blue-600 font-bold'}>
+                    <div className={`font-bold ${resolvedTheme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
                         {`排班: ${selectedCell.name} ${selectedCell.day.format("M月D日")} (${Weekdays[selectedCell.day.day()]})`}
                     </div>
                     <Divider classNames={{root: '!my-3'}}/>

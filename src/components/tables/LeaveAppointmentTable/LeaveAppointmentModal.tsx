@@ -18,7 +18,8 @@ interface ILeaveAppointmentModal {
 }
 
 export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCell}: ILeaveAppointmentModal) {
-    const {notification, currentUser} = useAppContext();
+    const {notification, currentUser, resolvedTheme} = useAppContext();
+    const isDark = resolvedTheme === 'dark';
     const {current, setCurrent} = useCurrentContext();
     const [duplicateCheck, setDuplicateCheck] = useState(true);
     const [duplicateNum, setDuplicateNum] = useState(5);
@@ -118,11 +119,11 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
             title={(
                 <>
                     <div className='flex items-center'>
-                        <div className={'text-blue-600 font-bold'}>
+                        <div className={`font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
                             {`预约休假: ${selectedCell?.day.format("M月D日")} (${Weekdays[selectedCell?.day.day() ?? 0]}) 第`}
                         </div>
-                        <div className={'text-red-600 font-bold px-1'}>{`${selectedCell?.sequence}`}</div>
-                        <div className={'text-blue-600 font-bold'}>顺序位</div>
+                        <div className={`font-bold px-1 ${isDark ? 'text-red-400' : 'text-red-600'}`}>{`${selectedCell?.sequence}`}</div>
+                        <div className={`font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>顺序位</div>
                     </div>
                     <Divider classNames={{root: '!my-3'}}/>
                 </>
@@ -159,12 +160,12 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
                 </div>
             )}
         >
-            <div className="rounded-lg border border-blue-200 shadow-sm">
-                <Row align="middle" className="min-h-12 border-b border-blue-200">
-                    <Col span={8} className="border-r border-blue-200 text-center font-bold text-blue-900">
+            <div className={`rounded-lg border shadow-sm ${isDark ? 'border-blue-500/40' : 'border-blue-200'}`}>
+                <Row align="middle" className={`min-h-12 border-b ${isDark ? 'border-blue-500/40' : 'border-blue-200'}`}>
+                    <Col span={8} className={`border-r text-center font-bold ${isDark ? 'border-blue-500/40 text-blue-300' : 'border-blue-200 text-blue-900'}`}>
                         预约人
                     </Col>
-                    <Col span={16} className="text-center font-bold text-slate-700">
+                    <Col span={16} className={`text-center font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
                         {selectedCell?.name ??
                             <Select
                                 style={{width: 100}}
@@ -183,11 +184,11 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
                     </Col>
                 </Row>
 
-                <Row align="middle" className="min-h-12 border-b border-blue-200">
-                    <Col span={8} className="border-r border-blue-200 text-center font-bold text-blue-900">
+                <Row align="middle" className={`min-h-12 border-b ${isDark ? 'border-blue-500/40' : 'border-blue-200'}`}>
+                    <Col span={8} className={`border-r text-center font-bold ${isDark ? 'border-blue-500/40 text-blue-300' : 'border-blue-200 text-blue-900'}`}>
                         假期类型
                     </Col>
-                    <Col span={16} className="text-center font-bold text-slate-700">
+                    <Col span={16} className={`text-center font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
                         {selectedCell?.banName ?
                             <Badge
                                 count={selectedCell.banName}
@@ -210,17 +211,20 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
                         }
                     </Col>
                 </Row>
-                <Row align="middle" className="min-h-12">
-                    <Col span={24} className="text-center font-bold">
-                        <DuplicateCheck
-                            text='重复'
-                            duplicateCheck={duplicateCheck}
-                            duplicateNum={duplicateNum}
-                            setDuplicateCheck={setDuplicateCheck}
-                            setDuplicateNum={setDuplicateNum}
-                        />
-                    </Col>
-                </Row>
+                {(!selectedCell?.name || (currentUser && selectedCell.name === currentUser)) ?
+                    <Row align="middle" className="min-h-12">
+                        <Col span={24} className="text-center font-bold">
+                            <DuplicateCheck
+                                text='重复'
+                                duplicateCheck={duplicateCheck}
+                                duplicateNum={duplicateNum}
+                                setDuplicateCheck={setDuplicateCheck}
+                                setDuplicateNum={setDuplicateNum}
+                            />
+                        </Col>
+                    </Row>
+                    : null
+                }
             </div>
         </Modal>
     )

@@ -46,7 +46,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                     {currentUser && <UserDropDown/>}
                 </div>
             </Header>
-            <Content className="pt-[18px] pb-[10px] max-w-[1300px] mx-auto w-full">
+            <Content className="pt-[18px] max-w-[1300px] mx-auto w-full">
                 <div className={'min-h-[80vh] p-4'}
                      style={{
                          background: colorBgContainer,
@@ -56,7 +56,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                     {children}
                 </div>
             </Content>
-            <Footer className="text-center !px-[50px] !py-[0px]">Powered by NextJS © {currentYear} Created by Xuhui Zhang</Footer>
+            <Footer className="!text-center !px-[50px] !py-[15px]">Powered by NextJS © {currentYear} Created by Xuhui Zhang</Footer>
         </Layout>
     );
 };

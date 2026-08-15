@@ -9,32 +9,30 @@ export interface IVacationTableData {
     loading: boolean;
 }
 
-const columns: TableColumnsType = [
-    {
-        title: '',
-        dataIndex: 'key',
-        width: 80,
-        onCell: () => ({
-            style: {background: '#fafafa', fontWeight: 600},
-        }),
-    },
-    {
-        title: '假期剩余天数',
-        dataIndex: 'days',
-        render: (value: number, record) => (
-            <Badge
-                count={value}
-                color={record.color}
-                classNames={{indicator: '!rounded-lg !font-bold'}}
-                showZero
-            />
-        ),
-    },
-];
-
 export default function useVacationTableData(): IVacationTableData {
     const [dataSource, setDataSource] = useState<IVacationTableData['dataSource']>([]);
     const [loading, setLoading] = useState(true);
+
+    const columns: TableColumnsType = [
+        {
+            title: '',
+            dataIndex: 'key',
+            width: 80,
+            onCell: () => ({style: {fontWeight: 600}}),
+        },
+        {
+            title: '假期剩余天数',
+            dataIndex: 'days',
+            render: (value: number, record) => (
+                <Badge
+                    count={value}
+                    color={record.color}
+                    classNames={{indicator: '!rounded-lg !font-bold'}}
+                    showZero
+                />
+            ),
+        },
+    ];
 
     const {selectedCell} = useSelectedCellContext();
     const {name, day} = selectedCell;

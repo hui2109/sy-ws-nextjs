@@ -3,6 +3,7 @@ import {Dayjs} from "dayjs";
 import React, {Dispatch, SetStateAction} from "react";
 import {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
 import {BanNamesForExcludePartner} from "@/configs/general";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 interface IBanBadge {
     banName: string,
@@ -15,6 +16,8 @@ interface IBanBadge {
 }
 
 export default function BanBadge({banName, banColor, names, currentUser, current, setIsInfoModalOpen, setSelectedCell}: IBanBadge) {
+    const {resolvedTheme} = useAppContext();
+    const isDark = resolvedTheme === 'dark';
     const filteredNames = names.filter(item => item !== currentUser);
     let banBadgeNames: React.JSX.Element | null;
 
@@ -23,7 +26,7 @@ export default function BanBadge({banName, banColor, names, currentUser, current
     } else if (filteredNames.length <= 2) {
         banBadgeNames = (
             <div
-                className="flex flex-col rounded-lg bg-white px-3 py-1 text-sm text-slate-700 shadow-sm"
+                className={`flex flex-col rounded-lg px-3 py-1 text-sm shadow-sm ${isDark ? 'bg-slate-700 text-slate-100' : 'bg-white text-slate-700'}`}
             >
                 {filteredNames.map(name => <div key={name}>{name}</div>)}
             </div>
@@ -43,7 +46,7 @@ export default function BanBadge({banName, banColor, names, currentUser, current
         banBadgeNames = (
             <>
                 <div
-                    className="flex flex-col rounded-lg bg-white px-3 py-1 text-sm text-slate-700 shadow-sm"
+                    className={`flex flex-col rounded-lg px-3 py-1 text-sm shadow-sm ${isDark ? 'bg-slate-700 text-slate-100' : 'bg-white text-slate-700'}`}
                 >
                     {filteredNames.slice(0, 2).map(name => <div key={name}>{name}</div>)}
                 </div>
@@ -63,7 +66,7 @@ export default function BanBadge({banName, banColor, names, currentUser, current
     }
 
     return (
-        <div className="flex w-fit flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 shadow-sm">
+        <div className={`flex w-fit flex-col items-center gap-2 rounded-2xl border px-5 py-4 shadow-sm ${isDark ? 'border-slate-700 bg-slate-800/60' : 'border-slate-200 bg-slate-50'}`}>
             <Badge
                 count={banName}
                 color={banColor}
