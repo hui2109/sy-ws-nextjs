@@ -29,10 +29,7 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
     const [systemTheme, setSystemTheme] = useState<ResolvedTheme>('light');
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-        );
-
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
         const updateSystemTheme = () => {
             setSystemTheme(mediaQuery.matches ? "dark" : "light");
         };
@@ -54,10 +51,15 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
         <ConfigProvider
             locale={locale}
             theme={{
-                algorithm:
-                    resolvedTheme === 'dark'
-                        ? theme.darkAlgorithm
-                        : theme.defaultAlgorithm,
+                algorithm: resolvedTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+                token: resolvedTheme === 'dark' ? {
+                    // 页面整体背景：柔和灰黑，避免纯黑带来的高对比刺激
+                    colorBgLayout: '#26292d',
+                    // Card、Form、Table 等普通容器背景
+                    colorBgContainer: '#2d3136',
+                    // Modal、Dropdown、Popover 等浮层背景
+                    colorBgElevated: '#353a40',
+                } : {}
             }}
         >
             {contextHolder}

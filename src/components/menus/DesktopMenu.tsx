@@ -46,7 +46,6 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                     {currentUser && <UserDropDown/>}
                 </div>
             </Header>
-
             <Content className="pt-[18px] pb-[10px] max-w-[1300px] mx-auto w-full">
                 <div className={'min-h-[80vh] p-4'}
                      style={{
