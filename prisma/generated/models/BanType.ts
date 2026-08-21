@@ -260,8 +260,6 @@ export type BanTypeWhereInput = {
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
-  askOffApplies?: Prisma.AskOffApplyListRelationFilter
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemListRelationFilter
 }
 
 export type BanTypeOrderByWithRelationInput = {
@@ -279,8 +277,6 @@ export type BanTypeOrderByWithRelationInput = {
   vacationRules?: Prisma.VacationRuleOrderByRelationAggregateInput
   leaveAppointments?: Prisma.LeaveAppointmentOrderByRelationAggregateInput
   expectedSchedules?: Prisma.ExpectedScheduleOrderByRelationAggregateInput
-  askOffApplies?: Prisma.AskOffApplyOrderByRelationAggregateInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemOrderByRelationAggregateInput
 }
 
 export type BanTypeWhereUniqueInput = Prisma.AtLeast<{
@@ -301,8 +297,6 @@ export type BanTypeWhereUniqueInput = Prisma.AtLeast<{
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
-  askOffApplies?: Prisma.AskOffApplyListRelationFilter
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemListRelationFilter
 }, "id" | "banCode" | "banName">
 
 export type BanTypeOrderByWithAggregationInput = {
@@ -353,8 +347,6 @@ export type BanTypeCreateInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeUncheckedCreateInput = {
@@ -372,8 +364,6 @@ export type BanTypeUncheckedCreateInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeUpdateInput = {
@@ -390,8 +380,6 @@ export type BanTypeUpdateInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeUncheckedUpdateInput = {
@@ -409,8 +397,6 @@ export type BanTypeUncheckedUpdateInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeCreateManyInput = {
@@ -559,34 +545,6 @@ export type BanTypeUpdateOneRequiredWithoutExpectedSchedulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BanTypeUpdateToOneWithWhereWithoutExpectedSchedulesInput, Prisma.BanTypeUpdateWithoutExpectedSchedulesInput>, Prisma.BanTypeUncheckedUpdateWithoutExpectedSchedulesInput>
 }
 
-export type BanTypeCreateNestedOneWithoutAskOffAppliesInput = {
-  create?: Prisma.XOR<Prisma.BanTypeCreateWithoutAskOffAppliesInput, Prisma.BanTypeUncheckedCreateWithoutAskOffAppliesInput>
-  connectOrCreate?: Prisma.BanTypeCreateOrConnectWithoutAskOffAppliesInput
-  connect?: Prisma.BanTypeWhereUniqueInput
-}
-
-export type BanTypeUpdateOneRequiredWithoutAskOffAppliesNestedInput = {
-  create?: Prisma.XOR<Prisma.BanTypeCreateWithoutAskOffAppliesInput, Prisma.BanTypeUncheckedCreateWithoutAskOffAppliesInput>
-  connectOrCreate?: Prisma.BanTypeCreateOrConnectWithoutAskOffAppliesInput
-  upsert?: Prisma.BanTypeUpsertWithoutAskOffAppliesInput
-  connect?: Prisma.BanTypeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.BanTypeUpdateToOneWithWhereWithoutAskOffAppliesInput, Prisma.BanTypeUpdateWithoutAskOffAppliesInput>, Prisma.BanTypeUncheckedUpdateWithoutAskOffAppliesInput>
-}
-
-export type BanTypeCreateNestedOneWithoutChangeScheduleApplyItemsInput = {
-  create?: Prisma.XOR<Prisma.BanTypeCreateWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUncheckedCreateWithoutChangeScheduleApplyItemsInput>
-  connectOrCreate?: Prisma.BanTypeCreateOrConnectWithoutChangeScheduleApplyItemsInput
-  connect?: Prisma.BanTypeWhereUniqueInput
-}
-
-export type BanTypeUpdateOneRequiredWithoutChangeScheduleApplyItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.BanTypeCreateWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUncheckedCreateWithoutChangeScheduleApplyItemsInput>
-  connectOrCreate?: Prisma.BanTypeCreateOrConnectWithoutChangeScheduleApplyItemsInput
-  upsert?: Prisma.BanTypeUpsertWithoutChangeScheduleApplyItemsInput
-  connect?: Prisma.BanTypeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.BanTypeUpdateToOneWithWhereWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUpdateWithoutChangeScheduleApplyItemsInput>, Prisma.BanTypeUncheckedUpdateWithoutChangeScheduleApplyItemsInput>
-}
-
 export type BanTypeCreateWithoutWorkSchedulesInput = {
   banCode: string
   banName: string
@@ -600,8 +558,6 @@ export type BanTypeCreateWithoutWorkSchedulesInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeUncheckedCreateWithoutWorkSchedulesInput = {
@@ -618,8 +574,6 @@ export type BanTypeUncheckedCreateWithoutWorkSchedulesInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeCreateOrConnectWithoutWorkSchedulesInput = {
@@ -651,8 +605,6 @@ export type BanTypeUpdateWithoutWorkSchedulesInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeUncheckedUpdateWithoutWorkSchedulesInput = {
@@ -669,8 +621,6 @@ export type BanTypeUncheckedUpdateWithoutWorkSchedulesInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeCreateWithoutVacationRulesInput = {
@@ -686,8 +636,6 @@ export type BanTypeCreateWithoutVacationRulesInput = {
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeUncheckedCreateWithoutVacationRulesInput = {
@@ -704,8 +652,6 @@ export type BanTypeUncheckedCreateWithoutVacationRulesInput = {
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeCreateOrConnectWithoutVacationRulesInput = {
@@ -737,8 +683,6 @@ export type BanTypeUpdateWithoutVacationRulesInput = {
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeUncheckedUpdateWithoutVacationRulesInput = {
@@ -755,8 +699,6 @@ export type BanTypeUncheckedUpdateWithoutVacationRulesInput = {
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeCreateWithoutLeaveAppointmentsInput = {
@@ -772,8 +714,6 @@ export type BanTypeCreateWithoutLeaveAppointmentsInput = {
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeUncheckedCreateWithoutLeaveAppointmentsInput = {
@@ -790,8 +730,6 @@ export type BanTypeUncheckedCreateWithoutLeaveAppointmentsInput = {
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeCreateOrConnectWithoutLeaveAppointmentsInput = {
@@ -823,8 +761,6 @@ export type BanTypeUpdateWithoutLeaveAppointmentsInput = {
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeUncheckedUpdateWithoutLeaveAppointmentsInput = {
@@ -841,8 +777,6 @@ export type BanTypeUncheckedUpdateWithoutLeaveAppointmentsInput = {
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeCreateWithoutExpectedSchedulesInput = {
@@ -858,8 +792,6 @@ export type BanTypeCreateWithoutExpectedSchedulesInput = {
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeUncheckedCreateWithoutExpectedSchedulesInput = {
@@ -876,8 +808,6 @@ export type BanTypeUncheckedCreateWithoutExpectedSchedulesInput = {
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutNewBanTypeInput
 }
 
 export type BanTypeCreateOrConnectWithoutExpectedSchedulesInput = {
@@ -909,8 +839,6 @@ export type BanTypeUpdateWithoutExpectedSchedulesInput = {
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutNewBanTypeNestedInput
 }
 
 export type BanTypeUncheckedUpdateWithoutExpectedSchedulesInput = {
@@ -927,180 +855,6 @@ export type BanTypeUncheckedUpdateWithoutExpectedSchedulesInput = {
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutNewBanTypeNestedInput
-}
-
-export type BanTypeCreateWithoutAskOffAppliesInput = {
-  banCode: string
-  banName: string
-  startTime: Date | string
-  endTime: Date | string
-  description: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  color?: string
-  workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
-  vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
-  leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
-  expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutNewBanTypeInput
-}
-
-export type BanTypeUncheckedCreateWithoutAskOffAppliesInput = {
-  id?: number
-  banCode: string
-  banName: string
-  startTime: Date | string
-  endTime: Date | string
-  description: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  color?: string
-  workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutNewBanTypeInput
-}
-
-export type BanTypeCreateOrConnectWithoutAskOffAppliesInput = {
-  where: Prisma.BanTypeWhereUniqueInput
-  create: Prisma.XOR<Prisma.BanTypeCreateWithoutAskOffAppliesInput, Prisma.BanTypeUncheckedCreateWithoutAskOffAppliesInput>
-}
-
-export type BanTypeUpsertWithoutAskOffAppliesInput = {
-  update: Prisma.XOR<Prisma.BanTypeUpdateWithoutAskOffAppliesInput, Prisma.BanTypeUncheckedUpdateWithoutAskOffAppliesInput>
-  create: Prisma.XOR<Prisma.BanTypeCreateWithoutAskOffAppliesInput, Prisma.BanTypeUncheckedCreateWithoutAskOffAppliesInput>
-  where?: Prisma.BanTypeWhereInput
-}
-
-export type BanTypeUpdateToOneWithWhereWithoutAskOffAppliesInput = {
-  where?: Prisma.BanTypeWhereInput
-  data: Prisma.XOR<Prisma.BanTypeUpdateWithoutAskOffAppliesInput, Prisma.BanTypeUncheckedUpdateWithoutAskOffAppliesInput>
-}
-
-export type BanTypeUpdateWithoutAskOffAppliesInput = {
-  banCode?: Prisma.StringFieldUpdateOperationsInput | string
-  banName?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
-  vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutNewBanTypeNestedInput
-}
-
-export type BanTypeUncheckedUpdateWithoutAskOffAppliesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  banCode?: Prisma.StringFieldUpdateOperationsInput | string
-  banName?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  changeScheduleApplyItems?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutNewBanTypeNestedInput
-}
-
-export type BanTypeCreateWithoutChangeScheduleApplyItemsInput = {
-  banCode: string
-  banName: string
-  startTime: Date | string
-  endTime: Date | string
-  description: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  color?: string
-  workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutBanTypeInput
-  vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutBanTypeInput
-  leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutBanTypeInput
-  expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutBanTypeInput
-}
-
-export type BanTypeUncheckedCreateWithoutChangeScheduleApplyItemsInput = {
-  id?: number
-  banCode: string
-  banName: string
-  startTime: Date | string
-  endTime: Date | string
-  description: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  color?: string
-  workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutBanTypeInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutBanTypeInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutBanTypeInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput
-}
-
-export type BanTypeCreateOrConnectWithoutChangeScheduleApplyItemsInput = {
-  where: Prisma.BanTypeWhereUniqueInput
-  create: Prisma.XOR<Prisma.BanTypeCreateWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUncheckedCreateWithoutChangeScheduleApplyItemsInput>
-}
-
-export type BanTypeUpsertWithoutChangeScheduleApplyItemsInput = {
-  update: Prisma.XOR<Prisma.BanTypeUpdateWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUncheckedUpdateWithoutChangeScheduleApplyItemsInput>
-  create: Prisma.XOR<Prisma.BanTypeCreateWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUncheckedCreateWithoutChangeScheduleApplyItemsInput>
-  where?: Prisma.BanTypeWhereInput
-}
-
-export type BanTypeUpdateToOneWithWhereWithoutChangeScheduleApplyItemsInput = {
-  where?: Prisma.BanTypeWhereInput
-  data: Prisma.XOR<Prisma.BanTypeUpdateWithoutChangeScheduleApplyItemsInput, Prisma.BanTypeUncheckedUpdateWithoutChangeScheduleApplyItemsInput>
-}
-
-export type BanTypeUpdateWithoutChangeScheduleApplyItemsInput = {
-  banCode?: Prisma.StringFieldUpdateOperationsInput | string
-  banName?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  workSchedules?: Prisma.WorkScheduleUpdateManyWithoutBanTypeNestedInput
-  vacationRules?: Prisma.VacationRuleUpdateManyWithoutBanTypeNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutBanTypeNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutBanTypeNestedInput
-}
-
-export type BanTypeUncheckedUpdateWithoutChangeScheduleApplyItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  banCode?: Prisma.StringFieldUpdateOperationsInput | string
-  banName?: Prisma.StringFieldUpdateOperationsInput | string
-  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutBanTypeNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutBanTypeNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutBanTypeNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput
 }
 
 
@@ -1113,8 +867,6 @@ export type BanTypeCountOutputType = {
   vacationRules: number
   leaveAppointments: number
   expectedSchedules: number
-  askOffApplies: number
-  changeScheduleApplyItems: number
 }
 
 export type BanTypeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1122,8 +874,6 @@ export type BanTypeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   vacationRules?: boolean | BanTypeCountOutputTypeCountVacationRulesArgs
   leaveAppointments?: boolean | BanTypeCountOutputTypeCountLeaveAppointmentsArgs
   expectedSchedules?: boolean | BanTypeCountOutputTypeCountExpectedSchedulesArgs
-  askOffApplies?: boolean | BanTypeCountOutputTypeCountAskOffAppliesArgs
-  changeScheduleApplyItems?: boolean | BanTypeCountOutputTypeCountChangeScheduleApplyItemsArgs
 }
 
 /**
@@ -1164,20 +914,6 @@ export type BanTypeCountOutputTypeCountExpectedSchedulesArgs<ExtArgs extends run
   where?: Prisma.ExpectedScheduleWhereInput
 }
 
-/**
- * BanTypeCountOutputType without action
- */
-export type BanTypeCountOutputTypeCountAskOffAppliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AskOffApplyWhereInput
-}
-
-/**
- * BanTypeCountOutputType without action
- */
-export type BanTypeCountOutputTypeCountChangeScheduleApplyItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChangeScheduleApplyItemWhereInput
-}
-
 
 export type BanTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1194,8 +930,6 @@ export type BanTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   vacationRules?: boolean | Prisma.BanType$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.BanType$leaveAppointmentsArgs<ExtArgs>
   expectedSchedules?: boolean | Prisma.BanType$expectedSchedulesArgs<ExtArgs>
-  askOffApplies?: boolean | Prisma.BanType$askOffAppliesArgs<ExtArgs>
-  changeScheduleApplyItems?: boolean | Prisma.BanType$changeScheduleApplyItemsArgs<ExtArgs>
   _count?: boolean | Prisma.BanTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["banType"]>
 
@@ -1244,8 +978,6 @@ export type BanTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   vacationRules?: boolean | Prisma.BanType$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.BanType$leaveAppointmentsArgs<ExtArgs>
   expectedSchedules?: boolean | Prisma.BanType$expectedSchedulesArgs<ExtArgs>
-  askOffApplies?: boolean | Prisma.BanType$askOffAppliesArgs<ExtArgs>
-  changeScheduleApplyItems?: boolean | Prisma.BanType$changeScheduleApplyItemsArgs<ExtArgs>
   _count?: boolean | Prisma.BanTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BanTypeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1258,8 +990,6 @@ export type $BanTypePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     vacationRules: Prisma.$VacationRulePayload<ExtArgs>[]
     leaveAppointments: Prisma.$LeaveAppointmentPayload<ExtArgs>[]
     expectedSchedules: Prisma.$ExpectedSchedulePayload<ExtArgs>[]
-    askOffApplies: Prisma.$AskOffApplyPayload<ExtArgs>[]
-    changeScheduleApplyItems: Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1670,8 +1400,6 @@ export interface Prisma__BanTypeClient<T, Null = never, ExtArgs extends runtime.
   vacationRules<T extends Prisma.BanType$vacationRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BanType$vacationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VacationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaveAppointments<T extends Prisma.BanType$leaveAppointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BanType$leaveAppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expectedSchedules<T extends Prisma.BanType$expectedSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BanType$expectedSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpectedSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  askOffApplies<T extends Prisma.BanType$askOffAppliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BanType$askOffAppliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AskOffApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  changeScheduleApplyItems<T extends Prisma.BanType$changeScheduleApplyItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BanType$changeScheduleApplyItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2197,54 +1925,6 @@ export type BanType$expectedSchedulesArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.ExpectedScheduleScalarFieldEnum | Prisma.ExpectedScheduleScalarFieldEnum[]
-}
-
-/**
- * BanType.askOffApplies
- */
-export type BanType$askOffAppliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AskOffApply
-   */
-  select?: Prisma.AskOffApplySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AskOffApply
-   */
-  omit?: Prisma.AskOffApplyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AskOffApplyInclude<ExtArgs> | null
-  where?: Prisma.AskOffApplyWhereInput
-  orderBy?: Prisma.AskOffApplyOrderByWithRelationInput | Prisma.AskOffApplyOrderByWithRelationInput[]
-  cursor?: Prisma.AskOffApplyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AskOffApplyScalarFieldEnum | Prisma.AskOffApplyScalarFieldEnum[]
-}
-
-/**
- * BanType.changeScheduleApplyItems
- */
-export type BanType$changeScheduleApplyItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChangeScheduleApplyItem
-   */
-  select?: Prisma.ChangeScheduleApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChangeScheduleApplyItem
-   */
-  omit?: Prisma.ChangeScheduleApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChangeScheduleApplyItemInclude<ExtArgs> | null
-  where?: Prisma.ChangeScheduleApplyItemWhereInput
-  orderBy?: Prisma.ChangeScheduleApplyItemOrderByWithRelationInput | Prisma.ChangeScheduleApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.ChangeScheduleApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChangeScheduleApplyItemScalarFieldEnum | Prisma.ChangeScheduleApplyItemScalarFieldEnum[]
 }
 
 /**

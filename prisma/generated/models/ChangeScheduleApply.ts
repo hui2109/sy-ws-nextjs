@@ -244,7 +244,6 @@ export type ChangeScheduleApplyWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ChangeScheduleApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeScheduleApply"> | Date | string
   personId?: Prisma.IntFilter<"ChangeScheduleApply"> | number
-  items?: Prisma.ChangeScheduleApplyItemListRelationFilter
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }
 
@@ -257,7 +256,6 @@ export type ChangeScheduleApplyOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  items?: Prisma.ChangeScheduleApplyItemOrderByRelationAggregateInput
   person?: Prisma.PersonOrderByWithRelationInput
 }
 
@@ -273,7 +271,6 @@ export type ChangeScheduleApplyWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ChangeScheduleApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeScheduleApply"> | Date | string
   personId?: Prisma.IntFilter<"ChangeScheduleApply"> | number
-  items?: Prisma.ChangeScheduleApplyItemListRelationFilter
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }, "id">
 
@@ -314,7 +311,6 @@ export type ChangeScheduleApplyCreateInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutChangeScheduleApplyInput
   person: Prisma.PersonCreateNestedOneWithoutChangeScheduleAppliesInput
 }
 
@@ -327,7 +323,6 @@ export type ChangeScheduleApplyUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   personId: number
-  items?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutChangeScheduleApplyInput
 }
 
 export type ChangeScheduleApplyUpdateInput = {
@@ -337,7 +332,6 @@ export type ChangeScheduleApplyUpdateInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutChangeScheduleApplyNestedInput
   person?: Prisma.PersonUpdateOneRequiredWithoutChangeScheduleAppliesNestedInput
 }
 
@@ -350,7 +344,6 @@ export type ChangeScheduleApplyUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personId?: Prisma.IntFieldUpdateOperationsInput | number
-  items?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutChangeScheduleApplyNestedInput
 }
 
 export type ChangeScheduleApplyCreateManyInput = {
@@ -437,11 +430,6 @@ export type ChangeScheduleApplySumOrderByAggregateInput = {
   personId?: Prisma.SortOrder
 }
 
-export type ChangeScheduleApplyScalarRelationFilter = {
-  is?: Prisma.ChangeScheduleApplyWhereInput
-  isNot?: Prisma.ChangeScheduleApplyWhereInput
-}
-
 export type ChangeScheduleApplyCreateNestedManyWithoutPersonInput = {
   create?: Prisma.XOR<Prisma.ChangeScheduleApplyCreateWithoutPersonInput, Prisma.ChangeScheduleApplyUncheckedCreateWithoutPersonInput> | Prisma.ChangeScheduleApplyCreateWithoutPersonInput[] | Prisma.ChangeScheduleApplyUncheckedCreateWithoutPersonInput[]
   connectOrCreate?: Prisma.ChangeScheduleApplyCreateOrConnectWithoutPersonInput | Prisma.ChangeScheduleApplyCreateOrConnectWithoutPersonInput[]
@@ -484,20 +472,6 @@ export type ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput = {
   deleteMany?: Prisma.ChangeScheduleApplyScalarWhereInput | Prisma.ChangeScheduleApplyScalarWhereInput[]
 }
 
-export type ChangeScheduleApplyCreateNestedOneWithoutItemsInput = {
-  create?: Prisma.XOR<Prisma.ChangeScheduleApplyCreateWithoutItemsInput, Prisma.ChangeScheduleApplyUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.ChangeScheduleApplyCreateOrConnectWithoutItemsInput
-  connect?: Prisma.ChangeScheduleApplyWhereUniqueInput
-}
-
-export type ChangeScheduleApplyUpdateOneRequiredWithoutItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.ChangeScheduleApplyCreateWithoutItemsInput, Prisma.ChangeScheduleApplyUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.ChangeScheduleApplyCreateOrConnectWithoutItemsInput
-  upsert?: Prisma.ChangeScheduleApplyUpsertWithoutItemsInput
-  connect?: Prisma.ChangeScheduleApplyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ChangeScheduleApplyUpdateToOneWithWhereWithoutItemsInput, Prisma.ChangeScheduleApplyUpdateWithoutItemsInput>, Prisma.ChangeScheduleApplyUncheckedUpdateWithoutItemsInput>
-}
-
 export type ChangeScheduleApplyCreateWithoutPersonInput = {
   startDate: Date | string
   endDate: Date | string
@@ -505,7 +479,6 @@ export type ChangeScheduleApplyCreateWithoutPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutChangeScheduleApplyInput
 }
 
 export type ChangeScheduleApplyUncheckedCreateWithoutPersonInput = {
@@ -516,7 +489,6 @@ export type ChangeScheduleApplyUncheckedCreateWithoutPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutChangeScheduleApplyInput
 }
 
 export type ChangeScheduleApplyCreateOrConnectWithoutPersonInput = {
@@ -559,64 +531,6 @@ export type ChangeScheduleApplyScalarWhereInput = {
   personId?: Prisma.IntFilter<"ChangeScheduleApply"> | number
 }
 
-export type ChangeScheduleApplyCreateWithoutItemsInput = {
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  person: Prisma.PersonCreateNestedOneWithoutChangeScheduleAppliesInput
-}
-
-export type ChangeScheduleApplyUncheckedCreateWithoutItemsInput = {
-  id?: number
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  personId: number
-}
-
-export type ChangeScheduleApplyCreateOrConnectWithoutItemsInput = {
-  where: Prisma.ChangeScheduleApplyWhereUniqueInput
-  create: Prisma.XOR<Prisma.ChangeScheduleApplyCreateWithoutItemsInput, Prisma.ChangeScheduleApplyUncheckedCreateWithoutItemsInput>
-}
-
-export type ChangeScheduleApplyUpsertWithoutItemsInput = {
-  update: Prisma.XOR<Prisma.ChangeScheduleApplyUpdateWithoutItemsInput, Prisma.ChangeScheduleApplyUncheckedUpdateWithoutItemsInput>
-  create: Prisma.XOR<Prisma.ChangeScheduleApplyCreateWithoutItemsInput, Prisma.ChangeScheduleApplyUncheckedCreateWithoutItemsInput>
-  where?: Prisma.ChangeScheduleApplyWhereInput
-}
-
-export type ChangeScheduleApplyUpdateToOneWithWhereWithoutItemsInput = {
-  where?: Prisma.ChangeScheduleApplyWhereInput
-  data: Prisma.XOR<Prisma.ChangeScheduleApplyUpdateWithoutItemsInput, Prisma.ChangeScheduleApplyUncheckedUpdateWithoutItemsInput>
-}
-
-export type ChangeScheduleApplyUpdateWithoutItemsInput = {
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  person?: Prisma.PersonUpdateOneRequiredWithoutChangeScheduleAppliesNestedInput
-}
-
-export type ChangeScheduleApplyUncheckedUpdateWithoutItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-}
-
 export type ChangeScheduleApplyCreateManyPersonInput = {
   id?: number
   startDate: Date | string
@@ -634,7 +548,6 @@ export type ChangeScheduleApplyUpdateWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutChangeScheduleApplyNestedInput
 }
 
 export type ChangeScheduleApplyUncheckedUpdateWithoutPersonInput = {
@@ -645,7 +558,6 @@ export type ChangeScheduleApplyUncheckedUpdateWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutChangeScheduleApplyNestedInput
 }
 
 export type ChangeScheduleApplyUncheckedUpdateManyWithoutPersonInput = {
@@ -659,35 +571,6 @@ export type ChangeScheduleApplyUncheckedUpdateManyWithoutPersonInput = {
 }
 
 
-/**
- * Count Type ChangeScheduleApplyCountOutputType
- */
-
-export type ChangeScheduleApplyCountOutputType = {
-  items: number
-}
-
-export type ChangeScheduleApplyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  items?: boolean | ChangeScheduleApplyCountOutputTypeCountItemsArgs
-}
-
-/**
- * ChangeScheduleApplyCountOutputType without action
- */
-export type ChangeScheduleApplyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChangeScheduleApplyCountOutputType
-   */
-  select?: Prisma.ChangeScheduleApplyCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * ChangeScheduleApplyCountOutputType without action
- */
-export type ChangeScheduleApplyCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChangeScheduleApplyItemWhereInput
-}
-
 
 export type ChangeScheduleApplySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -698,9 +581,7 @@ export type ChangeScheduleApplySelect<ExtArgs extends runtime.Types.Extensions.I
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
-  items?: boolean | Prisma.ChangeScheduleApply$itemsArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.ChangeScheduleApplyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["changeScheduleApply"]>
 
 export type ChangeScheduleApplySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -740,9 +621,7 @@ export type ChangeScheduleApplySelectScalar = {
 
 export type ChangeScheduleApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "personId", ExtArgs["result"]["changeScheduleApply"]>
 export type ChangeScheduleApplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  items?: boolean | Prisma.ChangeScheduleApply$itemsArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.ChangeScheduleApplyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChangeScheduleApplyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -754,7 +633,6 @@ export type ChangeScheduleApplyIncludeUpdateManyAndReturn<ExtArgs extends runtim
 export type $ChangeScheduleApplyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ChangeScheduleApply"
   objects: {
-    items: Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>[]
     person: Prisma.$PersonPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1160,7 +1038,6 @@ readonly fields: ChangeScheduleApplyFieldRefs;
  */
 export interface Prisma__ChangeScheduleApplyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  items<T extends Prisma.ChangeScheduleApply$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChangeScheduleApply$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1597,30 +1474,6 @@ export type ChangeScheduleApplyDeleteManyArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many ChangeScheduleApplies to delete.
    */
   limit?: number
-}
-
-/**
- * ChangeScheduleApply.items
- */
-export type ChangeScheduleApply$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChangeScheduleApplyItem
-   */
-  select?: Prisma.ChangeScheduleApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChangeScheduleApplyItem
-   */
-  omit?: Prisma.ChangeScheduleApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChangeScheduleApplyItemInclude<ExtArgs> | null
-  where?: Prisma.ChangeScheduleApplyItemWhereInput
-  orderBy?: Prisma.ChangeScheduleApplyItemOrderByWithRelationInput | Prisma.ChangeScheduleApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.ChangeScheduleApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChangeScheduleApplyItemScalarFieldEnum | Prisma.ChangeScheduleApplyItemScalarFieldEnum[]
 }
 
 /**

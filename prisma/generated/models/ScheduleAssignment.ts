@@ -210,10 +210,6 @@ export type ScheduleAssignmentWhereInput = {
   workScheduleId?: Prisma.IntFilter<"ScheduleAssignment"> | number
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   workSchedule?: Prisma.XOR<Prisma.WorkScheduleScalarRelationFilter, Prisma.WorkScheduleWhereInput>
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemListRelationFilter
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemListRelationFilter
-  askOffApplyItems?: Prisma.AskOffApplyItemListRelationFilter
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemListRelationFilter
 }
 
 export type ScheduleAssignmentOrderByWithRelationInput = {
@@ -222,10 +218,6 @@ export type ScheduleAssignmentOrderByWithRelationInput = {
   workScheduleId?: Prisma.SortOrder
   person?: Prisma.PersonOrderByWithRelationInput
   workSchedule?: Prisma.WorkScheduleOrderByWithRelationInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemOrderByRelationAggregateInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemOrderByRelationAggregateInput
-  askOffApplyItems?: Prisma.AskOffApplyItemOrderByRelationAggregateInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemOrderByRelationAggregateInput
 }
 
 export type ScheduleAssignmentWhereUniqueInput = Prisma.AtLeast<{
@@ -238,10 +230,6 @@ export type ScheduleAssignmentWhereUniqueInput = Prisma.AtLeast<{
   workScheduleId?: Prisma.IntFilter<"ScheduleAssignment"> | number
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   workSchedule?: Prisma.XOR<Prisma.WorkScheduleScalarRelationFilter, Prisma.WorkScheduleWhereInput>
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemListRelationFilter
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemListRelationFilter
-  askOffApplyItems?: Prisma.AskOffApplyItemListRelationFilter
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemListRelationFilter
 }, "id" | "personId_workScheduleId">
 
 export type ScheduleAssignmentOrderByWithAggregationInput = {
@@ -267,39 +255,23 @@ export type ScheduleAssignmentScalarWhereWithAggregatesInput = {
 export type ScheduleAssignmentCreateInput = {
   person: Prisma.PersonCreateNestedOneWithoutScheduleAssignmentsInput
   workSchedule: Prisma.WorkScheduleCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutOldScheduleAssignmentInput
 }
 
 export type ScheduleAssignmentUncheckedCreateInput = {
   id?: number
   personId: number
   workScheduleId: number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutOldScheduleAssignmentInput
 }
 
 export type ScheduleAssignmentUpdateInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
   workSchedule?: Prisma.WorkScheduleUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutOldScheduleAssignmentNestedInput
 }
 
 export type ScheduleAssignmentUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   workScheduleId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutOldScheduleAssignmentNestedInput
 }
 
 export type ScheduleAssignmentCreateManyInput = {
@@ -326,11 +298,6 @@ export type ScheduleAssignmentListRelationFilter = {
 
 export type ScheduleAssignmentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type ScheduleAssignmentScalarRelationFilter = {
-  is?: Prisma.ScheduleAssignmentWhereInput
-  isNot?: Prisma.ScheduleAssignmentWhereInput
 }
 
 export type ScheduleAssignmentPersonIdWorkScheduleIdCompoundUniqueInput = {
@@ -452,77 +419,13 @@ export type ScheduleAssignmentUncheckedUpdateManyWithoutWorkScheduleNestedInput 
   deleteMany?: Prisma.ScheduleAssignmentScalarWhereInput | Prisma.ScheduleAssignmentScalarWhereInput[]
 }
 
-export type ScheduleAssignmentCreateNestedOneWithoutShiftItemsAsMineInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsMineInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutShiftItemsAsMineInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-}
-
-export type ScheduleAssignmentCreateNestedOneWithoutShiftItemsAsTargetInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsTargetInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutShiftItemsAsTargetInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-}
-
-export type ScheduleAssignmentUpdateOneRequiredWithoutShiftItemsAsMineNestedInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsMineInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutShiftItemsAsMineInput
-  upsert?: Prisma.ScheduleAssignmentUpsertWithoutShiftItemsAsMineInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ScheduleAssignmentUpdateToOneWithWhereWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUpdateWithoutShiftItemsAsMineInput>, Prisma.ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsMineInput>
-}
-
-export type ScheduleAssignmentUpdateOneRequiredWithoutShiftItemsAsTargetNestedInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsTargetInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutShiftItemsAsTargetInput
-  upsert?: Prisma.ScheduleAssignmentUpsertWithoutShiftItemsAsTargetInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ScheduleAssignmentUpdateToOneWithWhereWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUpdateWithoutShiftItemsAsTargetInput>, Prisma.ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsTargetInput>
-}
-
-export type ScheduleAssignmentCreateNestedOneWithoutAskOffApplyItemsInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutAskOffApplyItemsInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutAskOffApplyItemsInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-}
-
-export type ScheduleAssignmentUpdateOneRequiredWithoutAskOffApplyItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutAskOffApplyItemsInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutAskOffApplyItemsInput
-  upsert?: Prisma.ScheduleAssignmentUpsertWithoutAskOffApplyItemsInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ScheduleAssignmentUpdateToOneWithWhereWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUpdateWithoutAskOffApplyItemsInput>, Prisma.ScheduleAssignmentUncheckedUpdateWithoutAskOffApplyItemsInput>
-}
-
-export type ScheduleAssignmentCreateNestedOneWithoutChangeApplyItemsAsOldInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutChangeApplyItemsAsOldInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutChangeApplyItemsAsOldInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-}
-
-export type ScheduleAssignmentUpdateOneRequiredWithoutChangeApplyItemsAsOldNestedInput = {
-  create?: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutChangeApplyItemsAsOldInput>
-  connectOrCreate?: Prisma.ScheduleAssignmentCreateOrConnectWithoutChangeApplyItemsAsOldInput
-  upsert?: Prisma.ScheduleAssignmentUpsertWithoutChangeApplyItemsAsOldInput
-  connect?: Prisma.ScheduleAssignmentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ScheduleAssignmentUpdateToOneWithWhereWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUpdateWithoutChangeApplyItemsAsOldInput>, Prisma.ScheduleAssignmentUncheckedUpdateWithoutChangeApplyItemsAsOldInput>
-}
-
 export type ScheduleAssignmentCreateWithoutPersonInput = {
   workSchedule: Prisma.WorkScheduleCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutOldScheduleAssignmentInput
 }
 
 export type ScheduleAssignmentUncheckedCreateWithoutPersonInput = {
   id?: number
   workScheduleId: number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutOldScheduleAssignmentInput
 }
 
 export type ScheduleAssignmentCreateOrConnectWithoutPersonInput = {
@@ -562,19 +465,11 @@ export type ScheduleAssignmentScalarWhereInput = {
 
 export type ScheduleAssignmentCreateWithoutWorkScheduleInput = {
   person: Prisma.PersonCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutOldScheduleAssignmentInput
 }
 
 export type ScheduleAssignmentUncheckedCreateWithoutWorkScheduleInput = {
   id?: number
   personId: number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutOldScheduleAssignmentInput
 }
 
 export type ScheduleAssignmentCreateOrConnectWithoutWorkScheduleInput = {
@@ -603,206 +498,6 @@ export type ScheduleAssignmentUpdateManyWithWhereWithoutWorkScheduleInput = {
   data: Prisma.XOR<Prisma.ScheduleAssignmentUpdateManyMutationInput, Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutWorkScheduleInput>
 }
 
-export type ScheduleAssignmentCreateWithoutShiftItemsAsMineInput = {
-  person: Prisma.PersonCreateNestedOneWithoutScheduleAssignmentsInput
-  workSchedule: Prisma.WorkScheduleCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutOldScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsMineInput = {
-  id?: number
-  personId: number
-  workScheduleId: number
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutOldScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentCreateOrConnectWithoutShiftItemsAsMineInput = {
-  where: Prisma.ScheduleAssignmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsMineInput>
-}
-
-export type ScheduleAssignmentCreateWithoutShiftItemsAsTargetInput = {
-  person: Prisma.PersonCreateNestedOneWithoutScheduleAssignmentsInput
-  workSchedule: Prisma.WorkScheduleCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutMyScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutOldScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsTargetInput = {
-  id?: number
-  personId: number
-  workScheduleId: number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutMyScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutOldScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentCreateOrConnectWithoutShiftItemsAsTargetInput = {
-  where: Prisma.ScheduleAssignmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsTargetInput>
-}
-
-export type ScheduleAssignmentUpsertWithoutShiftItemsAsMineInput = {
-  update: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsMineInput>
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsMineInput>
-  where?: Prisma.ScheduleAssignmentWhereInput
-}
-
-export type ScheduleAssignmentUpdateToOneWithWhereWithoutShiftItemsAsMineInput = {
-  where?: Prisma.ScheduleAssignmentWhereInput
-  data: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutShiftItemsAsMineInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsMineInput>
-}
-
-export type ScheduleAssignmentUpdateWithoutShiftItemsAsMineInput = {
-  person?: Prisma.PersonUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  workSchedule?: Prisma.WorkScheduleUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutOldScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsMineInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-  workScheduleId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutOldScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentUpsertWithoutShiftItemsAsTargetInput = {
-  update: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsTargetInput>
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutShiftItemsAsTargetInput>
-  where?: Prisma.ScheduleAssignmentWhereInput
-}
-
-export type ScheduleAssignmentUpdateToOneWithWhereWithoutShiftItemsAsTargetInput = {
-  where?: Prisma.ScheduleAssignmentWhereInput
-  data: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutShiftItemsAsTargetInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsTargetInput>
-}
-
-export type ScheduleAssignmentUpdateWithoutShiftItemsAsTargetInput = {
-  person?: Prisma.PersonUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  workSchedule?: Prisma.WorkScheduleUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutMyScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutOldScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentUncheckedUpdateWithoutShiftItemsAsTargetInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-  workScheduleId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutMyScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutOldScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentCreateWithoutAskOffApplyItemsInput = {
-  person: Prisma.PersonCreateNestedOneWithoutScheduleAssignmentsInput
-  workSchedule: Prisma.WorkScheduleCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutTargetScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemCreateNestedManyWithoutOldScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentUncheckedCreateWithoutAskOffApplyItemsInput = {
-  id?: number
-  personId: number
-  workScheduleId: number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutTargetScheduleAssignmentInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedCreateNestedManyWithoutOldScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentCreateOrConnectWithoutAskOffApplyItemsInput = {
-  where: Prisma.ScheduleAssignmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutAskOffApplyItemsInput>
-}
-
-export type ScheduleAssignmentUpsertWithoutAskOffApplyItemsInput = {
-  update: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutAskOffApplyItemsInput>
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutAskOffApplyItemsInput>
-  where?: Prisma.ScheduleAssignmentWhereInput
-}
-
-export type ScheduleAssignmentUpdateToOneWithWhereWithoutAskOffApplyItemsInput = {
-  where?: Prisma.ScheduleAssignmentWhereInput
-  data: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutAskOffApplyItemsInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutAskOffApplyItemsInput>
-}
-
-export type ScheduleAssignmentUpdateWithoutAskOffApplyItemsInput = {
-  person?: Prisma.PersonUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  workSchedule?: Prisma.WorkScheduleUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutOldScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentUncheckedUpdateWithoutAskOffApplyItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-  workScheduleId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutOldScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentCreateWithoutChangeApplyItemsAsOldInput = {
-  person: Prisma.PersonCreateNestedOneWithoutScheduleAssignmentsInput
-  workSchedule: Prisma.WorkScheduleCreateNestedOneWithoutScheduleAssignmentsInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemCreateNestedManyWithoutScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentUncheckedCreateWithoutChangeApplyItemsAsOldInput = {
-  id?: number
-  personId: number
-  workScheduleId: number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutMyScheduleAssignmentInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedCreateNestedManyWithoutTargetScheduleAssignmentInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutScheduleAssignmentInput
-}
-
-export type ScheduleAssignmentCreateOrConnectWithoutChangeApplyItemsAsOldInput = {
-  where: Prisma.ScheduleAssignmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutChangeApplyItemsAsOldInput>
-}
-
-export type ScheduleAssignmentUpsertWithoutChangeApplyItemsAsOldInput = {
-  update: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutChangeApplyItemsAsOldInput>
-  create: Prisma.XOR<Prisma.ScheduleAssignmentCreateWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUncheckedCreateWithoutChangeApplyItemsAsOldInput>
-  where?: Prisma.ScheduleAssignmentWhereInput
-}
-
-export type ScheduleAssignmentUpdateToOneWithWhereWithoutChangeApplyItemsAsOldInput = {
-  where?: Prisma.ScheduleAssignmentWhereInput
-  data: Prisma.XOR<Prisma.ScheduleAssignmentUpdateWithoutChangeApplyItemsAsOldInput, Prisma.ScheduleAssignmentUncheckedUpdateWithoutChangeApplyItemsAsOldInput>
-}
-
-export type ScheduleAssignmentUpdateWithoutChangeApplyItemsAsOldInput = {
-  person?: Prisma.PersonUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  workSchedule?: Prisma.WorkScheduleUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUpdateManyWithoutScheduleAssignmentNestedInput
-}
-
-export type ScheduleAssignmentUncheckedUpdateWithoutChangeApplyItemsAsOldInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-  workScheduleId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutScheduleAssignmentNestedInput
-}
-
 export type ScheduleAssignmentCreateManyPersonInput = {
   id?: number
   workScheduleId: number
@@ -810,19 +505,11 @@ export type ScheduleAssignmentCreateManyPersonInput = {
 
 export type ScheduleAssignmentUpdateWithoutPersonInput = {
   workSchedule?: Prisma.WorkScheduleUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutOldScheduleAssignmentNestedInput
 }
 
 export type ScheduleAssignmentUncheckedUpdateWithoutPersonInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   workScheduleId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutOldScheduleAssignmentNestedInput
 }
 
 export type ScheduleAssignmentUncheckedUpdateManyWithoutPersonInput = {
@@ -837,19 +524,11 @@ export type ScheduleAssignmentCreateManyWorkScheduleInput = {
 
 export type ScheduleAssignmentUpdateWithoutWorkScheduleInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutScheduleAssignmentsNestedInput
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUpdateManyWithoutOldScheduleAssignmentNestedInput
 }
 
 export type ScheduleAssignmentUncheckedUpdateWithoutWorkScheduleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   personId?: Prisma.IntFieldUpdateOperationsInput | number
-  shiftItemsAsMine?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutMyScheduleAssignmentNestedInput
-  shiftItemsAsTarget?: Prisma.ShiftScheduleApplyItemUncheckedUpdateManyWithoutTargetScheduleAssignmentNestedInput
-  askOffApplyItems?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutScheduleAssignmentNestedInput
-  changeApplyItemsAsOld?: Prisma.ChangeScheduleApplyItemUncheckedUpdateManyWithoutOldScheduleAssignmentNestedInput
 }
 
 export type ScheduleAssignmentUncheckedUpdateManyWithoutWorkScheduleInput = {
@@ -858,62 +537,6 @@ export type ScheduleAssignmentUncheckedUpdateManyWithoutWorkScheduleInput = {
 }
 
 
-/**
- * Count Type ScheduleAssignmentCountOutputType
- */
-
-export type ScheduleAssignmentCountOutputType = {
-  shiftItemsAsMine: number
-  shiftItemsAsTarget: number
-  askOffApplyItems: number
-  changeApplyItemsAsOld: number
-}
-
-export type ScheduleAssignmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  shiftItemsAsMine?: boolean | ScheduleAssignmentCountOutputTypeCountShiftItemsAsMineArgs
-  shiftItemsAsTarget?: boolean | ScheduleAssignmentCountOutputTypeCountShiftItemsAsTargetArgs
-  askOffApplyItems?: boolean | ScheduleAssignmentCountOutputTypeCountAskOffApplyItemsArgs
-  changeApplyItemsAsOld?: boolean | ScheduleAssignmentCountOutputTypeCountChangeApplyItemsAsOldArgs
-}
-
-/**
- * ScheduleAssignmentCountOutputType without action
- */
-export type ScheduleAssignmentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ScheduleAssignmentCountOutputType
-   */
-  select?: Prisma.ScheduleAssignmentCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * ScheduleAssignmentCountOutputType without action
- */
-export type ScheduleAssignmentCountOutputTypeCountShiftItemsAsMineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ShiftScheduleApplyItemWhereInput
-}
-
-/**
- * ScheduleAssignmentCountOutputType without action
- */
-export type ScheduleAssignmentCountOutputTypeCountShiftItemsAsTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ShiftScheduleApplyItemWhereInput
-}
-
-/**
- * ScheduleAssignmentCountOutputType without action
- */
-export type ScheduleAssignmentCountOutputTypeCountAskOffApplyItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AskOffApplyItemWhereInput
-}
-
-/**
- * ScheduleAssignmentCountOutputType without action
- */
-export type ScheduleAssignmentCountOutputTypeCountChangeApplyItemsAsOldArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChangeScheduleApplyItemWhereInput
-}
-
 
 export type ScheduleAssignmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -921,11 +544,6 @@ export type ScheduleAssignmentSelect<ExtArgs extends runtime.Types.Extensions.In
   workScheduleId?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   workSchedule?: boolean | Prisma.WorkScheduleDefaultArgs<ExtArgs>
-  shiftItemsAsMine?: boolean | Prisma.ScheduleAssignment$shiftItemsAsMineArgs<ExtArgs>
-  shiftItemsAsTarget?: boolean | Prisma.ScheduleAssignment$shiftItemsAsTargetArgs<ExtArgs>
-  askOffApplyItems?: boolean | Prisma.ScheduleAssignment$askOffApplyItemsArgs<ExtArgs>
-  changeApplyItemsAsOld?: boolean | Prisma.ScheduleAssignment$changeApplyItemsAsOldArgs<ExtArgs>
-  _count?: boolean | Prisma.ScheduleAssignmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["scheduleAssignment"]>
 
 export type ScheduleAssignmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -954,11 +572,6 @@ export type ScheduleAssignmentOmit<ExtArgs extends runtime.Types.Extensions.Inte
 export type ScheduleAssignmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   workSchedule?: boolean | Prisma.WorkScheduleDefaultArgs<ExtArgs>
-  shiftItemsAsMine?: boolean | Prisma.ScheduleAssignment$shiftItemsAsMineArgs<ExtArgs>
-  shiftItemsAsTarget?: boolean | Prisma.ScheduleAssignment$shiftItemsAsTargetArgs<ExtArgs>
-  askOffApplyItems?: boolean | Prisma.ScheduleAssignment$askOffApplyItemsArgs<ExtArgs>
-  changeApplyItemsAsOld?: boolean | Prisma.ScheduleAssignment$changeApplyItemsAsOldArgs<ExtArgs>
-  _count?: boolean | Prisma.ScheduleAssignmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ScheduleAssignmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -974,10 +587,6 @@ export type $ScheduleAssignmentPayload<ExtArgs extends runtime.Types.Extensions.
   objects: {
     person: Prisma.$PersonPayload<ExtArgs>
     workSchedule: Prisma.$WorkSchedulePayload<ExtArgs>
-    shiftItemsAsMine: Prisma.$ShiftScheduleApplyItemPayload<ExtArgs>[]
-    shiftItemsAsTarget: Prisma.$ShiftScheduleApplyItemPayload<ExtArgs>[]
-    askOffApplyItems: Prisma.$AskOffApplyItemPayload<ExtArgs>[]
-    changeApplyItemsAsOld: Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1379,10 +988,6 @@ export interface Prisma__ScheduleAssignmentClient<T, Null = never, ExtArgs exten
   readonly [Symbol.toStringTag]: "PrismaPromise"
   person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   workSchedule<T extends Prisma.WorkScheduleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkScheduleDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkScheduleClient<runtime.Types.Result.GetResult<Prisma.$WorkSchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  shiftItemsAsMine<T extends Prisma.ScheduleAssignment$shiftItemsAsMineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScheduleAssignment$shiftItemsAsMineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftScheduleApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  shiftItemsAsTarget<T extends Prisma.ScheduleAssignment$shiftItemsAsTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScheduleAssignment$shiftItemsAsTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftScheduleApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  askOffApplyItems<T extends Prisma.ScheduleAssignment$askOffApplyItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScheduleAssignment$askOffApplyItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AskOffApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  changeApplyItemsAsOld<T extends Prisma.ScheduleAssignment$changeApplyItemsAsOldArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScheduleAssignment$changeApplyItemsAsOldArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1813,102 +1418,6 @@ export type ScheduleAssignmentDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many ScheduleAssignments to delete.
    */
   limit?: number
-}
-
-/**
- * ScheduleAssignment.shiftItemsAsMine
- */
-export type ScheduleAssignment$shiftItemsAsMineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ShiftScheduleApplyItem
-   */
-  select?: Prisma.ShiftScheduleApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ShiftScheduleApplyItem
-   */
-  omit?: Prisma.ShiftScheduleApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ShiftScheduleApplyItemInclude<ExtArgs> | null
-  where?: Prisma.ShiftScheduleApplyItemWhereInput
-  orderBy?: Prisma.ShiftScheduleApplyItemOrderByWithRelationInput | Prisma.ShiftScheduleApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.ShiftScheduleApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ShiftScheduleApplyItemScalarFieldEnum | Prisma.ShiftScheduleApplyItemScalarFieldEnum[]
-}
-
-/**
- * ScheduleAssignment.shiftItemsAsTarget
- */
-export type ScheduleAssignment$shiftItemsAsTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ShiftScheduleApplyItem
-   */
-  select?: Prisma.ShiftScheduleApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ShiftScheduleApplyItem
-   */
-  omit?: Prisma.ShiftScheduleApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ShiftScheduleApplyItemInclude<ExtArgs> | null
-  where?: Prisma.ShiftScheduleApplyItemWhereInput
-  orderBy?: Prisma.ShiftScheduleApplyItemOrderByWithRelationInput | Prisma.ShiftScheduleApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.ShiftScheduleApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ShiftScheduleApplyItemScalarFieldEnum | Prisma.ShiftScheduleApplyItemScalarFieldEnum[]
-}
-
-/**
- * ScheduleAssignment.askOffApplyItems
- */
-export type ScheduleAssignment$askOffApplyItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AskOffApplyItem
-   */
-  select?: Prisma.AskOffApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AskOffApplyItem
-   */
-  omit?: Prisma.AskOffApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AskOffApplyItemInclude<ExtArgs> | null
-  where?: Prisma.AskOffApplyItemWhereInput
-  orderBy?: Prisma.AskOffApplyItemOrderByWithRelationInput | Prisma.AskOffApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.AskOffApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AskOffApplyItemScalarFieldEnum | Prisma.AskOffApplyItemScalarFieldEnum[]
-}
-
-/**
- * ScheduleAssignment.changeApplyItemsAsOld
- */
-export type ScheduleAssignment$changeApplyItemsAsOldArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChangeScheduleApplyItem
-   */
-  select?: Prisma.ChangeScheduleApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChangeScheduleApplyItem
-   */
-  omit?: Prisma.ChangeScheduleApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChangeScheduleApplyItemInclude<ExtArgs> | null
-  where?: Prisma.ChangeScheduleApplyItemWhereInput
-  orderBy?: Prisma.ChangeScheduleApplyItemOrderByWithRelationInput | Prisma.ChangeScheduleApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.ChangeScheduleApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChangeScheduleApplyItemScalarFieldEnum | Prisma.ChangeScheduleApplyItemScalarFieldEnum[]
 }
 
 /**

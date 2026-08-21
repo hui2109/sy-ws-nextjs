@@ -58,11 +58,8 @@ export const ModelName = {
   LeaveAppointment: 'LeaveAppointment',
   ExpectedSchedule: 'ExpectedSchedule',
   ShiftScheduleApply: 'ShiftScheduleApply',
-  ShiftScheduleApplyItem: 'ShiftScheduleApplyItem',
   AskOffApply: 'AskOffApply',
-  AskOffApplyItem: 'AskOffApplyItem',
   ChangeScheduleApply: 'ChangeScheduleApply',
-  ChangeScheduleApplyItem: 'ChangeScheduleApplyItem',
   ScheduleAssignment: 'ScheduleAssignment'
 } as const
 
@@ -186,16 +183,6 @@ export const ShiftScheduleApplyScalarFieldEnum = {
 export type ShiftScheduleApplyScalarFieldEnum = (typeof ShiftScheduleApplyScalarFieldEnum)[keyof typeof ShiftScheduleApplyScalarFieldEnum]
 
 
-export const ShiftScheduleApplyItemScalarFieldEnum = {
-  id: 'id',
-  shiftScheduleApplyId: 'shiftScheduleApplyId',
-  myScheduleAssignmentId: 'myScheduleAssignmentId',
-  targetScheduleAssignmentId: 'targetScheduleAssignmentId'
-} as const
-
-export type ShiftScheduleApplyItemScalarFieldEnum = (typeof ShiftScheduleApplyItemScalarFieldEnum)[keyof typeof ShiftScheduleApplyItemScalarFieldEnum]
-
-
 export const AskOffApplyScalarFieldEnum = {
   id: 'id',
   startDate: 'startDate',
@@ -204,20 +191,10 @@ export const AskOffApplyScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  personId: 'personId',
-  banTypeId: 'banTypeId'
+  personId: 'personId'
 } as const
 
 export type AskOffApplyScalarFieldEnum = (typeof AskOffApplyScalarFieldEnum)[keyof typeof AskOffApplyScalarFieldEnum]
-
-
-export const AskOffApplyItemScalarFieldEnum = {
-  id: 'id',
-  askOffApplyId: 'askOffApplyId',
-  scheduleAssignmentId: 'scheduleAssignmentId'
-} as const
-
-export type AskOffApplyItemScalarFieldEnum = (typeof AskOffApplyItemScalarFieldEnum)[keyof typeof AskOffApplyItemScalarFieldEnum]
 
 
 export const ChangeScheduleApplyScalarFieldEnum = {
@@ -232,17 +209,6 @@ export const ChangeScheduleApplyScalarFieldEnum = {
 } as const
 
 export type ChangeScheduleApplyScalarFieldEnum = (typeof ChangeScheduleApplyScalarFieldEnum)[keyof typeof ChangeScheduleApplyScalarFieldEnum]
-
-
-export const ChangeScheduleApplyItemScalarFieldEnum = {
-  id: 'id',
-  changeScheduleApplyId: 'changeScheduleApplyId',
-  oldScheduleAssignmentId: 'oldScheduleAssignmentId',
-  newWorkDate: 'newWorkDate',
-  newBanTypeId: 'newBanTypeId'
-} as const
-
-export type ChangeScheduleApplyItemScalarFieldEnum = (typeof ChangeScheduleApplyItemScalarFieldEnum)[keyof typeof ChangeScheduleApplyItemScalarFieldEnum]
 
 
 export const ScheduleAssignmentScalarFieldEnum = {

@@ -53,30 +53,15 @@ export type ExpectedSchedule = Prisma.ExpectedScheduleModel
  */
 export type ShiftScheduleApply = Prisma.ShiftScheduleApplyModel
 /**
- * Model ShiftScheduleApplyItem
- * 
- */
-export type ShiftScheduleApplyItem = Prisma.ShiftScheduleApplyItemModel
-/**
  * Model AskOffApply
  * 
  */
 export type AskOffApply = Prisma.AskOffApplyModel
 /**
- * Model AskOffApplyItem
- * 
- */
-export type AskOffApplyItem = Prisma.AskOffApplyItemModel
-/**
  * Model ChangeScheduleApply
  * 
  */
 export type ChangeScheduleApply = Prisma.ChangeScheduleApplyModel
-/**
- * Model ChangeScheduleApplyItem
- * 
- */
-export type ChangeScheduleApplyItem = Prisma.ChangeScheduleApplyItemModel
 /**
  * Model ScheduleAssignment
  * 

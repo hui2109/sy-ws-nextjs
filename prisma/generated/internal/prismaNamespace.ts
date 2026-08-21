@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.8.0
- * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
+ * Prisma Client JS version: 7.9.1
+ * Query Engine version: e922089b7d7502aff4249d5da3420f6fa55fc6ad
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.8.0",
-  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
+  client: "7.9.1",
+  engine: "e922089b7d7502aff4249d5da3420f6fa55fc6ad"
 }
 
 /**
@@ -156,6 +156,19 @@ export type Subset<T, U> = {
 };
 
 /**
+ * Resolved type of the argument passed to the `PrismaClient` constructor.
+ *
+ * When called without a narrower options type (the common case), this resolves
+ * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+ * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+ * the argument is missing or incomplete. When the user supplies a narrower
+ * options type (e.g. via a literal), it falls back to `Subset` to keep
+ * filtering out unknown properties.
+ */
+export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+  [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+/**
  * SelectSubset
  * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
  * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -187,7 +200,7 @@ type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 export type XOR<T, U> =
   T extends object ?
   U extends object ?
-    (Without<T, U> & U) | (Without<U, T> & T)
+    ((Without<T, U> & U) | (Without<U, T> & T)) & object
   : U : T
 
 
@@ -391,11 +404,8 @@ export const ModelName = {
   LeaveAppointment: 'LeaveAppointment',
   ExpectedSchedule: 'ExpectedSchedule',
   ShiftScheduleApply: 'ShiftScheduleApply',
-  ShiftScheduleApplyItem: 'ShiftScheduleApplyItem',
   AskOffApply: 'AskOffApply',
-  AskOffApplyItem: 'AskOffApplyItem',
   ChangeScheduleApply: 'ChangeScheduleApply',
-  ChangeScheduleApplyItem: 'ChangeScheduleApplyItem',
   ScheduleAssignment: 'ScheduleAssignment'
 } as const
 
@@ -412,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "banType" | "workSchedule" | "vacationRule" | "leaveAppointment" | "expectedSchedule" | "shiftScheduleApply" | "shiftScheduleApplyItem" | "askOffApply" | "askOffApplyItem" | "changeScheduleApply" | "changeScheduleApplyItem" | "scheduleAssignment"
+    modelProps: "person" | "banType" | "workSchedule" | "vacationRule" | "leaveAppointment" | "expectedSchedule" | "shiftScheduleApply" | "askOffApply" | "changeScheduleApply" | "scheduleAssignment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -934,80 +944,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ShiftScheduleApplyItem: {
-      payload: Prisma.$ShiftScheduleApplyItemPayload<ExtArgs>
-      fields: Prisma.ShiftScheduleApplyItemFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ShiftScheduleApplyItemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ShiftScheduleApplyItemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>
-        }
-        findFirst: {
-          args: Prisma.ShiftScheduleApplyItemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ShiftScheduleApplyItemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>
-        }
-        findMany: {
-          args: Prisma.ShiftScheduleApplyItemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>[]
-        }
-        create: {
-          args: Prisma.ShiftScheduleApplyItemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>
-        }
-        createMany: {
-          args: Prisma.ShiftScheduleApplyItemCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ShiftScheduleApplyItemCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>[]
-        }
-        delete: {
-          args: Prisma.ShiftScheduleApplyItemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>
-        }
-        update: {
-          args: Prisma.ShiftScheduleApplyItemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>
-        }
-        deleteMany: {
-          args: Prisma.ShiftScheduleApplyItemDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ShiftScheduleApplyItemUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ShiftScheduleApplyItemUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>[]
-        }
-        upsert: {
-          args: Prisma.ShiftScheduleApplyItemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ShiftScheduleApplyItemPayload>
-        }
-        aggregate: {
-          args: Prisma.ShiftScheduleApplyItemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateShiftScheduleApplyItem>
-        }
-        groupBy: {
-          args: Prisma.ShiftScheduleApplyItemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ShiftScheduleApplyItemGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ShiftScheduleApplyItemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ShiftScheduleApplyItemCountAggregateOutputType> | number
-        }
-      }
-    }
     AskOffApply: {
       payload: Prisma.$AskOffApplyPayload<ExtArgs>
       fields: Prisma.AskOffApplyFieldRefs
@@ -1082,80 +1018,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AskOffApplyItem: {
-      payload: Prisma.$AskOffApplyItemPayload<ExtArgs>
-      fields: Prisma.AskOffApplyItemFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AskOffApplyItemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AskOffApplyItemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>
-        }
-        findFirst: {
-          args: Prisma.AskOffApplyItemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AskOffApplyItemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>
-        }
-        findMany: {
-          args: Prisma.AskOffApplyItemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>[]
-        }
-        create: {
-          args: Prisma.AskOffApplyItemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>
-        }
-        createMany: {
-          args: Prisma.AskOffApplyItemCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AskOffApplyItemCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>[]
-        }
-        delete: {
-          args: Prisma.AskOffApplyItemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>
-        }
-        update: {
-          args: Prisma.AskOffApplyItemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>
-        }
-        deleteMany: {
-          args: Prisma.AskOffApplyItemDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AskOffApplyItemUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AskOffApplyItemUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>[]
-        }
-        upsert: {
-          args: Prisma.AskOffApplyItemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AskOffApplyItemPayload>
-        }
-        aggregate: {
-          args: Prisma.AskOffApplyItemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAskOffApplyItem>
-        }
-        groupBy: {
-          args: Prisma.AskOffApplyItemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AskOffApplyItemGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AskOffApplyItemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AskOffApplyItemCountAggregateOutputType> | number
-        }
-      }
-    }
     ChangeScheduleApply: {
       payload: Prisma.$ChangeScheduleApplyPayload<ExtArgs>
       fields: Prisma.ChangeScheduleApplyFieldRefs
@@ -1227,80 +1089,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ChangeScheduleApplyCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ChangeScheduleApplyCountAggregateOutputType> | number
-        }
-      }
-    }
-    ChangeScheduleApplyItem: {
-      payload: Prisma.$ChangeScheduleApplyItemPayload<ExtArgs>
-      fields: Prisma.ChangeScheduleApplyItemFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ChangeScheduleApplyItemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ChangeScheduleApplyItemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>
-        }
-        findFirst: {
-          args: Prisma.ChangeScheduleApplyItemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ChangeScheduleApplyItemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>
-        }
-        findMany: {
-          args: Prisma.ChangeScheduleApplyItemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>[]
-        }
-        create: {
-          args: Prisma.ChangeScheduleApplyItemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>
-        }
-        createMany: {
-          args: Prisma.ChangeScheduleApplyItemCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ChangeScheduleApplyItemCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>[]
-        }
-        delete: {
-          args: Prisma.ChangeScheduleApplyItemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>
-        }
-        update: {
-          args: Prisma.ChangeScheduleApplyItemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>
-        }
-        deleteMany: {
-          args: Prisma.ChangeScheduleApplyItemDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ChangeScheduleApplyItemUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ChangeScheduleApplyItemUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>[]
-        }
-        upsert: {
-          args: Prisma.ChangeScheduleApplyItemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeScheduleApplyItemPayload>
-        }
-        aggregate: {
-          args: Prisma.ChangeScheduleApplyItemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateChangeScheduleApplyItem>
-        }
-        groupBy: {
-          args: Prisma.ChangeScheduleApplyItemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChangeScheduleApplyItemGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ChangeScheduleApplyItemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChangeScheduleApplyItemCountAggregateOutputType> | number
         }
       }
     }
@@ -1521,16 +1309,6 @@ export const ShiftScheduleApplyScalarFieldEnum = {
 export type ShiftScheduleApplyScalarFieldEnum = (typeof ShiftScheduleApplyScalarFieldEnum)[keyof typeof ShiftScheduleApplyScalarFieldEnum]
 
 
-export const ShiftScheduleApplyItemScalarFieldEnum = {
-  id: 'id',
-  shiftScheduleApplyId: 'shiftScheduleApplyId',
-  myScheduleAssignmentId: 'myScheduleAssignmentId',
-  targetScheduleAssignmentId: 'targetScheduleAssignmentId'
-} as const
-
-export type ShiftScheduleApplyItemScalarFieldEnum = (typeof ShiftScheduleApplyItemScalarFieldEnum)[keyof typeof ShiftScheduleApplyItemScalarFieldEnum]
-
-
 export const AskOffApplyScalarFieldEnum = {
   id: 'id',
   startDate: 'startDate',
@@ -1539,20 +1317,10 @@ export const AskOffApplyScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  personId: 'personId',
-  banTypeId: 'banTypeId'
+  personId: 'personId'
 } as const
 
 export type AskOffApplyScalarFieldEnum = (typeof AskOffApplyScalarFieldEnum)[keyof typeof AskOffApplyScalarFieldEnum]
-
-
-export const AskOffApplyItemScalarFieldEnum = {
-  id: 'id',
-  askOffApplyId: 'askOffApplyId',
-  scheduleAssignmentId: 'scheduleAssignmentId'
-} as const
-
-export type AskOffApplyItemScalarFieldEnum = (typeof AskOffApplyItemScalarFieldEnum)[keyof typeof AskOffApplyItemScalarFieldEnum]
 
 
 export const ChangeScheduleApplyScalarFieldEnum = {
@@ -1567,17 +1335,6 @@ export const ChangeScheduleApplyScalarFieldEnum = {
 } as const
 
 export type ChangeScheduleApplyScalarFieldEnum = (typeof ChangeScheduleApplyScalarFieldEnum)[keyof typeof ChangeScheduleApplyScalarFieldEnum]
-
-
-export const ChangeScheduleApplyItemScalarFieldEnum = {
-  id: 'id',
-  changeScheduleApplyId: 'changeScheduleApplyId',
-  oldScheduleAssignmentId: 'oldScheduleAssignmentId',
-  newWorkDate: 'newWorkDate',
-  newBanTypeId: 'newBanTypeId'
-} as const
-
-export type ChangeScheduleApplyItemScalarFieldEnum = (typeof ChangeScheduleApplyItemScalarFieldEnum)[keyof typeof ChangeScheduleApplyItemScalarFieldEnum]
 
 
 export const ScheduleAssignmentScalarFieldEnum = {
@@ -1733,19 +1490,10 @@ export type BatchPayload = {
 export const defineExtension = runtime.Extensions.defineExtension as unknown as runtime.Types.Extensions.ExtendsHook<"define", TypeMapCb, runtime.Types.Extensions.DefaultArgs>
 export type DefaultPrismaClient = PrismaClient
 export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
-export type PrismaClientOptions = ({
-  /**
-   * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-pg`.
-   */
-  adapter: runtime.SqlDriverAdapterFactory
-  accelerateUrl?: never
-} | {
-  /**
-   * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
-   */
-  accelerateUrl: string
-  adapter?: never
-}) & {
+/**
+ * Options common to all variants of `PrismaClientOptions`, regardless of whether you connect to your database through a driver adapter or through Prisma Accelerate.
+ */
+export interface PrismaClientBaseOptions {
   /**
    * @default "colorless"
    */
@@ -1832,6 +1580,56 @@ export type PrismaClientOptions = ({
    */
   queryPlanCacheMaxSize?: number
 }
+
+/**
+ * `PrismaClient` options for connecting to your database through Prisma Accelerate instead of a driver adapter.
+ * 
+ * Learn more: https://pris.ly/d/accelerate
+ */
+export interface PrismaClientOptionsWithAccelerateUrl extends PrismaClientBaseOptions {
+  /**
+   * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+   * 
+   * Learn more: https://pris.ly/d/accelerate
+   */
+  accelerateUrl: string
+  adapter?: never
+}
+
+/**
+ * `PrismaClient` options for connecting to your database through a driver adapter. This is the common case in Prisma 7.
+ * 
+ * Learn more: https://pris.ly/d/driver-adapters
+ */
+export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions {
+  /**
+   * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+   * 
+   * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+   * 
+   * Learn more: https://pris.ly/d/driver-adapters
+   * 
+   * @example
+   * ```ts
+   * import { PrismaPg } from '@prisma/adapter-pg'
+   * import { PrismaClient } from './generated/prisma/client'
+   * 
+   * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * const prisma = new PrismaClient({ adapter })
+   * ```
+   */
+  adapter: runtime.SqlDriverAdapterFactory
+  accelerateUrl?: never
+}
+
+/**
+ * Options passed to the `PrismaClient` constructor.
+ * 
+ * A driver adapter (or, alternatively, a Prisma Accelerate URL) is **required**. See {@link PrismaClientOptionsWithAdapter} and {@link PrismaClientOptionsWithAccelerateUrl} for the two variants. All other properties live in {@link PrismaClientBaseOptions} and are optional.
+ * 
+ * Learn more about driver adapters: https://pris.ly/d/driver-adapters
+ */
+export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   person?: Prisma.PersonOmit
   banType?: Prisma.BanTypeOmit
@@ -1840,11 +1638,8 @@ export type GlobalOmitConfig = {
   leaveAppointment?: Prisma.LeaveAppointmentOmit
   expectedSchedule?: Prisma.ExpectedScheduleOmit
   shiftScheduleApply?: Prisma.ShiftScheduleApplyOmit
-  shiftScheduleApplyItem?: Prisma.ShiftScheduleApplyItemOmit
   askOffApply?: Prisma.AskOffApplyOmit
-  askOffApplyItem?: Prisma.AskOffApplyItemOmit
   changeScheduleApply?: Prisma.ChangeScheduleApplyOmit
-  changeScheduleApplyItem?: Prisma.ChangeScheduleApplyItemOmit
   scheduleAssignment?: Prisma.ScheduleAssignmentOmit
 }
 

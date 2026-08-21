@@ -169,9 +169,9 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
                         {selectedCell?.name ??
                             <Select
                                 style={{width: 100}}
-                                options={validStaffs.map(validBanName => ({
-                                    label: validBanName,
-                                    value: validBanName,
+                                options={validStaffs.map(validStaff => ({
+                                    label: validStaff,
+                                    value: validStaff,
                                 }))}
                                 classNames={{popup: {listItem: 'text-center'}}}
                                 placeholder='请选择...'

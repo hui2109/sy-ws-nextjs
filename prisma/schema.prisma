@@ -22,7 +22,7 @@ enum ApplyStatus {
   APPROVED
   REJECTED
   PENDING_REVIEW
-  SUBMITTED
+  DRAFT
 }
 
 enum Role {
@@ -69,12 +69,12 @@ model BanType {
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz(3)
   color       String   @default("red")
 
-  workSchedules            WorkSchedule[]
-  vacationRules            VacationRule[]
-  leaveAppointments        LeaveAppointment[]
-  expectedSchedules        ExpectedSchedule[]
-  askOffApplies            AskOffApply[]
-  changeScheduleApplyItems ChangeScheduleApplyItem[]
+  workSchedules     WorkSchedule[]
+  vacationRules     VacationRule[]
+  leaveAppointments LeaveAppointment[]
+  expectedSchedules ExpectedSchedule[]
+  // askOffApplies            AskOffApply[]
+  // changeScheduleApplyItems ChangeScheduleApplyItem[]
 }
 
 model WorkSchedule {
@@ -144,88 +144,88 @@ model ShiftScheduleApply {
   startDate      DateTime    @db.Date
   endDate        DateTime    @db.Date
   reason         String?
-  status         ApplyStatus @default(SUBMITTED)
+  status         ApplyStatus @default(DRAFT)
   createdAt      DateTime    @default(now()) @db.Timestamptz(3)
   updatedAt      DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
   applicantId    Int
   targetPersonId Int
 
-  items ShiftScheduleApplyItem[]
+  // items ShiftScheduleApplyItem[]
 
   applicant    Person @relation("ShiftApplicant", fields: [applicantId], references: [id])
   targetPerson Person @relation("ShiftTargetPerson", fields: [targetPersonId], references: [id])
 }
 
-model ShiftScheduleApplyItem {
-  id                         Int @id @default(autoincrement())
-  shiftScheduleApplyId       Int
-  myScheduleAssignmentId     Int
-  targetScheduleAssignmentId Int
-
-  shiftScheduleApply       ShiftScheduleApply @relation(fields: [shiftScheduleApplyId], references: [id], onDelete: Cascade)
-  myScheduleAssignment     ScheduleAssignment @relation("ShiftMyScheduleAssignment", fields: [myScheduleAssignmentId], references: [id], onDelete: Cascade)
-  targetScheduleAssignment ScheduleAssignment @relation("ShiftTargetScheduleAssignment", fields: [targetScheduleAssignmentId], references: [id], onDelete: Cascade)
-
-  @@unique([shiftScheduleApplyId, myScheduleAssignmentId])
-  @@unique([shiftScheduleApplyId, targetScheduleAssignmentId])
-}
+// model ShiftScheduleApplyItem {
+//   id                         Int @id @default(autoincrement())
+//   shiftScheduleApplyId       Int
+//   myScheduleAssignmentId     Int
+//   targetScheduleAssignmentId Int
+//
+//   shiftScheduleApply       ShiftScheduleApply @relation(fields: [shiftScheduleApplyId], references: [id], onDelete: Cascade)
+//   myScheduleAssignment     ScheduleAssignment @relation("ShiftMyScheduleAssignment", fields: [myScheduleAssignmentId], references: [id], onDelete: Cascade)
+//   targetScheduleAssignment ScheduleAssignment @relation("ShiftTargetScheduleAssignment", fields: [targetScheduleAssignmentId], references: [id], onDelete: Cascade)
+//
+//   @@unique([shiftScheduleApplyId, myScheduleAssignmentId])
+//   @@unique([shiftScheduleApplyId, targetScheduleAssignmentId])
+// }
 
 model AskOffApply {
   id        Int         @id @default(autoincrement())
   startDate DateTime    @db.Date
   endDate   DateTime    @db.Date
   reason    String?
-  status    ApplyStatus @default(SUBMITTED)
+  status    ApplyStatus @default(DRAFT)
   createdAt DateTime    @default(now()) @db.Timestamptz(3)
   updatedAt DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
   personId  Int
-  banTypeId Int
+  // banTypeId Int
 
-  items AskOffApplyItem[]
+  // items AskOffApplyItem[]
 
-  person  Person  @relation(fields: [personId], references: [id])
-  banType BanType @relation(fields: [banTypeId], references: [id])
+  person Person @relation(fields: [personId], references: [id])
+  // banType BanType @relation(fields: [banTypeId], references: [id])
 }
 
-model AskOffApplyItem {
-  id                   Int @id @default(autoincrement())
-  askOffApplyId        Int
-  scheduleAssignmentId Int
-
-  askOffApply        AskOffApply        @relation(fields: [askOffApplyId], references: [id], onDelete: Cascade)
-  scheduleAssignment ScheduleAssignment @relation(fields: [scheduleAssignmentId], references: [id], onDelete: Cascade)
-
-  @@unique([askOffApplyId, scheduleAssignmentId])
-}
+// model AskOffApplyItem {
+//   id                   Int @id @default(autoincrement())
+//   askOffApplyId        Int
+//   scheduleAssignmentId Int
+//
+//   askOffApply        AskOffApply        @relation(fields: [askOffApplyId], references: [id], onDelete: Cascade)
+//   scheduleAssignment ScheduleAssignment @relation(fields: [scheduleAssignmentId], references: [id], onDelete: Cascade)
+//
+//   @@unique([askOffApplyId, scheduleAssignmentId])
+// }
 
 model ChangeScheduleApply {
   id        Int         @id @default(autoincrement())
   startDate DateTime    @db.Date
   endDate   DateTime    @db.Date
   reason    String?
-  status    ApplyStatus @default(SUBMITTED)
+  status    ApplyStatus @default(DRAFT)
   createdAt DateTime    @default(now()) @db.Timestamptz(3)
   updatedAt DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
   personId  Int
 
-  items ChangeScheduleApplyItem[]
+  // items ChangeScheduleApplyItem[]
 
   person Person @relation(fields: [personId], references: [id])
 }
 
-model ChangeScheduleApplyItem {
-  id                      Int      @id @default(autoincrement())
-  changeScheduleApplyId   Int
-  oldScheduleAssignmentId Int
-  newWorkDate             DateTime @db.Date
-  newBanTypeId            Int
-
-  changeScheduleApply   ChangeScheduleApply @relation(fields: [changeScheduleApplyId], references: [id], onDelete: Cascade)
-  oldScheduleAssignment ScheduleAssignment  @relation(fields: [oldScheduleAssignmentId], references: [id], onDelete: Cascade)
-  newBanType            BanType             @relation(fields: [newBanTypeId], references: [id])
-
-  @@unique([changeScheduleApplyId, oldScheduleAssignmentId])
-}
+// model ChangeScheduleApplyItem {
+//   id                      Int      @id @default(autoincrement())
+//   changeScheduleApplyId   Int
+//   oldScheduleAssignmentId Int
+//   newWorkDate             DateTime @db.Date
+//   newBanTypeId            Int
+//
+//   changeScheduleApply   ChangeScheduleApply @relation(fields: [changeScheduleApplyId], references: [id], onDelete: Cascade)
+//   oldScheduleAssignment ScheduleAssignment  @relation(fields: [oldScheduleAssignmentId], references: [id], onDelete: Cascade)
+//   newBanType            BanType             @relation(fields: [newBanTypeId], references: [id])
+//
+//   @@unique([changeScheduleApplyId, oldScheduleAssignmentId])
+// }
 
 model ScheduleAssignment {
   id             Int @id @default(autoincrement())
@@ -235,10 +235,10 @@ model ScheduleAssignment {
   person       Person       @relation(fields: [personId], references: [id])
   workSchedule WorkSchedule @relation(fields: [workScheduleId], references: [id], onDelete: Cascade)
 
-  shiftItemsAsMine      ShiftScheduleApplyItem[]  @relation("ShiftMyScheduleAssignment")
-  shiftItemsAsTarget    ShiftScheduleApplyItem[]  @relation("ShiftTargetScheduleAssignment")
-  askOffApplyItems      AskOffApplyItem[]
-  changeApplyItemsAsOld ChangeScheduleApplyItem[]
+  // shiftItemsAsMine      ShiftScheduleApplyItem[]  @relation("ShiftMyScheduleAssignment")
+  // shiftItemsAsTarget    ShiftScheduleApplyItem[]  @relation("ShiftTargetScheduleAssignment")
+  // askOffApplyItems      AskOffApplyItem[]
+  // changeApplyItemsAsOld ChangeScheduleApplyItem[]
 
   @@unique([personId, workScheduleId])
 }

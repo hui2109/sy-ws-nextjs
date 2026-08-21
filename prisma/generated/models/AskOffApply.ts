@@ -29,13 +29,11 @@ export type AggregateAskOffApply = {
 export type AskOffApplyAvgAggregateOutputType = {
   id: number | null
   personId: number | null
-  banTypeId: number | null
 }
 
 export type AskOffApplySumAggregateOutputType = {
   id: number | null
   personId: number | null
-  banTypeId: number | null
 }
 
 export type AskOffApplyMinAggregateOutputType = {
@@ -47,7 +45,6 @@ export type AskOffApplyMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   personId: number | null
-  banTypeId: number | null
 }
 
 export type AskOffApplyMaxAggregateOutputType = {
@@ -59,7 +56,6 @@ export type AskOffApplyMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   personId: number | null
-  banTypeId: number | null
 }
 
 export type AskOffApplyCountAggregateOutputType = {
@@ -71,7 +67,6 @@ export type AskOffApplyCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   personId: number
-  banTypeId: number
   _all: number
 }
 
@@ -79,13 +74,11 @@ export type AskOffApplyCountAggregateOutputType = {
 export type AskOffApplyAvgAggregateInputType = {
   id?: true
   personId?: true
-  banTypeId?: true
 }
 
 export type AskOffApplySumAggregateInputType = {
   id?: true
   personId?: true
-  banTypeId?: true
 }
 
 export type AskOffApplyMinAggregateInputType = {
@@ -97,7 +90,6 @@ export type AskOffApplyMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   personId?: true
-  banTypeId?: true
 }
 
 export type AskOffApplyMaxAggregateInputType = {
@@ -109,7 +101,6 @@ export type AskOffApplyMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   personId?: true
-  banTypeId?: true
 }
 
 export type AskOffApplyCountAggregateInputType = {
@@ -121,7 +112,6 @@ export type AskOffApplyCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   personId?: true
-  banTypeId?: true
   _all?: true
 }
 
@@ -220,7 +210,6 @@ export type AskOffApplyGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   personId: number
-  banTypeId: number
   _count: AskOffApplyCountAggregateOutputType | null
   _avg: AskOffApplyAvgAggregateOutputType | null
   _sum: AskOffApplySumAggregateOutputType | null
@@ -255,10 +244,7 @@ export type AskOffApplyWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntFilter<"AskOffApply"> | number
-  banTypeId?: Prisma.IntFilter<"AskOffApply"> | number
-  items?: Prisma.AskOffApplyItemListRelationFilter
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
-  banType?: Prisma.XOR<Prisma.BanTypeScalarRelationFilter, Prisma.BanTypeWhereInput>
 }
 
 export type AskOffApplyOrderByWithRelationInput = {
@@ -270,10 +256,7 @@ export type AskOffApplyOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
-  items?: Prisma.AskOffApplyItemOrderByRelationAggregateInput
   person?: Prisma.PersonOrderByWithRelationInput
-  banType?: Prisma.BanTypeOrderByWithRelationInput
 }
 
 export type AskOffApplyWhereUniqueInput = Prisma.AtLeast<{
@@ -288,10 +271,7 @@ export type AskOffApplyWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntFilter<"AskOffApply"> | number
-  banTypeId?: Prisma.IntFilter<"AskOffApply"> | number
-  items?: Prisma.AskOffApplyItemListRelationFilter
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
-  banType?: Prisma.XOR<Prisma.BanTypeScalarRelationFilter, Prisma.BanTypeWhereInput>
 }, "id">
 
 export type AskOffApplyOrderByWithAggregationInput = {
@@ -303,7 +283,6 @@ export type AskOffApplyOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
   _count?: Prisma.AskOffApplyCountOrderByAggregateInput
   _avg?: Prisma.AskOffApplyAvgOrderByAggregateInput
   _max?: Prisma.AskOffApplyMaxOrderByAggregateInput
@@ -323,7 +302,6 @@ export type AskOffApplyScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntWithAggregatesFilter<"AskOffApply"> | number
-  banTypeId?: Prisma.IntWithAggregatesFilter<"AskOffApply"> | number
 }
 
 export type AskOffApplyCreateInput = {
@@ -333,9 +311,7 @@ export type AskOffApplyCreateInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.AskOffApplyItemCreateNestedManyWithoutAskOffApplyInput
   person: Prisma.PersonCreateNestedOneWithoutAskOffAppliesInput
-  banType: Prisma.BanTypeCreateNestedOneWithoutAskOffAppliesInput
 }
 
 export type AskOffApplyUncheckedCreateInput = {
@@ -347,8 +323,6 @@ export type AskOffApplyUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   personId: number
-  banTypeId: number
-  items?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutAskOffApplyInput
 }
 
 export type AskOffApplyUpdateInput = {
@@ -358,9 +332,7 @@ export type AskOffApplyUpdateInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.AskOffApplyItemUpdateManyWithoutAskOffApplyNestedInput
   person?: Prisma.PersonUpdateOneRequiredWithoutAskOffAppliesNestedInput
-  banType?: Prisma.BanTypeUpdateOneRequiredWithoutAskOffAppliesNestedInput
 }
 
 export type AskOffApplyUncheckedUpdateInput = {
@@ -372,8 +344,6 @@ export type AskOffApplyUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personId?: Prisma.IntFieldUpdateOperationsInput | number
-  banTypeId?: Prisma.IntFieldUpdateOperationsInput | number
-  items?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutAskOffApplyNestedInput
 }
 
 export type AskOffApplyCreateManyInput = {
@@ -385,7 +355,6 @@ export type AskOffApplyCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   personId: number
-  banTypeId: number
 }
 
 export type AskOffApplyUpdateManyMutationInput = {
@@ -406,7 +375,6 @@ export type AskOffApplyUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personId?: Prisma.IntFieldUpdateOperationsInput | number
-  banTypeId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type AskOffApplyListRelationFilter = {
@@ -428,13 +396,11 @@ export type AskOffApplyCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
 }
 
 export type AskOffApplyAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
 }
 
 export type AskOffApplyMaxOrderByAggregateInput = {
@@ -446,7 +412,6 @@ export type AskOffApplyMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
 }
 
 export type AskOffApplyMinOrderByAggregateInput = {
@@ -458,18 +423,11 @@ export type AskOffApplyMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
 }
 
 export type AskOffApplySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  banTypeId?: Prisma.SortOrder
-}
-
-export type AskOffApplyScalarRelationFilter = {
-  is?: Prisma.AskOffApplyWhereInput
-  isNot?: Prisma.AskOffApplyWhereInput
 }
 
 export type AskOffApplyCreateNestedManyWithoutPersonInput = {
@@ -514,62 +472,6 @@ export type AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput = {
   deleteMany?: Prisma.AskOffApplyScalarWhereInput | Prisma.AskOffApplyScalarWhereInput[]
 }
 
-export type AskOffApplyCreateNestedManyWithoutBanTypeInput = {
-  create?: Prisma.XOR<Prisma.AskOffApplyCreateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput> | Prisma.AskOffApplyCreateWithoutBanTypeInput[] | Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput[]
-  connectOrCreate?: Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput | Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput[]
-  createMany?: Prisma.AskOffApplyCreateManyBanTypeInputEnvelope
-  connect?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-}
-
-export type AskOffApplyUncheckedCreateNestedManyWithoutBanTypeInput = {
-  create?: Prisma.XOR<Prisma.AskOffApplyCreateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput> | Prisma.AskOffApplyCreateWithoutBanTypeInput[] | Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput[]
-  connectOrCreate?: Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput | Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput[]
-  createMany?: Prisma.AskOffApplyCreateManyBanTypeInputEnvelope
-  connect?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-}
-
-export type AskOffApplyUpdateManyWithoutBanTypeNestedInput = {
-  create?: Prisma.XOR<Prisma.AskOffApplyCreateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput> | Prisma.AskOffApplyCreateWithoutBanTypeInput[] | Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput[]
-  connectOrCreate?: Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput | Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput[]
-  upsert?: Prisma.AskOffApplyUpsertWithWhereUniqueWithoutBanTypeInput | Prisma.AskOffApplyUpsertWithWhereUniqueWithoutBanTypeInput[]
-  createMany?: Prisma.AskOffApplyCreateManyBanTypeInputEnvelope
-  set?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  disconnect?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  delete?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  connect?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  update?: Prisma.AskOffApplyUpdateWithWhereUniqueWithoutBanTypeInput | Prisma.AskOffApplyUpdateWithWhereUniqueWithoutBanTypeInput[]
-  updateMany?: Prisma.AskOffApplyUpdateManyWithWhereWithoutBanTypeInput | Prisma.AskOffApplyUpdateManyWithWhereWithoutBanTypeInput[]
-  deleteMany?: Prisma.AskOffApplyScalarWhereInput | Prisma.AskOffApplyScalarWhereInput[]
-}
-
-export type AskOffApplyUncheckedUpdateManyWithoutBanTypeNestedInput = {
-  create?: Prisma.XOR<Prisma.AskOffApplyCreateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput> | Prisma.AskOffApplyCreateWithoutBanTypeInput[] | Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput[]
-  connectOrCreate?: Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput | Prisma.AskOffApplyCreateOrConnectWithoutBanTypeInput[]
-  upsert?: Prisma.AskOffApplyUpsertWithWhereUniqueWithoutBanTypeInput | Prisma.AskOffApplyUpsertWithWhereUniqueWithoutBanTypeInput[]
-  createMany?: Prisma.AskOffApplyCreateManyBanTypeInputEnvelope
-  set?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  disconnect?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  delete?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  connect?: Prisma.AskOffApplyWhereUniqueInput | Prisma.AskOffApplyWhereUniqueInput[]
-  update?: Prisma.AskOffApplyUpdateWithWhereUniqueWithoutBanTypeInput | Prisma.AskOffApplyUpdateWithWhereUniqueWithoutBanTypeInput[]
-  updateMany?: Prisma.AskOffApplyUpdateManyWithWhereWithoutBanTypeInput | Prisma.AskOffApplyUpdateManyWithWhereWithoutBanTypeInput[]
-  deleteMany?: Prisma.AskOffApplyScalarWhereInput | Prisma.AskOffApplyScalarWhereInput[]
-}
-
-export type AskOffApplyCreateNestedOneWithoutItemsInput = {
-  create?: Prisma.XOR<Prisma.AskOffApplyCreateWithoutItemsInput, Prisma.AskOffApplyUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.AskOffApplyCreateOrConnectWithoutItemsInput
-  connect?: Prisma.AskOffApplyWhereUniqueInput
-}
-
-export type AskOffApplyUpdateOneRequiredWithoutItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.AskOffApplyCreateWithoutItemsInput, Prisma.AskOffApplyUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.AskOffApplyCreateOrConnectWithoutItemsInput
-  upsert?: Prisma.AskOffApplyUpsertWithoutItemsInput
-  connect?: Prisma.AskOffApplyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AskOffApplyUpdateToOneWithWhereWithoutItemsInput, Prisma.AskOffApplyUpdateWithoutItemsInput>, Prisma.AskOffApplyUncheckedUpdateWithoutItemsInput>
-}
-
 export type AskOffApplyCreateWithoutPersonInput = {
   startDate: Date | string
   endDate: Date | string
@@ -577,8 +479,6 @@ export type AskOffApplyCreateWithoutPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.AskOffApplyItemCreateNestedManyWithoutAskOffApplyInput
-  banType: Prisma.BanTypeCreateNestedOneWithoutAskOffAppliesInput
 }
 
 export type AskOffApplyUncheckedCreateWithoutPersonInput = {
@@ -589,8 +489,6 @@ export type AskOffApplyUncheckedCreateWithoutPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  banTypeId: number
-  items?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutAskOffApplyInput
 }
 
 export type AskOffApplyCreateOrConnectWithoutPersonInput = {
@@ -631,118 +529,6 @@ export type AskOffApplyScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntFilter<"AskOffApply"> | number
-  banTypeId?: Prisma.IntFilter<"AskOffApply"> | number
-}
-
-export type AskOffApplyCreateWithoutBanTypeInput = {
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  items?: Prisma.AskOffApplyItemCreateNestedManyWithoutAskOffApplyInput
-  person: Prisma.PersonCreateNestedOneWithoutAskOffAppliesInput
-}
-
-export type AskOffApplyUncheckedCreateWithoutBanTypeInput = {
-  id?: number
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  personId: number
-  items?: Prisma.AskOffApplyItemUncheckedCreateNestedManyWithoutAskOffApplyInput
-}
-
-export type AskOffApplyCreateOrConnectWithoutBanTypeInput = {
-  where: Prisma.AskOffApplyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AskOffApplyCreateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput>
-}
-
-export type AskOffApplyCreateManyBanTypeInputEnvelope = {
-  data: Prisma.AskOffApplyCreateManyBanTypeInput | Prisma.AskOffApplyCreateManyBanTypeInput[]
-  skipDuplicates?: boolean
-}
-
-export type AskOffApplyUpsertWithWhereUniqueWithoutBanTypeInput = {
-  where: Prisma.AskOffApplyWhereUniqueInput
-  update: Prisma.XOR<Prisma.AskOffApplyUpdateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedUpdateWithoutBanTypeInput>
-  create: Prisma.XOR<Prisma.AskOffApplyCreateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedCreateWithoutBanTypeInput>
-}
-
-export type AskOffApplyUpdateWithWhereUniqueWithoutBanTypeInput = {
-  where: Prisma.AskOffApplyWhereUniqueInput
-  data: Prisma.XOR<Prisma.AskOffApplyUpdateWithoutBanTypeInput, Prisma.AskOffApplyUncheckedUpdateWithoutBanTypeInput>
-}
-
-export type AskOffApplyUpdateManyWithWhereWithoutBanTypeInput = {
-  where: Prisma.AskOffApplyScalarWhereInput
-  data: Prisma.XOR<Prisma.AskOffApplyUpdateManyMutationInput, Prisma.AskOffApplyUncheckedUpdateManyWithoutBanTypeInput>
-}
-
-export type AskOffApplyCreateWithoutItemsInput = {
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  person: Prisma.PersonCreateNestedOneWithoutAskOffAppliesInput
-  banType: Prisma.BanTypeCreateNestedOneWithoutAskOffAppliesInput
-}
-
-export type AskOffApplyUncheckedCreateWithoutItemsInput = {
-  id?: number
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  personId: number
-  banTypeId: number
-}
-
-export type AskOffApplyCreateOrConnectWithoutItemsInput = {
-  where: Prisma.AskOffApplyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AskOffApplyCreateWithoutItemsInput, Prisma.AskOffApplyUncheckedCreateWithoutItemsInput>
-}
-
-export type AskOffApplyUpsertWithoutItemsInput = {
-  update: Prisma.XOR<Prisma.AskOffApplyUpdateWithoutItemsInput, Prisma.AskOffApplyUncheckedUpdateWithoutItemsInput>
-  create: Prisma.XOR<Prisma.AskOffApplyCreateWithoutItemsInput, Prisma.AskOffApplyUncheckedCreateWithoutItemsInput>
-  where?: Prisma.AskOffApplyWhereInput
-}
-
-export type AskOffApplyUpdateToOneWithWhereWithoutItemsInput = {
-  where?: Prisma.AskOffApplyWhereInput
-  data: Prisma.XOR<Prisma.AskOffApplyUpdateWithoutItemsInput, Prisma.AskOffApplyUncheckedUpdateWithoutItemsInput>
-}
-
-export type AskOffApplyUpdateWithoutItemsInput = {
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  person?: Prisma.PersonUpdateOneRequiredWithoutAskOffAppliesNestedInput
-  banType?: Prisma.BanTypeUpdateOneRequiredWithoutAskOffAppliesNestedInput
-}
-
-export type AskOffApplyUncheckedUpdateWithoutItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-  banTypeId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type AskOffApplyCreateManyPersonInput = {
@@ -753,7 +539,6 @@ export type AskOffApplyCreateManyPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  banTypeId: number
 }
 
 export type AskOffApplyUpdateWithoutPersonInput = {
@@ -763,8 +548,6 @@ export type AskOffApplyUpdateWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.AskOffApplyItemUpdateManyWithoutAskOffApplyNestedInput
-  banType?: Prisma.BanTypeUpdateOneRequiredWithoutAskOffAppliesNestedInput
 }
 
 export type AskOffApplyUncheckedUpdateWithoutPersonInput = {
@@ -775,8 +558,6 @@ export type AskOffApplyUncheckedUpdateWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  banTypeId?: Prisma.IntFieldUpdateOperationsInput | number
-  items?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutAskOffApplyNestedInput
 }
 
 export type AskOffApplyUncheckedUpdateManyWithoutPersonInput = {
@@ -787,83 +568,8 @@ export type AskOffApplyUncheckedUpdateManyWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  banTypeId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type AskOffApplyCreateManyBanTypeInput = {
-  id?: number
-  startDate: Date | string
-  endDate: Date | string
-  reason?: string | null
-  status?: $Enums.ApplyStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  personId: number
-}
-
-export type AskOffApplyUpdateWithoutBanTypeInput = {
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.AskOffApplyItemUpdateManyWithoutAskOffApplyNestedInput
-  person?: Prisma.PersonUpdateOneRequiredWithoutAskOffAppliesNestedInput
-}
-
-export type AskOffApplyUncheckedUpdateWithoutBanTypeInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-  items?: Prisma.AskOffApplyItemUncheckedUpdateManyWithoutAskOffApplyNestedInput
-}
-
-export type AskOffApplyUncheckedUpdateManyWithoutBanTypeInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  personId?: Prisma.IntFieldUpdateOperationsInput | number
-}
-
-
-/**
- * Count Type AskOffApplyCountOutputType
- */
-
-export type AskOffApplyCountOutputType = {
-  items: number
-}
-
-export type AskOffApplyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  items?: boolean | AskOffApplyCountOutputTypeCountItemsArgs
-}
-
-/**
- * AskOffApplyCountOutputType without action
- */
-export type AskOffApplyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AskOffApplyCountOutputType
-   */
-  select?: Prisma.AskOffApplyCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * AskOffApplyCountOutputType without action
- */
-export type AskOffApplyCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AskOffApplyItemWhereInput
-}
 
 
 export type AskOffApplySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -875,11 +581,7 @@ export type AskOffApplySelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
-  banTypeId?: boolean
-  items?: boolean | Prisma.AskOffApply$itemsArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  banType?: boolean | Prisma.BanTypeDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.AskOffApplyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["askOffApply"]>
 
 export type AskOffApplySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -891,9 +593,7 @@ export type AskOffApplySelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
-  banTypeId?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  banType?: boolean | Prisma.BanTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["askOffApply"]>
 
 export type AskOffApplySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -905,9 +605,7 @@ export type AskOffApplySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
-  banTypeId?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  banType?: boolean | Prisma.BanTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["askOffApply"]>
 
 export type AskOffApplySelectScalar = {
@@ -919,31 +617,23 @@ export type AskOffApplySelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
-  banTypeId?: boolean
 }
 
-export type AskOffApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "personId" | "banTypeId", ExtArgs["result"]["askOffApply"]>
+export type AskOffApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "personId", ExtArgs["result"]["askOffApply"]>
 export type AskOffApplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  items?: boolean | Prisma.AskOffApply$itemsArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  banType?: boolean | Prisma.BanTypeDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.AskOffApplyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AskOffApplyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  banType?: boolean | Prisma.BanTypeDefaultArgs<ExtArgs>
 }
 export type AskOffApplyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
-  banType?: boolean | Prisma.BanTypeDefaultArgs<ExtArgs>
 }
 
 export type $AskOffApplyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AskOffApply"
   objects: {
-    items: Prisma.$AskOffApplyItemPayload<ExtArgs>[]
     person: Prisma.$PersonPayload<ExtArgs>
-    banType: Prisma.$BanTypePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -954,7 +644,6 @@ export type $AskOffApplyPayload<ExtArgs extends runtime.Types.Extensions.Interna
     createdAt: Date
     updatedAt: Date
     personId: number
-    banTypeId: number
   }, ExtArgs["result"]["askOffApply"]>
   composites: {}
 }
@@ -1349,9 +1038,7 @@ readonly fields: AskOffApplyFieldRefs;
  */
 export interface Prisma__AskOffApplyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  items<T extends Prisma.AskOffApply$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AskOffApply$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AskOffApplyItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  banType<T extends Prisma.BanTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BanTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__BanTypeClient<runtime.Types.Result.GetResult<Prisma.$BanTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1389,7 +1076,6 @@ export interface AskOffApplyFieldRefs {
   readonly createdAt: Prisma.FieldRef<"AskOffApply", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AskOffApply", 'DateTime'>
   readonly personId: Prisma.FieldRef<"AskOffApply", 'Int'>
-  readonly banTypeId: Prisma.FieldRef<"AskOffApply", 'Int'>
 }
     
 
@@ -1788,30 +1474,6 @@ export type AskOffApplyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many AskOffApplies to delete.
    */
   limit?: number
-}
-
-/**
- * AskOffApply.items
- */
-export type AskOffApply$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AskOffApplyItem
-   */
-  select?: Prisma.AskOffApplyItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AskOffApplyItem
-   */
-  omit?: Prisma.AskOffApplyItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AskOffApplyItemInclude<ExtArgs> | null
-  where?: Prisma.AskOffApplyItemWhereInput
-  orderBy?: Prisma.AskOffApplyItemOrderByWithRelationInput | Prisma.AskOffApplyItemOrderByWithRelationInput[]
-  cursor?: Prisma.AskOffApplyItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AskOffApplyItemScalarFieldEnum | Prisma.AskOffApplyItemScalarFieldEnum[]
 }
 
 /**

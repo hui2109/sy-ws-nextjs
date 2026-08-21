@@ -22,7 +22,7 @@ export const ApplyStatus = {
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',
   PENDING_REVIEW: 'PENDING_REVIEW',
-  SUBMITTED: 'SUBMITTED'
+  DRAFT: 'DRAFT'
 } as const
 
 export type ApplyStatus = (typeof ApplyStatus)[keyof typeof ApplyStatus]
