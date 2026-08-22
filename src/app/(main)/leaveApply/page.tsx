@@ -1,7 +1,7 @@
-import {Button} from "antd";
+import LeaveApplyList from "@/components/tables/LeaveApplyList/LeaveApplyList";
 
-export default function XX() {
+export default function LeaveApply() {
     return (
-        <Button>假勤申请</Button>
+        <LeaveApplyList/>
     )
 }
