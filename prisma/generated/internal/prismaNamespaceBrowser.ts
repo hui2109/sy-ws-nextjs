@@ -177,7 +177,8 @@ export const ShiftScheduleApplyScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   applicantId: 'applicantId',
-  targetPersonId: 'targetPersonId'
+  targetPersonId: 'targetPersonId',
+  shiftScheduleAssignments: 'shiftScheduleAssignments'
 } as const
 
 export type ShiftScheduleApplyScalarFieldEnum = (typeof ShiftScheduleApplyScalarFieldEnum)[keyof typeof ShiftScheduleApplyScalarFieldEnum]
@@ -191,7 +192,8 @@ export const AskOffApplyScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  personId: 'personId'
+  personId: 'personId',
+  askOffAssignments: 'askOffAssignments'
 } as const
 
 export type AskOffApplyScalarFieldEnum = (typeof AskOffApplyScalarFieldEnum)[keyof typeof AskOffApplyScalarFieldEnum]
@@ -205,7 +207,8 @@ export const ChangeScheduleApplyScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  personId: 'personId'
+  personId: 'personId',
+  changeScheduleAssignments: 'changeScheduleAssignments'
 } as const
 
 export type ChangeScheduleApplyScalarFieldEnum = (typeof ChangeScheduleApplyScalarFieldEnum)[keyof typeof ChangeScheduleApplyScalarFieldEnum]
@@ -228,12 +231,28 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 export const NullsOrder = {

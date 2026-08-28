@@ -67,6 +67,7 @@ export type AskOffApplyCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   personId: number
+  askOffAssignments: number
   _all: number
 }
 
@@ -112,6 +113,7 @@ export type AskOffApplyCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   personId?: true
+  askOffAssignments?: true
   _all?: true
 }
 
@@ -210,6 +212,7 @@ export type AskOffApplyGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   personId: number
+  askOffAssignments: runtime.JsonValue
   _count: AskOffApplyCountAggregateOutputType | null
   _avg: AskOffApplyAvgAggregateOutputType | null
   _sum: AskOffApplySumAggregateOutputType | null
@@ -244,6 +247,7 @@ export type AskOffApplyWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntFilter<"AskOffApply"> | number
+  askOffAssignments?: Prisma.JsonFilter<"AskOffApply">
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }
 
@@ -256,6 +260,7 @@ export type AskOffApplyOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
+  askOffAssignments?: Prisma.SortOrder
   person?: Prisma.PersonOrderByWithRelationInput
 }
 
@@ -271,6 +276,7 @@ export type AskOffApplyWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntFilter<"AskOffApply"> | number
+  askOffAssignments?: Prisma.JsonFilter<"AskOffApply">
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }, "id">
 
@@ -283,6 +289,7 @@ export type AskOffApplyOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
+  askOffAssignments?: Prisma.SortOrder
   _count?: Prisma.AskOffApplyCountOrderByAggregateInput
   _avg?: Prisma.AskOffApplyAvgOrderByAggregateInput
   _max?: Prisma.AskOffApplyMaxOrderByAggregateInput
@@ -302,6 +309,7 @@ export type AskOffApplyScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntWithAggregatesFilter<"AskOffApply"> | number
+  askOffAssignments?: Prisma.JsonWithAggregatesFilter<"AskOffApply">
 }
 
 export type AskOffApplyCreateInput = {
@@ -311,6 +319,7 @@ export type AskOffApplyCreateInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  askOffAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
   person: Prisma.PersonCreateNestedOneWithoutAskOffAppliesInput
 }
 
@@ -323,6 +332,7 @@ export type AskOffApplyUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   personId: number
+  askOffAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUpdateInput = {
@@ -332,6 +342,7 @@ export type AskOffApplyUpdateInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   person?: Prisma.PersonUpdateOneRequiredWithoutAskOffAppliesNestedInput
 }
 
@@ -344,6 +355,7 @@ export type AskOffApplyUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personId?: Prisma.IntFieldUpdateOperationsInput | number
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyCreateManyInput = {
@@ -355,6 +367,7 @@ export type AskOffApplyCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   personId: number
+  askOffAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUpdateManyMutationInput = {
@@ -364,6 +377,7 @@ export type AskOffApplyUpdateManyMutationInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUncheckedUpdateManyInput = {
@@ -375,6 +389,7 @@ export type AskOffApplyUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   personId?: Prisma.IntFieldUpdateOperationsInput | number
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyListRelationFilter = {
@@ -396,6 +411,7 @@ export type AskOffApplyCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   personId?: Prisma.SortOrder
+  askOffAssignments?: Prisma.SortOrder
 }
 
 export type AskOffApplyAvgOrderByAggregateInput = {
@@ -479,6 +495,7 @@ export type AskOffApplyCreateWithoutPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  askOffAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUncheckedCreateWithoutPersonInput = {
@@ -489,6 +506,7 @@ export type AskOffApplyUncheckedCreateWithoutPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  askOffAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyCreateOrConnectWithoutPersonInput = {
@@ -529,6 +547,7 @@ export type AskOffApplyScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AskOffApply"> | Date | string
   personId?: Prisma.IntFilter<"AskOffApply"> | number
+  askOffAssignments?: Prisma.JsonFilter<"AskOffApply">
 }
 
 export type AskOffApplyCreateManyPersonInput = {
@@ -539,6 +558,7 @@ export type AskOffApplyCreateManyPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  askOffAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUpdateWithoutPersonInput = {
@@ -548,6 +568,7 @@ export type AskOffApplyUpdateWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUncheckedUpdateWithoutPersonInput = {
@@ -558,6 +579,7 @@ export type AskOffApplyUncheckedUpdateWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type AskOffApplyUncheckedUpdateManyWithoutPersonInput = {
@@ -568,6 +590,7 @@ export type AskOffApplyUncheckedUpdateManyWithoutPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  askOffAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -581,6 +604,7 @@ export type AskOffApplySelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
+  askOffAssignments?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["askOffApply"]>
 
@@ -593,6 +617,7 @@ export type AskOffApplySelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
+  askOffAssignments?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["askOffApply"]>
 
@@ -605,6 +630,7 @@ export type AskOffApplySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
+  askOffAssignments?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["askOffApply"]>
 
@@ -617,9 +643,10 @@ export type AskOffApplySelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   personId?: boolean
+  askOffAssignments?: boolean
 }
 
-export type AskOffApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "personId", ExtArgs["result"]["askOffApply"]>
+export type AskOffApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "personId" | "askOffAssignments", ExtArgs["result"]["askOffApply"]>
 export type AskOffApplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }
@@ -644,6 +671,7 @@ export type $AskOffApplyPayload<ExtArgs extends runtime.Types.Extensions.Interna
     createdAt: Date
     updatedAt: Date
     personId: number
+    askOffAssignments: runtime.JsonValue
   }, ExtArgs["result"]["askOffApply"]>
   composites: {}
 }
@@ -1076,6 +1104,7 @@ export interface AskOffApplyFieldRefs {
   readonly createdAt: Prisma.FieldRef<"AskOffApply", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AskOffApply", 'DateTime'>
   readonly personId: Prisma.FieldRef<"AskOffApply", 'Int'>
+  readonly askOffAssignments: Prisma.FieldRef<"AskOffApply", 'Json'>
 }
     
 

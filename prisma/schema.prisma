@@ -140,75 +140,45 @@ model ExpectedSchedule {
 }
 
 model ShiftScheduleApply {
-  id             Int         @id @default(autoincrement())
-  startDate      DateTime    @db.Date
-  endDate        DateTime    @db.Date
-  reason         String?
-  status         ApplyStatus @default(DRAFT)
-  createdAt      DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt      DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
-  applicantId    Int
-  targetPersonId Int
-
-  // items ShiftScheduleApplyItem[]
+  id                       Int         @id @default(autoincrement())
+  startDate                DateTime    @db.Date
+  endDate                  DateTime    @db.Date
+  reason                   String?
+  status                   ApplyStatus @default(DRAFT)
+  createdAt                DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt                DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
+  applicantId              Int
+  targetPersonId           Int
+  shiftScheduleAssignments Json
 
   applicant    Person @relation("ShiftApplicant", fields: [applicantId], references: [id])
   targetPerson Person @relation("ShiftTargetPerson", fields: [targetPersonId], references: [id])
 }
 
-// model ShiftScheduleApplyItem {
-//   id                         Int @id @default(autoincrement())
-//   shiftScheduleApplyId       Int
-//   myScheduleAssignmentId     Int
-//   targetScheduleAssignmentId Int
-//
-//   shiftScheduleApply       ShiftScheduleApply @relation(fields: [shiftScheduleApplyId], references: [id], onDelete: Cascade)
-//   myScheduleAssignment     ScheduleAssignment @relation("ShiftMyScheduleAssignment", fields: [myScheduleAssignmentId], references: [id], onDelete: Cascade)
-//   targetScheduleAssignment ScheduleAssignment @relation("ShiftTargetScheduleAssignment", fields: [targetScheduleAssignmentId], references: [id], onDelete: Cascade)
-//
-//   @@unique([shiftScheduleApplyId, myScheduleAssignmentId])
-//   @@unique([shiftScheduleApplyId, targetScheduleAssignmentId])
-// }
-
 model AskOffApply {
-  id        Int         @id @default(autoincrement())
-  startDate DateTime    @db.Date
-  endDate   DateTime    @db.Date
-  reason    String?
-  status    ApplyStatus @default(DRAFT)
-  createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
-  personId  Int
-  // banTypeId Int
-
-  // items AskOffApplyItem[]
+  id                Int         @id @default(autoincrement())
+  startDate         DateTime    @db.Date
+  endDate           DateTime    @db.Date
+  reason            String?
+  status            ApplyStatus @default(DRAFT)
+  createdAt         DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt         DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
+  personId          Int
+  askOffAssignments Json
 
   person Person @relation(fields: [personId], references: [id])
-  // banType BanType @relation(fields: [banTypeId], references: [id])
 }
 
-// model AskOffApplyItem {
-//   id                   Int @id @default(autoincrement())
-//   askOffApplyId        Int
-//   scheduleAssignmentId Int
-//
-//   askOffApply        AskOffApply        @relation(fields: [askOffApplyId], references: [id], onDelete: Cascade)
-//   scheduleAssignment ScheduleAssignment @relation(fields: [scheduleAssignmentId], references: [id], onDelete: Cascade)
-//
-//   @@unique([askOffApplyId, scheduleAssignmentId])
-// }
-
 model ChangeScheduleApply {
-  id        Int         @id @default(autoincrement())
-  startDate DateTime    @db.Date
-  endDate   DateTime    @db.Date
-  reason    String?
-  status    ApplyStatus @default(DRAFT)
-  createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
-  personId  Int
-
-  // items ChangeScheduleApplyItem[]
+  id                        Int         @id @default(autoincrement())
+  startDate                 DateTime    @db.Date
+  endDate                   DateTime    @db.Date
+  reason                    String?
+  status                    ApplyStatus @default(DRAFT)
+  createdAt                 DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt                 DateTime    @default(now()) @updatedAt @db.Timestamptz(3)
+  personId                  Int
+  changeScheduleAssignments Json
 
   person Person @relation(fields: [personId], references: [id])
 }

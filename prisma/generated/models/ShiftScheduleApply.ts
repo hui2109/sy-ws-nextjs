@@ -72,6 +72,7 @@ export type ShiftScheduleApplyCountAggregateOutputType = {
   updatedAt: number
   applicantId: number
   targetPersonId: number
+  shiftScheduleAssignments: number
   _all: number
 }
 
@@ -122,6 +123,7 @@ export type ShiftScheduleApplyCountAggregateInputType = {
   updatedAt?: true
   applicantId?: true
   targetPersonId?: true
+  shiftScheduleAssignments?: true
   _all?: true
 }
 
@@ -221,6 +223,7 @@ export type ShiftScheduleApplyGroupByOutputType = {
   updatedAt: Date
   applicantId: number
   targetPersonId: number
+  shiftScheduleAssignments: runtime.JsonValue
   _count: ShiftScheduleApplyCountAggregateOutputType | null
   _avg: ShiftScheduleApplyAvgAggregateOutputType | null
   _sum: ShiftScheduleApplySumAggregateOutputType | null
@@ -256,6 +259,7 @@ export type ShiftScheduleApplyWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ShiftScheduleApply"> | Date | string
   applicantId?: Prisma.IntFilter<"ShiftScheduleApply"> | number
   targetPersonId?: Prisma.IntFilter<"ShiftScheduleApply"> | number
+  shiftScheduleAssignments?: Prisma.JsonFilter<"ShiftScheduleApply">
   applicant?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   targetPerson?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }
@@ -270,6 +274,7 @@ export type ShiftScheduleApplyOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   applicantId?: Prisma.SortOrder
   targetPersonId?: Prisma.SortOrder
+  shiftScheduleAssignments?: Prisma.SortOrder
   applicant?: Prisma.PersonOrderByWithRelationInput
   targetPerson?: Prisma.PersonOrderByWithRelationInput
 }
@@ -287,6 +292,7 @@ export type ShiftScheduleApplyWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"ShiftScheduleApply"> | Date | string
   applicantId?: Prisma.IntFilter<"ShiftScheduleApply"> | number
   targetPersonId?: Prisma.IntFilter<"ShiftScheduleApply"> | number
+  shiftScheduleAssignments?: Prisma.JsonFilter<"ShiftScheduleApply">
   applicant?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   targetPerson?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }, "id">
@@ -301,6 +307,7 @@ export type ShiftScheduleApplyOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   applicantId?: Prisma.SortOrder
   targetPersonId?: Prisma.SortOrder
+  shiftScheduleAssignments?: Prisma.SortOrder
   _count?: Prisma.ShiftScheduleApplyCountOrderByAggregateInput
   _avg?: Prisma.ShiftScheduleApplyAvgOrderByAggregateInput
   _max?: Prisma.ShiftScheduleApplyMaxOrderByAggregateInput
@@ -321,6 +328,7 @@ export type ShiftScheduleApplyScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ShiftScheduleApply"> | Date | string
   applicantId?: Prisma.IntWithAggregatesFilter<"ShiftScheduleApply"> | number
   targetPersonId?: Prisma.IntWithAggregatesFilter<"ShiftScheduleApply"> | number
+  shiftScheduleAssignments?: Prisma.JsonWithAggregatesFilter<"ShiftScheduleApply">
 }
 
 export type ShiftScheduleApplyCreateInput = {
@@ -330,6 +338,7 @@ export type ShiftScheduleApplyCreateInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
   applicant: Prisma.PersonCreateNestedOneWithoutShiftScheduleAppliesAsApplicantInput
   targetPerson: Prisma.PersonCreateNestedOneWithoutShiftScheduleAppliesAsTargetInput
 }
@@ -344,6 +353,7 @@ export type ShiftScheduleApplyUncheckedCreateInput = {
   updatedAt?: Date | string
   applicantId: number
   targetPersonId: number
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUpdateInput = {
@@ -353,6 +363,7 @@ export type ShiftScheduleApplyUpdateInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   applicant?: Prisma.PersonUpdateOneRequiredWithoutShiftScheduleAppliesAsApplicantNestedInput
   targetPerson?: Prisma.PersonUpdateOneRequiredWithoutShiftScheduleAppliesAsTargetNestedInput
 }
@@ -367,6 +378,7 @@ export type ShiftScheduleApplyUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applicantId?: Prisma.IntFieldUpdateOperationsInput | number
   targetPersonId?: Prisma.IntFieldUpdateOperationsInput | number
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyCreateManyInput = {
@@ -379,6 +391,7 @@ export type ShiftScheduleApplyCreateManyInput = {
   updatedAt?: Date | string
   applicantId: number
   targetPersonId: number
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUpdateManyMutationInput = {
@@ -388,6 +401,7 @@ export type ShiftScheduleApplyUpdateManyMutationInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUncheckedUpdateManyInput = {
@@ -400,6 +414,7 @@ export type ShiftScheduleApplyUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applicantId?: Prisma.IntFieldUpdateOperationsInput | number
   targetPersonId?: Prisma.IntFieldUpdateOperationsInput | number
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyListRelationFilter = {
@@ -422,6 +437,7 @@ export type ShiftScheduleApplyCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   applicantId?: Prisma.SortOrder
   targetPersonId?: Prisma.SortOrder
+  shiftScheduleAssignments?: Prisma.SortOrder
 }
 
 export type ShiftScheduleApplyAvgOrderByAggregateInput = {
@@ -559,6 +575,7 @@ export type ShiftScheduleApplyCreateWithoutApplicantInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
   targetPerson: Prisma.PersonCreateNestedOneWithoutShiftScheduleAppliesAsTargetInput
 }
 
@@ -571,6 +588,7 @@ export type ShiftScheduleApplyUncheckedCreateWithoutApplicantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   targetPersonId: number
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyCreateOrConnectWithoutApplicantInput = {
@@ -590,6 +608,7 @@ export type ShiftScheduleApplyCreateWithoutTargetPersonInput = {
   status?: $Enums.ApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
   applicant: Prisma.PersonCreateNestedOneWithoutShiftScheduleAppliesAsApplicantInput
 }
 
@@ -602,6 +621,7 @@ export type ShiftScheduleApplyUncheckedCreateWithoutTargetPersonInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   applicantId: number
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyCreateOrConnectWithoutTargetPersonInput = {
@@ -643,6 +663,7 @@ export type ShiftScheduleApplyScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ShiftScheduleApply"> | Date | string
   applicantId?: Prisma.IntFilter<"ShiftScheduleApply"> | number
   targetPersonId?: Prisma.IntFilter<"ShiftScheduleApply"> | number
+  shiftScheduleAssignments?: Prisma.JsonFilter<"ShiftScheduleApply">
 }
 
 export type ShiftScheduleApplyUpsertWithWhereUniqueWithoutTargetPersonInput = {
@@ -670,6 +691,7 @@ export type ShiftScheduleApplyCreateManyApplicantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   targetPersonId: number
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyCreateManyTargetPersonInput = {
@@ -681,6 +703,7 @@ export type ShiftScheduleApplyCreateManyTargetPersonInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   applicantId: number
+  shiftScheduleAssignments: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUpdateWithoutApplicantInput = {
@@ -690,6 +713,7 @@ export type ShiftScheduleApplyUpdateWithoutApplicantInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   targetPerson?: Prisma.PersonUpdateOneRequiredWithoutShiftScheduleAppliesAsTargetNestedInput
 }
 
@@ -702,6 +726,7 @@ export type ShiftScheduleApplyUncheckedUpdateWithoutApplicantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   targetPersonId?: Prisma.IntFieldUpdateOperationsInput | number
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantInput = {
@@ -713,6 +738,7 @@ export type ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   targetPersonId?: Prisma.IntFieldUpdateOperationsInput | number
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUpdateWithoutTargetPersonInput = {
@@ -722,6 +748,7 @@ export type ShiftScheduleApplyUpdateWithoutTargetPersonInput = {
   status?: Prisma.EnumApplyStatusFieldUpdateOperationsInput | $Enums.ApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   applicant?: Prisma.PersonUpdateOneRequiredWithoutShiftScheduleAppliesAsApplicantNestedInput
 }
 
@@ -734,6 +761,7 @@ export type ShiftScheduleApplyUncheckedUpdateWithoutTargetPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applicantId?: Prisma.IntFieldUpdateOperationsInput | number
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonInput = {
@@ -745,6 +773,7 @@ export type ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applicantId?: Prisma.IntFieldUpdateOperationsInput | number
+  shiftScheduleAssignments?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -759,6 +788,7 @@ export type ShiftScheduleApplySelect<ExtArgs extends runtime.Types.Extensions.In
   updatedAt?: boolean
   applicantId?: boolean
   targetPersonId?: boolean
+  shiftScheduleAssignments?: boolean
   applicant?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shiftScheduleApply"]>
@@ -773,6 +803,7 @@ export type ShiftScheduleApplySelectCreateManyAndReturn<ExtArgs extends runtime.
   updatedAt?: boolean
   applicantId?: boolean
   targetPersonId?: boolean
+  shiftScheduleAssignments?: boolean
   applicant?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shiftScheduleApply"]>
@@ -787,6 +818,7 @@ export type ShiftScheduleApplySelectUpdateManyAndReturn<ExtArgs extends runtime.
   updatedAt?: boolean
   applicantId?: boolean
   targetPersonId?: boolean
+  shiftScheduleAssignments?: boolean
   applicant?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shiftScheduleApply"]>
@@ -801,9 +833,10 @@ export type ShiftScheduleApplySelectScalar = {
   updatedAt?: boolean
   applicantId?: boolean
   targetPersonId?: boolean
+  shiftScheduleAssignments?: boolean
 }
 
-export type ShiftScheduleApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "applicantId" | "targetPersonId", ExtArgs["result"]["shiftScheduleApply"]>
+export type ShiftScheduleApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "applicantId" | "targetPersonId" | "shiftScheduleAssignments", ExtArgs["result"]["shiftScheduleApply"]>
 export type ShiftScheduleApplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   applicant?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -833,6 +866,7 @@ export type $ShiftScheduleApplyPayload<ExtArgs extends runtime.Types.Extensions.
     updatedAt: Date
     applicantId: number
     targetPersonId: number
+    shiftScheduleAssignments: runtime.JsonValue
   }, ExtArgs["result"]["shiftScheduleApply"]>
   composites: {}
 }
@@ -1267,6 +1301,7 @@ export interface ShiftScheduleApplyFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"ShiftScheduleApply", 'DateTime'>
   readonly applicantId: Prisma.FieldRef<"ShiftScheduleApply", 'Int'>
   readonly targetPersonId: Prisma.FieldRef<"ShiftScheduleApply", 'Int'>
+  readonly shiftScheduleAssignments: Prisma.FieldRef<"ShiftScheduleApply", 'Json'>
 }
     
 
