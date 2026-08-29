@@ -18,16 +18,6 @@ export const ScheduleStatus = {
 export type ScheduleStatus = (typeof ScheduleStatus)[keyof typeof ScheduleStatus]
 
 
-export const ApplyStatus = {
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  PENDING_REVIEW: 'PENDING_REVIEW',
-  DRAFT: 'DRAFT'
-} as const
-
-export type ApplyStatus = (typeof ApplyStatus)[keyof typeof ApplyStatus]
-
-
 export const Role = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -35,3 +25,22 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const LeaveApplyStatus = {
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  DRAFT: 'DRAFT'
+} as const
+
+export type LeaveApplyStatus = (typeof LeaveApplyStatus)[keyof typeof LeaveApplyStatus]
+
+
+export const LeaveApplyType = {
+  SHIFT_SCHEDULE: 'SHIFT_SCHEDULE',
+  ASKOFF: 'ASKOFF',
+  CHANGE_SCHEDULE: 'CHANGE_SCHEDULE'
+} as const
+
+export type LeaveApplyType = (typeof LeaveApplyType)[keyof typeof LeaveApplyType]

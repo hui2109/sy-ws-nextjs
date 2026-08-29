@@ -300,10 +300,8 @@ export type PersonWhereInput = {
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyListRelationFilter
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyListRelationFilter
-  askOffApplies?: Prisma.AskOffApplyListRelationFilter
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyListRelationFilter
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyListRelationFilter
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -325,10 +323,8 @@ export type PersonOrderByWithRelationInput = {
   vacationRules?: Prisma.VacationRuleOrderByRelationAggregateInput
   leaveAppointments?: Prisma.LeaveAppointmentOrderByRelationAggregateInput
   expectedSchedules?: Prisma.ExpectedScheduleOrderByRelationAggregateInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyOrderByRelationAggregateInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyOrderByRelationAggregateInput
-  askOffApplies?: Prisma.AskOffApplyOrderByRelationAggregateInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyOrderByRelationAggregateInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyOrderByRelationAggregateInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -353,10 +349,8 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyListRelationFilter
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyListRelationFilter
-  askOffApplies?: Prisma.AskOffApplyListRelationFilter
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyListRelationFilter
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyListRelationFilter
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyListRelationFilter
 }, "id" | "username" | "name" | "workNumber">
 
 export type PersonOrderByWithAggregationInput = {
@@ -419,10 +413,8 @@ export type PersonCreateInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -444,10 +436,8 @@ export type PersonUncheckedCreateInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonUpdateInput = {
@@ -468,10 +458,8 @@ export type PersonUpdateInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -493,10 +481,8 @@ export type PersonUncheckedUpdateInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -617,6 +603,11 @@ export type PersonScalarRelationFilter = {
   isNot?: Prisma.PersonWhereInput
 }
 
+export type PersonNullableScalarRelationFilter = {
+  is?: Prisma.PersonWhereInput | null
+  isNot?: Prisma.PersonWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -691,60 +682,34 @@ export type PersonUpdateOneRequiredWithoutExpectedSchedulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutExpectedSchedulesInput, Prisma.PersonUpdateWithoutExpectedSchedulesInput>, Prisma.PersonUncheckedUpdateWithoutExpectedSchedulesInput>
 }
 
-export type PersonCreateNestedOneWithoutShiftScheduleAppliesAsApplicantInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutShiftScheduleAppliesAsApplicantInput
+export type PersonCreateNestedOneWithoutLeaveAppliesAsCurrentUserInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsCurrentUserInput
   connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonCreateNestedOneWithoutShiftScheduleAppliesAsTargetInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutShiftScheduleAppliesAsTargetInput
+export type PersonCreateNestedOneWithoutLeaveAppliesAsTargetStaffInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsTargetStaffInput
   connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonUpdateOneRequiredWithoutShiftScheduleAppliesAsApplicantNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutShiftScheduleAppliesAsApplicantInput
-  upsert?: Prisma.PersonUpsertWithoutShiftScheduleAppliesAsApplicantInput
+export type PersonUpdateOneRequiredWithoutLeaveAppliesAsCurrentUserNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsCurrentUserInput
+  upsert?: Prisma.PersonUpsertWithoutLeaveAppliesAsCurrentUserInput
   connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput>, Prisma.PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUpdateWithoutLeaveAppliesAsCurrentUserInput>, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput>
 }
 
-export type PersonUpdateOneRequiredWithoutShiftScheduleAppliesAsTargetNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutShiftScheduleAppliesAsTargetInput
-  upsert?: Prisma.PersonUpsertWithoutShiftScheduleAppliesAsTargetInput
+export type PersonUpdateOneWithoutLeaveAppliesAsTargetStaffNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsTargetStaffInput
+  upsert?: Prisma.PersonUpsertWithoutLeaveAppliesAsTargetStaffInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
   connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUpdateWithoutShiftScheduleAppliesAsTargetInput>, Prisma.PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput>
-}
-
-export type PersonCreateNestedOneWithoutAskOffAppliesInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutAskOffAppliesInput, Prisma.PersonUncheckedCreateWithoutAskOffAppliesInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutAskOffAppliesInput
-  connect?: Prisma.PersonWhereUniqueInput
-}
-
-export type PersonUpdateOneRequiredWithoutAskOffAppliesNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutAskOffAppliesInput, Prisma.PersonUncheckedCreateWithoutAskOffAppliesInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutAskOffAppliesInput
-  upsert?: Prisma.PersonUpsertWithoutAskOffAppliesInput
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutAskOffAppliesInput, Prisma.PersonUpdateWithoutAskOffAppliesInput>, Prisma.PersonUncheckedUpdateWithoutAskOffAppliesInput>
-}
-
-export type PersonCreateNestedOneWithoutChangeScheduleAppliesInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutChangeScheduleAppliesInput, Prisma.PersonUncheckedCreateWithoutChangeScheduleAppliesInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutChangeScheduleAppliesInput
-  connect?: Prisma.PersonWhereUniqueInput
-}
-
-export type PersonUpdateOneRequiredWithoutChangeScheduleAppliesNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutChangeScheduleAppliesInput, Prisma.PersonUncheckedCreateWithoutChangeScheduleAppliesInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutChangeScheduleAppliesInput
-  upsert?: Prisma.PersonUpsertWithoutChangeScheduleAppliesInput
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutChangeScheduleAppliesInput, Prisma.PersonUpdateWithoutChangeScheduleAppliesInput>, Prisma.PersonUncheckedUpdateWithoutChangeScheduleAppliesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUpdateWithoutLeaveAppliesAsTargetStaffInput>, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsTargetStaffInput>
 }
 
 export type PersonCreateNestedOneWithoutScheduleAssignmentsInput = {
@@ -778,10 +743,8 @@ export type PersonCreateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonUncheckedCreateWithoutVacationRulesInput = {
@@ -802,10 +765,8 @@ export type PersonUncheckedCreateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonCreateOrConnectWithoutVacationRulesInput = {
@@ -841,10 +802,8 @@ export type PersonUpdateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutVacationRulesInput = {
@@ -865,10 +824,8 @@ export type PersonUncheckedUpdateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonCreateWithoutLeaveAppointmentsInput = {
@@ -888,10 +845,8 @@ export type PersonCreateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonUncheckedCreateWithoutLeaveAppointmentsInput = {
@@ -912,10 +867,8 @@ export type PersonUncheckedCreateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonCreateOrConnectWithoutLeaveAppointmentsInput = {
@@ -951,10 +904,8 @@ export type PersonUpdateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutLeaveAppointmentsInput = {
@@ -975,10 +926,8 @@ export type PersonUncheckedUpdateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonCreateWithoutExpectedSchedulesInput = {
@@ -998,10 +947,8 @@ export type PersonCreateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonUncheckedCreateWithoutExpectedSchedulesInput = {
@@ -1022,10 +969,8 @@ export type PersonUncheckedCreateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonCreateOrConnectWithoutExpectedSchedulesInput = {
@@ -1061,10 +1006,8 @@ export type PersonUpdateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutExpectedSchedulesInput = {
@@ -1085,13 +1028,11 @@ export type PersonUncheckedUpdateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
-export type PersonCreateWithoutShiftScheduleAppliesAsApplicantInput = {
+export type PersonCreateWithoutLeaveAppliesAsCurrentUserInput = {
   username: string
   passwordHash: string
   avatar: string
@@ -1109,12 +1050,10 @@ export type PersonCreateWithoutShiftScheduleAppliesAsApplicantInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
-export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput = {
+export type PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput = {
   id?: number
   username: string
   passwordHash: string
@@ -1133,17 +1072,15 @@ export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
-export type PersonCreateOrConnectWithoutShiftScheduleAppliesAsApplicantInput = {
+export type PersonCreateOrConnectWithoutLeaveAppliesAsCurrentUserInput = {
   where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
 }
 
-export type PersonCreateWithoutShiftScheduleAppliesAsTargetInput = {
+export type PersonCreateWithoutLeaveAppliesAsTargetStaffInput = {
   username: string
   passwordHash: string
   avatar: string
@@ -1161,12 +1098,10 @@ export type PersonCreateWithoutShiftScheduleAppliesAsTargetInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
 }
 
-export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput = {
+export type PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput = {
   id?: number
   username: string
   passwordHash: string
@@ -1185,28 +1120,26 @@ export type PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
 }
 
-export type PersonCreateOrConnectWithoutShiftScheduleAppliesAsTargetInput = {
+export type PersonCreateOrConnectWithoutLeaveAppliesAsTargetStaffInput = {
   where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput>
 }
 
-export type PersonUpsertWithoutShiftScheduleAppliesAsApplicantInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsApplicantInput>
+export type PersonUpsertWithoutLeaveAppliesAsCurrentUserInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
   where?: Prisma.PersonWhereInput
 }
 
-export type PersonUpdateToOneWithWhereWithoutShiftScheduleAppliesAsApplicantInput = {
+export type PersonUpdateToOneWithWhereWithoutLeaveAppliesAsCurrentUserInput = {
   where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput, Prisma.PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput>
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput>
 }
 
-export type PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
+export type PersonUpdateWithoutLeaveAppliesAsCurrentUserInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1224,12 +1157,10 @@ export type PersonUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
-export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
+export type PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1248,23 +1179,21 @@ export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsApplicantInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
-export type PersonUpsertWithoutShiftScheduleAppliesAsTargetInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUncheckedCreateWithoutShiftScheduleAppliesAsTargetInput>
+export type PersonUpsertWithoutLeaveAppliesAsTargetStaffInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsTargetStaffInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput>
   where?: Prisma.PersonWhereInput
 }
 
-export type PersonUpdateToOneWithWhereWithoutShiftScheduleAppliesAsTargetInput = {
+export type PersonUpdateToOneWithWhereWithoutLeaveAppliesAsTargetStaffInput = {
   where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutShiftScheduleAppliesAsTargetInput, Prisma.PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput>
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsTargetStaffInput>
 }
 
-export type PersonUpdateWithoutShiftScheduleAppliesAsTargetInput = {
+export type PersonUpdateWithoutLeaveAppliesAsTargetStaffInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1282,12 +1211,10 @@ export type PersonUpdateWithoutShiftScheduleAppliesAsTargetInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
 }
 
-export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput = {
+export type PersonUncheckedUpdateWithoutLeaveAppliesAsTargetStaffInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1306,229 +1233,7 @@ export type PersonUncheckedUpdateWithoutShiftScheduleAppliesAsTargetInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonCreateWithoutAskOffAppliesInput = {
-  username: string
-  passwordHash: string
-  avatar: string
-  name: string
-  weight?: number
-  hireDate: Date | string
-  workNumber: string
-  phoneNumber: string
-  isActive?: boolean
-  displayOrder?: number
-  role?: $Enums.Role
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
-  vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
-  leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
-  expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
-}
-
-export type PersonUncheckedCreateWithoutAskOffAppliesInput = {
-  id?: number
-  username: string
-  passwordHash: string
-  avatar: string
-  name: string
-  weight?: number
-  hireDate: Date | string
-  workNumber: string
-  phoneNumber: string
-  isActive?: boolean
-  displayOrder?: number
-  role?: $Enums.Role
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
-  vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
-}
-
-export type PersonCreateOrConnectWithoutAskOffAppliesInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutAskOffAppliesInput, Prisma.PersonUncheckedCreateWithoutAskOffAppliesInput>
-}
-
-export type PersonUpsertWithoutAskOffAppliesInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutAskOffAppliesInput, Prisma.PersonUncheckedUpdateWithoutAskOffAppliesInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutAskOffAppliesInput, Prisma.PersonUncheckedCreateWithoutAskOffAppliesInput>
-  where?: Prisma.PersonWhereInput
-}
-
-export type PersonUpdateToOneWithWhereWithoutAskOffAppliesInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutAskOffAppliesInput, Prisma.PersonUncheckedUpdateWithoutAskOffAppliesInput>
-}
-
-export type PersonUpdateWithoutAskOffAppliesInput = {
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  workNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
-  vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonUncheckedUpdateWithoutAskOffAppliesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  workNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
-  vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonCreateWithoutChangeScheduleAppliesInput = {
-  username: string
-  passwordHash: string
-  avatar: string
-  name: string
-  weight?: number
-  hireDate: Date | string
-  workNumber: string
-  phoneNumber: string
-  isActive?: boolean
-  displayOrder?: number
-  role?: $Enums.Role
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
-  vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
-  leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
-  expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-}
-
-export type PersonUncheckedCreateWithoutChangeScheduleAppliesInput = {
-  id?: number
-  username: string
-  passwordHash: string
-  avatar: string
-  name: string
-  weight?: number
-  hireDate: Date | string
-  workNumber: string
-  phoneNumber: string
-  isActive?: boolean
-  displayOrder?: number
-  role?: $Enums.Role
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
-  vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-}
-
-export type PersonCreateOrConnectWithoutChangeScheduleAppliesInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutChangeScheduleAppliesInput, Prisma.PersonUncheckedCreateWithoutChangeScheduleAppliesInput>
-}
-
-export type PersonUpsertWithoutChangeScheduleAppliesInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutChangeScheduleAppliesInput, Prisma.PersonUncheckedUpdateWithoutChangeScheduleAppliesInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutChangeScheduleAppliesInput, Prisma.PersonUncheckedCreateWithoutChangeScheduleAppliesInput>
-  where?: Prisma.PersonWhereInput
-}
-
-export type PersonUpdateToOneWithWhereWithoutChangeScheduleAppliesInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutChangeScheduleAppliesInput, Prisma.PersonUncheckedUpdateWithoutChangeScheduleAppliesInput>
-}
-
-export type PersonUpdateWithoutChangeScheduleAppliesInput = {
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  workNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
-  vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonUncheckedUpdateWithoutChangeScheduleAppliesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  hireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  workNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
-  vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
-  expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
 }
 
 export type PersonCreateWithoutScheduleAssignmentsInput = {
@@ -1548,10 +1253,8 @@ export type PersonCreateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonUncheckedCreateWithoutScheduleAssignmentsInput = {
@@ -1572,10 +1275,8 @@ export type PersonUncheckedCreateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutApplicantInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedCreateNestedManyWithoutTargetPersonInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedCreateNestedManyWithoutPersonInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedCreateNestedManyWithoutPersonInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
 export type PersonCreateOrConnectWithoutScheduleAssignmentsInput = {
@@ -1611,10 +1312,8 @@ export type PersonUpdateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutScheduleAssignmentsInput = {
@@ -1635,10 +1334,8 @@ export type PersonUncheckedUpdateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  shiftScheduleAppliesAsApplicant?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutApplicantNestedInput
-  shiftScheduleAppliesAsTarget?: Prisma.ShiftScheduleApplyUncheckedUpdateManyWithoutTargetPersonNestedInput
-  askOffApplies?: Prisma.AskOffApplyUncheckedUpdateManyWithoutPersonNestedInput
-  changeScheduleApplies?: Prisma.ChangeScheduleApplyUncheckedUpdateManyWithoutPersonNestedInput
+  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
 
@@ -1651,10 +1348,8 @@ export type PersonCountOutputType = {
   vacationRules: number
   leaveAppointments: number
   expectedSchedules: number
-  shiftScheduleAppliesAsApplicant: number
-  shiftScheduleAppliesAsTarget: number
-  askOffApplies: number
-  changeScheduleApplies: number
+  leaveAppliesAsCurrentUser: number
+  leaveAppliesAsTargetStaff: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1662,10 +1357,8 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   vacationRules?: boolean | PersonCountOutputTypeCountVacationRulesArgs
   leaveAppointments?: boolean | PersonCountOutputTypeCountLeaveAppointmentsArgs
   expectedSchedules?: boolean | PersonCountOutputTypeCountExpectedSchedulesArgs
-  shiftScheduleAppliesAsApplicant?: boolean | PersonCountOutputTypeCountShiftScheduleAppliesAsApplicantArgs
-  shiftScheduleAppliesAsTarget?: boolean | PersonCountOutputTypeCountShiftScheduleAppliesAsTargetArgs
-  askOffApplies?: boolean | PersonCountOutputTypeCountAskOffAppliesArgs
-  changeScheduleApplies?: boolean | PersonCountOutputTypeCountChangeScheduleAppliesArgs
+  leaveAppliesAsCurrentUser?: boolean | PersonCountOutputTypeCountLeaveAppliesAsCurrentUserArgs
+  leaveAppliesAsTargetStaff?: boolean | PersonCountOutputTypeCountLeaveAppliesAsTargetStaffArgs
 }
 
 /**
@@ -1709,29 +1402,15 @@ export type PersonCountOutputTypeCountExpectedSchedulesArgs<ExtArgs extends runt
 /**
  * PersonCountOutputType without action
  */
-export type PersonCountOutputTypeCountShiftScheduleAppliesAsApplicantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ShiftScheduleApplyWhereInput
+export type PersonCountOutputTypeCountLeaveAppliesAsCurrentUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveApplyWhereInput
 }
 
 /**
  * PersonCountOutputType without action
  */
-export type PersonCountOutputTypeCountShiftScheduleAppliesAsTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ShiftScheduleApplyWhereInput
-}
-
-/**
- * PersonCountOutputType without action
- */
-export type PersonCountOutputTypeCountAskOffAppliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AskOffApplyWhereInput
-}
-
-/**
- * PersonCountOutputType without action
- */
-export type PersonCountOutputTypeCountChangeScheduleAppliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChangeScheduleApplyWhereInput
+export type PersonCountOutputTypeCountLeaveAppliesAsTargetStaffArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveApplyWhereInput
 }
 
 
@@ -1754,10 +1433,8 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   vacationRules?: boolean | Prisma.Person$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.Person$leaveAppointmentsArgs<ExtArgs>
   expectedSchedules?: boolean | Prisma.Person$expectedSchedulesArgs<ExtArgs>
-  shiftScheduleAppliesAsApplicant?: boolean | Prisma.Person$shiftScheduleAppliesAsApplicantArgs<ExtArgs>
-  shiftScheduleAppliesAsTarget?: boolean | Prisma.Person$shiftScheduleAppliesAsTargetArgs<ExtArgs>
-  askOffApplies?: boolean | Prisma.Person$askOffAppliesArgs<ExtArgs>
-  changeScheduleApplies?: boolean | Prisma.Person$changeScheduleAppliesArgs<ExtArgs>
+  leaveAppliesAsCurrentUser?: boolean | Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs>
+  leaveAppliesAsTargetStaff?: boolean | Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -1818,10 +1495,8 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   vacationRules?: boolean | Prisma.Person$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.Person$leaveAppointmentsArgs<ExtArgs>
   expectedSchedules?: boolean | Prisma.Person$expectedSchedulesArgs<ExtArgs>
-  shiftScheduleAppliesAsApplicant?: boolean | Prisma.Person$shiftScheduleAppliesAsApplicantArgs<ExtArgs>
-  shiftScheduleAppliesAsTarget?: boolean | Prisma.Person$shiftScheduleAppliesAsTargetArgs<ExtArgs>
-  askOffApplies?: boolean | Prisma.Person$askOffAppliesArgs<ExtArgs>
-  changeScheduleApplies?: boolean | Prisma.Person$changeScheduleAppliesArgs<ExtArgs>
+  leaveAppliesAsCurrentUser?: boolean | Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs>
+  leaveAppliesAsTargetStaff?: boolean | Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1834,10 +1509,8 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     vacationRules: Prisma.$VacationRulePayload<ExtArgs>[]
     leaveAppointments: Prisma.$LeaveAppointmentPayload<ExtArgs>[]
     expectedSchedules: Prisma.$ExpectedSchedulePayload<ExtArgs>[]
-    shiftScheduleAppliesAsApplicant: Prisma.$ShiftScheduleApplyPayload<ExtArgs>[]
-    shiftScheduleAppliesAsTarget: Prisma.$ShiftScheduleApplyPayload<ExtArgs>[]
-    askOffApplies: Prisma.$AskOffApplyPayload<ExtArgs>[]
-    changeScheduleApplies: Prisma.$ChangeScheduleApplyPayload<ExtArgs>[]
+    leaveAppliesAsCurrentUser: Prisma.$LeaveApplyPayload<ExtArgs>[]
+    leaveAppliesAsTargetStaff: Prisma.$LeaveApplyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2252,10 +1925,8 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   vacationRules<T extends Prisma.Person$vacationRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$vacationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VacationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaveAppointments<T extends Prisma.Person$leaveAppointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expectedSchedules<T extends Prisma.Person$expectedSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$expectedSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpectedSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  shiftScheduleAppliesAsApplicant<T extends Prisma.Person$shiftScheduleAppliesAsApplicantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$shiftScheduleAppliesAsApplicantArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftScheduleApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  shiftScheduleAppliesAsTarget<T extends Prisma.Person$shiftScheduleAppliesAsTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$shiftScheduleAppliesAsTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftScheduleApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  askOffApplies<T extends Prisma.Person$askOffAppliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$askOffAppliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AskOffApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  changeScheduleApplies<T extends Prisma.Person$changeScheduleAppliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$changeScheduleAppliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChangeScheduleApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveAppliesAsCurrentUser<T extends Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveAppliesAsTargetStaff<T extends Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2788,99 +2459,51 @@ export type Person$expectedSchedulesArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * Person.shiftScheduleAppliesAsApplicant
+ * Person.leaveAppliesAsCurrentUser
  */
-export type Person$shiftScheduleAppliesAsApplicantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Person$leaveAppliesAsCurrentUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ShiftScheduleApply
+   * Select specific fields to fetch from the LeaveApply
    */
-  select?: Prisma.ShiftScheduleApplySelect<ExtArgs> | null
+  select?: Prisma.LeaveApplySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ShiftScheduleApply
+   * Omit specific fields from the LeaveApply
    */
-  omit?: Prisma.ShiftScheduleApplyOmit<ExtArgs> | null
+  omit?: Prisma.LeaveApplyOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ShiftScheduleApplyInclude<ExtArgs> | null
-  where?: Prisma.ShiftScheduleApplyWhereInput
-  orderBy?: Prisma.ShiftScheduleApplyOrderByWithRelationInput | Prisma.ShiftScheduleApplyOrderByWithRelationInput[]
-  cursor?: Prisma.ShiftScheduleApplyWhereUniqueInput
+  include?: Prisma.LeaveApplyInclude<ExtArgs> | null
+  where?: Prisma.LeaveApplyWhereInput
+  orderBy?: Prisma.LeaveApplyOrderByWithRelationInput | Prisma.LeaveApplyOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveApplyWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ShiftScheduleApplyScalarFieldEnum | Prisma.ShiftScheduleApplyScalarFieldEnum[]
+  distinct?: Prisma.LeaveApplyScalarFieldEnum | Prisma.LeaveApplyScalarFieldEnum[]
 }
 
 /**
- * Person.shiftScheduleAppliesAsTarget
+ * Person.leaveAppliesAsTargetStaff
  */
-export type Person$shiftScheduleAppliesAsTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Person$leaveAppliesAsTargetStaffArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ShiftScheduleApply
+   * Select specific fields to fetch from the LeaveApply
    */
-  select?: Prisma.ShiftScheduleApplySelect<ExtArgs> | null
+  select?: Prisma.LeaveApplySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ShiftScheduleApply
+   * Omit specific fields from the LeaveApply
    */
-  omit?: Prisma.ShiftScheduleApplyOmit<ExtArgs> | null
+  omit?: Prisma.LeaveApplyOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ShiftScheduleApplyInclude<ExtArgs> | null
-  where?: Prisma.ShiftScheduleApplyWhereInput
-  orderBy?: Prisma.ShiftScheduleApplyOrderByWithRelationInput | Prisma.ShiftScheduleApplyOrderByWithRelationInput[]
-  cursor?: Prisma.ShiftScheduleApplyWhereUniqueInput
+  include?: Prisma.LeaveApplyInclude<ExtArgs> | null
+  where?: Prisma.LeaveApplyWhereInput
+  orderBy?: Prisma.LeaveApplyOrderByWithRelationInput | Prisma.LeaveApplyOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveApplyWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ShiftScheduleApplyScalarFieldEnum | Prisma.ShiftScheduleApplyScalarFieldEnum[]
-}
-
-/**
- * Person.askOffApplies
- */
-export type Person$askOffAppliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AskOffApply
-   */
-  select?: Prisma.AskOffApplySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AskOffApply
-   */
-  omit?: Prisma.AskOffApplyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AskOffApplyInclude<ExtArgs> | null
-  where?: Prisma.AskOffApplyWhereInput
-  orderBy?: Prisma.AskOffApplyOrderByWithRelationInput | Prisma.AskOffApplyOrderByWithRelationInput[]
-  cursor?: Prisma.AskOffApplyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AskOffApplyScalarFieldEnum | Prisma.AskOffApplyScalarFieldEnum[]
-}
-
-/**
- * Person.changeScheduleApplies
- */
-export type Person$changeScheduleAppliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChangeScheduleApply
-   */
-  select?: Prisma.ChangeScheduleApplySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChangeScheduleApply
-   */
-  omit?: Prisma.ChangeScheduleApplyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChangeScheduleApplyInclude<ExtArgs> | null
-  where?: Prisma.ChangeScheduleApplyWhereInput
-  orderBy?: Prisma.ChangeScheduleApplyOrderByWithRelationInput | Prisma.ChangeScheduleApplyOrderByWithRelationInput[]
-  cursor?: Prisma.ChangeScheduleApplyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChangeScheduleApplyScalarFieldEnum | Prisma.ChangeScheduleApplyScalarFieldEnum[]
+  distinct?: Prisma.LeaveApplyScalarFieldEnum | Prisma.LeaveApplyScalarFieldEnum[]
 }
 
 /**

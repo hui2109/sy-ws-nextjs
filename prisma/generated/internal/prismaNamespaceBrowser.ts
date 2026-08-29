@@ -57,9 +57,7 @@ export const ModelName = {
   VacationRule: 'VacationRule',
   LeaveAppointment: 'LeaveAppointment',
   ExpectedSchedule: 'ExpectedSchedule',
-  ShiftScheduleApply: 'ShiftScheduleApply',
-  AskOffApply: 'AskOffApply',
-  ChangeScheduleApply: 'ChangeScheduleApply',
+  LeaveApply: 'LeaveApply',
   ScheduleAssignment: 'ScheduleAssignment'
 } as const
 
@@ -168,50 +166,21 @@ export const ExpectedScheduleScalarFieldEnum = {
 export type ExpectedScheduleScalarFieldEnum = (typeof ExpectedScheduleScalarFieldEnum)[keyof typeof ExpectedScheduleScalarFieldEnum]
 
 
-export const ShiftScheduleApplyScalarFieldEnum = {
+export const LeaveApplyScalarFieldEnum = {
   id: 'id',
+  leaveApplyType: 'leaveApplyType',
   startDate: 'startDate',
   endDate: 'endDate',
   reason: 'reason',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  applicantId: 'applicantId',
-  targetPersonId: 'targetPersonId',
-  shiftScheduleAssignments: 'shiftScheduleAssignments'
+  currentUserId: 'currentUserId',
+  targetStaffId: 'targetStaffId',
+  assignmentsJson: 'assignmentsJson'
 } as const
 
-export type ShiftScheduleApplyScalarFieldEnum = (typeof ShiftScheduleApplyScalarFieldEnum)[keyof typeof ShiftScheduleApplyScalarFieldEnum]
-
-
-export const AskOffApplyScalarFieldEnum = {
-  id: 'id',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  reason: 'reason',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  personId: 'personId',
-  askOffAssignments: 'askOffAssignments'
-} as const
-
-export type AskOffApplyScalarFieldEnum = (typeof AskOffApplyScalarFieldEnum)[keyof typeof AskOffApplyScalarFieldEnum]
-
-
-export const ChangeScheduleApplyScalarFieldEnum = {
-  id: 'id',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  reason: 'reason',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  personId: 'personId',
-  changeScheduleAssignments: 'changeScheduleAssignments'
-} as const
-
-export type ChangeScheduleApplyScalarFieldEnum = (typeof ChangeScheduleApplyScalarFieldEnum)[keyof typeof ChangeScheduleApplyScalarFieldEnum]
+export type LeaveApplyScalarFieldEnum = (typeof LeaveApplyScalarFieldEnum)[keyof typeof LeaveApplyScalarFieldEnum]
 
 
 export const ScheduleAssignmentScalarFieldEnum = {

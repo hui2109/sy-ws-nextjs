@@ -38,5 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## 如何更改数据库
 
 - npx prisma validate
-- npx prisma migrate dev --name v9
+- npx prisma migrate dev --name v12
 - npx prisma generate

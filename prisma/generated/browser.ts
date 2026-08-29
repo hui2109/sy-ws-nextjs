@@ -48,20 +48,10 @@ export type LeaveAppointment = Prisma.LeaveAppointmentModel
  */
 export type ExpectedSchedule = Prisma.ExpectedScheduleModel
 /**
- * Model ShiftScheduleApply
+ * Model LeaveApply
  * 
  */
-export type ShiftScheduleApply = Prisma.ShiftScheduleApplyModel
-/**
- * Model AskOffApply
- * 
- */
-export type AskOffApply = Prisma.AskOffApplyModel
-/**
- * Model ChangeScheduleApply
- * 
- */
-export type ChangeScheduleApply = Prisma.ChangeScheduleApplyModel
+export type LeaveApply = Prisma.LeaveApplyModel
 /**
  * Model ScheduleAssignment
  * 
