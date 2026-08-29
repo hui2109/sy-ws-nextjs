@@ -2,14 +2,17 @@
 
 import {Button, Col, Listy, Row, Select} from "antd";
 import {PlusCircleOutlined} from "@ant-design/icons";
-import LeaveApplyForm from "@/components/tables/LeaveApplyList/LeaveApplyForm";
+import NewLeaveApplyForm from "@/components/tables/LeaveApplyList/NewLeaveApplyForm";
 
-export const LeaveApplyStatus = {
-    APPROVED: '已通过',
-    REJECTED: '已退回',
-    PENDING_REVIEW: '待审核',
-    DRAFT: '草稿',
-}
+export type TLeaveApplyStatus = '已通过' | '已退回' | '待审核' | '草稿';
+
+export const leaveApplyStatusColorMap: Record<TLeaveApplyStatus, string> = {
+    '已通过': 'green',
+    '已退回': 'magenta',
+    '待审核': 'orange',
+    '草稿': 'geekblue',
+};
+const leaveApplyStatusOptions: TLeaveApplyStatus[] = ['已通过', '已退回', '待审核', '草稿'];
 
 interface Item {
     id: number;
@@ -21,7 +24,7 @@ export default function LeaveApplyList() {
         id: index,
         content: `Item ${index}`,
     }));
-    const applyStatusOption = Object.values(LeaveApplyStatus).map((item) => ({
+    const applyStatusOption = Object.values(leaveApplyStatusOptions).map((item) => ({
         label: item,
         value: item,
     }));
@@ -43,7 +46,7 @@ export default function LeaveApplyList() {
                 <Listy<Item> items={items} height={800} rowKey="id" itemRender={(item) => item.content}/>
             </Col>
             <Col span={18}>
-                <LeaveApplyForm/>
+                <NewLeaveApplyForm/>
             </Col>
         </Row>
     )
