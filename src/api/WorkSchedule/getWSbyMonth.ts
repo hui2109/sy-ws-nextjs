@@ -3,7 +3,7 @@
 import {prisma} from "@/connectionsDB/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {ScheduleStatus} from "@/configs/general";
+import {ScheduleStatusMap} from "@/configs/general";
 import {getValidStaff} from "@/api/Person/getValidStaff";
 
 dayjs.extend(utc);
@@ -69,13 +69,13 @@ export async function getWSbyMonth(dt: string, onlyValidStaff: boolean = true): 
         }
     }
     if (monthStatus.size === 0) {
-        MonthSchedule['monthStatus'] = ScheduleStatus.NODATA;
+        MonthSchedule['monthStatus'] = ScheduleStatusMap.NODATA;
     } else if (monthStatus.has('DRAFT')) {
-        MonthSchedule['monthStatus'] = ScheduleStatus.DRAFT;
+        MonthSchedule['monthStatus'] = ScheduleStatusMap.DRAFT;
     } else if (monthStatus.has('PENDING_REVIEW')) {
-        MonthSchedule['monthStatus'] = ScheduleStatus.PENDING_REVIEW;
+        MonthSchedule['monthStatus'] = ScheduleStatusMap.PENDING_REVIEW;
     } else {
-        MonthSchedule['monthStatus'] = ScheduleStatus.PUBLISHED;
+        MonthSchedule['monthStatus'] = ScheduleStatusMap.PUBLISHED;
     }
     return MonthSchedule
 }

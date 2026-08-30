@@ -4,16 +4,11 @@ import "dotenv/config";
 import {prisma} from "@/connectionsDB/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {IPersonDateBansMap, TLeaveApplyType} from "@/components/tables/LeaveApplyList/NewLeaveApplyForm";
-import {LeaveApplyStatus, LeaveApplyType} from "../../../prisma/generated/enums";
+import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/NewLeaveApplyForm";
+import {LeaveApplyStatus} from "@/prisma/generated/enums";
+import {TLeaveApplyType} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
 
 dayjs.extend(utc);
-
-const leaveApplyTypeMap: Record<TLeaveApplyType, LeaveApplyType> = {
-    '换班': 'SHIFT_SCHEDULE',
-    '请假': 'ASKOFF',
-    '改班': 'CHANGE_SCHEDULE',
-}
 
 export default async function createLeaveApply(leaveApplyType: TLeaveApplyType, start_date: string, end_date: string, reason: string,
                                                currentUser: string, targetStaff: string | null, LAAssignmentsJson: IPersonDateBansMap, status: LeaveApplyStatus) {
@@ -30,7 +25,7 @@ export default async function createLeaveApply(leaveApplyType: TLeaveApplyType, 
 
     return prisma.leaveApply.create({
         data: {
-            leaveApplyType: leaveApplyTypeMap[leaveApplyType],
+            leaveApplyType,
             startDate,
             endDate,
             reason,

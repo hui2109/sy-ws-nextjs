@@ -5,11 +5,11 @@ import NullText from "@/components/others/NullText";
 import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
-import {TLeaveApplyType} from "@/components/tables/LeaveApplyList/NewLeaveApplyForm";
 import {Dispatch, SetStateAction} from "react";
+import {LeaveApplyType} from "@/prisma/generated/enums";
 
 interface ILeaveApplyAskOffOrChangeScheduleTable {
-    leaveApplyType: Exclude<TLeaveApplyType, '换班'>
+    leaveApplyType: Exclude<LeaveApplyType, '换班'>
     personDateBansMap: Record<string, Record<string, [string, number][]>>,
     setPersonDateBansMap: Dispatch<SetStateAction<Record<string, Record<string, [string, number][]>> | null>>
     banTypeColorMap: Record<string, string>,
@@ -27,14 +27,12 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
     const isDark = resolvedTheme === 'dark';
     const daysInRange = getDatesBetween(dateRange[0], dateRange[1]);
 
-    if (leaveApplyType === '改班' && !targetStaff) return null;
-
     const dataSource = daysInRange.map(day => {
         const format_date = day.format('YYYY-MM-DD');
         return {
             key: format_date,
             dt: format_date,
-            myBan: leaveApplyType === '请假' ? personDateBansMap[currentUser]?.[format_date] : personDateBansMap[targetStaff as string]?.[format_date],
+            myBan: leaveApplyType === 'ASKOFF' ? personDateBansMap[currentUser]?.[format_date] : personDateBansMap[targetStaff as string]?.[format_date],
         }
     });
 
@@ -49,7 +47,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
             ),
         },
         {
-            title: leaveApplyType === '请假' ? '我应该上' : `${targetStaff} 应该上`,
+            title: leaveApplyType === 'ASKOFF' ? '我应该上' : `${targetStaff} 应该上`,
             dataIndex: 'myBan',
             width: 150,
             align: 'center',
@@ -71,12 +69,12 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
             },
         },
         {
-            title: leaveApplyType === '请假' ? '我想休什么假' : '改成',
+            title: leaveApplyType === 'ASKOFF' ? '我想休什么假' : '改成',
             width: 250,
             align: 'center',
             render: (record: typeof dataSource[number]) => {
-                const currentName = leaveApplyType === '请假' ? currentUser : targetStaff;
-                return leaveApplyType === '请假'
+                const currentName = leaveApplyType === 'ASKOFF' ? currentUser : targetStaff;
+                return leaveApplyType === 'ASKOFF'
                     ? (
                         <Select
                             value={personDateBansMap[`${currentName}_`]?.[record.dt]?.[0]?.[0] ?? null}
@@ -158,12 +156,12 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                     <h3 className={`text-base font-semibold ${
                         isDark ? 'text-slate-100' : 'text-slate-900'
                     }`}>
-                        {leaveApplyType === '请假' ? '请假' : '改班'}明细
+                        {leaveApplyType === 'ASKOFF' ? '请假' : '改班'}明细
                     </h3>
                     <p className={`mt-0.5 text-xs ${
                         isDark ? 'text-slate-400' : 'text-slate-500'
                     }`}>
-                        核对 {leaveApplyType === '请假' ? currentUser : targetStaff} 当前排班，并逐日选择{leaveApplyType === '请假' ? '希望申请的休假类型' : '调整后的班次'}
+                        核对 {leaveApplyType === 'ASKOFF' ? currentUser : targetStaff} 当前排班，并逐日选择{leaveApplyType === 'ASKOFF' ? '希望申请的休假类型' : '调整后的班次'}
                     </p>
                 </div>
                 <div className={`w-fit rounded-full border px-3 py-1 text-xs font-medium ${

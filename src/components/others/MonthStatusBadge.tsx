@@ -1,12 +1,12 @@
-import {ScheduleStatus} from "@/configs/general";
+import {ScheduleStatusMap} from "@/configs/general";
 import {Badge} from "antd";
 
 export function MonthStatusBadge(monthStatus: string) {
     const monthStatusColorMap: Record<string, string> = {
-        [ScheduleStatus.NODATA]: '#5810db',
-        [ScheduleStatus.DRAFT]: '#f5222d',
-        [ScheduleStatus.PENDING_REVIEW]: '#faad14',
-        [ScheduleStatus.PUBLISHED]: '#52c41a',
+        [ScheduleStatusMap.NODATA]: '#5810db',
+        [ScheduleStatusMap.DRAFT]: '#f5222d',
+        [ScheduleStatusMap.PENDING_REVIEW]: '#faad14',
+        [ScheduleStatusMap.PUBLISHED]: '#52c41a',
     };
 
     return (

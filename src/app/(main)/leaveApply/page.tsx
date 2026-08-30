@@ -1,4 +1,4 @@
-import LeaveApplyTab from "@/components/tables/LeaveApplyList/LeaveApplyTab";
+import LeaveApplyTab from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
 
 export default function LeaveApply() {
     return (

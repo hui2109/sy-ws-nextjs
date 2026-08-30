@@ -3,7 +3,7 @@ import {getWSbyMonth} from "@/api/WorkSchedule/getWSbyMonth";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import {Badge, TableColumnsType} from "antd";
-import {ScheduleStatus, Weekdays} from "@/configs/general";
+import {ScheduleStatusMap, Weekdays} from "@/configs/general";
 import NullText from "@/components/others/NullText";
 import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
@@ -57,7 +57,7 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
     if (!DBData || !banTypeColorMap) return {dataSource: [], columns: [], loading};
 
     // 只有审核了的排班, 才能被看到
-    const dataSource = (DBData.monthStatus === ScheduleStatus.PUBLISHED) ?
+    const dataSource = (DBData.monthStatus === ScheduleStatusMap.PUBLISHED) ?
         Object.entries(DBData.nameBansMap)
             .filter(([, scheduleInfo]) => Object.keys(scheduleInfo).length > 0)
             .map(([personName, scheduleInfo]) => {

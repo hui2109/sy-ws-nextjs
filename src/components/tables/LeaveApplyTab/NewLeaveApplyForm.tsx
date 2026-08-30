@@ -9,17 +9,16 @@ import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {getWSbyNameDates} from "@/api/WorkSchedule/getWSbyNameDates";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
-import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyList/LeaveApplyTables/LeaveApplyShiftScheduleTable";
-import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyList/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
-import {leaveApplyStatusColorMap} from "@/components/tables/LeaveApplyList/LeaveApplyTab";
+import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyTab/LeaveApplyTables/LeaveApplyShiftScheduleTable";
+import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyTab/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
 import {SaveOutlined, SendOutlined} from "@ant-design/icons";
 import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
+import {leaveApplyStatusColorMap, leaveApplyTypeMap} from "@/configs/general";
+import {LeaveApplyType} from "@/prisma/generated/enums";
 
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
-const leaveApplyTypeOptions: TLeaveApplyType[] = ['换班', '请假', '改班'];
 
-export type TLeaveApplyType = '换班' | '请假' | '改班';
 type IBanAssignment = [banName: string, scheduleAssignmentId: number];
 type IDateBansMap = Record<string, IBanAssignment[]>;
 export type IPersonDateBansMap = Record<string, IDateBansMap>;
@@ -27,7 +26,7 @@ export type IPersonDateBansMap = Record<string, IDateBansMap>;
 export default function NewLeaveApplyForm() {
     const {currentUser, resolvedTheme, notification} = useAppContext();
     const isDark = resolvedTheme === 'dark';
-    const [leaveApplyType, setLeaveApplyType] = useState<null | TLeaveApplyType>(null);
+    const [leaveApplyType, setLeaveApplyType] = useState<null | LeaveApplyType>(null);
     const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null] | null>([dayjs(), dayjs().add(4, 'day')]);
     const [targetStaff, setTargetStaff] = useState<string | null>(null);
     const [reason, setReason] = useState<string>('');
@@ -108,12 +107,12 @@ export default function NewLeaveApplyForm() {
             if (!r) {
                 notification.error({
                     title: '假期申请 提交失败',
-                    description: `${leaveApplyType} 申请提交失败! 原因: 不存在当前用户!`
+                    description: `${leaveApplyTypeMap[leaveApplyType]} 申请提交失败! 原因: 不存在当前用户!`
                 });
             } else {
                 notification.success({
                     title: '假期申请 提交成功',
-                    description: `${leaveApplyType === '改班' ? targetStaff : currentUser} 的 ${leaveApplyType} 申请提交成功! 当前状态: 待审核!`
+                    description: `${leaveApplyType === "CHANGE_SCHEDULE" ? targetStaff : currentUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请提交成功! 当前状态: 待审核!`
                 });
             }
         })
@@ -129,15 +128,23 @@ export default function NewLeaveApplyForm() {
             if (!r) {
                 notification.error({
                     title: '假期申请 保存失败',
-                    description: `${leaveApplyType} 申请保存失败! 原因: 不存在当前用户!`
+                    description: `${leaveApplyTypeMap[leaveApplyType]} 申请保存失败! 原因: 不存在当前用户!`
                 });
             } else {
                 notification.success({
                     title: '假期申请 保存成功',
-                    description: `${currentUser} 的 ${leaveApplyType} 申请保存成功! 当前状态: 草稿!`
+                    description: `${currentUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请保存成功! 当前状态: 草稿!`
                 });
             }
         })
+    }
+
+    function hasDateBans(name: string | null | undefined) {
+        if (!name || !personDateBansMap?.[name]) {
+            return false;
+        }
+
+        return Object.keys(personDateBansMap[name]).length > 0;
     }
 
     const labelCellClassName = isDark ? 'border-slate-700/80 bg-slate-800/50 text-slate-300' : 'border-slate-200 bg-slate-50/90 text-slate-600';
@@ -184,7 +191,7 @@ export default function NewLeaveApplyForm() {
                             </div>
                             <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
                                 <Tag
-                                    color={leaveApplyStatusColorMap['草稿']}
+                                    color={leaveApplyStatusColorMap.DRAFT}
                                     variant='solid'
                                     className='!text-sm !font-bold'
                                 >
@@ -201,15 +208,17 @@ export default function NewLeaveApplyForm() {
                                     placeholder="请选择申请类别"
                                     value={leaveApplyType}
                                     onChange={value => {
-                                        if (value === '换班' && targetStaff === currentUser) {
+                                        if (value === 'SHIFT_SCHEDULE' && targetStaff === currentUser) {
                                             setTargetStaff(null);
                                         }
                                         setLeaveApplyType(value);
                                     }}
-                                    options={leaveApplyTypeOptions.map(item => ({
-                                        label: item,
-                                        value: item,
-                                    }))}
+                                    options={Object.entries(leaveApplyTypeMap).map(
+                                        ([value, label]) => ({
+                                            value: value as LeaveApplyType,
+                                            label,
+                                        }),
+                                    )}
                                     classNames={{popup: {listItem: 'text-center'}}}
                                 />
                             </div>
@@ -225,10 +234,10 @@ export default function NewLeaveApplyForm() {
                                 />
                             </div>
 
-                            {leaveApplyType && leaveApplyType !== '请假' && (
+                            {leaveApplyType && leaveApplyType !== 'ASKOFF' && (
                                 <>
                                     <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
-                                        {leaveApplyType === '换班' ? '换班对象' : '调整人员'}
+                                        {leaveApplyType === "SHIFT_SCHEDULE" ? '换班对象' : '调整人员'}
                                     </div>
                                     <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
                                         <Select
@@ -237,7 +246,7 @@ export default function NewLeaveApplyForm() {
                                             placeholder="请选择人员"
                                             value={targetStaff}
                                             onChange={value => setTargetStaff(value)}
-                                            options={validStaffs?.filter(staff => leaveApplyType !== '换班' || staff !== currentUser)
+                                            options={validStaffs?.filter(staff => leaveApplyType !== "SHIFT_SCHEDULE" || staff !== currentUser)
                                                 .map(staff => ({
                                                     label: staff,
                                                     value: staff,
@@ -273,7 +282,7 @@ export default function NewLeaveApplyForm() {
                 </div>
             </div>
             <div>
-                {leaveApplyType === '换班' && currentUser && targetStaff && personDateBansMap && banTypeColorMap && dateRange?.[0] && dateRange?.[1] && (
+                {leaveApplyType === "SHIFT_SCHEDULE" && currentUser && targetStaff && personDateBansMap && banTypeColorMap && dateRange?.[0] && dateRange?.[1] && (
                     <LeaveApplyShiftScheduleTable
                         personDateBansMap={personDateBansMap}
                         banTypeColorMap={banTypeColorMap}
@@ -282,24 +291,25 @@ export default function NewLeaveApplyForm() {
                     />
                 )}
 
-                {leaveApplyType && leaveApplyType !== '换班' && currentUser && personDateBansMap && banTypeColorMap && dateRange?.[0] && dateRange?.[1] && validBanNames && (
-                    <LeaveApplyAskOffOrChangeScheduleTable
-                        leaveApplyType={leaveApplyType}
-                        personDateBansMap={personDateBansMap}
-                        setPersonDateBansMap={setPersonDateBansMap}
-                        banTypeColorMap={banTypeColorMap}
-                        dateRange={[dateRange[0], dateRange[1]]}
-                        currentUser={currentUser}
-                        targetStaff={targetStaff}
-                        validBanNames={validBanNames}
-                    />
-                )}
+                {leaveApplyType && leaveApplyType !== "SHIFT_SCHEDULE" && currentUser && personDateBansMap && banTypeColorMap && dateRange?.[0] && dateRange?.[1] && validBanNames
+                    && (leaveApplyType === 'ASKOFF' || targetStaff) && (
+                        <LeaveApplyAskOffOrChangeScheduleTable
+                            leaveApplyType={leaveApplyType}
+                            personDateBansMap={personDateBansMap}
+                            setPersonDateBansMap={setPersonDateBansMap}
+                            banTypeColorMap={banTypeColorMap}
+                            dateRange={[dateRange[0], dateRange[1]]}
+                            currentUser={currentUser}
+                            targetStaff={targetStaff}
+                            validBanNames={validBanNames}
+                        />
+                    )}
 
                 {leaveApplyType && personDateBansMap && dateRange?.[0] && dateRange?.[1] && currentUser && reason.trim() !== '' &&
                     (
-                        (leaveApplyType === '换班' && targetStaff && Object.keys(personDateBansMap[currentUser]).length !== 0 && Object.keys(personDateBansMap[targetStaff]).length !== 0) ||
-                        (leaveApplyType === '请假' && Object.keys(personDateBansMap[currentUser]).length !== 0) ||
-                        (leaveApplyType === '改班' && targetStaff && Object.keys(personDateBansMap[targetStaff]).length !== 0)
+                        leaveApplyType === 'SHIFT_SCHEDULE' && hasDateBans(currentUser) && hasDateBans(targetStaff) ||
+                        leaveApplyType === 'ASKOFF' && hasDateBans(currentUser) && hasDateBans(`${currentUser}_`) ||
+                        leaveApplyType === 'CHANGE_SCHEDULE' && hasDateBans(targetStaff) && hasDateBans(`${targetStaff}_`)
                     ) && (
                         <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
                             <Button
@@ -322,23 +332,3 @@ export default function NewLeaveApplyForm() {
         </div>
     );
 }
-
-// export interface ILeaveApplyAssignmentsJson {
-//     leaveApplyType: TLeaveApplyType;
-//     dateNameAssignments: IPersonDateBansMap;
-// }
-
-// function convertPersonDateBansMapToDateNameAssignments(personDateBansMap: Record<string, Record<string, [string, number][]>>): ILeaveApplyAssignmentsJson['dateNameAssignments'] {
-//     return Object.entries(personDateBansMap).reduce(
-//         (prev, [personName, dateMap]) => {
-//             Object.entries(dateMap).forEach(([date, bans]) => {
-//                 prev[date] = prev[date] || {};
-//                 prev[date][personName] = bans.map(([banName, id]) => {
-//                     if (personName.indexOf('_') === -1) return id; else return banName;
-//                 });
-//             });
-//             return prev;
-//         },
-//         {} as Record<string, Record<string, (number | string)[]>>
-//     )
-// }
