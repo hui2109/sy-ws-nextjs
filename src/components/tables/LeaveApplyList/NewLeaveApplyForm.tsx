@@ -11,21 +11,18 @@ import {getWSbyNameDates} from "@/api/WorkSchedule/getWSbyNameDates";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyList/LeaveApplyTables/LeaveApplyShiftScheduleTable";
 import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyList/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
-import {leaveApplyStatusColorMap} from "@/components/tables/LeaveApplyList/LeaveApplyList";
+import {leaveApplyStatusColorMap} from "@/components/tables/LeaveApplyList/LeaveApplyTab";
 import {SaveOutlined, SendOutlined} from "@ant-design/icons";
 import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
 
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
+const leaveApplyTypeOptions: TLeaveApplyType[] = ['换班', '请假', '改班'];
 
 export type TLeaveApplyType = '换班' | '请假' | '改班';
-
-export interface ILeaveApplyAssignmentsJson {
-    leaveApplyType: TLeaveApplyType;
-    dateNameAssignments: Record<`${number}-${number}-${number}`, Record<string, (number | string)[]>>;
-}
-
-const leaveApplyTypeOptions: TLeaveApplyType[] = ['换班', '请假', '改班'];
+type IBanAssignment = [banName: string, scheduleAssignmentId: number];
+type IDateBansMap = Record<string, IBanAssignment[]>;
+export type IPersonDateBansMap = Record<string, IDateBansMap>;
 
 export default function NewLeaveApplyForm() {
     const {currentUser, resolvedTheme, notification} = useAppContext();
@@ -34,7 +31,7 @@ export default function NewLeaveApplyForm() {
     const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null] | null>([dayjs(), dayjs().add(4, 'day')]);
     const [targetStaff, setTargetStaff] = useState<string | null>(null);
     const [reason, setReason] = useState<string>('');
-    const [personDateBansMap, setPersonDateBansMap] = useState<Record<string, Record<string, [string, number][]>> | null>(null);
+    const [personDateBansMap, setPersonDateBansMap] = useState<IPersonDateBansMap | null>(null);
     const [validStaffs, setValidStaffs] = useState<string[] | null>(null);
     const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
@@ -104,14 +101,10 @@ export default function NewLeaveApplyForm() {
     function handleSubmit() {
         if (!personDateBansMap || !leaveApplyType || !dateRange?.[0] || !dateRange?.[1] || !currentUser) return null;
 
-        const leaveApplyAssignmentsJson: ILeaveApplyAssignmentsJson = {
-            leaveApplyType: leaveApplyType,
-            dateNameAssignments: convertPersonDateBansMapToDateNameAssignments(personDateBansMap),
-        };
         const start_date = dateRange[0].format('YYYY-MM-DD');
         const end_date = dateRange[1].format('YYYY-MM-DD');
 
-        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, leaveApplyAssignmentsJson, 'PENDING_REVIEW').then(r => {
+        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, personDateBansMap, 'PENDING_REVIEW').then(r => {
             if (!r) {
                 notification.error({
                     title: '假期申请 提交失败',
@@ -120,7 +113,7 @@ export default function NewLeaveApplyForm() {
             } else {
                 notification.success({
                     title: '假期申请 提交成功',
-                    description: `${currentUser} 的 ${leaveApplyType} 申请提交成功! 当前状态: 待审核!`
+                    description: `${leaveApplyType === '改班' ? targetStaff : currentUser} 的 ${leaveApplyType} 申请提交成功! 当前状态: 待审核!`
                 });
             }
         })
@@ -129,14 +122,10 @@ export default function NewLeaveApplyForm() {
     function handleSaveDraft() {
         if (!personDateBansMap || !leaveApplyType || !dateRange?.[0] || !dateRange?.[1] || !currentUser) return null;
 
-        const leaveApplyAssignmentsJson: ILeaveApplyAssignmentsJson = {
-            leaveApplyType: leaveApplyType,
-            dateNameAssignments: convertPersonDateBansMapToDateNameAssignments(personDateBansMap),
-        };
         const start_date = dateRange[0].format('YYYY-MM-DD');
         const end_date = dateRange[1].format('YYYY-MM-DD');
 
-        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, leaveApplyAssignmentsJson, 'DRAFT').then(r => {
+        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, personDateBansMap, 'DRAFT').then(r => {
             if (!r) {
                 notification.error({
                     title: '假期申请 保存失败',
@@ -334,17 +323,22 @@ export default function NewLeaveApplyForm() {
     );
 }
 
-function convertPersonDateBansMapToDateNameAssignments(personDateBansMap: Record<string, Record<string, [string, number][]>>): ILeaveApplyAssignmentsJson['dateNameAssignments'] {
-    return Object.entries(personDateBansMap).reduce(
-        (prev, [personName, dateMap]) => {
-            Object.entries(dateMap).forEach(([date, bans]) => {
-                prev[date] = prev[date] || {};
-                prev[date][personName] = bans.map(([banName, id]) => {
-                    if (personName.indexOf('_') === -1) return id; else return banName;
-                });
-            });
-            return prev;
-        },
-        {} as Record<string, Record<string, (number | string)[]>>
-    )
-}
+// export interface ILeaveApplyAssignmentsJson {
+//     leaveApplyType: TLeaveApplyType;
+//     dateNameAssignments: IPersonDateBansMap;
+// }
+
+// function convertPersonDateBansMapToDateNameAssignments(personDateBansMap: Record<string, Record<string, [string, number][]>>): ILeaveApplyAssignmentsJson['dateNameAssignments'] {
+//     return Object.entries(personDateBansMap).reduce(
+//         (prev, [personName, dateMap]) => {
+//             Object.entries(dateMap).forEach(([date, bans]) => {
+//                 prev[date] = prev[date] || {};
+//                 prev[date][personName] = bans.map(([banName, id]) => {
+//                     if (personName.indexOf('_') === -1) return id; else return banName;
+//                 });
+//             });
+//             return prev;
+//         },
+//         {} as Record<string, Record<string, (number | string)[]>>
+//     )
+// }
