@@ -13,6 +13,7 @@ import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyList/Lea
 import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyList/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
 import {leaveApplyStatusColorMap} from "@/components/tables/LeaveApplyList/LeaveApplyList";
 import {SaveOutlined, SendOutlined} from "@ant-design/icons";
+import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
 
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
@@ -27,7 +28,7 @@ export interface ILeaveApplyAssignmentsJson {
 const leaveApplyTypeOptions: TLeaveApplyType[] = ['换班', '请假', '改班'];
 
 export default function NewLeaveApplyForm() {
-    const {currentUser, resolvedTheme} = useAppContext();
+    const {currentUser, resolvedTheme, notification} = useAppContext();
     const isDark = resolvedTheme === 'dark';
     const [leaveApplyType, setLeaveApplyType] = useState<null | TLeaveApplyType>(null);
     const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null] | null>([dayjs(), dayjs().add(4, 'day')]);
@@ -75,6 +76,7 @@ export default function NewLeaveApplyForm() {
             if (!isMounted) return;
 
             setPersonDateBansMap(prev => {
+                const safePrev = prev ?? {};
                 const newData = {...prev};
 
                 for (const [name, dateBansMap] of results) {
@@ -82,7 +84,7 @@ export default function NewLeaveApplyForm() {
                     newData[name] = dateBansMap;
                     const tempKey = `${name}_`;
                     // 只有原来的 state 里没有 name_，才初始化它
-                    if (!Object.prototype.hasOwnProperty.call(prev, tempKey)) {
+                    if (!Object.hasOwn(safePrev, tempKey)) {
                         newData[tempKey] = Object.fromEntries(
                             Object.keys(dateBansMap).map(date => [date, []])
                         );
@@ -100,18 +102,54 @@ export default function NewLeaveApplyForm() {
 
 
     function handleSubmit() {
-        if (!personDateBansMap || !leaveApplyType) return null;
+        if (!personDateBansMap || !leaveApplyType || !dateRange?.[0] || !dateRange?.[1] || !currentUser) return null;
 
         const leaveApplyAssignmentsJson: ILeaveApplyAssignmentsJson = {
             leaveApplyType: leaveApplyType,
             dateNameAssignments: convertPersonDateBansMapToDateNameAssignments(personDateBansMap),
         };
+        const start_date = dateRange[0].format('YYYY-MM-DD');
+        const end_date = dateRange[1].format('YYYY-MM-DD');
 
-
-        console.log(leaveApplyAssignmentsJson);
+        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, leaveApplyAssignmentsJson, 'PENDING_REVIEW').then(r => {
+            if (!r) {
+                notification.error({
+                    title: '假期申请 提交失败',
+                    description: `${leaveApplyType} 申请提交失败! 原因: 不存在当前用户!`
+                });
+            } else {
+                notification.success({
+                    title: '假期申请 提交成功',
+                    description: `${currentUser} 的 ${leaveApplyType} 申请提交成功! 当前状态: 待审核!`
+                });
+            }
+        })
     }
 
-    console.log(personDateBansMap)
+    function handleSaveDraft() {
+        if (!personDateBansMap || !leaveApplyType || !dateRange?.[0] || !dateRange?.[1] || !currentUser) return null;
+
+        const leaveApplyAssignmentsJson: ILeaveApplyAssignmentsJson = {
+            leaveApplyType: leaveApplyType,
+            dateNameAssignments: convertPersonDateBansMapToDateNameAssignments(personDateBansMap),
+        };
+        const start_date = dateRange[0].format('YYYY-MM-DD');
+        const end_date = dateRange[1].format('YYYY-MM-DD');
+
+        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, leaveApplyAssignmentsJson, 'DRAFT').then(r => {
+            if (!r) {
+                notification.error({
+                    title: '假期申请 保存失败',
+                    description: `${leaveApplyType} 申请保存失败! 原因: 不存在当前用户!`
+                });
+            } else {
+                notification.success({
+                    title: '假期申请 保存成功',
+                    description: `${currentUser} 的 ${leaveApplyType} 申请保存成功! 当前状态: 草稿!`
+                });
+            }
+        })
+    }
 
     const labelCellClassName = isDark ? 'border-slate-700/80 bg-slate-800/50 text-slate-300' : 'border-slate-200 bg-slate-50/90 text-slate-600';
     const valueCellClassName = isDark ? 'border-slate-700/80 bg-slate-900/35' : 'border-slate-200 bg-white';
@@ -268,25 +306,28 @@ export default function NewLeaveApplyForm() {
                     />
                 )}
 
-                {leaveApplyType && dateRange?.[0] && dateRange?.[1] && currentUser && reason.trim() !== '' && (leaveApplyType !== '请假' ? targetStaff : true) && (
-                    <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                        <Button
-                            icon={<SaveOutlined/>}
-                            // onClick={handleSaveDraft}
-                            // loading={saving}
-                        >
-                            暂时保存
-                        </Button>
-                        <Button
-                            type='primary'
-                            icon={<SendOutlined/>}
-                            onClick={handleSubmit}
-                            // loading={submitting}
-                        >
-                            提交申请
-                        </Button>
-                    </div>
-                )
+                {leaveApplyType && personDateBansMap && dateRange?.[0] && dateRange?.[1] && currentUser && reason.trim() !== '' &&
+                    (
+                        (leaveApplyType === '换班' && targetStaff && Object.keys(personDateBansMap[currentUser]).length !== 0 && Object.keys(personDateBansMap[targetStaff]).length !== 0) ||
+                        (leaveApplyType === '请假' && Object.keys(personDateBansMap[currentUser]).length !== 0) ||
+                        (leaveApplyType === '改班' && targetStaff && Object.keys(personDateBansMap[targetStaff]).length !== 0)
+                    ) && (
+                        <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                            <Button
+                                icon={<SaveOutlined/>}
+                                onClick={handleSaveDraft}
+                            >
+                                暂时保存
+                            </Button>
+                            <Button
+                                type='primary'
+                                icon={<SendOutlined/>}
+                                onClick={handleSubmit}
+                            >
+                                提交申请
+                            </Button>
+                        </div>
+                    )
                 }
             </div>
         </div>
