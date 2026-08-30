@@ -16,6 +16,7 @@ enum ScheduleStatus {
   PUBLISHED
   PENDING_REVIEW
   DRAFT
+  NODATA
 }
 
 enum Role {

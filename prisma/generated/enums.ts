@@ -12,7 +12,8 @@
 export const ScheduleStatus = {
   PUBLISHED: 'PUBLISHED',
   PENDING_REVIEW: 'PENDING_REVIEW',
-  DRAFT: 'DRAFT'
+  DRAFT: 'DRAFT',
+  NODATA: 'NODATA'
 } as const
 
 export type ScheduleStatus = (typeof ScheduleStatus)[keyof typeof ScheduleStatus]
