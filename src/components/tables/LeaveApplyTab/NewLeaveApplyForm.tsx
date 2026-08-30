@@ -15,6 +15,7 @@ import {SaveOutlined, SendOutlined} from "@ant-design/icons";
 import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
 import {leaveApplyStatusColorMap, leaveApplyTypeMap} from "@/configs/general";
 import {LeaveApplyType} from "@/prisma/generated/enums";
+import getDatesBetween from "@/components/utils/getDatesBetween";
 
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
@@ -140,11 +141,21 @@ export default function NewLeaveApplyForm() {
     }
 
     function hasDateBans(name: string | null | undefined) {
-        if (!name || !personDateBansMap?.[name]) {
+        if (!name || !personDateBansMap?.[name] || !dateRange?.[0] || !dateRange?.[1]) {
             return false;
         }
 
-        return Object.keys(personDateBansMap[name]).length > 0;
+        const daysInRange = getDatesBetween(dateRange[0], dateRange[1]);
+
+        if (Object.keys(personDateBansMap[name]).length === 0) return false;
+
+        let count = 0;
+        for (const day of daysInRange) {
+            if (personDateBansMap[name][day.format('YYYY-MM-DD')]) {
+                count++;
+            }
+        }
+        return count !== 0;
     }
 
     const labelCellClassName = isDark ? 'border-slate-700/80 bg-slate-800/50 text-slate-300' : 'border-slate-200 bg-slate-50/90 text-slate-600';

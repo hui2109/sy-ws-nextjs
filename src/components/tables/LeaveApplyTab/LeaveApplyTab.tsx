@@ -15,7 +15,7 @@ export default function LeaveApplyTab() {
         },
         {
             key: '2',
-            label: '查看记录',
+            label: '我发起的',
             children: (
                 <LeaveApplyList/>
             )
