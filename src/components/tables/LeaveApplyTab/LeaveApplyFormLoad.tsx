@@ -1,13 +1,14 @@
 'use client';
 
-import {DatePicker, Input, Select, Tag} from "antd";
-import {useEffect, useState} from "react";
+import {Badge, DatePicker, Input, Select, Tag} from "antd";
+import React, {useEffect, useState} from "react";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyTab/LeaveApplyTables/LeaveApplyShiftScheduleTable";
 import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyTab/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
-import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeMap} from "@/configs/general";
+import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import {IClickedLeaveApplyDetails} from "@/components/tables/LeaveApplyTab/LeaveApplyList";
+import {LeaveApplyType} from "@/prisma/generated/enums";
 
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
@@ -94,9 +95,16 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                             <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
                                 <Select
                                     className="w-full max-w-[180px] text-center"
-                                    value={leaveApplyTypeMap[leaveApplyType]}
-                                    disabled
+                                    value={leaveApplyType}
                                     classNames={{popup: {listItem: 'text-center'}}}
+                                    labelRender={(labelInValueType) => (
+                                        <Badge
+                                            count={leaveApplyTypeMap[labelInValueType.value as LeaveApplyType]}
+                                            color={leaveApplyTypeColorMap[labelInValueType.value as LeaveApplyType]}
+                                            classNames={{indicator: '!rounded-lg !font-bold'}}
+                                        />
+                                    )}
+                                    disabled
                                 />
                             </div>
 

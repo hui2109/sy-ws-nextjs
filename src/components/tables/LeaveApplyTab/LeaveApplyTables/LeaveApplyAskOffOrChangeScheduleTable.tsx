@@ -42,7 +42,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                 closable={closable}
                 onClose={onClose}
                 variant='solid'
-                style={{marginInlineEnd: 4}}
+                style={{marginInlineEnd: 4, fontWeight: 'bolder'}}
             >
                 {label}
             </Tag>

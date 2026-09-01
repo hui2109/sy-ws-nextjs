@@ -1,6 +1,6 @@
 'use client';
 
-import {Button, DatePicker, Input, Select, Tag} from "antd";
+import {Badge, Button, DatePicker, Input, Select, Tag} from "antd";
 import {useEffect, useState} from "react";
 import dayjs, {Dayjs} from "dayjs";
 import {getValidStaff} from "@/api/Person/getValidStaff";
@@ -13,7 +13,7 @@ import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyTab/Leav
 import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyTab/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
 import {SaveOutlined, SendOutlined} from "@ant-design/icons";
 import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
-import {leaveApplyStatusColorMap, leaveApplyTypeMap} from "@/configs/general";
+import {leaveApplyStatusColorMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import {LeaveApplyType} from "@/prisma/generated/enums";
 import getDatesBetween from "@/components/utils/getDatesBetween";
 
@@ -285,12 +285,16 @@ export default function LeaveApplyFormNew() {
                                     placeholder="请选择申请类别"
                                     value={leaveApplyType}
                                     onChange={handleLeaveApplyTypeChange}
-                                    options={Object.entries(leaveApplyTypeMap).map(
-                                        ([value, label]) => ({
-                                            value: value as LeaveApplyType,
-                                            label,
-                                        }),
-                                    )}
+                                    options={Object.entries(leaveApplyTypeMap).map(([value, label]) => ({
+                                        value: value as LeaveApplyType,
+                                        label: (
+                                            <Badge
+                                                count={label}
+                                                color={leaveApplyTypeColorMap[value as LeaveApplyType]}
+                                                classNames={{indicator: '!rounded-lg !font-bold'}}
+                                            />
+                                        ),
+                                    }))}
                                     classNames={{popup: {listItem: 'text-center'}}}
                                 />
                             </div>

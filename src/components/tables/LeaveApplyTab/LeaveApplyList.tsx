@@ -1,12 +1,12 @@
 'use client';
 
-import {Card, Tag} from "antd";
+import {Badge, Card, Tag} from "antd";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {LeaveApplyStatus, LeaveApplyType} from "@/prisma/generated/enums";
 import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
 import getLeaveAppliesbyName from "@/api/LeaveApply/getLeaveAppliesbyName";
 import {useAppContext} from "@/components/hooks/AppProvider";
-import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeMap} from "@/configs/general";
+import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
 import LeaveApplyModal from "@/components/tables/LeaveApplyTab/LeaveApplyModal";
 
@@ -197,9 +197,11 @@ function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModal
                                 ? 'text-slate-400'
                                 : 'text-slate-500'}`}
                         >
-                            <Tag variant='solid' color={leaveApplyType === 'ASKOFF' ? 'blue' : leaveApplyType === 'SHIFT_SCHEDULE' ? 'volcano' : 'purple'}>
-                                {leaveApplyTypeMap[leaveApplyType]}申请
-                            </Tag>
+                            <Badge
+                                count={`${leaveApplyTypeMap[leaveApplyType]}申请`}
+                                color={leaveApplyTypeColorMap[leaveApplyType]}
+                                classNames={{indicator: '!rounded-lg !font-bold'}}
+                            />
                         </div>
                     </div>
                     <Tag

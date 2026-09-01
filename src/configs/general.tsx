@@ -30,6 +30,11 @@ export const leaveApplyStatusMap = {
     PENDING_REVIEW: '待审核',
     DRAFT: '草稿',
 } as const satisfies Record<LeaveApplyStatus, string>;
+export const leaveApplyTypeColorMap = {
+    SHIFT_SCHEDULE: 'volcano',
+    ASKOFF: 'blue',
+    CHANGE_SCHEDULE: 'purple',
+} satisfies Record<LeaveApplyType, string>;
 export const leaveApplyStatusColorMap = {
     APPROVED: 'green',
     REJECTED: 'magenta',
