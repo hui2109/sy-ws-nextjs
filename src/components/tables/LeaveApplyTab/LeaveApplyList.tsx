@@ -4,11 +4,12 @@ import {Badge, Card, Tag} from "antd";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {LeaveApplyStatus, LeaveApplyType} from "@/prisma/generated/enums";
 import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
-import getLeaveAppliesbyName from "@/api/LeaveApply/getLeaveAppliesbyName";
+import getLeaveAppliesbyNameStatus from "@/api/LeaveApply/getLeaveAppliesbyNameStatus";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
 import LeaveApplyModal from "@/components/tables/LeaveApplyTab/LeaveApplyModal";
+import {SendStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
 
 export interface ILeaveApplyRecord {
     leaveApplyType: LeaveApplyType;
@@ -42,8 +43,8 @@ export interface IClickedLeaveApplyDetails {
 
 }
 
-export default function LeaveApplyList() {
-    const {currentUser, resolvedTheme} = useAppContext();
+export default function LeaveApplyList({name, sendStatus}: { name: string, sendStatus: SendStatus }) {
+    const {resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === "dark";
     const [loading, setLoading] = useState<boolean>(true);
     const [leaveApplyRecords, setLeaveApplyRecords] = useState<ILeaveApplyRecord[] | null>(null);
@@ -51,11 +52,10 @@ export default function LeaveApplyList() {
     const [clickedLeaveApplyDetails, setClickedLeaveApplyDetails] = useState<IClickedLeaveApplyDetails | null>(null);
 
     useEffect(() => {
-        if (!currentUser) return;
         let isMounted = true;
 
         if (isMounted) {
-            getLeaveAppliesbyName(currentUser).then(leaveApplyRecords => {
+            getLeaveAppliesbyNameStatus(name, sendStatus).then(leaveApplyRecords => {
                 setLeaveApplyRecords(leaveApplyRecords);
                 setLoading(false);
             })
@@ -65,7 +65,7 @@ export default function LeaveApplyList() {
             isMounted = false;
             setLoading(true);
         };
-    }, [currentUser]);
+    }, [name, sendStatus]);
 
     return (
         <div className={`rounded-2xl p-6 transition-colors duration-200 ${

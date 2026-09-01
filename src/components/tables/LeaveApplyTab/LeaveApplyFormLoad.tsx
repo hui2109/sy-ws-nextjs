@@ -170,13 +170,24 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                     />
                 )}
             </div>
-            <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                <Tag variant={"solid"} color={'green'}>
-                    发起人: {currentUser}
-                </Tag>
-                <Tag variant={"solid"} color={'green'}>
-                    发起时间: {createdDate.format("YYYY/M/D HH:mm")}
-                </Tag>
+            <div className={`mt-6 flex items-center justify-end gap-2 border-t px-1 pt-4 text-xs ${
+                isDark
+                    ? 'border-slate-700 text-slate-400'
+                    : 'border-slate-200 text-slate-500'
+            }`}>
+                <span>
+                    发起人：
+                    <span className={isDark ? 'text-slate-200' : 'text-slate-700'}>
+                        {currentUser}
+                    </span>
+                </span>
+                <span className="opacity-40">·</span>
+                <span>
+                    发起时间：
+                    <span className={isDark ? 'text-slate-200' : 'text-slate-700'}>
+                        {createdDate.format('YYYY/M/D HH:mm')}
+                    </span>
+                </span>
             </div>
         </div>
     );
