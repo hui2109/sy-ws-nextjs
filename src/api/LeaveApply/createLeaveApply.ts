@@ -4,13 +4,12 @@ import "dotenv/config";
 import {prisma} from "@/connectionsDB/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/NewLeaveApplyForm";
-import {LeaveApplyStatus} from "@/prisma/generated/enums";
-import {TLeaveApplyType} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
+import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
+import {LeaveApplyStatus, LeaveApplyType} from "@/prisma/generated/enums";
 
 dayjs.extend(utc);
 
-export default async function createLeaveApply(leaveApplyType: TLeaveApplyType, start_date: string, end_date: string, reason: string,
+export default async function createLeaveApply(leaveApplyType: LeaveApplyType, start_date: string, end_date: string, reason: string,
                                                currentUser: string, targetStaff: string | null, LAAssignmentsJson: IPersonDateBansMap, status: LeaveApplyStatus) {
     const startDate = dayjs.utc(start_date).toDate();
     const endDate = dayjs.utc(end_date).toDate();

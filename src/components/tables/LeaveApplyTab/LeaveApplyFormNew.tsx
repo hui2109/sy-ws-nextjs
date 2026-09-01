@@ -22,9 +22,10 @@ const {RangePicker} = DatePicker;
 
 type IBanAssignment = [banName: string, scheduleAssignmentId: number];
 type IDateBansMap = Record<string, IBanAssignment[]>;
+type LeaveApplySaveStatus = 'PENDING_REVIEW' | 'DRAFT';
 export type IPersonDateBansMap = Record<string, IDateBansMap>;
 
-export default function NewLeaveApplyForm() {
+export default function LeaveApplyFormNew() {
     const {currentUser, resolvedTheme, notification} = useAppContext();
     const isDark = resolvedTheme === 'dark';
     const [leaveApplyType, setLeaveApplyType] = useState<null | LeaveApplyType>(null);
@@ -35,6 +36,12 @@ export default function NewLeaveApplyForm() {
     const [validStaffs, setValidStaffs] = useState<string[] | null>(null);
     const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
+
+    const isShiftSchedule = leaveApplyType === 'SHIFT_SCHEDULE';
+    const isAskOff = leaveApplyType === 'ASKOFF';
+    const completeDateRange = dateRange?.[0] && dateRange?.[1]
+        ? [dateRange[0], dateRange[1]] as [Dayjs, Dayjs]
+        : null;
 
     useEffect(() => {
         let isMounted = true;
@@ -74,7 +81,7 @@ export default function NewLeaveApplyForm() {
 
             setPersonDateBansMap(prev => {
                 const safePrev = prev ?? {};
-                const newData = {...prev};
+                const newData = {...safePrev};
 
                 for (const [name, dateBansMap] of results) {
                     // 这个每次都更新
@@ -98,65 +105,124 @@ export default function NewLeaveApplyForm() {
     }, [currentUser, targetStaff, dateRange]);
 
 
-    function handleSubmit() {
-        if (!personDateBansMap || !leaveApplyType || !dateRange?.[0] || !dateRange?.[1] || !currentUser) return null;
+    function handleCreateLeaveApply(status: LeaveApplySaveStatus) {
+        if (!personDateBansMap || !leaveApplyType || !completeDateRange || !currentUser) return null;
 
-        const start_date = dateRange[0].format('YYYY-MM-DD');
-        const end_date = dateRange[1].format('YYYY-MM-DD');
+        const [startDate, endDate] = completeDateRange;
+        const start_date = startDate.format('YYYY-MM-DD');
+        const end_date = endDate.format('YYYY-MM-DD');
 
-        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, personDateBansMap, 'PENDING_REVIEW').then(r => {
+        const isDraft = status === 'DRAFT';
+        const actionText = isDraft ? '保存' : '提交';
+        const successUser = leaveApplyType !== 'CHANGE_SCHEDULE' ? currentUser : targetStaff;
+        const successStatusText = isDraft ? '草稿' : '待审核';
+
+        createLeaveApply(
+            leaveApplyType,
+            start_date,
+            end_date,
+            reason,
+            currentUser,
+            targetStaff,
+            personDateBansMap,
+            status,
+        ).then(r => {
             if (!r) {
                 notification.error({
-                    title: '假期申请 提交失败',
-                    description: `${leaveApplyTypeMap[leaveApplyType]} 申请提交失败! 原因: 不存在当前用户!`
+                    title: `假期申请 ${actionText}失败`,
+                    description: `${leaveApplyTypeMap[leaveApplyType]} 申请${actionText}失败! 原因: 不存在当前用户! `
                 });
             } else {
                 notification.success({
-                    title: '假期申请 提交成功',
-                    description: `${leaveApplyType === "CHANGE_SCHEDULE" ? targetStaff : currentUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请提交成功! 当前状态: 待审核!`
-                });
-            }
-        })
-    }
-
-    function handleSaveDraft() {
-        if (!personDateBansMap || !leaveApplyType || !dateRange?.[0] || !dateRange?.[1] || !currentUser) return null;
-
-        const start_date = dateRange[0].format('YYYY-MM-DD');
-        const end_date = dateRange[1].format('YYYY-MM-DD');
-
-        createLeaveApply(leaveApplyType, start_date, end_date, reason, currentUser, targetStaff, personDateBansMap, 'DRAFT').then(r => {
-            if (!r) {
-                notification.error({
-                    title: '假期申请 保存失败',
-                    description: `${leaveApplyTypeMap[leaveApplyType]} 申请保存失败! 原因: 不存在当前用户!`
-                });
-            } else {
-                notification.success({
-                    title: '假期申请 保存成功',
-                    description: `${currentUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请保存成功! 当前状态: 草稿!`
+                    title: `假期申请 ${actionText}成功`,
+                    description: `${successUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请${actionText}成功! 当前状态: ${successStatusText}!`
                 });
             }
         })
     }
 
     function hasDateBans(name: string | null | undefined) {
-        if (!name || !personDateBansMap?.[name] || !dateRange?.[0] || !dateRange?.[1]) {
+        if (!name || !personDateBansMap?.[name] || !completeDateRange) {
             return false;
         }
 
-        const daysInRange = getDatesBetween(dateRange[0], dateRange[1]);
+        const dateBansMap = personDateBansMap[name];
+        if (Object.keys(dateBansMap).length === 0) return false;
 
-        if (Object.keys(personDateBansMap[name]).length === 0) return false;
-
-        let count = 0;
-        for (const day of daysInRange) {
-            if (personDateBansMap[name][day.format('YYYY-MM-DD')]) {
-                count++;
-            }
-        }
-        return count !== 0;
+        return getDatesBetween(...completeDateRange).some(
+            day => Boolean(dateBansMap[day.format('YYYY-MM-DD')])
+        );
     }
+
+    function hasRequiredDateBans() {
+        switch (leaveApplyType) {
+            case 'SHIFT_SCHEDULE':
+                return hasDateBans(currentUser) && hasDateBans(targetStaff);
+            case 'ASKOFF':
+                return hasDateBans(currentUser) && hasDateBans(`${currentUser}_`);
+            case 'CHANGE_SCHEDULE':
+                return hasDateBans(targetStaff) && hasDateBans(`${targetStaff}_`);
+            default:
+                return false;
+        }
+    }
+
+    function handleLeaveApplyTypeChange(value: LeaveApplyType) {
+        if (value === 'SHIFT_SCHEDULE' && targetStaff === currentUser) {
+            setTargetStaff(null);
+        }
+        setLeaveApplyType(value);
+    }
+
+    const targetStaffOptions = validStaffs
+        ?.filter(staff => !isShiftSchedule || staff !== currentUser)
+        .map(staff => ({
+            label: staff,
+            value: staff,
+        }));
+
+    const shiftScheduleTableProps = (
+        isShiftSchedule
+        && currentUser
+        && targetStaff
+        && personDateBansMap
+        && banTypeColorMap
+        && completeDateRange
+    ) ? {
+        personDateBansMap,
+        banTypeColorMap,
+        dateRange: completeDateRange,
+        names: [currentUser, targetStaff] as [string, string],
+    } : null;
+
+    const askOffOrChangeScheduleTableProps = (
+        leaveApplyType
+        && !isShiftSchedule
+        && currentUser
+        && personDateBansMap
+        && banTypeColorMap
+        && completeDateRange
+        && validBanNames
+        && (isAskOff || targetStaff)
+    ) ? {
+        leaveApplyType,
+        personDateBansMap,
+        setPersonDateBansMap,
+        banTypeColorMap,
+        dateRange: completeDateRange,
+        currentUser,
+        targetStaff,
+        validBanNames,
+    } : null;
+
+    const canShowActions = Boolean(
+        leaveApplyType
+        && personDateBansMap
+        && completeDateRange
+        && currentUser
+        && reason.trim() !== ''
+        && hasRequiredDateBans()
+    );
 
     const labelCellClassName = isDark ? 'border-slate-700/80 bg-slate-800/50 text-slate-300' : 'border-slate-200 bg-slate-50/90 text-slate-600';
     const valueCellClassName = isDark ? 'border-slate-700/80 bg-slate-900/35' : 'border-slate-200 bg-white';
@@ -218,12 +284,7 @@ export default function NewLeaveApplyForm() {
                                     className="w-full max-w-[180px] text-center"
                                     placeholder="请选择申请类别"
                                     value={leaveApplyType}
-                                    onChange={value => {
-                                        if (value === 'SHIFT_SCHEDULE' && targetStaff === currentUser) {
-                                            setTargetStaff(null);
-                                        }
-                                        setLeaveApplyType(value);
-                                    }}
+                                    onChange={handleLeaveApplyTypeChange}
                                     options={Object.entries(leaveApplyTypeMap).map(
                                         ([value, label]) => ({
                                             value: value as LeaveApplyType,
@@ -245,33 +306,32 @@ export default function NewLeaveApplyForm() {
                                 />
                             </div>
 
-                            {leaveApplyType && leaveApplyType !== 'ASKOFF' && (
-                                <>
-                                    <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
-                                        {leaveApplyType === "SHIFT_SCHEDULE" ? '换班对象' : '调整人员'}
-                                    </div>
-                                    <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
-                                        <Select
-                                            className="w-full max-w-[180px] text-center"
-                                            loading={!validStaffs}
-                                            placeholder="请选择人员"
-                                            value={targetStaff}
-                                            onChange={value => setTargetStaff(value)}
-                                            options={validStaffs?.filter(staff => leaveApplyType !== "SHIFT_SCHEDULE" || staff !== currentUser)
-                                                .map(staff => ({
-                                                    label: staff,
-                                                    value: staff,
-                                                }))}
-                                            showSearch={{
-                                                optionFilterProp: 'value',
-                                                filterSort: (optionA, optionB) =>
-                                                    (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
-                                            }}
-                                            classNames={{popup: {listItem: 'text-center'}}}
-                                        />
-                                    </div>
-                                </>
-                            )}
+                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
+                                {isShiftSchedule ? '换班对象' : isAskOff ? '请假人' : '调整人员'}
+                            </div>
+                            <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
+                                {isAskOff
+                                    ? <Select
+                                        className="w-full max-w-[180px] text-center"
+                                        value={currentUser}
+                                        classNames={{popup: {listItem: 'text-center'}}}
+                                        disabled
+                                    />
+                                    : <Select
+                                        className="w-full max-w-[180px] text-center"
+                                        loading={!validStaffs}
+                                        placeholder="请选择人员"
+                                        value={targetStaff}
+                                        onChange={value => setTargetStaff(value)}
+                                        options={targetStaffOptions}
+                                        showSearch={{
+                                            optionFilterProp: 'value',
+                                            filterSort: (optionA, optionB) =>
+                                                (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
+                                        }}
+                                        classNames={{popup: {listItem: 'text-center'}}}
+                                    />}
+                            </div>
 
                             <div className={`flex flex-col min-h-[170px] justify-center border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
                                 <div>申请理由</div>
@@ -279,7 +339,6 @@ export default function NewLeaveApplyForm() {
                             </div>
                             <div className={`flex items-center px-4 py-5 ${valueCellClassName}`}>
                                 <TextArea
-                                    className="!resize-none"
                                     rows={5}
                                     placeholder="请简要填写申请理由..."
                                     value={reason}
@@ -293,52 +352,31 @@ export default function NewLeaveApplyForm() {
                 </div>
             </div>
             <div>
-                {leaveApplyType === "SHIFT_SCHEDULE" && currentUser && targetStaff && personDateBansMap && banTypeColorMap && dateRange?.[0] && dateRange?.[1] && (
-                    <LeaveApplyShiftScheduleTable
-                        personDateBansMap={personDateBansMap}
-                        banTypeColorMap={banTypeColorMap}
-                        dateRange={[dateRange[0], dateRange[1]]}
-                        names={[currentUser, targetStaff]}
-                    />
+                {shiftScheduleTableProps && (
+                    <LeaveApplyShiftScheduleTable {...shiftScheduleTableProps}/>
                 )}
 
-                {leaveApplyType && leaveApplyType !== "SHIFT_SCHEDULE" && currentUser && personDateBansMap && banTypeColorMap && dateRange?.[0] && dateRange?.[1] && validBanNames
-                    && (leaveApplyType === 'ASKOFF' || targetStaff) && (
-                        <LeaveApplyAskOffOrChangeScheduleTable
-                            leaveApplyType={leaveApplyType}
-                            personDateBansMap={personDateBansMap}
-                            setPersonDateBansMap={setPersonDateBansMap}
-                            banTypeColorMap={banTypeColorMap}
-                            dateRange={[dateRange[0], dateRange[1]]}
-                            currentUser={currentUser}
-                            targetStaff={targetStaff}
-                            validBanNames={validBanNames}
-                        />
-                    )}
+                {askOffOrChangeScheduleTableProps && (
+                    <LeaveApplyAskOffOrChangeScheduleTable {...askOffOrChangeScheduleTableProps}/>
+                )}
 
-                {leaveApplyType && personDateBansMap && dateRange?.[0] && dateRange?.[1] && currentUser && reason.trim() !== '' &&
-                    (
-                        leaveApplyType === 'SHIFT_SCHEDULE' && hasDateBans(currentUser) && hasDateBans(targetStaff) ||
-                        leaveApplyType === 'ASKOFF' && hasDateBans(currentUser) && hasDateBans(`${currentUser}_`) ||
-                        leaveApplyType === 'CHANGE_SCHEDULE' && hasDateBans(targetStaff) && hasDateBans(`${targetStaff}_`)
-                    ) && (
-                        <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                            <Button
-                                icon={<SaveOutlined/>}
-                                onClick={handleSaveDraft}
-                            >
-                                暂时保存
-                            </Button>
-                            <Button
-                                type='primary'
-                                icon={<SendOutlined/>}
-                                onClick={handleSubmit}
-                            >
-                                提交申请
-                            </Button>
-                        </div>
-                    )
-                }
+                {canShowActions && (
+                    <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                        <Button
+                            icon={<SaveOutlined/>}
+                            onClick={() => handleCreateLeaveApply('DRAFT')}
+                        >
+                            暂时保存
+                        </Button>
+                        <Button
+                            type='primary'
+                            icon={<SendOutlined/>}
+                            onClick={() => handleCreateLeaveApply('PENDING_REVIEW')}
+                        >
+                            提交申请
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -11,17 +11,18 @@ import {LeaveApplyType} from "@/prisma/generated/enums";
 interface ILeaveApplyAskOffOrChangeScheduleTable {
     leaveApplyType: Exclude<LeaveApplyType, '换班'>
     personDateBansMap: Record<string, Record<string, [string, number][]>>,
-    setPersonDateBansMap: Dispatch<SetStateAction<Record<string, Record<string, [string, number][]>> | null>>
+    setPersonDateBansMap?: Dispatch<SetStateAction<Record<string, Record<string, [string, number][]>> | null>>
     banTypeColorMap: Record<string, string>,
     dateRange: [Dayjs, Dayjs],
     currentUser: string,
     targetStaff: string | null,
-    validBanNames: string[]
+    validBanNames: string[],
+    loadMode?: boolean,
 }
 
 export default function LeaveApplyAskOffOrChangeScheduleTable(
     {
-        leaveApplyType, personDateBansMap, setPersonDateBansMap, banTypeColorMap, dateRange, currentUser, targetStaff, validBanNames
+        leaveApplyType, personDateBansMap, setPersonDateBansMap, banTypeColorMap, dateRange, currentUser, targetStaff, validBanNames, loadMode
     }: ILeaveApplyAskOffOrChangeScheduleTable) {
     const {resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === 'dark';
@@ -75,68 +76,88 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
             render: (record: typeof dataSource[number]) => {
                 const currentName = leaveApplyType === 'ASKOFF' ? currentUser : targetStaff;
                 return leaveApplyType === 'ASKOFF'
-                    ? (
-                        <Select
-                            value={personDateBansMap[`${currentName}_`]?.[record.dt]?.[0]?.[0] ?? null}
-                            onChange={selectedValue => {
-                                setPersonDateBansMap(prev => {
-                                    if (!prev) return null;
+                    ? loadMode
+                        ? (
+                            <Select
+                                value={personDateBansMap[`${currentName}_`]?.[record.dt]?.[0]?.[0] ?? null}
+                                classNames={{popup: {listItem: 'text-center'}}}
+                                className="w-full max-w-[200px]"
+                                disabled
+                            />
+                        )
+                        : (
+                            <Select
+                                value={personDateBansMap[`${currentName}_`]?.[record.dt]?.[0]?.[0] ?? null}
+                                onChange={selectedValue => {
+                                    setPersonDateBansMap?.(prev => {
+                                        if (!prev) return null;
 
-                                    const newList = [];
-                                    newList[0] = [selectedValue, -1] as [string, number];
-                                    return {
-                                        ...prev,
-                                        [`${currentName}_`]: {
-                                            ...prev[`${currentName}_`],
-                                            [record.dt]: newList,
-                                        },
-                                    };
-                                });
-                            }}
-                            placeholder="请选择休假类型"
-                            options={filteredRelaxBanNames(validBanNames, ['补假']).map(banName => ({
-                                label: banName,
-                                value: banName,
-                            }))}
-                            classNames={{popup: {listItem: 'text-center'}}}
-                            className="w-full max-w-[200px]"
-                        />
-                    )
-                    : (
-                        <Select
-                            value={personDateBansMap[`${currentName}_`]?.[record.dt]
-                                    ?.filter(([name]) => name)
-                                    .map(([name]) => name as string)
-                                ?? []}
-                            onChange={selectedValues => {
-                                setPersonDateBansMap(prev => {
-                                    if (!prev) return null;
+                                        const newList = [];
+                                        newList[0] = [selectedValue, -1] as [string, number];
+                                        return {
+                                            ...prev,
+                                            [`${currentName}_`]: {
+                                                ...prev[`${currentName}_`],
+                                                [record.dt]: newList,
+                                            },
+                                        };
+                                    });
+                                }}
+                                placeholder="请选择休假类型"
+                                options={filteredRelaxBanNames(validBanNames, ['补假']).map(banName => ({
+                                    label: banName,
+                                    value: banName,
+                                }))}
+                                classNames={{popup: {listItem: 'text-center'}}}
+                                className="w-full max-w-[200px]"
+                            />
+                        )
+                    : loadMode
+                        ? (
+                            <Select
+                                value={personDateBansMap[`${currentName}_`]?.[record.dt]
+                                        ?.map(([name]) => name as string)
+                                    ?? []}
+                                mode='multiple'
+                                classNames={{popup: {listItem: 'text-center'}}}
+                                className="w-full max-w-[200px]"
+                                disabled
+                            />
+                        )
+                        : (
+                            <Select
+                                value={personDateBansMap[`${currentName}_`]?.[record.dt]
+                                        ?.map(([name]) => name as string)
+                                    ?? []}
+                                onChange={selectedValues => {
+                                    setPersonDateBansMap?.(prev => {
+                                        if (!prev) return null;
 
-                                    const newList = selectedValues.map((selectedValue): [string, number] => [selectedValue, -1]);
-                                    return {
-                                        ...prev,
-                                        [`${currentName}_`]: {
-                                            ...prev[`${currentName}_`],
-                                            [record.dt]: newList,
-                                        },
-                                    };
-                                });
-                            }}
-                            placeholder="请选择调整后的排班"
-                            options={validBanNames.map(banName => ({
-                                label: banName,
-                                value: banName,
-                            }))}
-                            showSearch={{
-                                optionFilterProp: 'value',
-                                filterSort: (optionA, optionB) =>
-                                    (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
-                            }}
-                            mode='multiple'
-                            classNames={{popup: {listItem: 'text-center'}}}
-                            className="w-full max-w-[200px]"
-                        />
-                    )
+                                        const newList = selectedValues.map((selectedValue): [string, number] => [selectedValue, -1]);
+                                        return {
+                                            ...prev,
+                                            [`${currentName}_`]: {
+                                                ...prev[`${currentName}_`],
+                                                [record.dt]: newList,
+                                            },
+                                        };
+                                    });
+                                }}
+                                placeholder="请选择调整后的排班"
+                                options={validBanNames.map(banName => ({
+                                    label: banName,
+                                    value: banName,
+                                }))}
+                                showSearch={{
+                                    optionFilterProp: 'value',
+                                    filterSort: (optionA, optionB) =>
+                                        (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
+                                }}
+                                mode='multiple'
+                                classNames={{popup: {listItem: 'text-center'}}}
+                                className="w-full max-w-[200px]"
+                            />
+                        )
             }
         },
     ];
@@ -158,11 +179,13 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                     }`}>
                         {leaveApplyType === 'ASKOFF' ? '请假' : '改班'}明细
                     </h3>
-                    <p className={`mt-0.5 text-xs ${
-                        isDark ? 'text-slate-400' : 'text-slate-500'
-                    }`}>
-                        核对 {leaveApplyType === 'ASKOFF' ? currentUser : targetStaff} 当前排班，并逐日选择{leaveApplyType === 'ASKOFF' ? '希望申请的休假类型' : '调整后的班次'}
-                    </p>
+                    {!loadMode && (
+                        <p className={`mt-0.5 text-xs ${
+                            isDark ? 'text-slate-400' : 'text-slate-500'
+                        }`}>
+                            核对 {leaveApplyType === 'ASKOFF' ? currentUser : targetStaff} 当前排班，并逐日选择{leaveApplyType === 'ASKOFF' ? '希望申请的休假类型' : '调整后的班次'}
+                        </p>
+                    )}
                 </div>
                 <div className={`w-fit rounded-full border px-3 py-1 text-xs font-medium ${
                     isDark

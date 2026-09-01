@@ -1,7 +1,7 @@
 'use client';
 
 import {Tabs, TabsProps} from "antd";
-import NewLeaveApplyForm from "@/components/tables/LeaveApplyTab/NewLeaveApplyForm";
+import LeaveApplyFormNew from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
 import LeaveApplyList from "@/components/tables/LeaveApplyTab/LeaveApplyList";
 
 export default function LeaveApplyTab() {
@@ -10,7 +10,7 @@ export default function LeaveApplyTab() {
             key: '1',
             label: '发起提交',
             children: (
-                <NewLeaveApplyForm/>
+                <LeaveApplyFormNew/>
             )
         },
         {
@@ -23,7 +23,9 @@ export default function LeaveApplyTab() {
         {
             key: '3',
             label: '我收到的',
-            children: '我收到的'
+            children: (
+                <LeaveApplyList/>
+            )
         },
     ]
 
