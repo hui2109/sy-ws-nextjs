@@ -163,10 +163,10 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                 )}
             </div>
             <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                <Tag variant={"solid"} color={'lime'}>
+                <Tag variant={"solid"} color={'green'}>
                     发起人: {currentUser}
                 </Tag>
-                <Tag variant={"solid"} color={'lime'}>
+                <Tag variant={"solid"} color={'green'}>
                     发起时间: {createdDate.format("YYYY/M/D HH:mm")}
                 </Tag>
             </div>

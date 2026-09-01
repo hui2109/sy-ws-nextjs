@@ -1,11 +1,12 @@
 import {Dayjs} from "dayjs";
 import getDatesBetween from "@/components/utils/getDatesBetween";
-import {Badge, Select, Table, TableColumnsType} from "antd";
+import type {SelectProps} from 'antd';
+import {Badge, Select, Table, TableColumnsType, Tag} from "antd";
 import NullText from "@/components/others/NullText";
 import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
-import {Dispatch, SetStateAction} from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {LeaveApplyType} from "@/prisma/generated/enums";
 
 interface ILeaveApplyAskOffOrChangeScheduleTable {
@@ -27,6 +28,26 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
     const {resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === 'dark';
     const daysInRange = getDatesBetween(dateRange[0], dateRange[1]);
+
+    const tagRender: SelectProps['tagRender'] = (props) => {
+        const {label, value, closable, onClose} = props;
+        const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        return (
+            <Tag
+                color={banTypeColorMap[value]}
+                onMouseDown={onPreventMouseDown}
+                closable={closable}
+                onClose={onClose}
+                variant='solid'
+                style={{marginInlineEnd: 4}}
+            >
+                {label}
+            </Tag>
+        );
+    };
 
     const dataSource = daysInRange.map(day => {
         const format_date = day.format('YYYY-MM-DD');
@@ -82,6 +103,13 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                                 value={personDateBansMap[`${currentName}_`]?.[record.dt]?.[0]?.[0] ?? null}
                                 classNames={{popup: {listItem: 'text-center'}}}
                                 className="w-full max-w-[200px]"
+                                labelRender={(labelInValueType) => (
+                                    <Badge
+                                        count={labelInValueType.value}
+                                        color={banTypeColorMap[labelInValueType.value]}
+                                        classNames={{indicator: '!rounded-lg !font-bold'}}
+                                    />
+                                )}
                                 disabled
                             />
                         )
@@ -105,7 +133,13 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                                 }}
                                 placeholder="请选择休假类型"
                                 options={filteredRelaxBanNames(validBanNames, ['补假']).map(banName => ({
-                                    label: banName,
+                                    label: (
+                                        <Badge
+                                            count={banName}
+                                            color={banTypeColorMap[banName]}
+                                            classNames={{indicator: '!rounded-lg !font-bold'}}
+                                        />
+                                    ),
                                     value: banName,
                                 }))}
                                 classNames={{popup: {listItem: 'text-center'}}}
@@ -121,6 +155,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                                 mode='multiple'
                                 classNames={{popup: {listItem: 'text-center'}}}
                                 className="w-full max-w-[200px]"
+                                tagRender={tagRender}
                                 disabled
                             />
                         )
@@ -156,6 +191,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                                 mode='multiple'
                                 classNames={{popup: {listItem: 'text-center'}}}
                                 className="w-full max-w-[200px]"
+                                tagRender={tagRender}
                             />
                         )
             }

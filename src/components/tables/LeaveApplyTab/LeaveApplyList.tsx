@@ -192,13 +192,14 @@ function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModal
                         >
                             {leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : currentUser}
                         </div>
-                        <div
-                            className={`text-sm font-medium ${
-                                isDark
-                                    ? 'text-slate-400'
-                                    : 'text-slate-500'}`}
+                        <div className={`text-sm font-medium ${
+                            isDark
+                                ? 'text-slate-400'
+                                : 'text-slate-500'}`}
                         >
-                            {leaveApplyTypeMap[leaveApplyType]}申请
+                            <Tag variant='solid' color={leaveApplyType === 'ASKOFF' ? 'blue' : leaveApplyType === 'SHIFT_SCHEDULE' ? 'volcano' : 'purple'}>
+                                {leaveApplyTypeMap[leaveApplyType]}申请
+                            </Tag>
                         </div>
                     </div>
                     <Tag
