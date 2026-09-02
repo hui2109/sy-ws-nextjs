@@ -1,15 +1,16 @@
 import {leaveApplyTypeMap} from "@/configs/general";
-import {Button, Modal, Tag} from "antd";
+import {Button, Modal, Popconfirm, Tag} from "antd";
 import React, {useEffect, useState} from "react";
 import {IClickedLeaveApplyDetails} from "@/components/tables/LeaveApplyTab/LeaveApplyList";
 import LeaveApplyFormLoad from "@/components/tables/LeaveApplyTab/LeaveApplyFormLoad";
 import {LeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
-import {CheckCircleOutlined, CloseCircleOutlined} from "@ant-design/icons";
+import {CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, SendOutlined} from "@ant-design/icons";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {getPersonRole} from "@/api/Person/getPersonRole";
 import {Role} from "@/prisma/generated/enums";
 import TextArea from "antd/es/input/TextArea";
 import updateLeaveApply from "@/api/LeaveApply/updateLeaveApply";
+import deleteLeaveApply from "@/api/LeaveApply/deleteLeaveApply";
 
 interface ILeaveApplyModal {
     isModalOpen: boolean;
@@ -25,6 +26,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
     const [isRejectModalOpen, setIsRejectModalOpen] = useState<boolean>(false);
     const [rejectReason, setRejectReason] = useState<string>('');
     const [modal, contextHolder] = Modal.useModal();
+    const formApplicant = leaveApplyType !== 'CHANGE_SCHEDULE' ? applyUser : targetStaff;
 
     useEffect(() => {
         if (!currentUser) return;
@@ -41,13 +43,19 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
 
     if (!currentUser || !role) return null;
 
-    const canReview = leaveApplyTabStatus !== 'Sent' && status === 'PENDING_REVIEW' && (role !== 'USER' || leaveApplyType === 'SHIFT_SCHEDULE');
+    const canReview = (leaveApplyTabStatus === 'Received' && status === 'PENDING_REVIEW' && (role !== 'USER' || leaveApplyType === 'SHIFT_SCHEDULE')) ||
+        (leaveApplyTabStatus === 'Sent' && status === 'DRAFT');
 
     function handleReject() {
         updateLeaveApply(id, 'REJECTED', rejectReason.trim()).then(() => {
             notification.warning({
-                title: `${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请已退回`,
-                description: `【退回理由】${rejectReason}`
+                title: '假勤申请 已退回',
+                description: (
+                    <div>
+                        <div>{formApplicant} 的 {leaveApplyTypeMap[leaveApplyType]} 申请已退回</div>
+                        <div>【退回理由】{rejectReason}</div>
+                    </div>
+                )
             });
             setIsRejectModalOpen(false);
             onClose();
@@ -56,7 +64,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
 
     function handleApprove() {
         modal.confirm({
-            title: `确定通过 ${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请?`,
+            title: `确定通过 ${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请?`,
             content: (
                 <div className='flex items-center px-1 pb-3.5 pt-2'>
                     <Tag
@@ -74,7 +82,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
             onOk: () => {
                 updateLeaveApply(id, 'APPROVED').then(() => {
                     notification.success({
-                        title: `${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请已通过`,
+                        title: '假勤申请 已通过',
                         description: `${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请已通过!`
                     });
                     onClose();
@@ -98,6 +106,51 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                 footer={(_, {OkBtn}) => {
                     if (!canReview) {
                         return <OkBtn/>;
+                    }
+
+                    if (status === 'DRAFT') {
+                        return (
+                            <div className="flex justify-end gap-3">
+                                <Popconfirm
+                                    title="确定要删除吗？(不可撤销！)"
+                                    onConfirm={() => {
+                                        deleteLeaveApply(id).then(() => {
+                                            notification.warning({
+                                                title: '假期申请 删除成功',
+                                                description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请删除成功!`
+                                            });
+                                            onClose();
+                                        })
+                                    }}
+                                    okButtonProps={{color: 'danger', variant: 'solid'}}
+                                >
+                                    <Button
+                                        color='danger'
+                                        variant='solid'
+                                        icon={<DeleteOutlined/>}
+                                        className="min-w-24"
+                                    >
+                                        删除申请
+                                    </Button>
+                                </Popconfirm>
+                                <Button
+                                    type='primary'
+                                    icon={<SendOutlined/>}
+                                    className="min-w-24"
+                                    onClick={() => {
+                                        updateLeaveApply(id, status).then(() => {
+                                            notification.success({
+                                                title: `假期申请 提交成功`,
+                                                description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请提交成功! 当前状态: 待审核!`
+                                            });
+                                            onClose();
+                                        })
+                                    }}
+                                >
+                                    提交申请
+                                </Button>
+                            </div>
+                        )
                     }
 
                     return (

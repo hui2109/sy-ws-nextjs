@@ -222,7 +222,7 @@ function Operations({value, setRuleData}: { value: IRuleData, setRuleData: Dispa
 
     return (
         <Space size="medium">
-            <Popconfirm title="确定要删除吗? (不可撤销！)" onConfirm={() => handleDelete(value)} okButtonProps={{color: 'danger', variant: 'solid'}}>
+            <Popconfirm title="确定要删除吗？(不可撤销！)" onConfirm={() => handleDelete(value)} okButtonProps={{color: 'danger', variant: 'solid'}}>
                 <a>删除?</a>
             </Popconfirm>
         </Space>

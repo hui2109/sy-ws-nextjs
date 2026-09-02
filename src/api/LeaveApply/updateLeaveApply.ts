@@ -12,6 +12,19 @@ export default async function updateLeaveApply(id: number, leaveApplyStatus: Lea
     const leaveApply = await prisma.leaveApply.findUnique({where: {id}, select: {reason: true}});
 
     if (!leaveApply) return null;
+    if (leaveApplyStatus === 'DRAFT') {
+        await prisma.leaveApply.updateMany({
+            where: {
+                id
+            },
+            data: {
+                status: "PENDING_REVIEW"
+            }
+        })
+
+        return null;
+    }
+
     if (leaveApplyStatus === 'APPROVED') {
         await prisma.leaveApply.updateMany({
             where: {

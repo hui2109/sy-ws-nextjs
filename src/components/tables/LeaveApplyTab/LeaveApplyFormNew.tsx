@@ -13,8 +13,8 @@ import LeaveApplyShiftScheduleTable from "@/components/tables/LeaveApplyTab/Leav
 import LeaveApplyAskOffOrChangeScheduleTable from "@/components/tables/LeaveApplyTab/LeaveApplyTables/LeaveApplyAskOffOrChangeScheduleTable";
 import {SaveOutlined, SendOutlined} from "@ant-design/icons";
 import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
-import {leaveApplyStatusColorMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
-import {LeaveApplyType} from "@/prisma/generated/enums";
+import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
+import {LeaveApplyStatus, LeaveApplyType} from "@/prisma/generated/enums";
 import getDatesBetween from "@/components/utils/getDatesBetween";
 
 const {TextArea} = Input;
@@ -39,9 +39,7 @@ export default function LeaveApplyFormNew() {
 
     const isShiftSchedule = leaveApplyType === 'SHIFT_SCHEDULE';
     const isAskOff = leaveApplyType === 'ASKOFF';
-    const completeDateRange = dateRange?.[0] && dateRange?.[1]
-        ? [dateRange[0], dateRange[1]] as [Dayjs, Dayjs]
-        : null;
+    const completeDateRange = dateRange?.[0] && dateRange?.[1] ? [dateRange[0], dateRange[1]] as [Dayjs, Dayjs] : null;
 
     useEffect(() => {
         let isMounted = true;
@@ -114,7 +112,7 @@ export default function LeaveApplyFormNew() {
 
         const isDraft = status === 'DRAFT';
         const actionText = isDraft ? '保存' : '提交';
-        const successUser = leaveApplyType !== 'CHANGE_SCHEDULE' ? currentUser : targetStaff;
+        const formApplicant = leaveApplyType !== 'CHANGE_SCHEDULE' ? currentUser : targetStaff;
         const successStatusText = isDraft ? '草稿' : '待审核';
 
         createLeaveApply(
@@ -130,12 +128,12 @@ export default function LeaveApplyFormNew() {
             if (!r) {
                 notification.error({
                     title: `假期申请 ${actionText}失败`,
-                    description: `${leaveApplyTypeMap[leaveApplyType]} 申请${actionText}失败! 原因: 不存在当前用户! `
+                    description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请${actionText}失败! 原因: 不存在当前用户! `
                 });
             } else {
                 notification.success({
                     title: `假期申请 ${actionText}成功`,
-                    description: `${successUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请${actionText}成功! 当前状态: ${successStatusText}!`
+                    description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请${actionText}成功! 当前状态: ${successStatusText}!`
                 });
             }
         })
@@ -210,7 +208,7 @@ export default function LeaveApplyFormNew() {
         setPersonDateBansMap,
         banTypeColorMap,
         dateRange: completeDateRange,
-        currentUser,
+        applyUser: currentUser,
         targetStaff,
         validBanNames,
     } : null;
@@ -272,7 +270,7 @@ export default function LeaveApplyFormNew() {
                                     variant='solid'
                                     className='!text-sm !font-bold'
                                 >
-                                    草稿
+                                    {leaveApplyStatusMap[LeaveApplyStatus.DRAFT]}
                                 </Tag>
                             </div>
 
@@ -365,7 +363,7 @@ export default function LeaveApplyFormNew() {
                 )}
 
                 {canShowActions && (
-                    <div className={`flex justify-end gap-3 mt-6 pt-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                    <div className={`flex justify-end gap-3 mt-6 pt-4 pb-4 pr-4 border-t-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
                         <Button
                             icon={<SaveOutlined/>}
                             onClick={() => handleCreateLeaveApply('DRAFT')}

@@ -102,7 +102,11 @@ export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: stri
                     ))}
                 </div>
             ) : leaveApplyRecords?.length ? (
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
+                <div className={
+                    leaveApplyRecords.length === 1
+                        ? "grid grid-cols-[280px] justify-center gap-4"
+                        : "grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4"
+                }>
                     {leaveApplyRecords.map(leaveApplyRecord => (
                         <LeaveApplyCard
                             key={`${dayjs(leaveApplyRecord.created_date).toISOString()}_${leaveApplyRecord.reason}`}
