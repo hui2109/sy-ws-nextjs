@@ -32,9 +32,11 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
         if (!currentUser) return;
         let isMounted = true;
 
-        if (isMounted) {
-            getPersonRole(currentUser).then(role => setRole(role))
-        }
+        getPersonRole(currentUser).then(role => {
+            if (isMounted) {
+                setRole(role)
+            }
+        })
 
         return () => {
             isMounted = false;
@@ -138,7 +140,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                                     icon={<SendOutlined/>}
                                     className="min-w-24"
                                     onClick={() => {
-                                        updateLeaveApply(id, status).then(() => {
+                                        updateLeaveApply(id, 'PENDING_REVIEW').then(() => {
                                             notification.success({
                                                 title: `假期申请 提交成功`,
                                                 description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请提交成功! 当前状态: 待审核!`

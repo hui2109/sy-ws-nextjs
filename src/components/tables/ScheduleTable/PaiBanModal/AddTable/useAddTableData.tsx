@@ -29,12 +29,21 @@ export default function useAddTableData(): IAddTableData {
     const {selectedCell} = useSelectedCellContext();
 
     useEffect(() => {
+        let isMounted = true;
+
         Promise.all([getBanTypeColorMap(), getValidBanNames()])
             .then(([colorMap, banNames]) => {
-                setBanTypeColorMap(colorMap);
-                setValidBanNames(banNames);
-            })
-            .finally(() => setLoading(false));
+                if (isMounted) {
+                    setBanTypeColorMap(colorMap);
+                    setValidBanNames(banNames);
+                    setLoading(false);
+                }
+            });
+
+        return () => {
+            isMounted = false;
+            setLoading(true);
+        };
     }, []);
 
     const dataSource = [

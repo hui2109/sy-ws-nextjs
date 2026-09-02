@@ -11,10 +11,11 @@ export function useTransformSTData() {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        let isMounted = true;
         if (modalKey !== 'hechapaiban') {
             return;
         }
+
+        let isMounted = true;
         const formatCurrDate = current.format('YYYY-MM-DD');
         getWSbyMonth(formatCurrDate).then(dbData => {
             if (isMounted) {

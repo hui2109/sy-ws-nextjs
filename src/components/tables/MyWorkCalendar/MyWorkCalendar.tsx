@@ -42,11 +42,11 @@ export default function MyWorkCalendar() {
     }, []);
 
     useEffect(() => {
-        let isMounted = true;
         if (!currentUser) return;
         if (monthsFetched.includes(current.format('YYYY-MM'))) {
             return;
         }
+        let isMounted = true;
 
         getPersonAllWSbyNameMonth(current.format('YYYY-MM-DD'), currentUser).then(r => {
             if (isMounted) {

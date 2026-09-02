@@ -65,36 +65,36 @@ export default function LeaveApplyFormNew() {
         let isMounted = true;
 
         if (!dateRange?.[0] || !dateRange?.[1]) return;
-
         const startDate = dateRange[0].format('YYYY-MM-DD');
         const endDate = dateRange[1].format('YYYY-MM-DD');
         const names = [...new Set([currentUser, targetStaff].filter(Boolean))] as string[];
+
         Promise.all(
             names.map(async name => [
                 name,
                 await getWSbyNameDates(name, startDate, endDate),
             ] as const)
         ).then(results => {
-            if (!isMounted) return;
+            if (isMounted) {
+                setPersonDateBansMap(prev => {
+                    const safePrev = prev ?? {};
+                    const newData = {...safePrev};
 
-            setPersonDateBansMap(prev => {
-                const safePrev = prev ?? {};
-                const newData = {...safePrev};
-
-                for (const [name, dateBansMap] of results) {
-                    // 这个每次都更新
-                    newData[name] = dateBansMap;
-                    const tempKey = `${name}_`;
-                    // 只有原来的 state 里没有 name_，才初始化它
-                    if (!Object.hasOwn(safePrev, tempKey)) {
-                        newData[tempKey] = Object.fromEntries(
-                            Object.keys(dateBansMap).map(date => [date, []])
-                        );
+                    for (const [name, dateBansMap] of results) {
+                        // 这个每次都更新
+                        newData[name] = dateBansMap;
+                        const tempKey = `${name}_`;
+                        // 只有原来的 state 里没有 name_，才初始化它
+                        if (!Object.hasOwn(safePrev, tempKey)) {
+                            newData[tempKey] = Object.fromEntries(
+                                Object.keys(dateBansMap).map(date => [date, []])
+                            );
+                        }
                     }
-                }
 
-                return newData;
-            });
+                    return newData;
+                });
+            }
         });
 
         return () => {

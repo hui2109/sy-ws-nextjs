@@ -56,12 +56,12 @@ export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: stri
     useEffect(() => {
         let isMounted = true;
 
-        if (isMounted) {
-            getLeaveAppliesbyNameStatus(name, leaveApplyTabStatus).then(leaveApplyRecords => {
+        getLeaveAppliesbyNameStatus(name, leaveApplyTabStatus).then(leaveApplyRecords => {
+            if (isMounted) {
                 setLeaveApplyRecords(leaveApplyRecords);
                 setLoading(false);
-            })
-        }
+            }
+        })
 
         return () => {
             isMounted = false;
