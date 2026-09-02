@@ -175,7 +175,7 @@ export const LeaveApplyScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  currentUserId: 'currentUserId',
+  applyUserId: 'applyUserId',
   targetStaffId: 'targetStaffId',
   assignmentsJson: 'assignmentsJson'
 } as const

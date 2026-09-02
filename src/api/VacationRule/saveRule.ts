@@ -4,7 +4,7 @@ import "dotenv/config";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import {IRuleData} from "@/components/tables/HolidaySettingTable/useHSTableData";
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 
 dayjs.extend(utc);
 

@@ -6,7 +6,7 @@ import LeaveApplyFormNew from "@/components/tables/LeaveApplyTab/LeaveApplyFormN
 import LeaveApplyList from "@/components/tables/LeaveApplyTab/LeaveApplyList";
 import {useAppContext} from "@/components/hooks/AppProvider";
 
-export type SendStatus = 'Sent' | 'Received';
+export type LeaveApplyTabStatus = 'Sent' | 'Received';
 
 export default function LeaveApplyTab() {
     const {currentUser, resolvedTheme} = useAppContext();
@@ -38,7 +38,7 @@ export default function LeaveApplyTab() {
             children: (
                 <LeaveApplyList
                     name={currentUser}
-                    sendStatus="Sent"
+                    leaveApplyTabStatus="Sent"
                 />
             )
         },
@@ -53,7 +53,7 @@ export default function LeaveApplyTab() {
             children: (
                 <LeaveApplyList
                     name={currentUser}
-                    sendStatus="Received"
+                    leaveApplyTabStatus="Received"
                 />
             )
         },

@@ -1,6 +1,6 @@
 'use server';
 
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 import {mkdir, unlink, writeFile} from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";

@@ -1,6 +1,6 @@
 "use server";
 
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 
 export async function getBanTypeColorMap(): Promise<Record<string, string>> {
     const data = await prisma.banType.findMany({

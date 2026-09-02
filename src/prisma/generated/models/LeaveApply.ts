@@ -28,13 +28,13 @@ export type AggregateLeaveApply = {
 
 export type LeaveApplyAvgAggregateOutputType = {
   id: number | null
-  currentUserId: number | null
+  applyUserId: number | null
   targetStaffId: number | null
 }
 
 export type LeaveApplySumAggregateOutputType = {
   id: number | null
-  currentUserId: number | null
+  applyUserId: number | null
   targetStaffId: number | null
 }
 
@@ -47,7 +47,7 @@ export type LeaveApplyMinAggregateOutputType = {
   status: $Enums.LeaveApplyStatus | null
   createdAt: Date | null
   updatedAt: Date | null
-  currentUserId: number | null
+  applyUserId: number | null
   targetStaffId: number | null
 }
 
@@ -60,7 +60,7 @@ export type LeaveApplyMaxAggregateOutputType = {
   status: $Enums.LeaveApplyStatus | null
   createdAt: Date | null
   updatedAt: Date | null
-  currentUserId: number | null
+  applyUserId: number | null
   targetStaffId: number | null
 }
 
@@ -73,7 +73,7 @@ export type LeaveApplyCountAggregateOutputType = {
   status: number
   createdAt: number
   updatedAt: number
-  currentUserId: number
+  applyUserId: number
   targetStaffId: number
   assignmentsJson: number
   _all: number
@@ -82,13 +82,13 @@ export type LeaveApplyCountAggregateOutputType = {
 
 export type LeaveApplyAvgAggregateInputType = {
   id?: true
-  currentUserId?: true
+  applyUserId?: true
   targetStaffId?: true
 }
 
 export type LeaveApplySumAggregateInputType = {
   id?: true
-  currentUserId?: true
+  applyUserId?: true
   targetStaffId?: true
 }
 
@@ -101,7 +101,7 @@ export type LeaveApplyMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  currentUserId?: true
+  applyUserId?: true
   targetStaffId?: true
 }
 
@@ -114,7 +114,7 @@ export type LeaveApplyMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  currentUserId?: true
+  applyUserId?: true
   targetStaffId?: true
 }
 
@@ -127,7 +127,7 @@ export type LeaveApplyCountAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  currentUserId?: true
+  applyUserId?: true
   targetStaffId?: true
   assignmentsJson?: true
   _all?: true
@@ -228,7 +228,7 @@ export type LeaveApplyGroupByOutputType = {
   status: $Enums.LeaveApplyStatus
   createdAt: Date
   updatedAt: Date
-  currentUserId: number
+  applyUserId: number
   targetStaffId: number | null
   assignmentsJson: runtime.JsonValue
   _count: LeaveApplyCountAggregateOutputType | null
@@ -265,10 +265,10 @@ export type LeaveApplyWhereInput = {
   status?: Prisma.EnumLeaveApplyStatusFilter<"LeaveApply"> | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFilter<"LeaveApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LeaveApply"> | Date | string
-  currentUserId?: Prisma.IntFilter<"LeaveApply"> | number
+  applyUserId?: Prisma.IntFilter<"LeaveApply"> | number
   targetStaffId?: Prisma.IntNullableFilter<"LeaveApply"> | number | null
   assignmentsJson?: Prisma.JsonFilter<"LeaveApply">
-  currentUser?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  applyUser?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   targetStaff?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
 }
 
@@ -281,10 +281,10 @@ export type LeaveApplyOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrderInput | Prisma.SortOrder
   assignmentsJson?: Prisma.SortOrder
-  currentUser?: Prisma.PersonOrderByWithRelationInput
+  applyUser?: Prisma.PersonOrderByWithRelationInput
   targetStaff?: Prisma.PersonOrderByWithRelationInput
 }
 
@@ -300,10 +300,10 @@ export type LeaveApplyWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumLeaveApplyStatusFilter<"LeaveApply"> | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFilter<"LeaveApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LeaveApply"> | Date | string
-  currentUserId?: Prisma.IntFilter<"LeaveApply"> | number
+  applyUserId?: Prisma.IntFilter<"LeaveApply"> | number
   targetStaffId?: Prisma.IntNullableFilter<"LeaveApply"> | number | null
   assignmentsJson?: Prisma.JsonFilter<"LeaveApply">
-  currentUser?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  applyUser?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   targetStaff?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
 }, "id">
 
@@ -316,7 +316,7 @@ export type LeaveApplyOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrderInput | Prisma.SortOrder
   assignmentsJson?: Prisma.SortOrder
   _count?: Prisma.LeaveApplyCountOrderByAggregateInput
@@ -338,7 +338,7 @@ export type LeaveApplyScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumLeaveApplyStatusWithAggregatesFilter<"LeaveApply"> | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LeaveApply"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LeaveApply"> | Date | string
-  currentUserId?: Prisma.IntWithAggregatesFilter<"LeaveApply"> | number
+  applyUserId?: Prisma.IntWithAggregatesFilter<"LeaveApply"> | number
   targetStaffId?: Prisma.IntNullableWithAggregatesFilter<"LeaveApply"> | number | null
   assignmentsJson?: Prisma.JsonWithAggregatesFilter<"LeaveApply">
 }
@@ -352,7 +352,7 @@ export type LeaveApplyCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  currentUser: Prisma.PersonCreateNestedOneWithoutLeaveAppliesAsCurrentUserInput
+  applyUser: Prisma.PersonCreateNestedOneWithoutLeaveAppliesAsApplyUserIdInput
   targetStaff?: Prisma.PersonCreateNestedOneWithoutLeaveAppliesAsTargetStaffInput
 }
 
@@ -365,7 +365,7 @@ export type LeaveApplyUncheckedCreateInput = {
   status?: $Enums.LeaveApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  currentUserId: number
+  applyUserId: number
   targetStaffId?: number | null
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
@@ -379,7 +379,7 @@ export type LeaveApplyUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  currentUser?: Prisma.PersonUpdateOneRequiredWithoutLeaveAppliesAsCurrentUserNestedInput
+  applyUser?: Prisma.PersonUpdateOneRequiredWithoutLeaveAppliesAsApplyUserIdNestedInput
   targetStaff?: Prisma.PersonUpdateOneWithoutLeaveAppliesAsTargetStaffNestedInput
 }
 
@@ -392,7 +392,7 @@ export type LeaveApplyUncheckedUpdateInput = {
   status?: Prisma.EnumLeaveApplyStatusFieldUpdateOperationsInput | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentUserId?: Prisma.IntFieldUpdateOperationsInput | number
+  applyUserId?: Prisma.IntFieldUpdateOperationsInput | number
   targetStaffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
@@ -406,7 +406,7 @@ export type LeaveApplyCreateManyInput = {
   status?: $Enums.LeaveApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  currentUserId: number
+  applyUserId: number
   targetStaffId?: number | null
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
@@ -431,7 +431,7 @@ export type LeaveApplyUncheckedUpdateManyInput = {
   status?: Prisma.EnumLeaveApplyStatusFieldUpdateOperationsInput | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentUserId?: Prisma.IntFieldUpdateOperationsInput | number
+  applyUserId?: Prisma.IntFieldUpdateOperationsInput | number
   targetStaffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
@@ -455,14 +455,14 @@ export type LeaveApplyCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrder
   assignmentsJson?: Prisma.SortOrder
 }
 
 export type LeaveApplyAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrder
 }
 
@@ -475,7 +475,7 @@ export type LeaveApplyMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrder
 }
 
@@ -488,20 +488,20 @@ export type LeaveApplyMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrder
 }
 
 export type LeaveApplySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  currentUserId?: Prisma.SortOrder
+  applyUserId?: Prisma.SortOrder
   targetStaffId?: Prisma.SortOrder
 }
 
-export type LeaveApplyCreateNestedManyWithoutCurrentUserInput = {
-  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput> | Prisma.LeaveApplyCreateWithoutCurrentUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput[]
-  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput | Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput[]
-  createMany?: Prisma.LeaveApplyCreateManyCurrentUserInputEnvelope
+export type LeaveApplyCreateNestedManyWithoutApplyUserInput = {
+  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput> | Prisma.LeaveApplyCreateWithoutApplyUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput[]
+  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput | Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput[]
+  createMany?: Prisma.LeaveApplyCreateManyApplyUserInputEnvelope
   connect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
 }
 
@@ -512,10 +512,10 @@ export type LeaveApplyCreateNestedManyWithoutTargetStaffInput = {
   connect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
 }
 
-export type LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput = {
-  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput> | Prisma.LeaveApplyCreateWithoutCurrentUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput[]
-  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput | Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput[]
-  createMany?: Prisma.LeaveApplyCreateManyCurrentUserInputEnvelope
+export type LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput = {
+  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput> | Prisma.LeaveApplyCreateWithoutApplyUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput[]
+  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput | Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput[]
+  createMany?: Prisma.LeaveApplyCreateManyApplyUserInputEnvelope
   connect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
 }
 
@@ -526,17 +526,17 @@ export type LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput = {
   connect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
 }
 
-export type LeaveApplyUpdateManyWithoutCurrentUserNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput> | Prisma.LeaveApplyCreateWithoutCurrentUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput[]
-  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput | Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput[]
-  upsert?: Prisma.LeaveApplyUpsertWithWhereUniqueWithoutCurrentUserInput | Prisma.LeaveApplyUpsertWithWhereUniqueWithoutCurrentUserInput[]
-  createMany?: Prisma.LeaveApplyCreateManyCurrentUserInputEnvelope
+export type LeaveApplyUpdateManyWithoutApplyUserNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput> | Prisma.LeaveApplyCreateWithoutApplyUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput[]
+  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput | Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput[]
+  upsert?: Prisma.LeaveApplyUpsertWithWhereUniqueWithoutApplyUserInput | Prisma.LeaveApplyUpsertWithWhereUniqueWithoutApplyUserInput[]
+  createMany?: Prisma.LeaveApplyCreateManyApplyUserInputEnvelope
   set?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
   disconnect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
   delete?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
   connect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
-  update?: Prisma.LeaveApplyUpdateWithWhereUniqueWithoutCurrentUserInput | Prisma.LeaveApplyUpdateWithWhereUniqueWithoutCurrentUserInput[]
-  updateMany?: Prisma.LeaveApplyUpdateManyWithWhereWithoutCurrentUserInput | Prisma.LeaveApplyUpdateManyWithWhereWithoutCurrentUserInput[]
+  update?: Prisma.LeaveApplyUpdateWithWhereUniqueWithoutApplyUserInput | Prisma.LeaveApplyUpdateWithWhereUniqueWithoutApplyUserInput[]
+  updateMany?: Prisma.LeaveApplyUpdateManyWithWhereWithoutApplyUserInput | Prisma.LeaveApplyUpdateManyWithWhereWithoutApplyUserInput[]
   deleteMany?: Prisma.LeaveApplyScalarWhereInput | Prisma.LeaveApplyScalarWhereInput[]
 }
 
@@ -554,17 +554,17 @@ export type LeaveApplyUpdateManyWithoutTargetStaffNestedInput = {
   deleteMany?: Prisma.LeaveApplyScalarWhereInput | Prisma.LeaveApplyScalarWhereInput[]
 }
 
-export type LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput> | Prisma.LeaveApplyCreateWithoutCurrentUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput[]
-  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput | Prisma.LeaveApplyCreateOrConnectWithoutCurrentUserInput[]
-  upsert?: Prisma.LeaveApplyUpsertWithWhereUniqueWithoutCurrentUserInput | Prisma.LeaveApplyUpsertWithWhereUniqueWithoutCurrentUserInput[]
-  createMany?: Prisma.LeaveApplyCreateManyCurrentUserInputEnvelope
+export type LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaveApplyCreateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput> | Prisma.LeaveApplyCreateWithoutApplyUserInput[] | Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput[]
+  connectOrCreate?: Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput | Prisma.LeaveApplyCreateOrConnectWithoutApplyUserInput[]
+  upsert?: Prisma.LeaveApplyUpsertWithWhereUniqueWithoutApplyUserInput | Prisma.LeaveApplyUpsertWithWhereUniqueWithoutApplyUserInput[]
+  createMany?: Prisma.LeaveApplyCreateManyApplyUserInputEnvelope
   set?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
   disconnect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
   delete?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
   connect?: Prisma.LeaveApplyWhereUniqueInput | Prisma.LeaveApplyWhereUniqueInput[]
-  update?: Prisma.LeaveApplyUpdateWithWhereUniqueWithoutCurrentUserInput | Prisma.LeaveApplyUpdateWithWhereUniqueWithoutCurrentUserInput[]
-  updateMany?: Prisma.LeaveApplyUpdateManyWithWhereWithoutCurrentUserInput | Prisma.LeaveApplyUpdateManyWithWhereWithoutCurrentUserInput[]
+  update?: Prisma.LeaveApplyUpdateWithWhereUniqueWithoutApplyUserInput | Prisma.LeaveApplyUpdateWithWhereUniqueWithoutApplyUserInput[]
+  updateMany?: Prisma.LeaveApplyUpdateManyWithWhereWithoutApplyUserInput | Prisma.LeaveApplyUpdateManyWithWhereWithoutApplyUserInput[]
   deleteMany?: Prisma.LeaveApplyScalarWhereInput | Prisma.LeaveApplyScalarWhereInput[]
 }
 
@@ -598,7 +598,7 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type LeaveApplyCreateWithoutCurrentUserInput = {
+export type LeaveApplyCreateWithoutApplyUserInput = {
   leaveApplyType: $Enums.LeaveApplyType
   startDate: Date | string
   endDate: Date | string
@@ -610,7 +610,7 @@ export type LeaveApplyCreateWithoutCurrentUserInput = {
   targetStaff?: Prisma.PersonCreateNestedOneWithoutLeaveAppliesAsTargetStaffInput
 }
 
-export type LeaveApplyUncheckedCreateWithoutCurrentUserInput = {
+export type LeaveApplyUncheckedCreateWithoutApplyUserInput = {
   id?: number
   leaveApplyType: $Enums.LeaveApplyType
   startDate: Date | string
@@ -623,13 +623,13 @@ export type LeaveApplyUncheckedCreateWithoutCurrentUserInput = {
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
-export type LeaveApplyCreateOrConnectWithoutCurrentUserInput = {
+export type LeaveApplyCreateOrConnectWithoutApplyUserInput = {
   where: Prisma.LeaveApplyWhereUniqueInput
-  create: Prisma.XOR<Prisma.LeaveApplyCreateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput>
+  create: Prisma.XOR<Prisma.LeaveApplyCreateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput>
 }
 
-export type LeaveApplyCreateManyCurrentUserInputEnvelope = {
-  data: Prisma.LeaveApplyCreateManyCurrentUserInput | Prisma.LeaveApplyCreateManyCurrentUserInput[]
+export type LeaveApplyCreateManyApplyUserInputEnvelope = {
+  data: Prisma.LeaveApplyCreateManyApplyUserInput | Prisma.LeaveApplyCreateManyApplyUserInput[]
   skipDuplicates?: boolean
 }
 
@@ -642,7 +642,7 @@ export type LeaveApplyCreateWithoutTargetStaffInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  currentUser: Prisma.PersonCreateNestedOneWithoutLeaveAppliesAsCurrentUserInput
+  applyUser: Prisma.PersonCreateNestedOneWithoutLeaveAppliesAsApplyUserIdInput
 }
 
 export type LeaveApplyUncheckedCreateWithoutTargetStaffInput = {
@@ -654,7 +654,7 @@ export type LeaveApplyUncheckedCreateWithoutTargetStaffInput = {
   status?: $Enums.LeaveApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  currentUserId: number
+  applyUserId: number
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -668,20 +668,20 @@ export type LeaveApplyCreateManyTargetStaffInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type LeaveApplyUpsertWithWhereUniqueWithoutCurrentUserInput = {
+export type LeaveApplyUpsertWithWhereUniqueWithoutApplyUserInput = {
   where: Prisma.LeaveApplyWhereUniqueInput
-  update: Prisma.XOR<Prisma.LeaveApplyUpdateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedUpdateWithoutCurrentUserInput>
-  create: Prisma.XOR<Prisma.LeaveApplyCreateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedCreateWithoutCurrentUserInput>
+  update: Prisma.XOR<Prisma.LeaveApplyUpdateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedUpdateWithoutApplyUserInput>
+  create: Prisma.XOR<Prisma.LeaveApplyCreateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedCreateWithoutApplyUserInput>
 }
 
-export type LeaveApplyUpdateWithWhereUniqueWithoutCurrentUserInput = {
+export type LeaveApplyUpdateWithWhereUniqueWithoutApplyUserInput = {
   where: Prisma.LeaveApplyWhereUniqueInput
-  data: Prisma.XOR<Prisma.LeaveApplyUpdateWithoutCurrentUserInput, Prisma.LeaveApplyUncheckedUpdateWithoutCurrentUserInput>
+  data: Prisma.XOR<Prisma.LeaveApplyUpdateWithoutApplyUserInput, Prisma.LeaveApplyUncheckedUpdateWithoutApplyUserInput>
 }
 
-export type LeaveApplyUpdateManyWithWhereWithoutCurrentUserInput = {
+export type LeaveApplyUpdateManyWithWhereWithoutApplyUserInput = {
   where: Prisma.LeaveApplyScalarWhereInput
-  data: Prisma.XOR<Prisma.LeaveApplyUpdateManyMutationInput, Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserInput>
+  data: Prisma.XOR<Prisma.LeaveApplyUpdateManyMutationInput, Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserInput>
 }
 
 export type LeaveApplyScalarWhereInput = {
@@ -696,7 +696,7 @@ export type LeaveApplyScalarWhereInput = {
   status?: Prisma.EnumLeaveApplyStatusFilter<"LeaveApply"> | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFilter<"LeaveApply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LeaveApply"> | Date | string
-  currentUserId?: Prisma.IntFilter<"LeaveApply"> | number
+  applyUserId?: Prisma.IntFilter<"LeaveApply"> | number
   targetStaffId?: Prisma.IntNullableFilter<"LeaveApply"> | number | null
   assignmentsJson?: Prisma.JsonFilter<"LeaveApply">
 }
@@ -717,7 +717,7 @@ export type LeaveApplyUpdateManyWithWhereWithoutTargetStaffInput = {
   data: Prisma.XOR<Prisma.LeaveApplyUpdateManyMutationInput, Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffInput>
 }
 
-export type LeaveApplyCreateManyCurrentUserInput = {
+export type LeaveApplyCreateManyApplyUserInput = {
   id?: number
   leaveApplyType: $Enums.LeaveApplyType
   startDate: Date | string
@@ -739,11 +739,11 @@ export type LeaveApplyCreateManyTargetStaffInput = {
   status?: $Enums.LeaveApplyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  currentUserId: number
+  applyUserId: number
   assignmentsJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
-export type LeaveApplyUpdateWithoutCurrentUserInput = {
+export type LeaveApplyUpdateWithoutApplyUserInput = {
   leaveApplyType?: Prisma.EnumLeaveApplyTypeFieldUpdateOperationsInput | $Enums.LeaveApplyType
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -755,7 +755,7 @@ export type LeaveApplyUpdateWithoutCurrentUserInput = {
   targetStaff?: Prisma.PersonUpdateOneWithoutLeaveAppliesAsTargetStaffNestedInput
 }
 
-export type LeaveApplyUncheckedUpdateWithoutCurrentUserInput = {
+export type LeaveApplyUncheckedUpdateWithoutApplyUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   leaveApplyType?: Prisma.EnumLeaveApplyTypeFieldUpdateOperationsInput | $Enums.LeaveApplyType
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -768,7 +768,7 @@ export type LeaveApplyUncheckedUpdateWithoutCurrentUserInput = {
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
-export type LeaveApplyUncheckedUpdateManyWithoutCurrentUserInput = {
+export type LeaveApplyUncheckedUpdateManyWithoutApplyUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   leaveApplyType?: Prisma.EnumLeaveApplyTypeFieldUpdateOperationsInput | $Enums.LeaveApplyType
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -790,7 +790,7 @@ export type LeaveApplyUpdateWithoutTargetStaffInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  currentUser?: Prisma.PersonUpdateOneRequiredWithoutLeaveAppliesAsCurrentUserNestedInput
+  applyUser?: Prisma.PersonUpdateOneRequiredWithoutLeaveAppliesAsApplyUserIdNestedInput
 }
 
 export type LeaveApplyUncheckedUpdateWithoutTargetStaffInput = {
@@ -802,7 +802,7 @@ export type LeaveApplyUncheckedUpdateWithoutTargetStaffInput = {
   status?: Prisma.EnumLeaveApplyStatusFieldUpdateOperationsInput | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentUserId?: Prisma.IntFieldUpdateOperationsInput | number
+  applyUserId?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -815,7 +815,7 @@ export type LeaveApplyUncheckedUpdateManyWithoutTargetStaffInput = {
   status?: Prisma.EnumLeaveApplyStatusFieldUpdateOperationsInput | $Enums.LeaveApplyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentUserId?: Prisma.IntFieldUpdateOperationsInput | number
+  applyUserId?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentsJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -830,10 +830,10 @@ export type LeaveApplySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  currentUserId?: boolean
+  applyUserId?: boolean
   targetStaffId?: boolean
   assignmentsJson?: boolean
-  currentUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  applyUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetStaff?: boolean | Prisma.LeaveApply$targetStaffArgs<ExtArgs>
 }, ExtArgs["result"]["leaveApply"]>
 
@@ -846,10 +846,10 @@ export type LeaveApplySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  currentUserId?: boolean
+  applyUserId?: boolean
   targetStaffId?: boolean
   assignmentsJson?: boolean
-  currentUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  applyUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetStaff?: boolean | Prisma.LeaveApply$targetStaffArgs<ExtArgs>
 }, ExtArgs["result"]["leaveApply"]>
 
@@ -862,10 +862,10 @@ export type LeaveApplySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  currentUserId?: boolean
+  applyUserId?: boolean
   targetStaffId?: boolean
   assignmentsJson?: boolean
-  currentUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  applyUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetStaff?: boolean | Prisma.LeaveApply$targetStaffArgs<ExtArgs>
 }, ExtArgs["result"]["leaveApply"]>
 
@@ -878,29 +878,29 @@ export type LeaveApplySelectScalar = {
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  currentUserId?: boolean
+  applyUserId?: boolean
   targetStaffId?: boolean
   assignmentsJson?: boolean
 }
 
-export type LeaveApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaveApplyType" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "currentUserId" | "targetStaffId" | "assignmentsJson", ExtArgs["result"]["leaveApply"]>
+export type LeaveApplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaveApplyType" | "startDate" | "endDate" | "reason" | "status" | "createdAt" | "updatedAt" | "applyUserId" | "targetStaffId" | "assignmentsJson", ExtArgs["result"]["leaveApply"]>
 export type LeaveApplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  currentUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  applyUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetStaff?: boolean | Prisma.LeaveApply$targetStaffArgs<ExtArgs>
 }
 export type LeaveApplyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  currentUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  applyUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetStaff?: boolean | Prisma.LeaveApply$targetStaffArgs<ExtArgs>
 }
 export type LeaveApplyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  currentUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  applyUser?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   targetStaff?: boolean | Prisma.LeaveApply$targetStaffArgs<ExtArgs>
 }
 
 export type $LeaveApplyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LeaveApply"
   objects: {
-    currentUser: Prisma.$PersonPayload<ExtArgs>
+    applyUser: Prisma.$PersonPayload<ExtArgs>
     targetStaff: Prisma.$PersonPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -912,7 +912,7 @@ export type $LeaveApplyPayload<ExtArgs extends runtime.Types.Extensions.Internal
     status: $Enums.LeaveApplyStatus
     createdAt: Date
     updatedAt: Date
-    currentUserId: number
+    applyUserId: number
     targetStaffId: number | null
     assignmentsJson: runtime.JsonValue
   }, ExtArgs["result"]["leaveApply"]>
@@ -1309,7 +1309,7 @@ readonly fields: LeaveApplyFieldRefs;
  */
 export interface Prisma__LeaveApplyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  currentUser<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  applyUser<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   targetStaff<T extends Prisma.LeaveApply$targetStaffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeaveApply$targetStaffArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1348,7 +1348,7 @@ export interface LeaveApplyFieldRefs {
   readonly status: Prisma.FieldRef<"LeaveApply", 'LeaveApplyStatus'>
   readonly createdAt: Prisma.FieldRef<"LeaveApply", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LeaveApply", 'DateTime'>
-  readonly currentUserId: Prisma.FieldRef<"LeaveApply", 'Int'>
+  readonly applyUserId: Prisma.FieldRef<"LeaveApply", 'Int'>
   readonly targetStaffId: Prisma.FieldRef<"LeaveApply", 'Int'>
   readonly assignmentsJson: Prisma.FieldRef<"LeaveApply", 'Json'>
 }

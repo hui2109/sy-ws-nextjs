@@ -1,6 +1,6 @@
 import "dotenv/config";
-import {sqlite} from "@/connectionsDB/sqlite";
-import {prisma} from "@/connectionsDB/prisma";
+import {sqlite} from "@/prisma/sqlite";
+import {prisma} from "@/prisma/prisma";
 
 // npx tsx src/utils/migrateSqlite.tsx
 

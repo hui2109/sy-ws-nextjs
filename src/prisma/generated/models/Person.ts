@@ -300,7 +300,7 @@ export type PersonWhereInput = {
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyListRelationFilter
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyListRelationFilter
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyListRelationFilter
 }
 
@@ -323,7 +323,7 @@ export type PersonOrderByWithRelationInput = {
   vacationRules?: Prisma.VacationRuleOrderByRelationAggregateInput
   leaveAppointments?: Prisma.LeaveAppointmentOrderByRelationAggregateInput
   expectedSchedules?: Prisma.ExpectedScheduleOrderByRelationAggregateInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyOrderByRelationAggregateInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyOrderByRelationAggregateInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyOrderByRelationAggregateInput
 }
 
@@ -349,7 +349,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   vacationRules?: Prisma.VacationRuleListRelationFilter
   leaveAppointments?: Prisma.LeaveAppointmentListRelationFilter
   expectedSchedules?: Prisma.ExpectedScheduleListRelationFilter
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyListRelationFilter
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyListRelationFilter
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyListRelationFilter
 }, "id" | "username" | "name" | "workNumber">
 
@@ -413,7 +413,7 @@ export type PersonCreateInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -436,7 +436,7 @@ export type PersonUncheckedCreateInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -458,7 +458,7 @@ export type PersonUpdateInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -481,7 +481,7 @@ export type PersonUncheckedUpdateInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -682,9 +682,9 @@ export type PersonUpdateOneRequiredWithoutExpectedSchedulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutExpectedSchedulesInput, Prisma.PersonUpdateWithoutExpectedSchedulesInput>, Prisma.PersonUncheckedUpdateWithoutExpectedSchedulesInput>
 }
 
-export type PersonCreateNestedOneWithoutLeaveAppliesAsCurrentUserInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsCurrentUserInput
+export type PersonCreateNestedOneWithoutLeaveAppliesAsApplyUserIdInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsApplyUserIdInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsApplyUserIdInput
   connect?: Prisma.PersonWhereUniqueInput
 }
 
@@ -694,12 +694,12 @@ export type PersonCreateNestedOneWithoutLeaveAppliesAsTargetStaffInput = {
   connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonUpdateOneRequiredWithoutLeaveAppliesAsCurrentUserNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsCurrentUserInput
-  upsert?: Prisma.PersonUpsertWithoutLeaveAppliesAsCurrentUserInput
+export type PersonUpdateOneRequiredWithoutLeaveAppliesAsApplyUserIdNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsApplyUserIdInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutLeaveAppliesAsApplyUserIdInput
+  upsert?: Prisma.PersonUpsertWithoutLeaveAppliesAsApplyUserIdInput
   connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUpdateWithoutLeaveAppliesAsCurrentUserInput>, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUpdateWithoutLeaveAppliesAsApplyUserIdInput>, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsApplyUserIdInput>
 }
 
 export type PersonUpdateOneWithoutLeaveAppliesAsTargetStaffNestedInput = {
@@ -743,7 +743,7 @@ export type PersonCreateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -765,7 +765,7 @@ export type PersonUncheckedCreateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -802,7 +802,7 @@ export type PersonUpdateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -824,7 +824,7 @@ export type PersonUncheckedUpdateWithoutVacationRulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -845,7 +845,7 @@ export type PersonCreateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -867,7 +867,7 @@ export type PersonUncheckedCreateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -904,7 +904,7 @@ export type PersonUpdateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -926,7 +926,7 @@ export type PersonUncheckedUpdateWithoutLeaveAppointmentsInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -947,7 +947,7 @@ export type PersonCreateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -969,7 +969,7 @@ export type PersonUncheckedCreateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -1006,7 +1006,7 @@ export type PersonUpdateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -1028,11 +1028,11 @@ export type PersonUncheckedUpdateWithoutExpectedSchedulesInput = {
   scheduleAssignments?: Prisma.ScheduleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
-export type PersonCreateWithoutLeaveAppliesAsCurrentUserInput = {
+export type PersonCreateWithoutLeaveAppliesAsApplyUserIdInput = {
   username: string
   passwordHash: string
   avatar: string
@@ -1053,7 +1053,7 @@ export type PersonCreateWithoutLeaveAppliesAsCurrentUserInput = {
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
-export type PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput = {
+export type PersonUncheckedCreateWithoutLeaveAppliesAsApplyUserIdInput = {
   id?: number
   username: string
   passwordHash: string
@@ -1075,9 +1075,9 @@ export type PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput = {
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
-export type PersonCreateOrConnectWithoutLeaveAppliesAsCurrentUserInput = {
+export type PersonCreateOrConnectWithoutLeaveAppliesAsApplyUserIdInput = {
   where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsApplyUserIdInput>
 }
 
 export type PersonCreateWithoutLeaveAppliesAsTargetStaffInput = {
@@ -1098,7 +1098,7 @@ export type PersonCreateWithoutLeaveAppliesAsTargetStaffInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyCreateNestedManyWithoutApplyUserInput
 }
 
 export type PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput = {
@@ -1120,7 +1120,7 @@ export type PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput
 }
 
 export type PersonCreateOrConnectWithoutLeaveAppliesAsTargetStaffInput = {
@@ -1128,18 +1128,18 @@ export type PersonCreateOrConnectWithoutLeaveAppliesAsTargetStaffInput = {
   create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsTargetStaffInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsTargetStaffInput>
 }
 
-export type PersonUpsertWithoutLeaveAppliesAsCurrentUserInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsCurrentUserInput>
+export type PersonUpsertWithoutLeaveAppliesAsApplyUserIdInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsApplyUserIdInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUncheckedCreateWithoutLeaveAppliesAsApplyUserIdInput>
   where?: Prisma.PersonWhereInput
 }
 
-export type PersonUpdateToOneWithWhereWithoutLeaveAppliesAsCurrentUserInput = {
+export type PersonUpdateToOneWithWhereWithoutLeaveAppliesAsApplyUserIdInput = {
   where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsCurrentUserInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput>
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutLeaveAppliesAsApplyUserIdInput, Prisma.PersonUncheckedUpdateWithoutLeaveAppliesAsApplyUserIdInput>
 }
 
-export type PersonUpdateWithoutLeaveAppliesAsCurrentUserInput = {
+export type PersonUpdateWithoutLeaveAppliesAsApplyUserIdInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1160,7 +1160,7 @@ export type PersonUpdateWithoutLeaveAppliesAsCurrentUserInput = {
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
-export type PersonUncheckedUpdateWithoutLeaveAppliesAsCurrentUserInput = {
+export type PersonUncheckedUpdateWithoutLeaveAppliesAsApplyUserIdInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1211,7 +1211,7 @@ export type PersonUpdateWithoutLeaveAppliesAsTargetStaffInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUpdateManyWithoutApplyUserNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutLeaveAppliesAsTargetStaffInput = {
@@ -1233,7 +1233,7 @@ export type PersonUncheckedUpdateWithoutLeaveAppliesAsTargetStaffInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput
 }
 
 export type PersonCreateWithoutScheduleAssignmentsInput = {
@@ -1253,7 +1253,7 @@ export type PersonCreateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -1275,7 +1275,7 @@ export type PersonUncheckedCreateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleUncheckedCreateNestedManyWithoutPersonInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedCreateNestedManyWithoutPersonInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedCreateNestedManyWithoutPersonInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutCurrentUserInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutApplyUserInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedCreateNestedManyWithoutTargetStaffInput
 }
 
@@ -1312,7 +1312,7 @@ export type PersonUpdateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -1334,7 +1334,7 @@ export type PersonUncheckedUpdateWithoutScheduleAssignmentsInput = {
   vacationRules?: Prisma.VacationRuleUncheckedUpdateManyWithoutPersonNestedInput
   leaveAppointments?: Prisma.LeaveAppointmentUncheckedUpdateManyWithoutPersonNestedInput
   expectedSchedules?: Prisma.ExpectedScheduleUncheckedUpdateManyWithoutPersonNestedInput
-  leaveAppliesAsCurrentUser?: Prisma.LeaveApplyUncheckedUpdateManyWithoutCurrentUserNestedInput
+  leaveAppliesAsApplyUserId?: Prisma.LeaveApplyUncheckedUpdateManyWithoutApplyUserNestedInput
   leaveAppliesAsTargetStaff?: Prisma.LeaveApplyUncheckedUpdateManyWithoutTargetStaffNestedInput
 }
 
@@ -1348,7 +1348,7 @@ export type PersonCountOutputType = {
   vacationRules: number
   leaveAppointments: number
   expectedSchedules: number
-  leaveAppliesAsCurrentUser: number
+  leaveAppliesAsApplyUserId: number
   leaveAppliesAsTargetStaff: number
 }
 
@@ -1357,7 +1357,7 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   vacationRules?: boolean | PersonCountOutputTypeCountVacationRulesArgs
   leaveAppointments?: boolean | PersonCountOutputTypeCountLeaveAppointmentsArgs
   expectedSchedules?: boolean | PersonCountOutputTypeCountExpectedSchedulesArgs
-  leaveAppliesAsCurrentUser?: boolean | PersonCountOutputTypeCountLeaveAppliesAsCurrentUserArgs
+  leaveAppliesAsApplyUserId?: boolean | PersonCountOutputTypeCountLeaveAppliesAsApplyUserIdArgs
   leaveAppliesAsTargetStaff?: boolean | PersonCountOutputTypeCountLeaveAppliesAsTargetStaffArgs
 }
 
@@ -1402,7 +1402,7 @@ export type PersonCountOutputTypeCountExpectedSchedulesArgs<ExtArgs extends runt
 /**
  * PersonCountOutputType without action
  */
-export type PersonCountOutputTypeCountLeaveAppliesAsCurrentUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type PersonCountOutputTypeCountLeaveAppliesAsApplyUserIdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LeaveApplyWhereInput
 }
 
@@ -1433,7 +1433,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   vacationRules?: boolean | Prisma.Person$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.Person$leaveAppointmentsArgs<ExtArgs>
   expectedSchedules?: boolean | Prisma.Person$expectedSchedulesArgs<ExtArgs>
-  leaveAppliesAsCurrentUser?: boolean | Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs>
+  leaveAppliesAsApplyUserId?: boolean | Prisma.Person$leaveAppliesAsApplyUserIdArgs<ExtArgs>
   leaveAppliesAsTargetStaff?: boolean | Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
@@ -1495,7 +1495,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   vacationRules?: boolean | Prisma.Person$vacationRulesArgs<ExtArgs>
   leaveAppointments?: boolean | Prisma.Person$leaveAppointmentsArgs<ExtArgs>
   expectedSchedules?: boolean | Prisma.Person$expectedSchedulesArgs<ExtArgs>
-  leaveAppliesAsCurrentUser?: boolean | Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs>
+  leaveAppliesAsApplyUserId?: boolean | Prisma.Person$leaveAppliesAsApplyUserIdArgs<ExtArgs>
   leaveAppliesAsTargetStaff?: boolean | Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1509,7 +1509,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     vacationRules: Prisma.$VacationRulePayload<ExtArgs>[]
     leaveAppointments: Prisma.$LeaveAppointmentPayload<ExtArgs>[]
     expectedSchedules: Prisma.$ExpectedSchedulePayload<ExtArgs>[]
-    leaveAppliesAsCurrentUser: Prisma.$LeaveApplyPayload<ExtArgs>[]
+    leaveAppliesAsApplyUserId: Prisma.$LeaveApplyPayload<ExtArgs>[]
     leaveAppliesAsTargetStaff: Prisma.$LeaveApplyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1925,7 +1925,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   vacationRules<T extends Prisma.Person$vacationRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$vacationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VacationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaveAppointments<T extends Prisma.Person$leaveAppointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expectedSchedules<T extends Prisma.Person$expectedSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$expectedSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpectedSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  leaveAppliesAsCurrentUser<T extends Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppliesAsCurrentUserArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveAppliesAsApplyUserId<T extends Prisma.Person$leaveAppliesAsApplyUserIdArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppliesAsApplyUserIdArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaveAppliesAsTargetStaff<T extends Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaveAppliesAsTargetStaffArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveApplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2459,9 +2459,9 @@ export type Person$expectedSchedulesArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * Person.leaveAppliesAsCurrentUser
+ * Person.leaveAppliesAsApplyUserId
  */
-export type Person$leaveAppliesAsCurrentUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Person$leaveAppliesAsApplyUserIdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the LeaveApply
    */

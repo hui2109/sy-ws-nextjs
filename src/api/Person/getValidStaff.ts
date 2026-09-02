@@ -1,7 +1,7 @@
 'use server';
 
 import "dotenv/config";
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 
 export async function getValidStaff(onlyValidStaff: boolean = true): Promise<string[]> {
     const staffList = await prisma.person.findMany({

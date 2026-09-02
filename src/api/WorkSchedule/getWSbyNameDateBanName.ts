@@ -1,6 +1,6 @@
 'use server';
 
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 
 export async function getWSbyNameDateBanName(name: string, startDate: Date, endDate: Date, banName: string) {
     return prisma.workSchedule.findMany({

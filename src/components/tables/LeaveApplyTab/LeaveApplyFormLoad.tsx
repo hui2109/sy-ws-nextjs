@@ -20,7 +20,7 @@ interface ILeaveApplyFormLoad {
 export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApplyFormLoad) {
     const {resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === 'dark';
-    const {status, leaveApplyType, dateRange, currentUser, targetStaff, reason, assignmentsJson, createdDate} = clickedLeaveApplyDetails;
+    const {status, leaveApplyType, dateRange, applyUser, targetStaff, reason, assignmentsJson, createdDate} = clickedLeaveApplyDetails;
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
 
     const isShiftSchedule = leaveApplyType === 'SHIFT_SCHEDULE';
@@ -70,7 +70,7 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                                 : 'border-slate-300 text-slate-600'
                         }`}
                     >
-                        申请人：{currentUser}
+                        申请人：{applyUser}
                     </div>
                 </div>
                 <div className="p-5">
@@ -125,7 +125,7 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                             <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
                                 <Select
                                     className="w-full max-w-[180px] text-center"
-                                    value={isAskOff ? currentUser : targetStaff}
+                                    value={isAskOff ? applyUser : targetStaff}
                                     classNames={{popup: {listItem: 'text-center'}}}
                                     disabled
                                 />
@@ -153,7 +153,7 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                         personDateBansMap={assignmentsJson}
                         banTypeColorMap={banTypeColorMap}
                         dateRange={dateRange}
-                        names={[currentUser, targetStaff]}
+                        names={[applyUser, targetStaff]}
                     />
                 )}
 
@@ -163,7 +163,7 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                         personDateBansMap={assignmentsJson}
                         banTypeColorMap={banTypeColorMap}
                         dateRange={dateRange}
-                        currentUser={currentUser}
+                        applyUser={applyUser}
                         targetStaff={targetStaff}
                         validBanNames={[]}
                         loadMode={true}
@@ -178,7 +178,7 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                 <span>
                     发起人：
                     <span className={isDark ? 'text-slate-200' : 'text-slate-700'}>
-                        {currentUser}
+                        {applyUser}
                     </span>
                 </span>
                 <span className="opacity-40">·</span>

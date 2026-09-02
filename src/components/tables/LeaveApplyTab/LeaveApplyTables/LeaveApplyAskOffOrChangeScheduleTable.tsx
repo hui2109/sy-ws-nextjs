@@ -15,7 +15,7 @@ interface ILeaveApplyAskOffOrChangeScheduleTable {
     setPersonDateBansMap?: Dispatch<SetStateAction<Record<string, Record<string, [string, number][]>> | null>>
     banTypeColorMap: Record<string, string>,
     dateRange: [Dayjs, Dayjs],
-    currentUser: string,
+    applyUser: string,
     targetStaff: string | null,
     validBanNames: string[],
     loadMode?: boolean,
@@ -23,7 +23,7 @@ interface ILeaveApplyAskOffOrChangeScheduleTable {
 
 export default function LeaveApplyAskOffOrChangeScheduleTable(
     {
-        leaveApplyType, personDateBansMap, setPersonDateBansMap, banTypeColorMap, dateRange, currentUser, targetStaff, validBanNames, loadMode
+        leaveApplyType, personDateBansMap, setPersonDateBansMap, banTypeColorMap, dateRange, applyUser, targetStaff, validBanNames, loadMode
     }: ILeaveApplyAskOffOrChangeScheduleTable) {
     const {resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === 'dark';
@@ -54,7 +54,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
         return {
             key: format_date,
             dt: format_date,
-            myBan: leaveApplyType === 'ASKOFF' ? personDateBansMap[currentUser]?.[format_date] : personDateBansMap[targetStaff as string]?.[format_date],
+            myBan: leaveApplyType === 'ASKOFF' ? personDateBansMap[applyUser]?.[format_date] : personDateBansMap[targetStaff as string]?.[format_date],
         }
     });
 
@@ -95,7 +95,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
             width: 250,
             align: 'center',
             render: (record: typeof dataSource[number]) => {
-                const currentName = leaveApplyType === 'ASKOFF' ? currentUser : targetStaff;
+                const currentName = leaveApplyType === 'ASKOFF' ? applyUser : targetStaff;
                 return leaveApplyType === 'ASKOFF'
                     ? loadMode
                         ? (
@@ -219,7 +219,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                         <p className={`mt-0.5 text-xs ${
                             isDark ? 'text-slate-400' : 'text-slate-500'
                         }`}>
-                            核对 {leaveApplyType === 'ASKOFF' ? currentUser : targetStaff} 当前排班，并逐日选择{leaveApplyType === 'ASKOFF' ? '希望申请的休假类型' : '调整后的班次'}
+                            核对 {leaveApplyType === 'ASKOFF' ? applyUser : targetStaff} 当前排班，并逐日选择{leaveApplyType === 'ASKOFF' ? '希望申请的休假类型' : '调整后的班次'}
                         </p>
                     )}
                 </div>

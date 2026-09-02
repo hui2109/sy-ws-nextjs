@@ -1,6 +1,6 @@
 'use server';
 
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 

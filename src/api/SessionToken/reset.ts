@@ -1,7 +1,7 @@
 'use server';
 
 import bcrypt from "bcryptjs";
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 import {IResetFormValues, ResetStatus} from "@/api/SessionToken/types/reset.types";
 import {PSPrefix} from "@/configs/general";
 

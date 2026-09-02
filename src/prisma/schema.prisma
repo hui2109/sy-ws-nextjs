@@ -58,7 +58,7 @@ model Person {
   vacationRules             VacationRule[]
   leaveAppointments         LeaveAppointment[]
   expectedSchedules         ExpectedSchedule[]
-  leaveAppliesAsCurrentUser LeaveApply[]         @relation("currentUser")
+  leaveAppliesAsApplyUserId LeaveApply[]         @relation("applyUser")
   leaveAppliesAsTargetStaff LeaveApply[]         @relation("targetStaff")
 }
 
@@ -153,11 +153,11 @@ model LeaveApply {
   status          LeaveApplyStatus @default(DRAFT)
   createdAt       DateTime         @default(now()) @db.Timestamptz(3)
   updatedAt       DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
-  currentUserId   Int
+  applyUserId     Int
   targetStaffId   Int?
   assignmentsJson Json
 
-  currentUser Person  @relation("currentUser", fields: [currentUserId], references: [id])
+  applyUser   Person  @relation("applyUser", fields: [applyUserId], references: [id])
   targetStaff Person? @relation("targetStaff", fields: [targetStaffId], references: [id])
 }
 

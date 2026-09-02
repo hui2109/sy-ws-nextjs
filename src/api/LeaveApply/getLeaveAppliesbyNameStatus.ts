@@ -1,28 +1,28 @@
 'use server';
 
 import 'dotenv/config';
-import {prisma} from '@/connectionsDB/prisma';
+import {prisma} from '@/prisma/prisma';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import {ILeaveApplyRecord} from '@/components/tables/LeaveApplyTab/LeaveApplyList';
 import {IPersonDateBansMap} from '@/components/tables/LeaveApplyTab/LeaveApplyFormNew';
-import {SendStatus} from '@/components/tables/LeaveApplyTab/LeaveApplyTab';
+import {LeaveApplyTabStatus} from '@/components/tables/LeaveApplyTab/LeaveApplyTab';
 import {LeaveApplyType} from '@/prisma/generated/enums';
 import {Prisma} from '@/prisma/generated/client';
 
 dayjs.extend(utc);
 
-export default async function getLeaveAppliesbyNameStatus(name: string, sendStatus: SendStatus) {
+export default async function getLeaveAppliesbyNameStatus(name: string, leaveApplyTabStatus: LeaveApplyTabStatus) {
     const person = await prisma.person.findUnique({where: {name}});
 
     if (!person) return null;
 
     let where: Prisma.LeaveApplyWhereInput;
 
-    if (sendStatus === 'Sent') {
+    if (leaveApplyTabStatus === 'Sent') {
         // 我发出的申请
         where = {
-            currentUser: {
+            applyUser: {
                 name,
             },
         };
@@ -31,6 +31,12 @@ export default async function getLeaveAppliesbyNameStatus(name: string, sendStat
         where = {
             targetStaff: {
                 name,
+            },
+            status: {
+                not: 'DRAFT'
+            },
+            leaveApplyType: {
+                not: LeaveApplyType.ASKOFF,
             },
         };
     } else {
@@ -50,14 +56,18 @@ export default async function getLeaveAppliesbyNameStatus(name: string, sendStat
                     },
                 },
             ],
+            status: {
+                not: 'DRAFT'
+            }
         };
     }
 
     const leaveApplies = await prisma.leaveApply.findMany({
         where,
         select: {
+            id: true,
             leaveApplyType: true,
-            currentUser: {
+            applyUser: {
                 select: {
                     name: true,
                 },
@@ -81,8 +91,9 @@ export default async function getLeaveAppliesbyNameStatus(name: string, sendStat
 
     return leaveApplies.map(
         (leaveApply): ILeaveApplyRecord => ({
+            id: leaveApply.id,
             leaveApplyType: leaveApply.leaveApplyType,
-            currentUser: leaveApply.currentUser.name,
+            applyUser: leaveApply.applyUser.name,
             targetStaff: leaveApply.targetStaff?.name ?? 'XXX',
             start_date: dayjs.utc(leaveApply.startDate).format('YYYY-MM-DD'),
             end_date: dayjs.utc(leaveApply.endDate).format('YYYY-MM-DD'),

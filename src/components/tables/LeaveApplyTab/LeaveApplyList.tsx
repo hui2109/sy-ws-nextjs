@@ -9,11 +9,12 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
 import LeaveApplyModal from "@/components/tables/LeaveApplyTab/LeaveApplyModal";
-import {SendStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
+import {LeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
 
 export interface ILeaveApplyRecord {
+    id: number;
     leaveApplyType: LeaveApplyType;
-    currentUser: string;
+    applyUser: string;
     targetStaff: string;
     start_date: string;
     end_date: string;
@@ -32,10 +33,11 @@ interface ILeaveApplyCard {
 }
 
 export interface IClickedLeaveApplyDetails {
+    id: number;
     status: LeaveApplyStatus;
     leaveApplyType: LeaveApplyType;
     dateRange: [Dayjs, Dayjs];
-    currentUser: string;
+    applyUser: string;
     targetStaff: string;
     reason: string;
     assignmentsJson: IPersonDateBansMap;
@@ -43,7 +45,7 @@ export interface IClickedLeaveApplyDetails {
 
 }
 
-export default function LeaveApplyList({name, sendStatus}: { name: string, sendStatus: SendStatus }) {
+export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: string, leaveApplyTabStatus: LeaveApplyTabStatus }) {
     const {resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === "dark";
     const [loading, setLoading] = useState<boolean>(true);
@@ -55,7 +57,7 @@ export default function LeaveApplyList({name, sendStatus}: { name: string, sendS
         let isMounted = true;
 
         if (isMounted) {
-            getLeaveAppliesbyNameStatus(name, sendStatus).then(leaveApplyRecords => {
+            getLeaveAppliesbyNameStatus(name, leaveApplyTabStatus).then(leaveApplyRecords => {
                 setLeaveApplyRecords(leaveApplyRecords);
                 setLoading(false);
             })
@@ -65,33 +67,15 @@ export default function LeaveApplyList({name, sendStatus}: { name: string, sendS
             isMounted = false;
             setLoading(true);
         };
-    }, [name, sendStatus]);
+    }, [name, leaveApplyTabStatus]);
 
     return (
-        <div className={`rounded-2xl p-6 transition-colors duration-200 ${
+        <div className={`rounded-2xl p-6 pt-3 transition-colors duration-200 ${
             isDark
                 ? 'bg-slate-950 text-slate-100'
                 : 'bg-slate-50 text-slate-900'}`}
         >
-            <div className="mb-5 flex justify-between items-center gap-2 ">
-                <div>
-                    <h2
-                        className={`text-xl font-bold tracking-tight ${
-                            isDark
-                                ? 'text-slate-100'
-                                : 'text-slate-900'}`}
-                    >
-                        假勤申请记录
-                    </h2>
-                    <p
-                        className={`mt-1 text-sm ${
-                            isDark
-                                ? 'text-slate-400'
-                                : 'text-slate-500'}`}
-                    >
-                        点击展示申请细节
-                    </p>
-                </div>
+            <div className="mb-2 flex justify-end items-center gap-2">
                 {!loading && leaveApplyRecords && (
                     <div
                         className={`w-fit rounded-full border px-3 py-1 text-xs font-medium ${
@@ -146,6 +130,7 @@ export default function LeaveApplyList({name, sendStatus}: { name: string, sendS
                     isModalOpen={isLeaveApplyModalOpen}
                     onClose={() => setIsLeaveApplyModalOpen(false)}
                     clickedLeaveApplyDetails={clickedLeaveApplyDetails}
+                    leaveApplyTabStatus={leaveApplyTabStatus}
                 />
             )}
         </div>
@@ -153,7 +138,7 @@ export default function LeaveApplyList({name, sendStatus}: { name: string, sendS
 }
 
 function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModalOpen, setClickedLeaveApplyDetails}: ILeaveApplyCard) {
-    const {leaveApplyType, currentUser, targetStaff, start_date, end_date, created_date, status, reason, assignmentsJson} = leaveApplyRecord;
+    const {id, leaveApplyType, applyUser, targetStaff, start_date, end_date, created_date, status, reason, assignmentsJson} = leaveApplyRecord;
     const startDate = dayjs(start_date);
     const endDate = dayjs(end_date);
     const createdDate = dayjs(created_date);
@@ -171,10 +156,11 @@ function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModal
             onClick={() => {
                 setIsLeaveApplyModalOpen(true);
                 setClickedLeaveApplyDetails({
+                    id,
                     status,
                     leaveApplyType,
                     dateRange: [startDate, endDate],
-                    currentUser,
+                    applyUser: applyUser,
                     targetStaff,
                     reason,
                     assignmentsJson,
@@ -190,7 +176,7 @@ function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModal
                                 ? 'text-slate-100'
                                 : 'text-slate-900'}`}
                         >
-                            {leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : currentUser}
+                            {leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser}
                         </div>
                         <div className={`text-sm font-medium ${
                             isDark
@@ -303,7 +289,7 @@ function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModal
                                 ? 'text-slate-300'
                                 : 'text-slate-600'}`}
                         >
-                            {currentUser}
+                            {applyUser}
                         </div>
                     </div>
                     <div className="text-right">

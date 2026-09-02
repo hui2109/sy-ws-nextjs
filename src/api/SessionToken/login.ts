@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import {cookies} from "next/headers";
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 import {ILoginFormValues, LoginStatus} from "@/api/SessionToken/types/login.types";
 import {createSessionToken} from "@/api/SessionToken/session";
 

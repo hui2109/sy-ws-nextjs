@@ -1,6 +1,6 @@
 "use server";
 
-import {prisma} from "@/connectionsDB/prisma";
+import {prisma} from "@/prisma/prisma";
 
 export default async function getValidBanNames() {
     const banNameList = await prisma.banType.findMany({
