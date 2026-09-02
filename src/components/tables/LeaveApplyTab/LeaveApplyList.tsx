@@ -10,6 +10,7 @@ import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, l
 import dayjs, {Dayjs} from "dayjs";
 import LeaveApplyModal from "@/components/tables/LeaveApplyTab/LeaveApplyModal";
 import {LeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
+import {useLeaveApplyTabContext} from "@/components/hooks/LeaveApplyTabContext";
 
 export interface ILeaveApplyRecord {
     id: number;
@@ -47,6 +48,7 @@ export interface IClickedLeaveApplyDetails {
 
 export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: string, leaveApplyTabStatus: LeaveApplyTabStatus }) {
     const {resolvedTheme} = useAppContext();
+    const {refreshKey} = useLeaveApplyTabContext();
     const isDark = resolvedTheme === "dark";
     const [loading, setLoading] = useState<boolean>(true);
     const [leaveApplyRecords, setLeaveApplyRecords] = useState<ILeaveApplyRecord[] | null>(null);
@@ -67,7 +69,7 @@ export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: stri
             isMounted = false;
             setLoading(true);
         };
-    }, [name, leaveApplyTabStatus]);
+    }, [name, leaveApplyTabStatus, refreshKey]);
 
     return (
         <div className={`rounded-2xl p-6 pt-3 transition-colors duration-200 ${
@@ -76,14 +78,14 @@ export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: stri
                 : 'bg-slate-50 text-slate-900'}`}
         >
             <div className="mb-2 flex justify-end items-center gap-2">
-                {!loading && leaveApplyRecords && (
+                {!loading && (
                     <div
                         className={`w-fit rounded-full border px-3 py-1 text-xs font-medium ${
                             isDark
                                 ? 'border-slate-700 bg-slate-900 text-slate-300'
                                 : 'border-slate-200 bg-white text-slate-600'}`}
                     >
-                        共 {leaveApplyRecords.length} 条记录
+                        共 {leaveApplyRecords?.length} 条记录
                     </div>
                 )}
             </div>

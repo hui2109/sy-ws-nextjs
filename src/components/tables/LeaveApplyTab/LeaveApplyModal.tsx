@@ -11,6 +11,7 @@ import {Role} from "@/prisma/generated/enums";
 import TextArea from "antd/es/input/TextArea";
 import updateLeaveApply from "@/api/LeaveApply/updateLeaveApply";
 import deleteLeaveApply from "@/api/LeaveApply/deleteLeaveApply";
+import {useLeaveApplyTabContext} from "@/components/hooks/LeaveApplyTabContext";
 
 interface ILeaveApplyModal {
     isModalOpen: boolean;
@@ -21,6 +22,7 @@ interface ILeaveApplyModal {
 
 export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApplyDetails, leaveApplyTabStatus}: ILeaveApplyModal) {
     const {currentUser, notification} = useAppContext();
+    const {refresh} = useLeaveApplyTabContext();
     const {id, leaveApplyType, applyUser, targetStaff, status} = clickedLeaveApplyDetails;
     const [role, setRole] = useState<Role | null>(null);
     const [isRejectModalOpen, setIsRejectModalOpen] = useState<boolean>(false);
@@ -61,6 +63,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
             });
             setIsRejectModalOpen(false);
             onClose();
+            refresh();
         });
     }
 
@@ -88,6 +91,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                         description: `${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请已通过!`
                     });
                     onClose();
+                    refresh();
                 });
             },
         });
@@ -122,6 +126,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                                                 description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请删除成功!`
                                             });
                                             onClose();
+                                            refresh();
                                         })
                                     }}
                                     okButtonProps={{color: 'danger', variant: 'solid'}}
@@ -146,6 +151,7 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                                                 description: `${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请提交成功! 当前状态: 待审核!`
                                             });
                                             onClose();
+                                            refresh();
                                         })
                                     }}
                                 >

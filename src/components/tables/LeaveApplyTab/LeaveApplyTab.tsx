@@ -5,12 +5,16 @@ import {InboxOutlined, PlusCircleOutlined, SendOutlined,} from "@ant-design/icon
 import LeaveApplyFormNew from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
 import LeaveApplyList from "@/components/tables/LeaveApplyTab/LeaveApplyList";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import {useState} from "react";
+import {LeaveApplyTabContext} from "@/components/hooks/LeaveApplyTabContext";
 
 export type LeaveApplyTabStatus = 'Sent' | 'Received';
 
 export default function LeaveApplyTab() {
     const {currentUser, resolvedTheme} = useAppContext();
     const isDark = resolvedTheme === 'dark';
+    const [refreshKey, setRefreshKey] = useState<number>(0);
+    const refresh = () => setRefreshKey(k => k + 1);
 
     if (!currentUser) return null;
 
@@ -60,16 +64,18 @@ export default function LeaveApplyTab() {
     ];
 
     return (
-        <div className={`rounded-2xl border shadow-sm transition-colors ${
-            isDark
-                ? 'border-slate-700/80 bg-slate-900/60 shadow-black/20'
-                : 'border-slate-200 bg-white shadow-slate-200/60'
-        }`}>
-            <Tabs
-                defaultActiveKey="1"
-                centered
-                items={tab_items}
-                className="
+        <LeaveApplyTabContext value={{refreshKey, refresh}}>
+            <div className={`rounded-2xl border shadow-sm transition-colors ${
+                isDark
+                    ? 'border-slate-700/80 bg-slate-900/60 shadow-black/20'
+                    : 'border-slate-200 bg-white shadow-slate-200/60'
+            }`}>
+                <Tabs
+                    defaultActiveKey="1"
+                    centered
+                    items={tab_items}
+                    onTabClick={(key) => key !== '1' && refresh()}
+                    className="
                     [&_.ant-tabs-nav]:!mb-0
                     [&_.ant-tabs-nav]:!px-6
                     [&_.ant-tabs-nav]:!pt-2
@@ -90,7 +96,8 @@ export default function LeaveApplyTab() {
                     [&_.ant-tabs-ink-bar]:!h-[3px]
                     [&_.ant-tabs-ink-bar]:!rounded-full
                 "
-            />
-        </div>
+                />
+            </div>
+        </LeaveApplyTabContext>
     );
 }

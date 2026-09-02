@@ -1,7 +1,6 @@
 import {createContext, Dispatch, RefObject, SetStateAction, useContext} from "react";
 import {Dayjs} from "dayjs";
 
-
 export const ScheduleTableContext = createContext<{
     current: Dayjs;
     setCurrent: Dispatch<SetStateAction<Dayjs>>;
