@@ -55,7 +55,7 @@ export default function LeaveApplyShiftScheduleTable({personDateBansMap, banType
             ),
         },
         {
-            title: '我的班',
+            title: `${names[0]} 的班`,
             dataIndex: 'myBan',
             width: 240,
             align: 'center',

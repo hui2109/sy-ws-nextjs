@@ -85,11 +85,23 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
             cancelText: "点错了",
             okButtonProps: {color: 'green', variant: 'solid'},
             onOk: () => {
-                updateLeaveApply(id, 'APPROVED').then(() => {
-                    notification.success({
-                        title: '假勤申请 已通过',
-                        description: `${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请已通过!`
-                    });
+                updateLeaveApply(id, 'APPROVED').then((error_message) => {
+                    if (error_message === null) {
+                        notification.success({
+                            title: '假勤申请 已通过',
+                            description: `${leaveApplyType === 'CHANGE_SCHEDULE' ? targetStaff : applyUser} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请已通过!`
+                        });
+                    } else {
+                        notification.error({
+                            title: '假勤申请 已退至 待审核',
+                            description: (
+                                <div>
+                                    <div>{formApplicant} 的 {leaveApplyTypeMap[leaveApplyType]} 申请已退至 待审核</div>
+                                    <div>【理由】{error_message}</div>
+                                </div>
+                            )
+                        });
+                    }
                     onClose();
                     refresh();
                 });

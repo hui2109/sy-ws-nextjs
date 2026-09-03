@@ -22,8 +22,8 @@ const {RangePicker} = DatePicker;
 
 type IBanAssignment = [banName: string, scheduleAssignmentId: number];
 type IDateBansMap = Record<string, IBanAssignment[]>;
-type LeaveApplySaveStatus = 'PENDING_REVIEW' | 'DRAFT';
 export type IPersonDateBansMap = Record<string, IDateBansMap>;
+type LeaveApplySaveStatus = 'PENDING_REVIEW' | 'DRAFT';
 
 export default function LeaveApplyFormNew() {
     const {currentUser, resolvedTheme, notification} = useAppContext();
@@ -86,9 +86,7 @@ export default function LeaveApplyFormNew() {
                         const tempKey = `${name}_`;
                         // 只有原来的 state 里没有 name_，才初始化它
                         if (!Object.hasOwn(safePrev, tempKey)) {
-                            newData[tempKey] = Object.fromEntries(
-                                Object.keys(dateBansMap).map(date => [date, []])
-                            );
+                            newData[tempKey] = {};
                         }
                     }
 
@@ -144,11 +142,17 @@ export default function LeaveApplyFormNew() {
             return false;
         }
 
+        const datesBetween = getDatesBetween(...completeDateRange);
         const dateBansMap = personDateBansMap[name];
-        if (Object.keys(dateBansMap).length === 0) return false;
 
-        return getDatesBetween(...completeDateRange).some(
-            day => Boolean(dateBansMap[day.format('YYYY-MM-DD')])
+        if (name.indexOf('_') !== -1) {
+            return datesBetween.some(
+                day => Boolean(dateBansMap[day.format('YYYY-MM-DD')]?.[0])
+            );
+        }
+
+        return !datesBetween.some(
+            day => !Boolean(dateBansMap[day.format('YYYY-MM-DD')]?.[0])
         );
     }
 
@@ -169,6 +173,19 @@ export default function LeaveApplyFormNew() {
         if (value === 'SHIFT_SCHEDULE' && targetStaff === currentUser) {
             setTargetStaff(null);
         }
+
+        if (value === "ASKOFF") {
+            setPersonDateBansMap(prev => {
+                if (!prev) return null;
+
+                return {
+                    ...prev,
+                    [`${currentUser}_`]: {}
+                }
+
+            })
+        }
+
         setLeaveApplyType(value);
     }
 
