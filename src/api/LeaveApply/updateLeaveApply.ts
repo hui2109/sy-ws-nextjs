@@ -11,6 +11,7 @@ import getWSIdsbyIds from "@/api/ScheduleAssignment/getWSIdsbyIds";
 import deleteScheduleAssignmentsbyIds from "@/api/ScheduleAssignment/deleteScheduleAssignmentsbyIds";
 import createScheduleAssignmentbyIds from "@/api/ScheduleAssignment/createScheduleAssignmentbyIds";
 import createScheduleAssignmentbyIdDateBanName from "@/api/ScheduleAssignment/createScheduleAssignmentbyIdDateBanName";
+import {cleanWS} from "@/api/WorkSchedule/cleanWS";
 
 dayjs.extend(utc);
 
@@ -179,6 +180,9 @@ async function executeLeaveApply(leaveApply: LeaveApply) {
     }
 
     if (hasInvalidData) return null;
+
     await Promise.all(actions.map(action => action()));
+    // 清理多余的workSchedule
+    await cleanWS();
     return 'ok';
 }
