@@ -9,6 +9,8 @@ export default function HSTable() {
     const [showHiddenRules, setShowHiddenRules] = useState<boolean>(false);
     const {ruleData, renderedColumns, loading} = useHSTableData(showHiddenRules);
 
+    if (!ruleData) return null;
+
     return <Table
         components={components}
         loading={loading}

@@ -5,7 +5,6 @@ import React, {Dispatch, SetStateAction, useEffect, useMemo, useState} from "rea
 import {Badge, Checkbox, Popconfirm, Space} from "antd";
 import type {ColumnType} from 'antd/es/table';
 import dayjs from "dayjs";
-import {getValidStaff} from "@/api/Person/getValidStaff";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
 import deleteRule from "@/api/VacationRule/deleteRule";
 import {useAppContext} from "@/components/hooks/AppProvider";
@@ -30,10 +29,9 @@ export interface IRuleData {
 type EditableColumn = ColumnType<IRuleData> & { editable?: boolean };
 
 export default function useHSTableData(showHiddenRules: boolean) {
-    const [ruleData, setRuleData] = useState<IRuleData []>([]);
+    const [ruleData, setRuleData] = useState<IRuleData [] | null>(null);
     const [loading, setLoading] = useState(true);
-    const [validStaffs, setValidStaffs] = useState<Array<string>>([]);
-    const [validBanNames, setValidBanNames] = useState<Array<string>>([]);
+    const [validBanNames, setValidBanNames] = useState<Array<string> | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
 
     useEffect(() => {
@@ -56,12 +54,10 @@ export default function useHSTableData(showHiddenRules: boolean) {
         let isMounted = true;
 
         Promise.all([
-            getValidStaff(),
             getValidBanNames(),
             getBanTypeColorMap(),
-        ]).then(([validStaffs, validBanNames, banTypeColorMap]) => {
+        ]).then(([validBanNames, banTypeColorMap]) => {
             if (isMounted) {
-                setValidStaffs(validStaffs);
                 setValidBanNames(filteredRelaxBanNames(validBanNames));
                 setBanTypeColorMap(banTypeColorMap);
                 setLoading(false);
@@ -75,7 +71,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, []);
 
     const columns: EditableColumn[] = useMemo(() => {
-        if (!banTypeColorMap) {
+        if (!ruleData || !banTypeColorMap) {
             return [];
         }
 
@@ -86,12 +82,12 @@ export default function useHSTableData(showHiddenRules: boolean) {
             endDate_set: new Set<string>(),
             enabled_set: new Set<boolean>(),
         }
-        ruleData.forEach((dt) => {
-            filtersSetObj.name_set.add(dt.name);
-            filtersSetObj.banName_set.add(dt.banName);
-            filtersSetObj.startDate_set.add(dt.startDate);
-            filtersSetObj.endDate_set.add(dt.endDate);
-            filtersSetObj.enabled_set.add(dt.enabled);
+        ruleData.forEach((data) => {
+            filtersSetObj.name_set.add(data.name);
+            filtersSetObj.banName_set.add(data.banName);
+            filtersSetObj.startDate_set.add(data.startDate);
+            filtersSetObj.endDate_set.add(data.endDate);
+            filtersSetObj.enabled_set.add(data.enabled);
         });
 
         return [
@@ -104,7 +100,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 dataIndex: 'name',
                 filters: Array.from(filtersSetObj.name_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-                editable: true,
+                // editable: true,
             },
             {
                 title: '假期类型',
@@ -159,12 +155,12 @@ export default function useHSTableData(showHiddenRules: boolean) {
                     <Checkbox
                         checked={value}
                         onChange={e => {
-                            setRuleData(prev => prev.map(item => {
+                            setRuleData(prev => prev?.map(item => {
                                 if (item.key === record.key) {
                                     return {...item, enabled: e.target.checked, hasModified: true};
                                 }
                                 return item;
-                            }))
+                            }) ?? null)
                         }}
                     />
                 )
@@ -177,13 +173,16 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, [ruleData, banTypeColorMap]);
 
     const renderedColumns = useMemo(() => {
-        if (columns.length === 0 || validStaffs.length === 0 || validBanNames.length === 0) {
+        if (columns.length === 0 || !validBanNames) {
             return [];
         }
 
         const handleSave = (row: IRuleData) => {
-            setRuleData(prev =>
-                prev.map(item => item.key === row.key ? {...item, ...row} : item)
+            setRuleData(prev => {
+                    if (!prev) return prev;
+
+                    return prev.map(item => item.key === row.key ? {...item, ...row} : item)
+                }
             );
         };
 
@@ -197,21 +196,21 @@ export default function useHSTableData(showHiddenRules: boolean) {
                     title: col.title,
                     editable: col.editable,
                     dataIndex: col.dataIndex as keyof IRuleData,
-                    record, validStaffs, validBanNames, handleSave
+                    record, validBanNames, handleSave
                 }),
             };
         });
-    }, [columns, validStaffs, validBanNames]);
+    }, [columns, validBanNames]);
 
     return {ruleData, renderedColumns, loading};
 }
 
-function Operations({value, setRuleData}: { value: IRuleData, setRuleData: Dispatch<SetStateAction<IRuleData[]>> }) {
+function Operations({value, setRuleData}: { value: IRuleData, setRuleData: Dispatch<SetStateAction<IRuleData[] | null>> }) {
     const {notification} = useAppContext();
     const handleDelete = (value: IRuleData) => {
         deleteRule(value.key).then(() => {
             setRuleData(prev =>
-                prev.filter(item => item.key !== value.key)
+                prev?.filter(item => item.key !== value.key) ?? null
             );
             notification.warning({
                 title: '假期规则已删除',
@@ -244,10 +243,10 @@ function sortRuleData(rules: Awaited<ReturnType<typeof getAllRules>>): IRuleData
         color: rule.banType.color,
         hasModified: false,
     })).sort((a, b) => {
-        const enabledCmp = Number(b.enabled) - Number(a.enabled); // descending: 1 before 0
-        if (enabledCmp !== 0) return enabledCmp;
         const nameCmp = String(a.name).localeCompare(String(b.name), 'zh-CN', {sensitivity: 'base'});
         if (nameCmp !== 0) return nameCmp;
+        const enabledCmp = Number(b.enabled) - Number(a.enabled); // descending: 1 before 0
+        if (enabledCmp !== 0) return enabledCmp;
         return String(a.banName).localeCompare(String(b.banName), 'zh-CN', {sensitivity: 'base'});
     });
 }

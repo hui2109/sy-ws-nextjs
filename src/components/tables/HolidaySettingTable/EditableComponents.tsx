@@ -19,7 +19,6 @@ interface EditableCellProps {
     children?: ReactNode | undefined
 }
 
-
 function EditableRow({...props}) {
     const [form] = Form.useForm();
     return (
@@ -29,7 +28,7 @@ function EditableRow({...props}) {
     );
 }
 
-function EditableCell({title, editable, dataIndex, record, validStaffs, validBanNames, handleSave, children, ...props}: EditableCellProps) {
+function EditableCell({title, editable, dataIndex, record, validBanNames, handleSave, children, ...props}: EditableCellProps) {
     const [editing, setEditing] = useState<boolean>(false);
     const inputNumberRef = useRef<null | InputNumberRef>(null);
     const selectRef = useRef<null | BaseSelectRef>(null);
@@ -77,21 +76,6 @@ function EditableCell({title, editable, dataIndex, record, validStaffs, validBan
         if (editing) {
             let inputNode: ReactNode;
             switch (dataIndex) {
-                case 'name':
-                    inputNode = (
-                        <Select
-                            ref={selectRef}
-                            style={{width: 100}}
-                            options={validStaffs.map(validStaff => ({
-                                label: validStaff,
-                                value: validStaff,
-                            }))}
-                            classNames={{popup: {listItem: 'text-center'}}}
-                            onChange={save}
-                            onBlur={save}
-                        />
-                    );
-                    break;
                 case 'banName':
                     inputNode = (
                         <Select
