@@ -14,7 +14,7 @@ export default function HSTable() {
     return <Table
         components={components}
         loading={loading}
-        columns={renderedColumns as TableColumnsType}
+        columns={renderedColumns as TableColumnsType<IRuleData>}
         dataSource={ruleData}
         scroll={{x: 'max-content', y: 750}}
         pagination={false}

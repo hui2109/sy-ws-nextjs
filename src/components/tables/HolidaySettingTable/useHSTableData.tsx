@@ -205,9 +205,15 @@ export default function useHSTableData(showHiddenRules: boolean) {
         });
     }, [columns, validBanNames]);
 
-    const onChange: TableProps<IRuleData>['onChange'] = (_pagination, _filters, _sorter, extra) => {
-        console.log(extra.currentDataSource)
-        setNameRowSpanMap(computeNameRowSpanMap(extra.currentDataSource));
+    const onChange: TableProps<IRuleData>['onChange'] = (_pagination, _filters, sorter, extra) => {
+        if (extra.action === 'filter') {
+            setNameRowSpanMap(computeNameRowSpanMap(extra.currentDataSource));
+        }
+
+        if (extra.action === 'sort') {
+            const isSorting = Array.isArray(sorter) ? sorter.some(item => item.order) : sorter.order;
+            setNameRowSpanMap(isSorting ? null : computeNameRowSpanMap(extra.currentDataSource));
+        }
     }
 
     return {ruleData, renderedColumns, loading, onChange};
