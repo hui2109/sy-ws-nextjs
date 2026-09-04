@@ -2,7 +2,7 @@
 
 import getAllRules from "@/api/VacationRule/getAllRules";
 import React, {Dispatch, SetStateAction, useEffect, useMemo, useState} from "react";
-import {Badge, Checkbox, Popconfirm, Space} from "antd";
+import {Badge, Checkbox, Popconfirm, Space, TableProps} from "antd";
 import type {ColumnType} from 'antd/es/table';
 import dayjs from "dayjs";
 import getValidBanNames from "@/api/BanType/getValidBanNames";
@@ -33,13 +33,16 @@ export default function useHSTableData(showHiddenRules: boolean) {
     const [loading, setLoading] = useState(true);
     const [validBanNames, setValidBanNames] = useState<Array<string> | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
+    const [nameRowSpanMap, setNameRowSpanMap] = useState<Record<number, number> | null>(null);
 
     useEffect(() => {
         let isMounted = true;
 
         getAllRules(showHiddenRules).then(rules => {
             if (isMounted) {
-                setRuleData(sortRuleData(rules));
+                const sortedRuleData = sortRuleData(rules)
+                setRuleData(sortedRuleData);
+                setNameRowSpanMap(computeNameRowSpanMap(sortedRuleData));
                 setLoading(false);
             }
         })
@@ -75,7 +78,6 @@ export default function useHSTableData(showHiddenRules: boolean) {
             return [];
         }
 
-        const nameRowSpanMap = computeNameRowSpanMap(ruleData);
         const filtersSetObj = {
             name_set: new Set<string>(),
             banName_set: new Set<string>(),
@@ -101,7 +103,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 dataIndex: 'name',
                 filters: Array.from(filtersSetObj.name_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-                onCell: (record) => ({rowSpan: nameRowSpanMap[record.key]}),
+                onCell: (record) => ({rowSpan: nameRowSpanMap?.[record.key]}),
             },
             {
                 title: '假期类型',
@@ -171,7 +173,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 render: (value: IRuleData) => <Operations value={value} setRuleData={setRuleData}/>,
             },
         ];
-    }, [ruleData, banTypeColorMap]);
+    }, [ruleData, banTypeColorMap, nameRowSpanMap]);
 
     const renderedColumns = useMemo(() => {
         if (columns.length === 0 || !validBanNames) {
@@ -203,7 +205,12 @@ export default function useHSTableData(showHiddenRules: boolean) {
         });
     }, [columns, validBanNames]);
 
-    return {ruleData, renderedColumns, loading};
+    const onChange: TableProps<IRuleData>['onChange'] = (_pagination, _filters, _sorter, extra) => {
+        console.log(extra.currentDataSource)
+        setNameRowSpanMap(computeNameRowSpanMap(extra.currentDataSource));
+    }
+
+    return {ruleData, renderedColumns, loading, onChange};
 }
 
 function Operations({value, setRuleData}: { value: IRuleData, setRuleData: Dispatch<SetStateAction<IRuleData[] | null>> }) {

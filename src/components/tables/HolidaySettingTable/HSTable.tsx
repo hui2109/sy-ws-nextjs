@@ -7,7 +7,7 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 
 export default function HSTable() {
     const [showHiddenRules, setShowHiddenRules] = useState<boolean>(false);
-    const {ruleData, renderedColumns, loading} = useHSTableData(showHiddenRules);
+    const {ruleData, renderedColumns, loading, onChange} = useHSTableData(showHiddenRules);
 
     if (!ruleData) return null;
 
@@ -33,6 +33,7 @@ export default function HSTable() {
             footer: '!p-2',
             title: '!p-3',
         }}
+        onChange={onChange}
     />
 }
 
