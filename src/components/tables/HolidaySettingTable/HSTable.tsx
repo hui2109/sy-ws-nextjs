@@ -5,11 +5,20 @@ import {components} from "@/components/tables/HolidaySettingTable/EditableCompon
 import saveRule from "@/api/VacationRule/saveRule";
 import {useAppContext} from "@/components/hooks/AppProvider";
 
-export default function HSTable() {
-    const [showHiddenRules, setShowHiddenRules] = useState<boolean>(false);
-    const {ruleData, renderedColumns, loading, onChange} = useHSTableData(showHiddenRules);
+interface IHSTableTools {
+    ruleData: IRuleData[],
+    showHiddenRules: boolean,
+    setShowHiddenRules: Dispatch<SetStateAction<boolean>>,
+    isEditable: boolean,
+}
 
-    if (!ruleData) return null;
+export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
+    const [showHiddenRules, setShowHiddenRules] = useState<boolean>(false);
+    const {ruleData, renderedColumns, loading, onChange} = useHSTableData(showHiddenRules, isEditable);
+
+    if (!ruleData || renderedColumns.length === 0) {
+        return null;
+    }
 
     return <Table
         components={components}
@@ -19,11 +28,17 @@ export default function HSTable() {
         scroll={{x: 'max-content', y: 750}}
         pagination={false}
         title={() => (
-            <HSTableTools
-                ruleData={ruleData}
-                showHiddenRules={showHiddenRules}
-                setShowHiddenRules={setShowHiddenRules}
-            />
+            <div className='flex flex-col justify-center'>
+                <div className='text-center text-2xl text-blue-600 font-bold mb-1'>
+                    假期{isEditable ? '设置' : '统计'}表
+                </div>
+                <HSTableTools
+                    ruleData={ruleData}
+                    showHiddenRules={showHiddenRules}
+                    setShowHiddenRules={setShowHiddenRules}
+                    isEditable={isEditable}
+                />
+            </div>
         )}
         footer={() => ''}
         column={{align: 'center'}}
@@ -37,12 +52,7 @@ export default function HSTable() {
     />
 }
 
-function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules}:
-                      {
-                          ruleData: IRuleData[],
-                          showHiddenRules: boolean,
-                          setShowHiddenRules: Dispatch<SetStateAction<boolean>>
-                      }) {
+function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable}: IHSTableTools) {
     const {notification} = useAppContext();
 
     function handleSave(ruleData: IRuleData[]) {
@@ -79,13 +89,15 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules}:
             >
                 显示未启用规则
             </Checkbox>
-            <Button
-                color='green'
-                variant='solid'
-                onClick={() => handleSave(ruleData)}
-            >
-                保存
-            </Button>
+            {isEditable && (
+                <Button
+                    color='green'
+                    variant='solid'
+                    onClick={() => handleSave(ruleData)}
+                >
+                    保存
+                </Button>
+            )}
         </div>
     )
 }

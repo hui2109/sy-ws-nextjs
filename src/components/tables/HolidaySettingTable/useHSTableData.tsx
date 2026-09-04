@@ -28,7 +28,8 @@ export interface IRuleData {
 
 type EditableColumn = ColumnType<IRuleData> & { editable?: boolean };
 
-export default function useHSTableData(showHiddenRules: boolean) {
+export default function useHSTableData(showHiddenRules: boolean, isEditable: boolean) {
+    const {currentUser} = useAppContext();
     const [ruleData, setRuleData] = useState<IRuleData [] | null>(null);
     const [loading, setLoading] = useState(true);
     const [validBanNames, setValidBanNames] = useState<Array<string> | null>(null);
@@ -74,7 +75,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
     }, []);
 
     const columns: EditableColumn[] = useMemo(() => {
-        if (!ruleData || !banTypeColorMap) {
+        if (!ruleData || !banTypeColorMap || !currentUser) {
             return [];
         }
 
@@ -104,13 +105,13 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 filters: Array.from(filtersSetObj.name_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.name.indexOf(value as string) === 0,
                 onCell: (record) => ({rowSpan: nameRowSpanMap?.[record.key]}),
+                defaultFilteredValue: isEditable ? [] : [currentUser],
             },
             {
                 title: '假期类型',
                 dataIndex: 'banName',
                 filters: Array.from(filtersSetObj.banName_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.banName.indexOf(value as string) === 0,
-                editable: true,
                 render: (value) => (
                     <Badge
                         count={value}
@@ -118,20 +119,21 @@ export default function useHSTableData(showHiddenRules: boolean) {
                         classNames={{indicator: '!rounded-lg !font-bold'}}
                     />
                 ),
+                editable: isEditable,
             },
             {
                 title: '开始日期',
                 dataIndex: 'startDate',
                 filters: Array.from(filtersSetObj.startDate_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.startDate.indexOf(value as string) === 0,
-                editable: true,
+                editable: isEditable,
             },
             {
                 title: '结束日期',
                 dataIndex: 'endDate',
                 filters: Array.from(filtersSetObj.endDate_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.endDate.indexOf(value as string) === 0,
-                editable: true,
+                editable: isEditable,
             },
             {
                 title: '剩余天数',
@@ -147,7 +149,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 title: '总天数',
                 dataIndex: 'available_days',
                 sorter: (a, b) => a.available_days - b.available_days,
-                editable: true,
+                editable: isEditable,
             },
             {
                 title: '启用?',
@@ -165,15 +167,23 @@ export default function useHSTableData(showHiddenRules: boolean) {
                                 return item;
                             }) ?? null)
                         }}
+                        disabled={!isEditable}
                     />
                 )
             },
-            {
-                title: '操作',
-                render: (value: IRuleData) => <Operations value={value} setRuleData={setRuleData}/>,
-            },
+            ...(isEditable
+                ? [{
+                    title: '操作',
+                    render: (_value: unknown, record: IRuleData) => (
+                        <Operations
+                            value={record}
+                            setRuleData={setRuleData}
+                        />
+                    ),
+                }]
+                : []),
         ];
-    }, [ruleData, banTypeColorMap, nameRowSpanMap]);
+    }, [ruleData, banTypeColorMap, nameRowSpanMap, isEditable, currentUser]);
 
     const renderedColumns = useMemo(() => {
         if (columns.length === 0 || !validBanNames) {
@@ -208,6 +218,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
     const onChange: TableProps<IRuleData>['onChange'] = (_pagination, _filters, sorter, extra) => {
         if (extra.action === 'filter') {
             setNameRowSpanMap(computeNameRowSpanMap(extra.currentDataSource));
+            return;
         }
 
         if (extra.action === 'sort') {
