@@ -75,6 +75,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
             return [];
         }
 
+        const nameRowSpanMap = computeNameRowSpanMap(ruleData);
         const filtersSetObj = {
             name_set: new Set<string>(),
             banName_set: new Set<string>(),
@@ -100,7 +101,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
                 dataIndex: 'name',
                 filters: Array.from(filtersSetObj.name_set).map((text) => ({value: text, text: text})),
                 onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-                // editable: true,
+                onCell: (record) => ({rowSpan: nameRowSpanMap[record.key]}),
             },
             {
                 title: '假期类型',
@@ -114,7 +115,7 @@ export default function useHSTableData(showHiddenRules: boolean) {
                         color={banTypeColorMap[value]}
                         classNames={{indicator: '!rounded-lg !font-bold'}}
                     />
-                )
+                ),
             },
             {
                 title: '开始日期',
@@ -249,4 +250,18 @@ function sortRuleData(rules: Awaited<ReturnType<typeof getAllRules>>): IRuleData
         if (enabledCmp !== 0) return enabledCmp;
         return String(a.banName).localeCompare(String(b.banName), 'zh-CN', {sensitivity: 'base'});
     });
+}
+
+function computeNameRowSpanMap(ruleData: IRuleData[]): Record<number, number> {
+    const map: Record<number, number> = {};
+    let lastName = '';
+    ruleData.forEach((item) => {
+        if (item.name === lastName) {
+            map[item.key] = 0;
+        } else {
+            lastName = item.name;
+            map[item.key] = ruleData.filter(d => d.name === item.name).length;
+        }
+    });
+    return map;
 }
