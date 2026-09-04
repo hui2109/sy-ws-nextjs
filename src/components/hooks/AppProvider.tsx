@@ -52,14 +52,14 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
             locale={locale}
             theme={{
                 algorithm: resolvedTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                token: resolvedTheme === 'dark' ? {
-                    // 页面整体背景：柔和灰黑，避免纯黑带来的高对比刺激
-                    colorBgLayout: '#26292d',
-                    // Card、Form、Table 等普通容器背景
-                    colorBgContainer: '#2d3136',
-                    // Modal、Dropdown、Popover 等浮层背景
-                    colorBgElevated: '#353a40',
-                } : {}
+                // token: resolvedTheme === 'dark' ? {
+                //     // 页面整体背景：柔和灰黑，避免纯黑带来的高对比刺激
+                //     colorBgLayout: '#26292d',
+                //     // Card、Form、Table 等普通容器背景
+                //     colorBgContainer: '#2d3136',
+                //     // Modal、Dropdown、Popover 等浮层背景
+                //     colorBgElevated: '#353a40',
+                // } : {}
             }}
         >
             {contextHolder}

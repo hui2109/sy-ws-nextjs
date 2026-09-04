@@ -32,7 +32,7 @@ export enum IconType {
     'qingjia' = 'icon-qingjia',
     'gaiban' = 'icon-xiugaibanjixinxi',
     'gerentongji' = 'icon-gerentongjiguanli',
-    'qitatongji' = 'icon-qitatongji',
+    'jiaqitongji' = 'icon-qitatongji',
     'xiujialeixing' = 'icon-shilileixing',
     'kaishipaiban' = 'icon-mk-pbgl',
     'qingkongpaiban' = 'icon-qingkongpaibanbiao',
@@ -45,4 +45,5 @@ export enum IconType {
     'daishenhe' = 'icon-daishenhe',
     'xiangpica' = 'icon-xiangpica',
     'info' = 'icon-info',
+    'bancitongji' = 'icon--tongjibiao'
 }

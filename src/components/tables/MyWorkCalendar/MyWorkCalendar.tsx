@@ -189,7 +189,7 @@ export default function MyWorkCalendar() {
                         }));
 
                     return (
-                        <div className={`mb-2 flex rounded-xl border p-5 items-center justify-between ${isDark ? 'border-slate-700 bg-slate-800/60' : 'border-slate-100 bg-slate-50/80'}`}>
+                        <div className={`mb-2 flex rounded-xl border p-5 items-center justify-between ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-100 bg-slate-50/80'}`}>
                             <div>
                                 <div className={`text-lg font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
                                     {value.format('YYYY 年 M 月')}

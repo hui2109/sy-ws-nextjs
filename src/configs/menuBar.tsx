@@ -3,17 +3,6 @@ import {MenuProps} from "antd";
 import React from "react";
 import Link from "next/link";
 
-interface MenuBarItem {
-    title: string;
-    key: string;
-    icon: {
-        type: IconType;
-        className: string;
-        useSvg: boolean;
-    };
-    children?: MenuBarItem[];
-}
-
 export const topMenuBar: MenuProps['items'] = [
     {
         label: (
@@ -80,7 +69,6 @@ export const topMenuBar: MenuProps['items'] = [
         key: '/scheduleTools',
     }
 ]
-
 
 export const scheduleToolsMenuBar: MenuProps['items'] = [
     {
@@ -150,7 +138,28 @@ export const scheduleToolsMenuBar: MenuProps['items'] = [
     }
 ]
 
-// 定值menuBar样式
+export const statisticsMenuBar: MenuProps['items'] = [
+    {
+        label: (
+            <Link href='/statistics/vacation' className="!text-lg font-bold !text-inherit block">
+                <IconFont type={IconType.jiaqitongji} useSvg={false} className={'me-2 !text-pink-600'}/>
+                <b>假期统计</b>
+            </Link>
+        ),
+        key: '/statistics/vacation',
+    },
+    {
+        label: (
+            <Link href='/statistics/banci' className="!text-lg font-bold !text-inherit block">
+                <IconFont type={IconType.bancitongji} useSvg={true} className={'me-2'}/>
+                <b>班次统计</b>
+            </Link>
+        ),
+        key: '/statistics/banci',
+    }
+]
+
+// 定值topMenuBar样式
 export const menuBarStyle = {
     components: {
         Menu: {
@@ -160,25 +169,36 @@ export const menuBarStyle = {
     },
 }
 
-export function buildMenuItems(items: MenuBarItem[]): MenuProps['items'] {
-    if (items.length === 0) return [];
-    return items.map((item) => {
-        const subChildren = 'children' in item && Array.isArray(item.children) && item.children.length > 0
-            ? buildMenuItems(item.children as MenuBarItem[])
-            : undefined;
+// export function buildMenuItems(items: MenuBarItem[]): MenuProps['items'] {
+//     if (items.length === 0) return [];
+//     return items.map((item) => {
+//         const subChildren = 'children' in item && Array.isArray(item.children) && item.children.length > 0
+//             ? buildMenuItems(item.children as MenuBarItem[])
+//             : undefined;
+//
+//         const menuBtn = (
+//             <div className="!text-lg font-bold">
+//                 <IconFont type={item.icon.type} useSvg={item.icon.useSvg} className={'me-2 ' + item.icon.className}/>
+//                 <b>{item.title}</b>
+//             </div>
+//         );
+//         const menuItem = (item.key.startsWith('/')) ? <Link href={item.key}>{menuBtn}</Link> : menuBtn
+//
+//         return {
+//             key: item.key,
+//             label: menuItem,
+//             children: subChildren,
+//         }
+//     });
+// }
 
-        const menuBtn = (
-            <div className="!text-lg font-bold">
-                <IconFont type={item.icon.type} useSvg={item.icon.useSvg} className={'me-2 ' + item.icon.className}/>
-                <b>{item.title}</b>
-            </div>
-        );
-        const menuItem = (item.key.startsWith('/')) ? <Link href={item.key}>{menuBtn}</Link> : menuBtn
-
-        return {
-            key: item.key,
-            label: menuItem,
-            children: subChildren,
-        }
-    });
-}
+// interface MenuBarItem {
+//     title: string;
+//     key: string;
+//     icon: {
+//         type: IconType;
+//         className: string;
+//         useSvg: boolean;
+//     };
+//     children?: MenuBarItem[];
+// }

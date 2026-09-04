@@ -1,7 +1,7 @@
-import {Button} from "antd";
+'use client';
 
-export default function XX() {
-    return (
-        <Button>统计</Button>
-    )
+import {redirect} from 'next/navigation';
+
+export default function Statistics() {
+    redirect('/statistics/vacation');
 }
