@@ -1,10 +1,9 @@
-import React from 'react';
-import {Button} from 'antd';
+'use client';
 
-const Home = () => (
-    <div className="App">
-        <Button type="primary">xiujialeixing</Button>
-    </div>
-);
+import BanCountTable from "@/components/tables/BanCountTable/BanCountTable";
 
-export default Home;
+export default function Banci() {
+    return (
+        <BanCountTable/>
+    );
+}

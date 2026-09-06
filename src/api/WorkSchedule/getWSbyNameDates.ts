@@ -62,4 +62,4 @@ export async function getWSbyNameDates(name: string, startDate: string, endDate:
 }
 
 // npx tsx src/api/WorkSchedule/getWSbyNameDates.ts
-getWSbyNameDates('张旭辉', '2026-01-01', '2026-12-31').then(r => console.log(r));
+// getWSbyNameDates('张旭辉', '2026-01-01', '2026-12-31').then(r => console.log(r));

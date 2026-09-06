@@ -63,7 +63,6 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
             title: '日期',
             dataIndex: 'dt',
             width: 150,
-            align: 'center',
             render: (date: string) => (
                 <span className="font-medium tabular-nums">{date}</span>
             ),
@@ -72,7 +71,6 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
             title: leaveApplyType === 'ASKOFF' ? '我应该上' : `${targetStaff} 应该上`,
             dataIndex: 'myBan',
             width: 150,
-            align: 'center',
             render: (bans: [string, number][] | undefined) => {
                 if (!bans) return <NullText/>;
                 const banNames = sortBanTypeList(bans.map(ban => ban[0]));
@@ -93,7 +91,6 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
         {
             title: leaveApplyType === 'ASKOFF' ? '我想休什么假' : '改成',
             width: 250,
-            align: 'center',
             render: (record: typeof dataSource[number]) => {
                 const currentName = leaveApplyType === 'ASKOFF' ? applyUser : targetStaff;
                 return leaveApplyType === 'ASKOFF'
@@ -233,6 +230,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                 </div>
             </div>
             <Table
+                column={{align: 'center'}}
                 columns={columns}
                 dataSource={dataSource}
                 scroll={{x: 'max-content', y: 750}}

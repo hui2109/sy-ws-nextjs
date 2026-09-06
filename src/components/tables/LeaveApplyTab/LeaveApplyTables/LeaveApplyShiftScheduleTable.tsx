@@ -49,7 +49,6 @@ export default function LeaveApplyShiftScheduleTable({personDateBansMap, banType
             title: '日期',
             dataIndex: 'dt',
             width: 180,
-            align: 'center',
             render: (date: string) => (
                 <span className="font-medium tabular-nums">{date}</span>
             ),
@@ -58,14 +57,12 @@ export default function LeaveApplyShiftScheduleTable({personDateBansMap, banType
             title: `${names[0]} 的班`,
             dataIndex: 'myBan',
             width: 240,
-            align: 'center',
             render: renderBansBadge,
         },
         {
             title: `${names[1]} 的班`,
             dataIndex: 'hisBan',
             width: 240,
-            align: 'center',
             render: renderBansBadge,
         },
     ];
@@ -102,6 +99,7 @@ export default function LeaveApplyShiftScheduleTable({personDateBansMap, banType
                 </div>
             </div>
             <Table
+                column={{align: "center"}}
                 columns={columns}
                 dataSource={dataSource}
                 scroll={{x: 'max-content', y: 750}}
