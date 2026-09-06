@@ -48,11 +48,13 @@ export async function getWSbyNameDates(name: string, startDate: string, endDate:
 
     const dateBansMap: Record<string, [string, number][]> = {};
     for (const workSchedule of workSchedules) {
-        if (!dateBansMap[dayjs(workSchedule.workDate).format('YYYY-MM-DD')]) {
-            dateBansMap[dayjs(workSchedule.workDate).format('YYYY-MM-DD')] = [];
+        const format_date = dayjs(workSchedule.workDate).format('YYYY-MM-DD');
+
+        if (!dateBansMap[format_date]) {
+            dateBansMap[format_date] = [];
         }
         for (const scheduleAssignment of workSchedule.scheduleAssignments) {
-            dateBansMap[dayjs(workSchedule.workDate).format('YYYY-MM-DD')].push([workSchedule.banType.banName, scheduleAssignment.id])
+            dateBansMap[format_date].push([workSchedule.banType.banName, scheduleAssignment.id])
         }
     }
 
@@ -60,4 +62,4 @@ export async function getWSbyNameDates(name: string, startDate: string, endDate:
 }
 
 // npx tsx src/api/WorkSchedule/getWSbyNameDates.ts
-// getWSbyNameDates('张旭辉', '2026-06-15', '2026-06-19').then(r => console.log(r));
+getWSbyNameDates('张旭辉', '2026-01-01', '2026-12-31').then(r => console.log(r));
