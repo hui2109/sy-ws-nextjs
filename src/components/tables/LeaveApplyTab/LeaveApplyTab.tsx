@@ -8,7 +8,7 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 import {useState} from "react";
 import {LeaveApplyTabContext} from "@/components/hooks/LeaveApplyTabContext";
 
-export type LeaveApplyTabStatus = 'Sent' | 'Received';
+export type TLeaveApplyTabStatus = 'Sent' | 'Received';
 
 export default function LeaveApplyTab() {
     const {currentUser, resolvedTheme} = useAppContext();

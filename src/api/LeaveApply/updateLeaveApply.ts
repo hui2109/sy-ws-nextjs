@@ -5,7 +5,7 @@ import {prisma} from "@/prisma/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import {LeaveApplyStatus} from "@/prisma/generated/enums";
-import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
+import {TPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
 import {LeaveApply} from "@/prisma/generated/client";
 import getWSIdsbyIds from "@/api/ScheduleAssignment/getWSIdsbyIds";
 import deleteScheduleAssignmentsbyIds from "@/api/ScheduleAssignment/deleteScheduleAssignmentsbyIds";
@@ -84,7 +84,7 @@ async function executeLeaveApply(leaveApply: LeaveApply) {
     const targetStaff = await prisma.person.findUnique({where: {id: leaveApply?.targetStaffId ?? -9999}});
     const startDate = dayjs(leaveApply.startDate);
     const endDate = dayjs(leaveApply.endDate);
-    const assignmentsJson = leaveApply.assignmentsJson as IPersonDateBansMap;
+    const assignmentsJson = leaveApply.assignmentsJson as TPersonDateBansMap;
     const actions = [];
     let hasInvalidData = false;
 

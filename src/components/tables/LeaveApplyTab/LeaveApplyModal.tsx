@@ -3,7 +3,7 @@ import {Button, Modal, Popconfirm, Tag} from "antd";
 import React, {useEffect, useState} from "react";
 import {IClickedLeaveApplyDetails} from "@/components/tables/LeaveApplyTab/LeaveApplyList";
 import LeaveApplyFormLoad from "@/components/tables/LeaveApplyTab/LeaveApplyFormLoad";
-import {LeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
+import {TLeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
 import {CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, SendOutlined} from "@ant-design/icons";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {getPersonRole} from "@/api/Person/getPersonRole";
@@ -17,7 +17,7 @@ interface ILeaveApplyModal {
     isModalOpen: boolean;
     onClose: () => void;
     clickedLeaveApplyDetails: IClickedLeaveApplyDetails;
-    leaveApplyTabStatus: LeaveApplyTabStatus;
+    leaveApplyTabStatus: TLeaveApplyTabStatus;
 }
 
 export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApplyDetails, leaveApplyTabStatus}: ILeaveApplyModal) {

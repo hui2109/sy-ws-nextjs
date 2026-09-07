@@ -20,10 +20,10 @@ import getDatesBetween from "@/components/utils/getDatesBetween";
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
 
-type IBanAssignment = [banName: string, scheduleAssignmentId: number];
-type IDateBansMap = Record<string, IBanAssignment[]>;
-export type IPersonDateBansMap = Record<string, IDateBansMap>;
-type LeaveApplySaveStatus = 'PENDING_REVIEW' | 'DRAFT';
+type TBanAssignment = [banName: string, scheduleAssignmentId: number];
+type TDateBansMap = Record<string, TBanAssignment[]>;
+export type TPersonDateBansMap = Record<string, TDateBansMap>;
+type TLeaveApplySaveStatus = 'PENDING_REVIEW' | 'DRAFT';
 
 export default function LeaveApplyFormNew() {
     const {currentUser, resolvedTheme, notification} = useAppContext();
@@ -32,7 +32,7 @@ export default function LeaveApplyFormNew() {
     const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null] | null>([dayjs(), dayjs().add(4, 'day')]);
     const [targetStaff, setTargetStaff] = useState<string | null>(null);
     const [reason, setReason] = useState<string>('');
-    const [personDateBansMap, setPersonDateBansMap] = useState<IPersonDateBansMap | null>(null);
+    const [personDateBansMap, setPersonDateBansMap] = useState<TPersonDateBansMap | null>(null);
     const [validStaffs, setValidStaffs] = useState<string[] | null>(null);
     const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
@@ -101,7 +101,7 @@ export default function LeaveApplyFormNew() {
     }, [currentUser, targetStaff, dateRange]);
 
 
-    function handleCreateLeaveApply(status: LeaveApplySaveStatus) {
+    function handleCreateLeaveApply(status: TLeaveApplySaveStatus) {
         if (!personDateBansMap || !leaveApplyType || !completeDateRange || !currentUser) return null;
 
         const [startDate, endDate] = completeDateRange;
@@ -341,7 +341,7 @@ export default function LeaveApplyFormNew() {
                                         loading={!validStaffs}
                                         placeholder="请选择人员"
                                         value={targetStaff}
-                                        onChange={value => setTargetStaff(value)}
+                                        onChange={setTargetStaff}
                                         options={targetStaffOptions}
                                         showSearch={{
                                             optionFilterProp: 'value',

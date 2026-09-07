@@ -5,14 +5,14 @@ import {prisma} from '@/prisma/prisma';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import {ILeaveApplyRecord} from '@/components/tables/LeaveApplyTab/LeaveApplyList';
-import {IPersonDateBansMap} from '@/components/tables/LeaveApplyTab/LeaveApplyFormNew';
-import {LeaveApplyTabStatus} from '@/components/tables/LeaveApplyTab/LeaveApplyTab';
+import {TPersonDateBansMap} from '@/components/tables/LeaveApplyTab/LeaveApplyFormNew';
+import {TLeaveApplyTabStatus} from '@/components/tables/LeaveApplyTab/LeaveApplyTab';
 import {LeaveApplyType} from '@/prisma/generated/enums';
 import {Prisma} from '@/prisma/generated/client';
 
 dayjs.extend(utc);
 
-export default async function getLeaveAppliesbyNameStatus(name: string, leaveApplyTabStatus: LeaveApplyTabStatus) {
+export default async function getLeaveAppliesbyNameStatus(name: string, leaveApplyTabStatus: TLeaveApplyTabStatus) {
     const person = await prisma.person.findUnique({where: {name}});
 
     if (!person) return null;
@@ -101,7 +101,7 @@ export default async function getLeaveAppliesbyNameStatus(name: string, leaveApp
             status: leaveApply.status,
             reason: leaveApply.reason,
             assignmentsJson:
-                leaveApply.assignmentsJson as unknown as IPersonDateBansMap,
+                leaveApply.assignmentsJson as unknown as TPersonDateBansMap,
         }),
     );
 }

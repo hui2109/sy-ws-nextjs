@@ -3,13 +3,13 @@
 import {Badge, Card, Tag} from "antd";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {LeaveApplyStatus, LeaveApplyType} from "@/prisma/generated/enums";
-import {IPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
+import {TPersonDateBansMap} from "@/components/tables/LeaveApplyTab/LeaveApplyFormNew";
 import getLeaveAppliesbyNameStatus from "@/api/LeaveApply/getLeaveAppliesbyNameStatus";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
 import LeaveApplyModal from "@/components/tables/LeaveApplyTab/LeaveApplyModal";
-import {LeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
+import {TLeaveApplyTabStatus} from "@/components/tables/LeaveApplyTab/LeaveApplyTab";
 import {useLeaveApplyTabContext} from "@/components/hooks/LeaveApplyTabContext";
 
 export interface ILeaveApplyRecord {
@@ -22,7 +22,7 @@ export interface ILeaveApplyRecord {
     created_date: string;
     status: LeaveApplyStatus;
     reason: string;
-    assignmentsJson: IPersonDateBansMap;
+    assignmentsJson: TPersonDateBansMap;
 }
 
 interface ILeaveApplyCard {
@@ -41,12 +41,12 @@ export interface IClickedLeaveApplyDetails {
     applyUser: string;
     targetStaff: string;
     reason: string;
-    assignmentsJson: IPersonDateBansMap;
+    assignmentsJson: TPersonDateBansMap;
     createdDate: Dayjs;
 
 }
 
-export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: string, leaveApplyTabStatus: LeaveApplyTabStatus }) {
+export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: string, leaveApplyTabStatus: TLeaveApplyTabStatus }) {
     const {resolvedTheme} = useAppContext();
     const {refreshKey} = useLeaveApplyTabContext();
     const isDark = resolvedTheme === "dark";
