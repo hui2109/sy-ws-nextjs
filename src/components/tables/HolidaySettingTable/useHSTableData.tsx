@@ -1,6 +1,6 @@
 'use client';
 
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from "react";
 import type {TableProps} from "antd";
 import {Badge, Checkbox, Popconfirm, Space} from "antd";
 import type {ColumnType} from "antd/es/table";
@@ -41,16 +41,6 @@ interface SortState {
     order: SortOrder;
 }
 
-interface RulesSnapshot {
-    showHiddenRules: boolean;
-    data: IRuleData[];
-}
-
-interface TableMeta {
-    validBanNames: string[];
-    banTypeColorMap: Record<string, string>;
-}
-
 interface FilterOptions {
     names: Array<{ value: string; text: string }>;
     banNames: Array<{ value: string; text: string }>;
@@ -63,90 +53,48 @@ const EMPTY_SORT_STATE: SortState = {columnKey: null, order: null};
 
 export default function useHSTableData(showHiddenRules: boolean, isEditable: boolean) {
     const {currentUser} = useAppContext();
-
-    // 这里只保存"外部系统返回的事实"。
-    const [rulesSnapshot, setRulesSnapshot] = useState<RulesSnapshot | null>(null);
-    const [tableMeta, setTableMeta] = useState<TableMeta | null>(null);
-
-    // filter / sorter 是用户操作产生的真实 UI 状态。
+    const [loading, setLoading] = useState<boolean>(true);
+    const [ruleData, setRuleData] = useState<IRuleData[] | null>(null);
+    const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
+    const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
     const [filterState, setFilterState] = useState<FilterState>({});
     const [sortState, setSortState] = useState<SortState>(EMPTY_SORT_STATE);
 
-    /*
-     * Effect 只负责和 API 同步。
-     * 不在这里同步 setLoading / setRowSpan / setFilteredData。
-     * cleanup 的 ignore 标记用于阻止旧请求覆盖新状态。
-     */
     useEffect(() => {
-        if (rulesSnapshot?.showHiddenRules === showHiddenRules) return;
+        let isMounted = true;
 
-        let ignore = false;
-
-        getAllRules(showHiddenRules).then(rules => {
-            if (ignore) return;
-            setRulesSnapshot({showHiddenRules, data: sortRuleData(rules)});
+        Promise.all([
+            getValidBanNames(),
+            getBanTypeColorMap(),
+        ]).then(([validBanNames, banTypeColorMap]) => {
+            if (isMounted) {
+                setValidBanNames(filteredRelaxBanNames(validBanNames));
+                setBanTypeColorMap(banTypeColorMap);
+            }
         });
 
         return () => {
-            ignore = true;
-        };
-    }, [showHiddenRules, rulesSnapshot?.showHiddenRules]);
-
-    useEffect(() => {
-        let ignore = false;
-
-        Promise.all([getValidBanNames(), getBanTypeColorMap()])
-            .then(([validBanNames, banTypeColorMap]) => {
-                if (ignore) return;
-                setTableMeta({
-                    validBanNames: filteredRelaxBanNames(validBanNames),
-                    banTypeColorMap,
-                });
-            });
-
-        return () => {
-            ignore = true;
+            isMounted = false;
         };
     }, []);
 
-    /*
-     * 请求切换期间保留上一份数据，让 Table 保持挂载；
-     * loading 由"snapshot 是否对应当前请求参数"直接推导。
-     */
-    const ruleData = rulesSnapshot?.data ?? null;
-    const rulesLoading = rulesSnapshot?.showHiddenRules !== showHiddenRules;
-    const metaLoading = tableMeta === null;
-    const loading = rulesLoading || metaLoading;
+    useEffect(() => {
+        let isMounted = true;
 
-    /*
-     * 只读模式要等 currentUser 可用后再第一次挂载 Table，
-     * 这样默认姓名筛选从第一次显示开始就是正确的。
-     */
-    const ready = ruleData !== null && tableMeta !== null && (isEditable || Boolean(currentUser));
+        getAllRules(showHiddenRules).then(rules => {
+            if (isMounted) {
+                setRuleData(sortRuleData(rules));
+                setLoading(false);
+            }
+        });
 
-    /*
-     * 统一修改当前规则数据。
-     * 如果当前 snapshot 属于旧的 showHiddenRules 参数，则拒绝对旧数据进行编辑。
-     */
-    const updateRuleData = useCallback(
-        (updater: (previous: IRuleData[]) => IRuleData[]) => {
-            setRulesSnapshot(previous => {
-                if (!previous || previous.showHiddenRules !== showHiddenRules) return previous;
+        return () => {
+            isMounted = false;
+            setLoading(true);
+        };
+    }, [showHiddenRules]);
 
-                const nextData = updater(previous.data);
-                if (Object.is(nextData, previous.data)) return previous;
-
-                return {...previous, data: nextData};
-            });
-        },
-        [showHiddenRules],
-    );
-
-    /*
-     * 只读模式下：
-     * 用户尚未操作姓名筛选 -> 默认 currentUser；
-     * 用户一旦操作过（包括清空） -> 以后都尊重用户选择。
-     */
+    // 只读模式下, 默认将 姓名 过滤器设为 currentUser
     const effectiveFilters = useMemo<FilterState>(() => {
         const nameFilter = filterState.name !== undefined
             ? filterState.name
@@ -155,26 +103,20 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
         return {...filterState, name: nameFilter};
     }, [filterState, isEditable, currentUser]);
 
-    /*
-     * 筛选菜单从完整 ruleData 生成，不从 tableData 生成，避免筛选条件彼此"吃掉"选项。
-     */
+    // 生成过滤器选项
     const filterOptions = useMemo<FilterOptions>(() => buildFilterOptions(ruleData ?? []), [ruleData]);
 
-    /*
-     * 整张表唯一的数据处理链：ruleData -> filter -> sorter -> tableData
-     */
-    const tableData = useMemo(
-        () => applyTableState(ruleData ?? [], effectiveFilters, sortState),
+    // 整张表唯一的数据处理链：ruleData -> filter -> sorter -> tableData
+    const tableData = useMemo(() => applyTableState(ruleData ?? [], effectiveFilters, sortState),
         [ruleData, effectiveFilters, sortState],
     );
 
-    // rowSpan 永远只根据"最终可见数据"计算。
+    // rowSpan 永远只根据"最终可见数据"计算
     const nameRowSpanMap = useMemo(() => computeNameRowSpanMap(tableData), [tableData]);
 
     const columns = useMemo<EditableColumn[]>(() => {
-        if (!tableMeta) return [];
+        if (!validBanNames || !banTypeColorMap) return [];
 
-        const {banTypeColorMap} = tableMeta;
         const getSortOrder = (key: SortKey): SortOrder => sortState.columnKey === key ? sortState.order : null;
 
         return [
@@ -189,7 +131,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 dataIndex: "name",
                 filters: filterOptions.names,
                 filteredValue: effectiveFilters.name ?? null,
-                // 不提供 onFilter：实际筛选由 applyTableState 完成。
+                // 不提供 onFilter：实际筛选由 applyTableState 完成
                 onCell: record => ({rowSpan: nameRowSpanMap[record.key] ?? 1}),
             },
             {
@@ -227,7 +169,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 key: "left_days",
                 title: "剩余天数",
                 dataIndex: "left_days",
-                sorter: true, // sorter: true 只保留 AntD 的排序交互。
+                sorter: true, // sorter: true 只保留 AntD 的排序交互
                 sortOrder: getSortOrder("left_days"),
             },
             {
@@ -254,14 +196,12 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 render: (value, record) => (
                     <Checkbox
                         checked={value}
-                        disabled={!isEditable || rulesLoading}
+                        disabled={!isEditable}
                         onChange={event => {
                             const enabled = event.target.checked;
-                            updateRuleData(previous =>
-                                previous.map(item =>
-                                    item.key === record.key ? {...item, enabled, hasModified: true} : item
-                                )
-                            );
+                            setRuleData(prev => {
+                                return prev?.map(item => item.key === record.key ? {...item, enabled, hasModified: true} : item) ?? null;
+                            });
                         }}
                     />
                 ),
@@ -270,51 +210,36 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 key: "operations",
                 title: "操作",
                 render: (_value: unknown, record: IRuleData) => (
-                    <Operations value={record} updateRuleData={updateRuleData} disabled={rulesLoading}/>
+                    <Operations value={record} setRuleData={setRuleData}/>
                 ),
             }] : []),
         ];
-    }, [effectiveFilters, filterOptions, isEditable, nameRowSpanMap, rulesLoading, sortState, tableMeta, updateRuleData]);
+    }, [validBanNames, banTypeColorMap, filterOptions, effectiveFilters, setRuleData, isEditable, nameRowSpanMap, sortState]);
 
-    /*
-     * 为可编辑列注入 EditableComponents 所需的 cell props。
-     * 同时保留列本身已有的 onCell，避免后续扩展时被覆盖。
-     */
     const renderedColumns = useMemo(() => {
-        if (columns.length === 0 || !tableMeta) return [];
-
-        const {validBanNames} = tableMeta;
-
+        if (columns.length === 0 || !validBanNames) return [];
         const handleSave = (row: IRuleData) => {
-            updateRuleData(previous =>
-                previous.map(item => item.key === row.key ? {...item, ...row} : item)
-            );
+            setRuleData(prev => {
+                return prev?.map(item => item.key === row.key ? {...item, ...row} : item) ?? null;
+            });
         };
 
-        return columns.map(column => {
-            if (!column.editable) return column;
-
-            const originalOnCell = column.onCell;
-
+        return columns.map((col) => {
+            if (!col.editable) return col;
             return {
-                ...column,
-                onCell: (record: IRuleData, rowIndex: number) => ({
-                    ...(originalOnCell?.(record, rowIndex) ?? {}),
-                    title: column.title,
-                    editable: column.editable,
-                    dataIndex: column.dataIndex as keyof IRuleData,
-                    record,
-                    validBanNames,
-                    handleSave,
+                ...col,
+                onCell: (record: IRuleData) => ({
+                    title: col.title,
+                    editable: col.editable,
+                    dataIndex: col.dataIndex as keyof IRuleData,
+                    record, validBanNames, handleSave
                 }),
             };
         });
-    }, [columns, tableMeta, updateRuleData]);
+    }, [columns, validBanNames]);
 
-    /*
-     * AntD 只负责把用户选择告诉我们。
-     * 不读取 extra.currentDataSource，也不在这里维护 rowSpan。
-     */
+    // AntD 只负责把用户选择告诉我们
+    // 不读取 extra.currentDataSource，也不在这里维护 rowSpan
     const onChange = useCallback<TableChangeHandler>((_pagination, filters, sorter) => {
         setFilterState(normalizeFilters(filters));
         setSortState(normalizeSorter(sorter));
@@ -325,65 +250,47 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
         setSortState(EMPTY_SORT_STATE);
     }, []);
 
-    return {ruleData, tableData, renderedColumns, loading, ready, onChange, resetTableState};
+    return {ruleData, tableData, renderedColumns, onChange, resetTableState, loading};
 }
 
-function Operations({value, updateRuleData, disabled}: {
-    value: IRuleData;
-    updateRuleData: (updater: (previous: IRuleData[]) => IRuleData[]) => void;
-    disabled: boolean;
-}) {
+function Operations({value, setRuleData}: { value: IRuleData, setRuleData: Dispatch<SetStateAction<IRuleData[] | null>> }) {
     const {notification} = useAppContext();
-
-    const handleDelete = (rule: IRuleData) => {
-        if (disabled) return;
-
-        deleteRule(rule.key).then(() => {
-            updateRuleData(previous => previous.filter(item => item.key !== rule.key));
-
+    const handleDelete = (value: IRuleData) => {
+        deleteRule(value.key).then(() => {
+            setRuleData(prev =>
+                prev?.filter(item => item.key !== value.key) ?? null
+            );
             notification.warning({
-                title: "假期规则已删除",
-                description: `${rule.name} 的 ${rule.banName} 规则 (${rule.startDate}至${rule.endDate} ${rule.available_days} 天) 已删除!`,
-            });
-        });
-    };
+                title: '假期规则已删除',
+                description: `${value.name} 的 ${value.banName} 规则 (${value.startDate}至${value.endDate} ${value.available_days} 天) 已删除!`
+            })
+        })
+    }
 
     return (
         <Space size="medium">
-            <Popconfirm
-                title="确定要删除吗？(不可撤销！)"
-                onConfirm={() => handleDelete(value)}
-                okButtonProps={{color: "danger", variant: "solid", disabled}}
-                disabled={disabled}
-            >
-                <a
-                    aria-disabled={disabled}
-                    style={disabled ? {pointerEvents: "none", opacity: 0.45} : undefined}
-                >
-                    删除?
-                </a>
+            <Popconfirm title="确定要删除吗？(不可撤销！)" onConfirm={() => handleDelete(value)} okButtonProps={{color: 'danger', variant: 'solid'}}>
+                <a>删除?</a>
             </Popconfirm>
         </Space>
-    );
+    )
 }
 
 function sortRuleData(rules: Awaited<ReturnType<typeof getAllRules>>): IRuleData[] {
-    return rules
-        .map(rule => ({
-            key: rule.id,
-            id: rule.id,
-            name: rule.person.name,
-            banName: rule.banType.banName,
-            startDate: dayjs(rule.startDate).format("YYYY-MM-DD"),
-            endDate: dayjs(rule.endDate).format("YYYY-MM-DD"),
-            left_days: rule.left_days,
-            used_days: rule.used_days,
-            available_days: rule.availableHalfDays / 2,
-            enabled: !rule.isHidden,
-            color: rule.banType.color,
-            hasModified: false,
-        }))
-        .sort(compareDefaultRuleData);
+    return rules.map(rule => ({
+        key: rule.id,
+        id: rule.id,
+        name: rule.person.name,
+        banName: rule.banType.banName,
+        startDate: dayjs(rule.startDate).format("YYYY-MM-DD"),
+        endDate: dayjs(rule.endDate).format("YYYY-MM-DD"),
+        left_days: rule.left_days,
+        used_days: rule.used_days,
+        available_days: rule.availableHalfDays / 2,
+        enabled: !rule.isHidden,
+        color: rule.banType.color,
+        hasModified: false,
+    })).sort(compareDefaultRuleData);
 }
 
 function compareDefaultRuleData(a: IRuleData, b: IRuleData): number {
@@ -416,8 +323,7 @@ function buildFilterOptions(ruleData: IRuleData[]): FilterOptions {
         banNames: Array.from(banNames).sort(compareChineseText).map(text => ({value: text, text})),
         startDates: Array.from(startDates).sort().map(text => ({value: text, text})),
         endDates: Array.from(endDates).sort().map(text => ({value: text, text})),
-        enabled: Array.from(enabled)
-            .sort((a, b) => Number(b) - Number(a))
+        enabled: Array.from(enabled).sort((a, b) => Number(b) - Number(a))
             .map(value => ({value, text: value ? "已启用" : "未启用"})),
     };
 }
@@ -438,7 +344,6 @@ function normalizeFilters(filters: AntdFilters): FilterState {
 
 function normalizeSorter(sorter: AntdSorter): SortState {
     const activeSorter = Array.isArray(sorter) ? sorter.find(item => Boolean(item.order)) : sorter;
-
     if (!activeSorter?.order || !isSortKey(activeSorter.columnKey)) return EMPTY_SORT_STATE;
 
     return {columnKey: activeSorter.columnKey, order: activeSorter.order};

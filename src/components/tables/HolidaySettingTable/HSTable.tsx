@@ -1,36 +1,32 @@
+'use client';
+
 import {Button, Checkbox, Table, TableColumnsType} from "antd";
-import type {Dispatch, SetStateAction} from "react";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import useHSTableData, {IRuleData} from "@/components/tables/HolidaySettingTable/useHSTableData";
 import {components} from "@/components/tables/HolidaySettingTable/EditableComponents";
 import saveRule from "@/api/VacationRule/saveRule";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import ModifyHSModal from "@/components/tables/HolidaySettingTable/ModifyHSModal";
 
 interface IHSTableTools {
     ruleData: IRuleData[];
     showHiddenRules: boolean;
     setShowHiddenRules: Dispatch<SetStateAction<boolean>>;
     isEditable: boolean;
-    loading: boolean;
+    resetTableState: () => void;
 }
 
 export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
     const [showHiddenRules, setShowHiddenRules] = useState(false);
+    const {ruleData, tableData, renderedColumns, onChange, loading, resetTableState} = useHSTableData(showHiddenRules, isEditable);
 
-    const {ruleData, tableData, renderedColumns, loading, ready, onChange} =
-        useHSTableData(showHiddenRules, isEditable);
-
-    /*
-     * 第一次加载时没有可显示数据。
-     * 后续切换 showHiddenRules 时 hook 会暂时保留上一份 snapshot，
-     * 所以 Table 不会卸载，而是通过 loading 显示加载状态。
-     */
-    if (!ready || !ruleData || renderedColumns.length === 0) return null;
+    if (!ruleData || renderedColumns.length === 0) return null;
 
     return (
-        <Table<IRuleData>
+        <Table
             components={components}
             loading={loading}
+            column={{align: "center"}}
             columns={renderedColumns as TableColumnsType<IRuleData>}
             dataSource={tableData}
             scroll={{x: "max-content", y: 750}}
@@ -45,12 +41,11 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
                         showHiddenRules={showHiddenRules}
                         setShowHiddenRules={setShowHiddenRules}
                         isEditable={isEditable}
-                        loading={loading}
+                        resetTableState={resetTableState}
                     />
                 </div>
             )}
             footer={() => ""}
-            column={{align: "center"}}
             size="large"
             bordered
             classNames={{footer: "!p-2", title: "!p-3"}}
@@ -59,8 +54,9 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
     );
 }
 
-function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable, loading}: IHSTableTools) {
+function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable, resetTableState}: IHSTableTools) {
     const {notification} = useAppContext();
+    const [isModifyHSModalOpen, setIsModifyHSModalOpen] = useState<boolean>(false);
 
     function handleSave(rules: IRuleData[]) {
         rules.filter(rule => rule.hasModified).forEach(rule => {
@@ -72,14 +68,12 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
                             description: `${rule.name} 的 ${rule.banName} 规则 (${rule.startDate} 至 ${rule.endDate} ${rule.available_days} 天 ${rule.enabled ? "已启用" : "未启用"}) 已保存!`,
                         });
                         break;
-
                     case "Unique constraint":
                         notification.error({
                             title: "假期规则保存失败",
                             description: `${rule.name} 的 ${rule.banName} 规则 (${rule.startDate} 至 ${rule.endDate}) 保存失败! 因为已存在相同规则!`,
                         });
                         break;
-
                     default:
                         notification.error({
                             title: "假期规则保存失败",
@@ -91,21 +85,43 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
     }
 
     return (
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex justify-end items-center gap-2">
             <Checkbox checked={showHiddenRules} onChange={event => setShowHiddenRules(event.target.checked)}>
                 显示未启用规则
             </Checkbox>
 
             {isEditable && (
                 <Button
+                    color="magenta"
+                    variant="solid"
+                    onClick={() => setIsModifyHSModalOpen(true)}
+                >
+                    新建规则
+                </Button>
+            )}
+
+            <Button
+                color="lime"
+                variant="solid"
+                onClick={resetTableState}
+            >
+                还原表格
+            </Button>
+
+            {isEditable && (
+                <Button
                     color="green"
                     variant="solid"
-                    disabled={loading}
                     onClick={() => handleSave(ruleData)}
                 >
                     保存
                 </Button>
             )}
+
+            <ModifyHSModal
+                isModalOpen={isModifyHSModalOpen}
+                onClose={() => setIsModifyHSModalOpen(false)}
+            />
         </div>
     );
 }
