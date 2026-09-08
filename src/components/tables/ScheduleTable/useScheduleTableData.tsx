@@ -11,6 +11,8 @@ import {NotificationInstance} from "antd/es/notification/interface";
 import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
+import {getPersonRole} from "@/api/Person/getPersonRole";
+import {Role} from "@/prisma/generated/enums";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -40,23 +42,28 @@ export default function useScheduleTableData(
     stToolStatus: IScheduleTableTools,
     onCellClick: (info: IScheduleCellInfo) => void
 ): IScheduleTableData {
+    const {currentUser, notification} = useAppContext();
     const {current, refreshKey, refresh} = useScheduleTableContext();
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const {notification} = useAppContext();
+    const [role, setRole] = useState<Role | null>(null);
 
     // ✅ Effect 1：只管当月数据，showPrevMonth 变化时完全不触发
     useEffect(() => {
+        if (!currentUser) return;
+
         let isMounted = true;
         const formatCurrDate = current.format('YYYY-MM-DD');
 
         Promise.all([
             getWSbyMonth(formatCurrDate),
             getBanTypeColorMap(),
-        ]).then(([dbDataCurr, banTypeColorMap]) => {
+            getPersonRole(currentUser),
+        ]).then(([dbDataCurr, banTypeColorMap, role]) => {
             if (isMounted) {
                 setAsyncState(prev => ({...prev, dbDataCurr, banTypeColorMap, dbDataPrev: prev?.dbDataPrev ?? null}));
                 setLoading(false);
+                setRole(role);
             }
         });
 
@@ -64,7 +71,7 @@ export default function useScheduleTableData(
             isMounted = false;
             setLoading(true);
         };
-    }, [current, refreshKey]);
+    }, [current, refreshKey, currentUser]);
 
     // ✅ Effect 2：只管上月数据，当月数据变化时不重新请求上月
     useEffect(() => {
@@ -101,14 +108,14 @@ export default function useScheduleTableData(
         });
     }, [nameBansMap]);
 
-    if (!asyncState) {
+    if (!asyncState || !role) {
         return {dataSource, columns: [], loading};
     }
 
     const {dbDataCurr, dbDataPrev, banTypeColorMap} = asyncState;
     const {monthStatus} = dbDataCurr;
     const effectiveDbDataPrev = stToolStatus.showPrevMonth ? dbDataPrev : null;
-    const columns = getColumns(current, monthStatus, banTypeColorMap, effectiveDbDataPrev, stToolStatus.eraser, notification, refresh, onCellClick);
+    const columns = getColumns(current, monthStatus, banTypeColorMap, effectiveDbDataPrev, stToolStatus.eraser, notification, refresh, onCellClick, role);
 
     return {dataSource, columns, loading};
 }
@@ -121,12 +128,16 @@ function getColumns(
     eraser: boolean,
     notification: NotificationInstance,
     refresh: () => void,
-    onCellClick: (info: IScheduleCellInfo) => void
+    onCellClick: (info: IScheduleCellInfo) => void,
+    role: Role
 ): TableColumnsType {
     const daysInMonth = Array.from(
         {length: date.daysInMonth()},
         (_, i) => date.date(i + 1)
     );
+    const canEdit = monthStatus === '已发布'
+        ? role === 'SUPERADMIN'
+        : role !== 'USER';
 
     const columns: TableColumnsType = daysInMonth.map(day => {
         const index = day.format('YYYY-MM-DD');
@@ -177,31 +188,34 @@ function getColumns(
             },
             onCell: (record) => ({
                 style: {cursor: eraser ? 'none' : 'pointer'},
-                onClick: () => {
+                onClick: async () => {
+                    if (!canEdit) return;
+
                     if (eraser) {
-                        // 橡皮擦模式: 点击单元格, 直接清空单元格里的所有排程
-                        if (record[index]) {
-                            const banList: Array<string> = record[index];
-                            banList.forEach((banName, i) =>
-                                deleteWSRecord(index, banName, record.name).then(() => {
-                                    if (i === banList.length - 1) {
-                                        notification.warning({
-                                            title: '排班已删除',
-                                            description: `${record.name} 的 ${index} 的 ${banList.join('、')} 排班已删除!`
-                                        });
-                                        refresh();
-                                    }
-                                })
-                            );
-                        }
-                    } else {
-                        onCellClick({
-                            name: record.name,
-                            day,
-                            bans: record[index] ?? [],
+                        const banList: string[] = record[index] ?? [];
+                        if (!banList.length) return;
+
+                        await Promise.all(
+                            banList.map(banName =>
+                                deleteWSRecord(index, banName, record.name)
+                            )
+                        );
+
+                        notification.warning({
+                            title: '排班已删除',
+                            description: `${record.name} 的 ${index} 的 ${banList.join('、')} 排班已删除!`
                         });
+                        refresh();
+                        return;
                     }
+
+                    onCellClick({
+                        name: record.name,
+                        day,
+                        bans: record[index] ?? [],
+                    });
                 },
+
             }),
         };
     });
