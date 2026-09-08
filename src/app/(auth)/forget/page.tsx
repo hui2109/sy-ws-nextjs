@@ -16,9 +16,10 @@ const {Title, Text} = Typography;
 
 export default function Forget() {
     const router = useRouter();
-    const {notification} = useAppContext();
+    const {notification, resolvedTheme} = useAppContext();
     const [loading, setLoading] = useState(false);
     const currentYear = dayjs().year();
+    const isDark = resolvedTheme === "dark";
 
     const handleSubmit = async (values: IResetFormValues) => {
         setLoading(true);
@@ -50,26 +51,27 @@ export default function Forget() {
     };
 
     return (
-        <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 px-4">
+        <div className={`relative flex min-h-screen items-center justify-center bg-gradient-to-b px-4 ${isDark ? "from-slate-950 to-slate-900" : "from-slate-50 to-slate-100"}`}>
             <div className="w-full max-w-[380px]">
                 {/* 品牌标识 */}
                 <div className="mb-8 flex flex-col items-center">
-                    <Title level={3} className="!mb-1 !text-slate-900">
+                    <Title level={3} className={`!mb-1 ${isDark ? "!text-slate-100" : "!text-slate-900"}`}>
                         重置账号密码
                     </Title>
                     <div className="flex justify-center items-center my-2">
                         <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
                         <span className="text-pink-600 text-xl font-bold">{AppName}</span>
                     </div>
-                    <Text className="text-slate-500">请填写以下信息完成重置</Text>
+                    <Text className={isDark ? "!text-slate-400" : "!text-slate-500"}>请填写以下信息完成重置</Text>
                 </div>
 
                 {/* 重置卡片 */}
-                <div className="rounded-xl border border-slate-200 bg-white px-8 py-9 shadow-sm">
+                <div className={`rounded-xl border px-8 py-9 shadow-sm ${isDark ? "border-slate-700 bg-slate-800/80" : "border-slate-200 bg-white"}`}>
                     <Form<IResetFormValues>
                         layout="vertical"
                         requiredMark={false}
                         onFinish={handleSubmit}
+                        className={isDark ? "[&_.ant-form-item-label>label]:!text-slate-300" : ""}
                     >
                         <Form.Item
                             label="姓名"
@@ -77,9 +79,10 @@ export default function Forget() {
                             rules={[{required: true, message: "请输入姓名"}]}
                         >
                             <Input
-                                prefix={<UserOutlined className="text-slate-400"/>}
+                                prefix={<UserOutlined className={isDark ? "text-slate-500" : "text-slate-400"}/>}
                                 placeholder="请输入您的姓名"
                                 size="large"
+                                className={isDark ? "!border-slate-700 !bg-slate-900 [&_input]:!bg-slate-900 [&_input]:!text-slate-100 [&_input::placeholder]:!text-slate-500" : ""}
                             />
                         </Form.Item>
 
@@ -89,9 +92,10 @@ export default function Forget() {
                             rules={[{required: true, message: "请输入工号"}]}
                         >
                             <Input
-                                prefix={<IdcardOutlined className="text-slate-400"/>}
+                                prefix={<IdcardOutlined className={isDark ? "text-slate-500" : "text-slate-400"}/>}
                                 placeholder="请输入您的工号"
                                 size="large"
+                                className={isDark ? "!border-slate-700 !bg-slate-900 [&_input]:!bg-slate-900 [&_input]:!text-slate-100 [&_input::placeholder]:!text-slate-500" : ""}
                             />
                         </Form.Item>
 
@@ -101,9 +105,10 @@ export default function Forget() {
                             rules={[{required: true, message: "请输入新用户名"}]}
                         >
                             <Input
-                                prefix={<UserOutlined className="text-slate-400"/>}
+                                prefix={<UserOutlined className={isDark ? "text-slate-500" : "text-slate-400"}/>}
                                 placeholder="请输入新用户名"
                                 size="large"
+                                className={isDark ? "!border-slate-700 !bg-slate-900 [&_input]:!bg-slate-900 [&_input]:!text-slate-100 [&_input::placeholder]:!text-slate-500" : ""}
                             />
                         </Form.Item>
 
@@ -114,9 +119,10 @@ export default function Forget() {
                             hasFeedback
                         >
                             <Input.Password
-                                prefix={<LockOutlined className="text-slate-400"/>}
+                                prefix={<LockOutlined className={isDark ? "text-slate-500" : "text-slate-400"}/>}
                                 placeholder="请输入新密码"
                                 size="large"
+                                className={isDark ? "!border-slate-700 !bg-slate-900 [&_input]:!bg-slate-900 [&_input]:!text-slate-100 [&_input::placeholder]:!text-slate-500" : ""}
                             />
                         </Form.Item>
 
@@ -138,9 +144,10 @@ export default function Forget() {
                             ]}
                         >
                             <Input.Password
-                                prefix={<LockOutlined className="text-slate-400"/>}
+                                prefix={<LockOutlined className={isDark ? "text-slate-500" : "text-slate-400"}/>}
                                 placeholder="请再次输入新密码"
                                 size="large"
+                                className={isDark ? "!border-slate-700 !bg-slate-900 [&_input]:!bg-slate-900 [&_input]:!text-slate-100 [&_input::placeholder]:!text-slate-500" : ""}
                             />
                         </Form.Item>
 
@@ -151,7 +158,7 @@ export default function Forget() {
                                 size="large"
                                 loading={loading}
                                 block
-                                className="!bg-slate-900 hover:!bg-slate-800"
+                                className={isDark ? "!bg-slate-100 !text-slate-900 hover:!bg-white" : "!bg-slate-900 hover:!bg-slate-800"}
                             >
                                 重置密码
                             </Button>
@@ -160,7 +167,7 @@ export default function Forget() {
                         <div className="mt-4 flex justify-end">
                             <Link
                                 href="/login"
-                                className="text-xs !text-slate-400 transition-colors hover:text-slate-700"
+                                className={`text-xs transition-colors ${isDark ? "!text-slate-500 hover:!text-slate-300" : "!text-slate-400 hover:!text-slate-700"}`}
                             >
                                 返回登录
                             </Link>
@@ -168,7 +175,7 @@ export default function Forget() {
                     </Form>
                 </div>
 
-                <Text className="absolute bottom-3 inset-x-0 text-center text-xs text-slate-400">
+                <Text className={`absolute bottom-3 inset-x-0 text-center text-xs ${isDark ? "!text-slate-600" : "!text-slate-400"}`}>
                     Powered by NextJS © {currentYear} Created by Xuhui Zhang
                 </Text>
             </div>
