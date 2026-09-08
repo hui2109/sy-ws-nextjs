@@ -22,25 +22,9 @@ export async function getWSbyNameDateBanName(name: string, startDate: Date, endD
             status: "PUBLISHED"
         },
         select: {
-            workDate: true,
             banType: {
                 select: {
-                    banName: true,
                     color: true
-                }
-            },
-            scheduleAssignments: {
-                where: {
-                    person: {
-                        name: name
-                    }
-                },
-                select: {
-                    person: {
-                        select: {
-                            name: true
-                        }
-                    }
                 }
             }
         }

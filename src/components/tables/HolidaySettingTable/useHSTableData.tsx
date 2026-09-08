@@ -81,7 +81,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
     useEffect(() => {
         let isMounted = true;
 
-        getAllRules(showHiddenRules).then(rules => {
+        getAllRules(showHiddenRules, isEditable).then(rules => {
             if (isMounted) {
                 setRuleData(sortRuleData(rules));
                 setLoading(false);
@@ -92,7 +92,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
             isMounted = false;
             setLoading(true);
         };
-    }, [showHiddenRules]);
+    }, [showHiddenRules, isEditable]);
 
     // 生成过滤器选项
     const filterOptions = useMemo<FilterOptions>(() => buildFilterOptions(ruleData ?? []), [ruleData]);
@@ -106,7 +106,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
     const nameRowSpanMap = useMemo(() => computeNameRowSpanMap(tableData), [tableData]);
 
     const columns = useMemo<EditableColumn[]>(() => {
-        if (!validBanNames || !banTypeColorMap) return [];
+        if (!banTypeColorMap) return [];
 
         const getSortOrder = (key: SortKey): SortOrder => sortState.columnKey === key ? sortState.order : null;
 
@@ -205,7 +205,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 ),
             }] : []),
         ];
-    }, [validBanNames, banTypeColorMap, filterOptions, filterState, setRuleData, isEditable, nameRowSpanMap, sortState]);
+    }, [banTypeColorMap, filterOptions, filterState, setRuleData, isEditable, nameRowSpanMap, sortState]);
 
     const renderedColumns = useMemo(() => {
         if (columns.length === 0 || !validBanNames) return [];

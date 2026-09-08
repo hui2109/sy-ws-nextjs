@@ -37,7 +37,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
         ]).then(([validStaffs, validBanNames]) => {
             if (isMounted) {
                 setValidStaffs(validStaffs);
-                setValidBanNames(filteredRelaxBanNames(validBanNames));
+                setValidBanNames(filteredRelaxBanNames(validBanNames, ['补假']));
             }
         });
 
