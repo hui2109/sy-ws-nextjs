@@ -70,7 +70,7 @@ export const topMenuBar: MenuProps['items'] = [
     }
 ]
 
-export const scheduleToolsMenuBar: MenuProps['items'] = [
+export const scheduleToolsMenuBar = [
     {
         label: (
             <Link href='/scheduleTools/start' className="!text-lg font-bold !text-inherit block">
@@ -136,7 +136,7 @@ export const scheduleToolsMenuBar: MenuProps['items'] = [
         ),
         key: '/scheduleTools/holidaySettings',
     }
-]
+] satisfies NonNullable<MenuProps['items']>;
 
 export const statisticsMenuBar: MenuProps['items'] = [
     {
