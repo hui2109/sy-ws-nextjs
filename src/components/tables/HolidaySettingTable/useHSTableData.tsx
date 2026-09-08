@@ -57,7 +57,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
     const [ruleData, setRuleData] = useState<IRuleData[] | null>(null);
     const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
-    const [filterState, setFilterState] = useState<FilterState>({});
+    const [filterState, setFilterState] = useState<FilterState>(isEditable ? {} : {name: [currentUser ?? '']});
     const [sortState, setSortState] = useState<SortState>(EMPTY_SORT_STATE);
 
     useEffect(() => {
@@ -94,21 +94,12 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
         };
     }, [showHiddenRules]);
 
-    // 只读模式下, 默认将 姓名 过滤器设为 currentUser
-    const effectiveFilters = useMemo<FilterState>(() => {
-        const nameFilter = filterState.name !== undefined
-            ? filterState.name
-            : (!isEditable && currentUser ? [currentUser] : null);
-
-        return {...filterState, name: nameFilter};
-    }, [filterState, isEditable, currentUser]);
-
     // 生成过滤器选项
     const filterOptions = useMemo<FilterOptions>(() => buildFilterOptions(ruleData ?? []), [ruleData]);
 
     // 整张表唯一的数据处理链：ruleData -> filter -> sorter -> tableData
-    const tableData = useMemo(() => applyTableState(ruleData ?? [], effectiveFilters, sortState),
-        [ruleData, effectiveFilters, sortState],
+    const tableData = useMemo(() => applyTableState(ruleData ?? [], filterState, sortState),
+        [ruleData, filterState, sortState],
     );
 
     // rowSpan 永远只根据"最终可见数据"计算
@@ -130,7 +121,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 title: "姓名",
                 dataIndex: "name",
                 filters: filterOptions.names,
-                filteredValue: effectiveFilters.name ?? null,
+                filteredValue: filterState.name ?? null,
                 // 不提供 onFilter：实际筛选由 applyTableState 完成
                 onCell: record => ({rowSpan: nameRowSpanMap[record.key] ?? 1}),
             },
@@ -139,7 +130,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 title: "假期类型",
                 dataIndex: "banName",
                 filters: filterOptions.banNames,
-                filteredValue: effectiveFilters.banName ?? null,
+                filteredValue: filterState.banName ?? null,
                 render: value => (
                     <Badge
                         count={value}
@@ -154,7 +145,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 title: "开始日期",
                 dataIndex: "startDate",
                 filters: filterOptions.startDates,
-                filteredValue: effectiveFilters.startDate ?? null,
+                filteredValue: filterState.startDate ?? null,
                 editable: isEditable,
             },
             {
@@ -162,7 +153,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 title: "结束日期",
                 dataIndex: "endDate",
                 filters: filterOptions.endDates,
-                filteredValue: effectiveFilters.endDate ?? null,
+                filteredValue: filterState.endDate ?? null,
                 editable: isEditable,
             },
             {
@@ -192,7 +183,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 title: "启用?",
                 dataIndex: "enabled",
                 filters: filterOptions.enabled,
-                filteredValue: effectiveFilters.enabled ?? null,
+                filteredValue: filterState.enabled ?? null,
                 render: (value, record) => (
                     <Checkbox
                         checked={value}
@@ -214,7 +205,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 ),
             }] : []),
         ];
-    }, [validBanNames, banTypeColorMap, filterOptions, effectiveFilters, setRuleData, isEditable, nameRowSpanMap, sortState]);
+    }, [validBanNames, banTypeColorMap, filterOptions, filterState, setRuleData, isEditable, nameRowSpanMap, sortState]);
 
     const renderedColumns = useMemo(() => {
         if (columns.length === 0 || !validBanNames) return [];

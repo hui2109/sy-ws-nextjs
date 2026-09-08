@@ -101,7 +101,7 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
             )}
 
             <Button
-                color="lime"
+                color="green"
                 variant="solid"
                 onClick={resetTableState}
             >
@@ -110,7 +110,7 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
 
             {isEditable && (
                 <Button
-                    color="green"
+                    color="blue"
                     variant="solid"
                     onClick={() => handleSave(ruleData)}
                 >
