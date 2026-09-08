@@ -5,23 +5,46 @@ import {Modal} from "antd";
 import {exportCurrentTable} from "@/components/utils/exportCurrentTable";
 
 export default function ExportTableModal() {
-    const {notification} = useAppContext();
+    const {notification, currentTheme, setCurrentTheme, resolvedTheme} = useAppContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
     const {current, scheduleTableRef} = useScheduleTableContext();
 
-    const handleOk = async () => {
-        await exportCurrentTable(scheduleTableRef,
-            () => {
-                notification.success({
-                    title: '本月排班已导出',
-                    description: `${current.format('YYYY年M月')} 的所有排班已导出!`,
+    // 等待主题切换触发的重新渲染 + antd 动态样式表完全生效后，再进行截图导出
+    const waitForThemeApplied = () =>
+        new Promise<void>(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setTimeout(resolve, 50);
                 });
-                setIsModalOpen(false);
-            },
-            () => {
-                notification.error({title: '导出失败', description: '请稍后重试!'});
+            });
+        });
+
+    const handleOk = async () => {
+        // 深色模式下不能直接导出，需要先临时切成浅色模式，导出完成后再切回去
+        const isDark = resolvedTheme === 'dark';
+        try {
+            if (isDark) {
+                setCurrentTheme('light');
+                await waitForThemeApplied();
             }
-        );
+
+            await exportCurrentTable(scheduleTableRef,
+                () => {
+                    notification.success({
+                        title: '本月排班已导出',
+                        description: `${current.format('YYYY年M月')} 的所有排班已导出!`,
+                    });
+                    setIsModalOpen(false);
+                },
+                () => {
+                    notification.error({title: '导出失败', description: '请稍后重试!'});
+                }
+            );
+        } finally {
+            if (isDark) {
+                setCurrentTheme(currentTheme);
+            }
+        }
     };
 
     const handleCancel = () => {
