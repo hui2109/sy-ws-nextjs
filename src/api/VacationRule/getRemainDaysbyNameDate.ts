@@ -48,9 +48,7 @@ export default async function getRemainDaysbyNameDate(name: string, current_date
     const bu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '补假');
     const tiao_xiu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '调休假');
     const days = bu_jia.length - tiao_xiu_jia.length;
-    if (days !== 0) {
-        banNameRemainDaysMap.push({key: '调休假', days, color: tiao_xiu_jia[0]?.banType.color});
-    }
+    banNameRemainDaysMap.push({key: '调休假', days, color: tiao_xiu_jia[0]?.banType.color});
 
     return banNameRemainDaysMap;
 }

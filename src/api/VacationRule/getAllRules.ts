@@ -24,7 +24,6 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
             banType: {
                 select: {
                     banName: true,
-                    color: true
                 }
             }
         }
@@ -73,7 +72,7 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
             availableHalfDays,
             isHidden,
             person: {name},
-            banType: {banName: '调休假', color: tiao_xiu_jia[0]?.banType.color},
+            banType: {banName: '调休假'},
             used_days,
             left_days
         });
@@ -105,7 +104,7 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
                 endDate,
                 isHidden,
                 person: {name},
-                banType: {banName: '去年余假', color: last_jia[0]?.banType.color},
+                banType: {banName: '去年余假'},
                 availableHalfDays,
                 used_days,
                 left_days

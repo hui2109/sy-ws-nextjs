@@ -23,7 +23,6 @@ export interface IRuleData {
     used_days: number;
     available_days: number;
     enabled: boolean;
-    color: string;
     hasModified: boolean;
 }
 
@@ -279,7 +278,6 @@ function sortRuleData(rules: Awaited<ReturnType<typeof getAllRules>>): IRuleData
         used_days: rule.used_days,
         available_days: rule.availableHalfDays / 2,
         enabled: !rule.isHidden,
-        color: rule.banType.color,
         hasModified: false,
     })).sort(compareDefaultRuleData);
 }
