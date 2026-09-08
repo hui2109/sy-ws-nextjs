@@ -8,7 +8,7 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 export default async function deleteRule(key: number) {
-    prisma.vacationRule.deleteMany({
+    await prisma.vacationRule.deleteMany({
         where: {
             id: key
         }

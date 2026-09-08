@@ -7,8 +7,11 @@ import {components} from "@/components/tables/HolidaySettingTable/EditableCompon
 import saveRule from "@/api/VacationRule/saveRule";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import ModifyHSModal from "@/components/tables/HolidaySettingTable/ModifyHSModal";
+import {useHSTableContext} from "@/components/hooks/HSTableContext";
+import NewHSModal from "@/components/tables/HolidaySettingTable/NewHSModal";
 
 interface IHSTableTools {
+    tableData: IRuleData[];
     ruleData: IRuleData[];
     showHiddenRules: boolean;
     setShowHiddenRules: Dispatch<SetStateAction<boolean>>;
@@ -37,6 +40,7 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
                         假期{isEditable ? "设置" : "统计"}表
                     </div>
                     <HSTableTools
+                        tableData={tableData}
                         ruleData={ruleData}
                         showHiddenRules={showHiddenRules}
                         setShowHiddenRules={setShowHiddenRules}
@@ -54,9 +58,11 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
     );
 }
 
-function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable, resetTableState}: IHSTableTools) {
+function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules, isEditable, resetTableState}: IHSTableTools) {
     const {notification} = useAppContext();
+    const {refresh} = useHSTableContext();
     const [isModifyHSModalOpen, setIsModifyHSModalOpen] = useState<boolean>(false);
+    const [isNewHSModalOpen, setIsNewHSModalOpen] = useState<boolean>(false);
 
     function handleSave(rules: IRuleData[]) {
         rules.filter(rule => rule.hasModified).forEach(rule => {
@@ -67,6 +73,7 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
                             title: "假期规则已保存",
                             description: `${rule.name} 的 ${rule.banName} 规则 (${rule.startDate} 至 ${rule.endDate} ${rule.available_days} 天 ${rule.enabled ? "已启用" : "未启用"}) 已保存!`,
                         });
+                        refresh();
                         break;
                     case "Unique constraint":
                         notification.error({
@@ -94,16 +101,35 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
                 <Button
                     color="magenta"
                     variant="solid"
-                    onClick={() => setIsModifyHSModalOpen(true)}
+                    onClick={() => {
+                        handleSave(ruleData);
+                        setIsNewHSModalOpen(true);
+                    }}
                 >
-                    新建规则
+                    新增规则
+                </Button>
+            )}
+
+            {isEditable && (
+                <Button
+                    color="gold"
+                    variant="solid"
+                    onClick={() => {
+                        handleSave(ruleData);
+                        setIsModifyHSModalOpen(true);
+                    }}
+                >
+                    修改规则
                 </Button>
             )}
 
             <Button
                 color="green"
                 variant="solid"
-                onClick={resetTableState}
+                onClick={() => {
+                    handleSave(ruleData);
+                    resetTableState();
+                }}
             >
                 还原表格
             </Button>
@@ -121,6 +147,12 @@ function HSTableTools({ruleData, showHiddenRules, setShowHiddenRules, isEditable
             <ModifyHSModal
                 isModalOpen={isModifyHSModalOpen}
                 onClose={() => setIsModifyHSModalOpen(false)}
+                tableData={tableData}
+            />
+
+            <NewHSModal
+                isModalOpen={isNewHSModalOpen}
+                onClose={() => setIsNewHSModalOpen(false)}
             />
         </div>
     );

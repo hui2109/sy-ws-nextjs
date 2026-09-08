@@ -11,6 +11,7 @@ import deleteRule from "@/api/VacationRule/deleteRule";
 import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
+import {useHSTableContext} from "@/components/hooks/HSTableContext";
 
 export interface IRuleData {
     key: number;
@@ -52,6 +53,7 @@ const EMPTY_SORT_STATE: SortState = {columnKey: null, order: null};
 
 export default function useHSTableData(showHiddenRules: boolean, isEditable: boolean) {
     const {currentUser} = useAppContext();
+    const {refreshKey} = useHSTableContext();
     const [loading, setLoading] = useState<boolean>(true);
     const [ruleData, setRuleData] = useState<IRuleData[] | null>(null);
     const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
@@ -91,7 +93,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
             isMounted = false;
             setLoading(true);
         };
-    }, [showHiddenRules, isEditable]);
+    }, [showHiddenRules, isEditable, refreshKey]);
 
     // 生成过滤器选项
     const filterOptions = useMemo<FilterOptions>(() => buildFilterOptions(ruleData ?? []), [ruleData]);
