@@ -8,8 +8,11 @@ import {getWSbyNameDateBanName} from "@/api/WorkSchedule/getWSbyNameDateBanName"
 
 dayjs.extend(utc);
 
-export default async function getAllRules(showHidden: boolean, isEditable: boolean) {
+export default async function getAllRules(showHidden: boolean, isEditable: boolean, name?: string, need_lastJia: boolean = true) {
     const allVacationRules = await prisma.vacationRule.findMany({
+        where: {
+            ...(name ? {person: {name}} : {})
+        },
         select: {
             id: true,
             startDate: true,
@@ -78,6 +81,9 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
         });
         fake_rule_id--;
     }
+
+    // 不需要 去年余假 的情况下
+    if (!need_lastJia) return rulesWithStats.filter(rule => showHidden || !rule.isHidden);
 
     // 创建 去年余假 所对应的规则
     for (const yearName of Array(...yearNameSet)) {

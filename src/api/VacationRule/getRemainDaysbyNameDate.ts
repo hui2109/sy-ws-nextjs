@@ -1,57 +1,28 @@
 'use server';
 
 import "dotenv/config";
-import {prisma} from "@/prisma/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {getWSbyNameDateBanName} from "@/api/WorkSchedule/getWSbyNameDateBanName";
+import getAllRules from "@/api/VacationRule/getAllRules";
+import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 
 dayjs.extend(utc);
 
 export default async function getRemainDaysbyNameDate(name: string, current_date: string) {
     const date = dayjs.utc(current_date);
     const banNameRemainDaysMap: { key: string, days: number, color: string }[] = [];
+    // 只有每年的一月份才会计算 去年余假
+    const need_lastJia = date.isAfter(dayjs(`${date.year()}-01-01`)) && date.isBefore(dayjs(`${date.year()}-01-31`));
 
-    const validVacationRules = await prisma.vacationRule.findMany({
-        where: {
-            startDate: {
-                lte: date.toDate(),
-            },
-            endDate: {
-                gte: date.toDate(),
-            },
-            isHidden: false,
-            person: {
-                name: name
-            }
-        },
-        select: {
-            startDate: true,
-            endDate: true,
-            availableHalfDays: true,
-            banType: {
-                select: {
-                    banName: true,
-                    color: true
-                }
-            }
-        }
-    });
+    const banTypeColorMap = await getBanTypeColorMap();
+    const validVacationRules = await getAllRules(false, false, name, need_lastJia);
+
     for (const rule of validVacationRules) {
-        const WSRecords = await getWSbyNameDateBanName(name, rule.startDate, rule.endDate, rule.banType.banName);
-        banNameRemainDaysMap.push({key: rule.banType.banName, days: (rule.availableHalfDays) / 2 - WSRecords.length, color: rule.banType.color});
+        banNameRemainDaysMap.push({key: rule.banType.banName, days: rule.left_days, color: banTypeColorMap[rule.banType.banName]});
     }
-
-    // 手动计算 [调休假] 的总天数及剩余天数
-    const startDate = date.startOf('year').toDate();
-    const endDate = date.endOf('year').toDate();
-    const bu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '补假');
-    const tiao_xiu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '调休假');
-    const days = bu_jia.length - tiao_xiu_jia.length;
-    banNameRemainDaysMap.push({key: '调休假', days, color: tiao_xiu_jia[0]?.banType.color});
 
     return banNameRemainDaysMap;
 }
 
 // npx tsx src/api/VacationRule/getRemainDaysbyNameDate.ts
-// getRemainDaysbyNameDate('张旭辉', '2026-06-25');
+// getRemainDaysbyNameDate('张旭辉', '2026-01-25').then(r => console.log(r));
