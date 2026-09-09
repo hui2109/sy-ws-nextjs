@@ -5,23 +5,26 @@ import AuditTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/
 import CheckTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/CheckTableModal/CheckTableModal";
 import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
 import ExportTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/ExportTableModal/ExportTableModal";
+import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
+import {ScheduleStatusMap} from "@/configs/general";
 
 export default function ScheduleTableSideMenuModals() {
     const {isModalOpen, modalKey} = useSTSideMenuModalContext();
+    const {monthStatus} = useScheduleTableContext();
 
-    if (!isModalOpen) {
-        return null;
-    }
+    if (!isModalOpen) return null;
+
+    const canRender = monthStatus !== ScheduleStatusMap.PUBLISHED;
 
     switch (modalKey) {
         case 'qingkongpaiban':
-            return <ClearTableModal/>;
+            return (canRender && <ClearTableModal/>);
         case 'hechapaiban':
             return <CheckTableModal/>;
         case 'tijiaopaiban':
-            return <SubmitTableModal/>;
+            return (canRender && <SubmitTableModal/>);
         case 'shenhepaiban':
-            return <AuditTableModal/>;
+            return (canRender && <AuditTableModal/>);
         case 'daochupaiban':
             return <ExportTableModal/>;
         default:

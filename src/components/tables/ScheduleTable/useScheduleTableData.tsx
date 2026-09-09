@@ -35,7 +35,6 @@ export interface IScheduleCellInfo {
 type AsyncState = {
     dbDataCurr: Awaited<ReturnType<typeof getWSbyMonth>>;
     dbDataPrev: Awaited<ReturnType<typeof getWSbyMonth>> | null;
-    banTypeColorMap: Record<string, string>;
 };
 
 export default function useScheduleTableData(
@@ -43,27 +42,41 @@ export default function useScheduleTableData(
     onCellClick: (info: IScheduleCellInfo) => void
 ): IScheduleTableData {
     const {currentUser, notification} = useAppContext();
-    const {current, refreshKey, refresh} = useScheduleTableContext();
-    const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
+    const {current, refreshKey, refresh, setMonthStatus} = useScheduleTableContext();
     const [loading, setLoading] = useState<boolean>(true);
+    const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
+    const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
     const [role, setRole] = useState<Role | null>(null);
+
+    useEffect(() => {
+        if (!currentUser) return;
+        let isMounted = true;
+
+        Promise.all([
+            getBanTypeColorMap(),
+            getPersonRole(currentUser),
+        ]).then(([banTypeColorMap, role]) => {
+            if (isMounted) {
+                setBanTypeColorMap(banTypeColorMap);
+                setRole(role);
+            }
+        });
+
+        return () => {
+            isMounted = false;
+        }
+    }, [currentUser]);
 
     // ✅ Effect 1：只管当月数据，showPrevMonth 变化时完全不触发
     useEffect(() => {
-        if (!currentUser) return;
-
         let isMounted = true;
         const formatCurrDate = current.format('YYYY-MM-DD');
 
-        Promise.all([
-            getWSbyMonth(formatCurrDate),
-            getBanTypeColorMap(),
-            getPersonRole(currentUser),
-        ]).then(([dbDataCurr, banTypeColorMap, role]) => {
+        getWSbyMonth(formatCurrDate).then(dbDataCurr => {
             if (isMounted) {
-                setAsyncState(prev => ({...prev, dbDataCurr, banTypeColorMap, dbDataPrev: prev?.dbDataPrev ?? null}));
+                setAsyncState(prev => ({...prev, dbDataCurr, dbDataPrev: prev?.dbDataPrev ?? null}));
                 setLoading(false);
-                setRole(role);
+                setMonthStatus(dbDataCurr.monthStatus)
             }
         });
 
@@ -71,7 +84,7 @@ export default function useScheduleTableData(
             isMounted = false;
             setLoading(true);
         };
-    }, [current, refreshKey, currentUser]);
+    }, [current, refreshKey, setMonthStatus]);
 
     // ✅ Effect 2：只管上月数据，当月数据变化时不重新请求上月
     useEffect(() => {
@@ -108,11 +121,11 @@ export default function useScheduleTableData(
         });
     }, [nameBansMap]);
 
-    if (!asyncState || !role) {
+    if (!asyncState || !role || !banTypeColorMap) {
         return {dataSource, columns: [], loading};
     }
 
-    const {dbDataCurr, dbDataPrev, banTypeColorMap} = asyncState;
+    const {dbDataCurr, dbDataPrev} = asyncState;
     const {monthStatus} = dbDataCurr;
     const effectiveDbDataPrev = stToolStatus.showPrevMonth ? dbDataPrev : null;
     const columns = getColumns(current, monthStatus, banTypeColorMap, effectiveDbDataPrev, stToolStatus.eraser, notification, refresh, onCellClick, role);

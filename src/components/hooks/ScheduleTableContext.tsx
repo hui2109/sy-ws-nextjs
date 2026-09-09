@@ -4,6 +4,8 @@ import {Dayjs} from "dayjs";
 export const ScheduleTableContext = createContext<{
     current: Dayjs;
     setCurrent: Dispatch<SetStateAction<Dayjs>>;
+    monthStatus: string | null;
+    setMonthStatus: Dispatch<SetStateAction<string | null>>;
     refreshKey: number;
     refresh: () => void;
     scheduleTableRef: RefObject<HTMLDivElement | null>;
