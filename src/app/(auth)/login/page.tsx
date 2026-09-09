@@ -51,7 +51,7 @@ export default function Login() {
                     description:
                         `欢迎您, ${res.name} !`,
                 });
-                router.push("/");
+                router.replace("/mySchedule");
                 break;
         }
 
