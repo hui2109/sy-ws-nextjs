@@ -40,3 +40,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - npx prisma validate
 - npx prisma migrate dev --name v13
 - npx prisma generate
+
+## 如何迁移数据库
+
+- 清空指定数据库
+- 运行 migrateSqlite.tsx 中的相应代码行 (只能一行一行地执行, 不能同时执行多行)
+- 重建数据库自增索引
+- 所有指令详见 commands.sql

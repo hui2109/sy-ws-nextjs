@@ -1,8 +1,6 @@
 import "dotenv/config";
-import {sqlite} from "@/prisma/sqlite";
+import {sqlite} from "@/prisma/sqlite/sqlite";
 import {prisma} from "@/prisma/prisma";
-
-// npx tsx src/utils/migrateSqlite.tsx
 
 function parseSqliteTime(value: string) {
     const [hour, minute, secondPart = "0"] = value.split(":");
@@ -200,17 +198,23 @@ async function migrateToVacationRule() {
     for (const vacationRule of vacationRules) {
         const {id, start_date, end_date, available_days, personnel_id, bantype_id, is_deleted} = vacationRule as never;
 
-        await prisma.vacationRule.create({
-            data: {
-                id,
-                startDate: new Date(`${start_date}T00:00:00.000Z`),
-                endDate: new Date(`${end_date}T00:00:00.000Z`),
-                availableHalfDays: available_days * 2,
-                isHidden: is_deleted === 1,
-                personId: personnel_id,
-                banTypeId: bantype_id,
-            },
-        });
+        try {
+            await prisma.vacationRule.create({
+                data: {
+                    id,
+                    startDate: new Date(`${start_date}T00:00:00.000Z`),
+                    endDate: new Date(`${end_date}T00:00:00.000Z`),
+                    availableHalfDays: available_days * 2,
+                    isHidden: is_deleted === 1,
+                    personId: personnel_id,
+                    banTypeId: bantype_id,
+                },
+            });
+        } catch (e) {
+            console.error(e);
+            console.log('哈哈哈哈哈哈')
+            console.error({id, start_date, end_date, available_days, personnel_id, bantype_id, is_deleted});
+        }
     }
 }
 
@@ -231,5 +235,8 @@ async function migrateToBanTypeColor() {
     }
 }
 
+// npx tsx src/prisma/sqlite/migrateSqlite.tsx
 // migreateToWorkSchedule();
 // migrateToWPL();
+// migrateToLeaveAppointment();
+// migrateToVacationRule();
