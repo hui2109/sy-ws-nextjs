@@ -8,6 +8,7 @@ import NullText from "@/components/others/NullText";
 import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import {Dayjs} from "dayjs";
+import VacationIndicator from "@/components/others/VacationIndicator";
 
 export interface IWorkTableCellInfo {
     name: string;
@@ -86,9 +87,10 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
         const index = day.format('YYYY-MM-DD');
         return {
             title: (
-                <div className='flex flex-col items-center font-bold'>
+                <div className='flex flex-col items-center font-bold relative'>
                     <span>{Weekdays[day.day()]}</span>
                     <span>{day.date()}</span>
+                    <VacationIndicator date={day}/>
                 </div>
             ),
             dataIndex: index,

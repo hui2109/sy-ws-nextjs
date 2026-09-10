@@ -13,6 +13,7 @@ import {sortBanTypeList} from "@/components/utils/sortBanTypeList";
 import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
 import {getPersonRole} from "@/api/Person/getPersonRole";
 import {Role} from "@/prisma/generated/enums";
+import VacationIndicator from "@/components/others/VacationIndicator";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -156,9 +157,10 @@ function getColumns(
         const index = day.format('YYYY-MM-DD');
         return {
             title: (
-                <div className='flex flex-col items-center font-bold'>
+                <div className='flex flex-col items-center font-bold relative'>
                     <span>{Weekdays[day.day()]}</span>
                     <span>{day.date()}</span>
+                    <VacationIndicator date={day}/>
                 </div>
             ),
             dataIndex: index,
