@@ -3,7 +3,7 @@
 import React from 'react';
 import {ConfigProvider, Layout, Menu, theme} from 'antd';
 import {AppName} from "@/configs/general";
-import {IconFont, IconType} from "@/assets/icons/IconFont";
+import {IconFont, IconType} from "@/components/others/IconFont";
 import {usePathname} from 'next/navigation';
 import dayjs from "dayjs";
 import {menuBarStyle, topMenuBar} from "@/configs/menuBar";

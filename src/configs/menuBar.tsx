@@ -1,4 +1,4 @@
-import {IconFont, IconType} from "@/assets/icons/IconFont";
+import {IconFont, IconType} from "@/components/others/IconFont";
 import {MenuProps} from "antd";
 import React from "react";
 import Link from "next/link";

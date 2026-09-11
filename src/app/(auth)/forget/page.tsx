@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import {Button, Form, Input, Typography} from "antd";
 import {IdcardOutlined, LockOutlined, UserOutlined} from "@ant-design/icons";
 import {useAppContext} from "@/components/hooks/AppProvider";
-import {IconFont, IconType} from "@/assets/icons/IconFont";
+import {IconFont, IconType} from "@/components/others/IconFont";
 import {AppName} from "@/configs/general";
 import dayjs from "dayjs";
 import Link from "next/link";

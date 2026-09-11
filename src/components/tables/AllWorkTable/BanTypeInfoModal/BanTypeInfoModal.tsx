@@ -1,5 +1,5 @@
 import {Badge, Card, Empty, Modal} from "antd";
-import {IconFont, IconType} from "@/assets/icons/IconFont";
+import {IconFont, IconType} from "@/components/others/IconFont";
 import {CalendarOutlined, ClockCircleOutlined, FileTextOutlined, UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import {IWorkTableCellInfo} from "@/components/tables/AllWorkTable/useAllWorkTableData";
