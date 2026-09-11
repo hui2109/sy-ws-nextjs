@@ -12,6 +12,7 @@ import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
 import {useHSTableContext} from "@/components/hooks/HSTableContext";
+import compareDefaultRuleData from "@/components/utils/compareDefaultRuleData";
 
 export interface IRuleData {
     key: number;
@@ -282,16 +283,6 @@ function sortRuleData(rules: Awaited<ReturnType<typeof getAllRules>>): IRuleData
         enabled: !rule.isHidden,
         hasModified: false,
     })).sort(compareDefaultRuleData);
-}
-
-function compareDefaultRuleData(a: IRuleData, b: IRuleData): number {
-    const nameCompare = String(a.name).localeCompare(String(b.name), "zh-CN", {sensitivity: "base"});
-    if (nameCompare !== 0) return nameCompare;
-
-    const enabledCompare = Number(b.enabled) - Number(a.enabled);
-    if (enabledCompare !== 0) return enabledCompare;
-
-    return String(a.banName).localeCompare(String(b.banName), "zh-CN", {sensitivity: "base"});
 }
 
 function buildFilterOptions(ruleData: IRuleData[]): FilterOptions {

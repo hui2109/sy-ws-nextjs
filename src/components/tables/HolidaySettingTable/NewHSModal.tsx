@@ -67,7 +67,7 @@ export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
             !selectedBanName ||
             !dateRange?.[0] ||
             !dateRange?.[1] ||
-            totalNum === 0 ||
+            (totalNum === 0 && selectedBanName !== '年假') ||
             isEnabled === null
         ) return;
 

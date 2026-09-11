@@ -56,17 +56,16 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
     // 创建 调休假 所对应的规则
     for (const yearName of Array(...yearNameSet)) {
         const [year, name] = yearName.split('&&');
-        const isHidden = !(Number(year) === dayjs().year());
 
-        const date = dayjs(`${year}-01-01`);
-        const startDate = date.toDate();
-        const endDate = date.endOf('year').toDate();
+        const startDate = dayjs.utc(`${year}-01-01`).toDate();
+        const endDate = dayjs.utc(`${year}-12-31`).toDate();
         const bu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '补假');
         const tiao_xiu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '调休假');
 
         const availableHalfDays = bu_jia.length * 2;
         const used_days = tiao_xiu_jia.length;
         const left_days = availableHalfDays / 2 - used_days;
+        const isHidden = Number(year) !== dayjs().year() || left_days === 0;
 
         rulesWithStats.push({
             id: fake_rule_id,
@@ -88,34 +87,31 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
     // 创建 去年余假 所对应的规则
     for (const yearName of Array(...yearNameSet)) {
         const [year, name] = yearName.split('&&');
-        const isHidden = !(Number(year) === dayjs().year());
 
-        if (!showHidden && isHidden) continue;
-
-        const date = dayjs(`${year}-01-01`);
-        const startDate = date.toDate();
-        const endDate = date.set('date', 31).toDate();
+        const startDate = dayjs.utc(`${year}-01-01`).toDate();
+        const endDate = dayjs.utc(`${year}-01-31`).toDate();
         const last_jia = await getWSbyNameDateBanName(name, startDate, endDate, '去年余假');
 
         const availableHalfDays = rulesWithStats
-            .filter(rule => dayjs(rule.startDate).year() === (date.year() - 1) && rule.person.name === name && rule.banType.banName !== '去年余假')
+            .filter(rule => dayjs(rule.startDate).year() === (startDate.getFullYear() - 1) && rule.person.name === name)
             .reduce((sum, rule) => sum + rule.left_days, 0) * 2;
         const used_days = last_jia.length;
         const left_days = availableHalfDays / 2 - used_days;
+        const isHidden = Number(year) !== dayjs().year() || left_days === 0;
 
-        if (left_days !== 0) {
-            rulesWithStats.push({
-                id: fake_rule_id,
-                startDate,
-                endDate,
-                isHidden,
-                person: {name},
-                banType: {banName: '去年余假'},
-                availableHalfDays,
-                used_days,
-                left_days
-            });
-        }
+        if (!showHidden && isHidden) continue;
+
+        rulesWithStats.push({
+            id: fake_rule_id,
+            startDate,
+            endDate,
+            isHidden,
+            person: {name},
+            banType: {banName: '去年余假'},
+            availableHalfDays,
+            used_days,
+            left_days
+        });
         fake_rule_id--;
     }
 
