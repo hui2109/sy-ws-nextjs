@@ -301,17 +301,13 @@ function buildFilterOptions(ruleData: IRuleData[]): FilterOptions {
     });
 
     return {
-        names: Array.from(names).sort(compareChineseText).map(text => ({value: text, text})),
-        banNames: Array.from(banNames).sort(compareChineseText).map(text => ({value: text, text})),
-        startDates: Array.from(startDates).sort().map(text => ({value: text, text})),
-        endDates: Array.from(endDates).sort().map(text => ({value: text, text})),
+        names: Array.from(names).map(text => ({value: text, text})),
+        banNames: Array.from(banNames).map(text => ({value: text, text})),
+        startDates: Array.from(startDates).sort().reverse().map(text => ({value: text, text})),
+        endDates: Array.from(endDates).sort().reverse().map(text => ({value: text, text})),
         enabled: Array.from(enabled).sort((a, b) => Number(b) - Number(a))
             .map(value => ({value, text: value ? "已启用" : "未启用"})),
     };
-}
-
-function compareChineseText(a: string, b: string): number {
-    return a.localeCompare(b, "zh-CN", {sensitivity: "base"});
 }
 
 function normalizeFilters(filters: AntdFilters): FilterState {

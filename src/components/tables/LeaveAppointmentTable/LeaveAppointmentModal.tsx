@@ -10,6 +10,7 @@ import {useAppContext} from "@/components/hooks/AppProvider";
 import deleteLeaveAppointments from "@/api/LeaveAppointment/deleteLeaveAppointments";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
+import {compareName} from "@/components/utils/compareDefaultRuleData";
 
 interface ILeaveAppointmentModal {
     isModalOpen: boolean;
@@ -36,7 +37,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
             getValidBanNames(),
         ]).then(([validStaffs, validBanNames]) => {
             if (isMounted) {
-                setValidStaffs(validStaffs);
+                setValidStaffs(validStaffs.sort(compareName));
                 setValidBanNames(filteredRelaxBanNames(validBanNames, ['补假']));
             }
         });

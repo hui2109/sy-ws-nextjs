@@ -32,7 +32,7 @@ function getNamePinyin(name: string): string {
  * 只有姓名完全相同时才返回 0，
  * 这样才会继续比较 enabled。
  */
-function compareName(a: string, b: string): number {
+export function compareName(a: string, b: string): number {
     if (a === b) return 0;
 
     const aPinyin = getNamePinyin(a);

@@ -16,6 +16,7 @@ import createLeaveApply from "@/api/LeaveApply/createLeaveApply";
 import {leaveApplyStatusColorMap, leaveApplyStatusMap, leaveApplyTypeColorMap, leaveApplyTypeMap} from "@/configs/general";
 import {LeaveApplyStatus, LeaveApplyType} from "@/prisma/generated/enums";
 import getDatesBetween from "@/components/utils/getDatesBetween";
+import {compareName} from "@/components/utils/compareDefaultRuleData";
 
 const {TextArea} = Input;
 const {RangePicker} = DatePicker;
@@ -345,8 +346,7 @@ export default function LeaveApplyFormNew() {
                                         options={targetStaffOptions}
                                         showSearch={{
                                             optionFilterProp: 'value',
-                                            filterSort: (optionA, optionB) =>
-                                                (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
+                                            filterSort: (optionA, optionB) => compareName(optionA.value, optionB.value)
                                         }}
                                         classNames={{popup: {listItem: 'text-center'}}}
                                     />}

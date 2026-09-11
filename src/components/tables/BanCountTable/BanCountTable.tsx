@@ -6,6 +6,7 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import dayjs from "dayjs";
 import {getValidStaff} from "@/api/Person/getValidStaff";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import {compareName} from "@/components/utils/compareDefaultRuleData";
 
 interface IBanCountTableTools {
     currentYear: number;
@@ -102,8 +103,7 @@ function BanCountTableTools({currentYear, setCurrentYear, currentStaff, setCurre
                 options={targetStaffOptions}
                 showSearch={{
                     optionFilterProp: 'value',
-                    filterSort: (optionA, optionB) =>
-                        (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
+                    filterSort: (optionA, optionB) => compareName(optionA.value, optionB.value)
                 }}
                 classNames={{popup: {listItem: 'text-center'}}}
             />
