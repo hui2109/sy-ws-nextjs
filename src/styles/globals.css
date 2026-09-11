@@ -1,2 +1,6 @@
 @import "./iconfont/iconfont.css";
 @import "tailwindcss";
+
+@theme {
+    --breakpoint-desktop: 68.125rem;
+}

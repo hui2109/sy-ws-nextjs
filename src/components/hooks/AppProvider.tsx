@@ -6,10 +6,13 @@ import locale from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import {NotificationInstance} from "antd/es/notification/interface";
+import {DESKTOP_BREAKPOINT} from "@/configs/general";
 
 dayjs.locale('zh-cn');
 export type ThemeMode = "light" | "dark" | "system";
 export type ResolvedTheme = Exclude<ThemeMode, "system">;
+export type ViewportType = 'desktop' | 'mobile' | null;
+export type ResolvedViewport = Exclude<ViewportType, null>;
 
 interface IAppContext {
     notification: NotificationInstance;
@@ -18,6 +21,7 @@ interface IAppContext {
     currentTheme: ThemeMode;
     setCurrentTheme: Dispatch<SetStateAction<ThemeMode>>;
     resolvedTheme: ResolvedTheme;
+    resolvedViewport: ResolvedViewport;
 }
 
 export const AppContext = createContext<IAppContext | null>(null);
@@ -27,6 +31,7 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
     const [currentUser, setCurrentUser] = useState<string | null>(initialUser);
     const [currentTheme, setCurrentTheme] = useState<ThemeMode>('system');
     const [systemTheme, setSystemTheme] = useState<ResolvedTheme>('light');
+    const [viewport, setViewport] = useState<ViewportType>(null);
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -45,7 +50,25 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
         };
     }, []);
 
+    useEffect(() => {
+        const mediaQuery = window.matchMedia(`(min-width: ${DESKTOP_BREAKPOINT}px)`);
+        const updateViewport = () => {
+            setViewport(mediaQuery.matches ? 'desktop' : 'mobile');
+        };
+
+        // 首次读取窗口大小
+        updateViewport();
+
+        // 这里不会在每次 resize 时都触发, 只有窗口跨过 1090px 这个临界点时, change 才会触发
+        mediaQuery.addEventListener('change', updateViewport);
+
+        return () => {
+            mediaQuery.removeEventListener('change', updateViewport);
+        };
+    }, []);
+
     const resolvedTheme: ResolvedTheme = currentTheme === 'system' ? systemTheme : currentTheme;
+    const resolvedViewport: ResolvedViewport = viewport ? viewport : 'mobile';
 
     return (
         <ConfigProvider
@@ -69,7 +92,8 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
                 setCurrentUser,
                 currentTheme,
                 setCurrentTheme,
-                resolvedTheme
+                resolvedTheme,
+                resolvedViewport,
             }}>
                 {children}
             </AppContext>

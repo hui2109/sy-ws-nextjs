@@ -11,7 +11,8 @@ export const LatterBantype = ['OAE', 'OAF',
     '事假', '病假', '丧假', '婚假', '产假', '陪产假', '育儿假', '其他假',
     '补假', '休息']
 export const BanNamesForExcludePartner = ['休息'];
-export const PSPrefix = 'syfl'
+export const PSPrefix = 'syfl';
+export const DESKTOP_BREAKPOINT = 1090;
 
 export const ScheduleStatusMap = {
     PUBLISHED: "已发布",
