@@ -22,13 +22,11 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
 
     return (
         <Layout>
-            <Header
-                className="flex items-center justify-center !px-0 shadow-md"
-            >
+            <Header className="flex items-center justify-center !px-0 shadow-md">
                 <div className="flex items-center w-full max-w-[1300px] mx-auto px-6">
                     <Link href='/'>
                         <div className="flex items-center me-4 ms-[30px]">
-                            <IconFont type={IconType.wangzhantubiao} className="text-green-600 text-4xl me-2"/>
+                            <IconFont type={IconType.wangzhantubiao} className="text-green-600 me-2"/>
                             <span className="text-pink-600 text-xl font-bold tracking-wide">{AppName}</span>
                         </div>
                     </Link>

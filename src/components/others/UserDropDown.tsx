@@ -135,12 +135,12 @@ export default function UserDropDown() {
     const items: MenuProps["items"] = [
         {
             key: "avatar",
-            icon: <UploadOutlined className="text-[15px]"/>,
+            icon: <UploadOutlined className="text-[12px]"/>,
             label: "修改头像",
         },
         {
             key: "refresh",
-            icon: <ReloadOutlined className="text-[15px]"/>,
+            icon: <ReloadOutlined className="text-[12px]"/>,
             label: "强制更新",
         },
         {
@@ -149,7 +149,7 @@ export default function UserDropDown() {
         {
             key: "logout",
             danger: true,
-            icon: <LogoutOutlined className="text-[15px]"/>,
+            icon: <LogoutOutlined className="text-[12px]"/>,
             label: "退出登录",
         },
     ];
@@ -174,12 +174,12 @@ export default function UserDropDown() {
                 menu={{
                     items,
                     onClick: handleMenuClick,
-                    className: '!min-w-[160px] !border !border-white/30 !p-1.5 [&_.ant-dropdown-menu-title-content]:font-semibold',
+                    className: '!min-w-[160px] !border !border-white/30 !p-1.5 [&_.ant-dropdown-menu-title-content]:font-semibold max-desktop:!min-w-[140px]',
                 }}
             >
                 <button
                     type="button"
-                    className="flex h-[54px] cursor-pointer items-center gap-2 border-0 bg-transparent px-3 text-white focus:outline-none"
+                    className="flex h-[54px] cursor-pointer items-center gap-2 border-0 bg-transparent px-3 text-white focus:outline-none max-desktop:pl-2 max-desktop:pr-0"
                 >
                     <span className="relative inline-flex h-[36px] w-[36px]">
                         <Avatar

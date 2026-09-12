@@ -16,17 +16,17 @@ export default function ThemeDropDown() {
     const items: MenuProps["items"] = [
         {
             key: "light",
-            icon: <SunOutlined className="text-[15px]"/>,
+            icon: <SunOutlined className="text-[12px]"/>,
             label: "浅色模式",
         },
         {
             key: "dark",
-            icon: <MoonOutlined className="text-[15px]"/>,
+            icon: <MoonOutlined className="text-[12px]"/>,
             label: "深色模式",
         },
         {
             key: "system",
-            icon: <DesktopOutlined className="text-[15px]"/>,
+            icon: <DesktopOutlined className="text-[12px]"/>,
             label: "跟随系统",
         },
     ];
@@ -59,12 +59,12 @@ export default function ThemeDropDown() {
                     onClick: handleMenuClick,
                     selectable: true,
                     selectedKeys: [currentTheme],
-                    className: "!min-w-[160px] !border !border-white/30 !p-1.5 [&_.ant-dropdown-menu-title-content]:font-semibold",
+                    className: "!min-w-[160px] !border !border-white/30 !p-1.5 [&_.ant-dropdown-menu-title-content]:font-semibold max-desktop:!min-w-[140px]",
                 }}
             >
                 <button
                     type="button"
-                    className="flex h-[54px] cursor-pointer items-center border-0 bg-transparent px-3 text-white focus:outline-none"
+                    className="flex h-[54px] cursor-pointer items-center border-0 bg-transparent px-3 text-white focus:outline-none max-desktop:pl-0 max-desktop:pr-2"
                 >
                     <span className="text-[21px]">
                         {themeIcon}
