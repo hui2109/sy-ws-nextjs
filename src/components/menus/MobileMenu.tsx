@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import {Layout} from 'antd';
+import {Layout, theme} from 'antd';
 import {AppName} from "@/configs/general";
 import {IconFont, IconType} from "@/components/others/IconFont";
 import {usePathname, useRouter} from 'next/navigation';
@@ -24,6 +24,7 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
     const pathname = usePathname();
     const router = useRouter();
     const activePath = '/' + pathname.split('/')[1];
+    const {token: {colorBgContainer, borderRadiusLG}} = theme.useToken();
 
     const contentTheme = resolvedTheme === 'dark' ? '!bg-[#0f0f0f]' : '!bg-[#f5f5f5]';
     const footerTheme = resolvedTheme === 'dark'

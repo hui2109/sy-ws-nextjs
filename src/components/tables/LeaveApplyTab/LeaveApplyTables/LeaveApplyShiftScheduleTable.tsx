@@ -1,4 +1,4 @@
-import {Dayjs} from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 import getDatesBetween from "@/components/utils/getDatesBetween";
 import {Badge, Table, TableColumnsType} from "antd";
 import NullText from "@/components/others/NullText";
@@ -13,7 +13,7 @@ interface ILeaveApplyShiftScheduleTable {
 }
 
 export default function LeaveApplyShiftScheduleTable({personDateBansMap, banTypeColorMap, dateRange, names}: ILeaveApplyShiftScheduleTable) {
-    const {resolvedTheme} = useAppContext();
+    const {resolvedTheme, resolvedViewport} = useAppContext();
     const isDark = resolvedTheme === 'dark';
     const daysInRange = getDatesBetween(dateRange[0], dateRange[1]);
 
@@ -48,32 +48,35 @@ export default function LeaveApplyShiftScheduleTable({personDateBansMap, banType
         {
             title: '日期',
             dataIndex: 'dt',
-            width: 180,
+            width: resolvedViewport === 'mobile' ? 100 : 180,
             render: (date: string) => (
-                <span className="font-medium tabular-nums">{date}</span>
+                <span className="font-medium tabular-nums">{
+                    resolvedViewport === 'mobile' ? dayjs(date).format('YY/M/D') : date
+                }</span>
             ),
         },
         {
             title: `${names[0]} 的班`,
             dataIndex: 'myBan',
-            width: 240,
+            width: resolvedViewport === 'mobile' ? 100 : 240,
             render: renderBansBadge,
         },
         {
             title: `${names[1]} 的班`,
             dataIndex: 'hisBan',
-            width: 240,
+            width: resolvedViewport === 'mobile' ? 100 : 240,
             render: renderBansBadge,
         },
     ];
 
     return (
-        <div className={`overflow-hidden rounded-2xl border shadow-sm transition-colors ${
+        <div className={`overflow-hidden rounded-2xl border shadow-sm transition-colors max-desktop:rounded-xl ${
             isDark
                 ? 'border-slate-700/80 bg-slate-900/70 shadow-black/20'
                 : 'border-slate-200 bg-white shadow-slate-200/70'
         }`}>
-            <div className={`flex justify-between items-center gap-2 border-b px-4 py-3.5 ${
+            <div className={`flex justify-between items-center gap-2 border-b px-4 py-3.5
+                max-desktop:flex-col max-desktop:items-start max-desktop:px-2 max-desktop:py-2 ${
                 isDark
                     ? 'border-slate-700/80 bg-slate-800/80'
                     : 'border-slate-200 bg-slate-50/90'
@@ -102,15 +105,19 @@ export default function LeaveApplyShiftScheduleTable({personDateBansMap, banType
                 column={{align: "center"}}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 750}}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 400px)'}}
                 pagination={false}
-                size="middle"
+                size={resolvedViewport === 'mobile' ? 'small' : "middle"}
                 bordered
-                className={`overflow-hidden rounded-xl p-4 ${
-                    isDark
-                        ? '[&_.ant-table]:!bg-slate-900/30 [&_.ant-table-thead_.ant-table-cell]:!bg-slate-800/80 [&_.ant-table-tbody_.ant-table-cell]:!bg-slate-900/30 [&_.ant-table-cell]:!border-slate-700/80 [&_.ant-table-tbody>tr:hover>td]:!bg-slate-800/70'
-                        : '[&_.ant-table]:!bg-white [&_.ant-table-thead_.ant-table-cell]:!bg-slate-50 [&_.ant-table-tbody_.ant-table-cell]:!bg-white [&_.ant-table-cell]:!border-slate-200 [&_.ant-table-tbody>tr:hover>td]:!bg-slate-50'
+                className={`overflow-hidden rounded-xl p-4
+                max-desktop:p-0 max-desktop:!rounded-none
+                    ${isDark
+                    ? '[&_.ant-table]:!bg-slate-900/30 [&_.ant-table-thead_.ant-table-cell]:!bg-slate-800/80 [&_.ant-table-tbody_.ant-table-cell]:!bg-slate-900/30 [&_.ant-table-cell]:!border-slate-700/80 [&_.ant-table-tbody>tr:hover>td]:!bg-slate-800/70'
+                    : '[&_.ant-table]:!bg-white [&_.ant-table-thead_.ant-table-cell]:!bg-slate-50 [&_.ant-table-tbody_.ant-table-cell]:!bg-white [&_.ant-table-cell]:!border-slate-200 [&_.ant-table-tbody>tr:hover>td]:!bg-slate-50'
                 }`}
+                classNames={{
+                    header: {cell: 'max-desktop:!p-1'}
+                }}
             />
         </div>
     );

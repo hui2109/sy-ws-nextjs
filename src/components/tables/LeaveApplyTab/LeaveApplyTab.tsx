@@ -11,7 +11,7 @@ import {LeaveApplyTabContext} from "@/components/hooks/LeaveApplyTabContext";
 export type TLeaveApplyTabStatus = 'Sent' | 'Received';
 
 export default function LeaveApplyTab() {
-    const {currentUser, resolvedTheme} = useAppContext();
+    const {currentUser, resolvedTheme, resolvedViewport} = useAppContext();
     const isDark = resolvedTheme === 'dark';
     const [refreshKey, setRefreshKey] = useState<number>(0);
     const refresh = () => setRefreshKey(k => k + 1);
@@ -22,7 +22,7 @@ export default function LeaveApplyTab() {
         {
             key: '1',
             label: (
-                <div className="flex items-center gap-2">
+                <div className="flex justify-center items-center gap-2">
                     <PlusCircleOutlined/>
                     提交申请
                 </div>
@@ -34,7 +34,7 @@ export default function LeaveApplyTab() {
         {
             key: '2',
             label: (
-                <div className="flex items-center gap-2">
+                <div className="flex justify-center items-center gap-2">
                     <SendOutlined/>
                     我发起的
                 </div>
@@ -49,7 +49,7 @@ export default function LeaveApplyTab() {
         {
             key: '3',
             label: (
-                <div className="flex items-center gap-2">
+                <div className="flex justify-center items-center gap-2">
                     <InboxOutlined/>
                     我收到的
                 </div>
@@ -65,33 +65,39 @@ export default function LeaveApplyTab() {
 
     return (
         <LeaveApplyTabContext value={{refreshKey, refresh}}>
-            <div className={`rounded-2xl border shadow-sm transition-colors ${
-                isDark
-                    ? 'border-slate-700/80 bg-slate-900/60 shadow-black/20'
-                    : 'border-slate-200 bg-white shadow-slate-200/60'
+            <div className={`rounded-2xl border shadow-sm transition-colors
+            max-desktop:rounded-xl max-desktop:mx-2 max-desktop:mb-3
+            ${isDark
+                ? 'border-slate-700/80 bg-slate-900/60 shadow-black/20'
+                : 'border-slate-200 bg-white shadow-slate-200/60'
             }`}>
                 <Tabs
                     defaultActiveKey="1"
                     centered
+                    tabBarGutter={resolvedViewport === 'mobile' ? 0 : undefined}
                     items={tab_items}
                     onTabClick={(key) => key !== '1' && refresh()}
                     className="
                     [&_.ant-tabs-nav]:!mb-0
                     [&_.ant-tabs-nav]:!px-6
-                    [&_.ant-tabs-nav]:!pt-2
+                    max-desktop:[&_.ant-tabs-nav-list]:!w-full
 
                     [&_.ant-tabs-tab]:!px-5
                     [&_.ant-tabs-tab]:!py-4
                     [&_.ant-tabs-tab]:!text-[15px]
                     [&_.ant-tabs-tab]:!font-medium
+                    max-desktop:[&_.ant-tabs-tab]:!flex-1
+                    max-desktop:[&_.ant-tabs-tab]:!justify-center
+                    max-desktop:[&_.ant-tabs-tab]:!items-center
+                    max-desktop:[&_.ant-tabs-tab]:!px-2
+                    max-desktop:[&_.ant-tabs-tab]:!py-3
+                    max-desktop:[&_.ant-tabs-tab]:!text-[13px]
 
                     [&_.ant-tabs-tab_.anticon]:!text-base
                     [&_.ant-tabs-tab_.anticon]:!opacity-70
+                    max-desktop:[&_.ant-tabs-tab_.anticon]:!text-sm
 
-                    [&_.ant-tabs-tab-active_.ant-tabs-tab-btn]:!font-semibold
-                    [&_.ant-tabs-tab-active_.anticon]:!opacity-100
-
-                    [&_.ant-tabs-content-holder]:!p-5
+                    [&_.ant-tabs-tab-active.ant-tabs-tab-btn]:!font-semibold
 
                     [&_.ant-tabs-ink-bar]:!h-[3px]
                     [&_.ant-tabs-ink-bar]:!rounded-full

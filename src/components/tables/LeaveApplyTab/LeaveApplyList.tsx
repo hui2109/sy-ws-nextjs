@@ -72,7 +72,8 @@ export default function LeaveApplyList({name, leaveApplyTabStatus}: { name: stri
     }, [name, leaveApplyTabStatus, refreshKey]);
 
     return (
-        <div className={`rounded-2xl p-6 pt-3 transition-colors duration-200 ${
+        <div className={`rounded-none rounded-bl-2xl rounded-br-2xl p-6 pt-3 transition-colors duration-200
+            max-desktop:rounded-bl-xl max-desktop:rounded-br-xl max-desktop:p-3 max-desktop:pt-2 ${
             isDark
                 ? 'bg-slate-950 text-slate-100'
                 : 'bg-slate-50 text-slate-900'}`}
@@ -268,7 +269,7 @@ function LeaveApplyCard({leaveApplyRecord, loading, isDark, setIsLeaveApplyModal
                     >
                         申请事由
                     </div>
-                    <p className={`line-clamp-2 min-h-10 text-sm leading-5 ${
+                    <p className={`truncate min-h-10 text-sm leading-5 ${
                         isDark
                             ? 'text-slate-300'
                             : 'text-slate-600'}`}

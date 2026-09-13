@@ -75,28 +75,30 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
             locale={locale}
             theme={{
                 algorithm: resolvedTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                // token: resolvedTheme === 'dark' ? {
-                //     // 页面整体背景：柔和灰黑，避免纯黑带来的高对比刺激
-                //     colorBgLayout: '#26292d',
-                //     // Card、Form、Table 等普通容器背景
-                //     colorBgContainer: '#2d3136',
-                //     // Modal、Dropdown、Popover 等浮层背景
-                //     colorBgElevated: '#353a40',
-                // } : {}
+                token: resolvedTheme === 'dark' ? {
+                    // 页面整体背景：柔和灰黑，避免纯黑带来的高对比刺激
+                    colorBgLayout: '#26292d',
+                    // Card、Form、Table 等普通容器背景
+                    // colorBgContainer: '#2d3136',
+                    // Modal、Dropdown、Popover 等浮层背景
+                    colorBgElevated: '#353a40',
+                } : {}
             }}
         >
-            {contextHolder}
-            <AppContext value={{
-                notification: api,
-                currentUser,
-                setCurrentUser,
-                currentTheme,
-                setCurrentTheme,
-                resolvedTheme,
-                resolvedViewport,
-            }}>
-                {children}
-            </AppContext>
+            <ThemeBackground>
+                {contextHolder}
+                <AppContext value={{
+                    notification: api,
+                    currentUser,
+                    setCurrentUser,
+                    currentTheme,
+                    setCurrentTheme,
+                    resolvedTheme,
+                    resolvedViewport,
+                }}>
+                    {children}
+                </AppContext>
+            </ThemeBackground>
         </ConfigProvider>
     );
 }
@@ -107,4 +109,14 @@ export function useAppContext() {
         throw new Error('useAppContext must be used within an AppProvider');
     }
     return context;
+}
+
+function ThemeBackground({children}: { children: React.ReactNode }) {
+    const {token} = theme.useToken();
+
+    return (
+        <div className="min-h-dvh" style={{backgroundColor: token.colorBgLayout}}>
+            {children}
+        </div>
+    );
 }

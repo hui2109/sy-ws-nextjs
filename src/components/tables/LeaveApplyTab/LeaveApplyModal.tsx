@@ -21,7 +21,7 @@ interface ILeaveApplyModal {
 }
 
 export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApplyDetails, leaveApplyTabStatus}: ILeaveApplyModal) {
-    const {currentUser, notification} = useAppContext();
+    const {currentUser, notification, resolvedViewport} = useAppContext();
     const {refresh} = useLeaveApplyTabContext();
     const {id, leaveApplyType, applyUser, targetStaff, status} = clickedLeaveApplyDetails;
     const [role, setRole] = useState<Role | null>(null);
@@ -69,6 +69,8 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
 
     function handleApprove() {
         modal.confirm({
+            centered: true,
+            width: resolvedViewport === 'mobile' ? 360 : undefined,
             title: `确定通过 ${formApplicant} 的 ${leaveApplyTypeMap[leaveApplyType]} 申请?`,
             content: (
                 <div className='flex items-center px-1 pb-3.5 pt-2'>
@@ -121,6 +123,12 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                 open={isModalOpen}
                 onOk={onClose}
                 onCancel={onClose}
+                width={resolvedViewport === 'mobile' ? '100%' : '80%'}
+                centered
+                classNames={{
+                    body: 'min-h-3',
+                    container: 'max-desktop:!p-4'
+                }}
                 footer={(_, {OkBtn}) => {
                     if (!canReview) {
                         return <OkBtn/>;
@@ -195,8 +203,6 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                         </div>
                     );
                 }}
-                width={'80%'}
-                centered
             >
                 <LeaveApplyFormLoad clickedLeaveApplyDetails={clickedLeaveApplyDetails}/>
             </Modal>
@@ -208,6 +214,8 @@ export default function LeaveApplyModal({isModalOpen, onClose, clickedLeaveApply
                 okText="确定退回"
                 cancelText="点错了"
                 okButtonProps={{danger: true}}
+                width={resolvedViewport === 'mobile' ? 360 : undefined}
+                centered
                 footer={(_, {OkBtn, CancelBtn}) => {
                     return (
                         <div className='flex justify-end items-center gap-2'>

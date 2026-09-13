@@ -167,7 +167,7 @@ export default function MyWorkCalendar() {
 
     return (
         <div className={`overflow-hidden rounded-2xl border p-5 shadow-sm
-            max-desktop:rounded-xl max-desktop:p-2
+            max-desktop:rounded-xl max-desktop:p-2 max-desktop:mx-2 max-desktop:mb-3
             ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
             <Calendar
                 value={current}
@@ -205,13 +205,11 @@ export default function MyWorkCalendar() {
                             max-desktop:gap-2 max-desktop:rounded-lg max-desktop:p-2
                             ${isDark ? 'border-slate-700 bg-slate-800/30' : 'border-slate-100 bg-slate-50/80'}`}>
                             <div className="max-desktop:min-w-0 max-desktop:flex-1">
-                                <div className={`text-lg font-semibold
-                                    max-desktop:text-sm
+                                <div className={`text-lg font-semibold whitespace-nowrap max-desktop:text-sm
                                     ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
                                     {value.format('YYYY 年 M 月')}
                                 </div>
-                                <div className={`mt-0.5 text-xs
-                                    max-desktop:truncate max-desktop:text-[10px]
+                                <div className={`mt-0.5 text-xs whitespace-nowrap max-desktop:text-[9px]
                                     ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                                     {currentUser} 的个人排班表
                                 </div>

@@ -18,7 +18,7 @@ interface ILeaveApplyFormLoad {
 }
 
 export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApplyFormLoad) {
-    const {resolvedTheme} = useAppContext();
+    const {resolvedTheme, resolvedViewport} = useAppContext();
     const isDark = resolvedTheme === 'dark';
     const {status, leaveApplyType, dateRange, applyUser, targetStaff, reason, assignmentsJson, createdDate} = clickedLeaveApplyDetails;
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
@@ -46,13 +46,15 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
     const valueCellClassName = isDark ? 'border-slate-700/80 bg-slate-900/35' : 'border-slate-200 bg-white';
 
     return (
-        <div className="space-y-5">
-            <div className={`overflow-hidden rounded-2xl border shadow-sm transition-colors ${
+        <div className="space-y-5 max-desktop:space-y-3">
+            <div className={`overflow-hidden rounded-2xl border shadow-sm transition-colors
+                max-desktop:rounded-xl ${
                 isDark
                     ? 'border-slate-700/80 bg-slate-900/70 shadow-black/20'
                     : 'border-slate-200 bg-white shadow-slate-200/70'
             }`}>
-                <div className={`flex items-center justify-between gap-3 border-b px-5 py-4 ${
+                <div className={`flex items-center justify-between gap-2 border-b px-5 py-4
+                    max-desktop:flex-col max-desktop:items-start max-desktop:px-2 max-desktop:py-2 ${
                     isDark
                         ? 'border-slate-700/80 bg-slate-800/80'
                         : 'border-slate-200 bg-slate-50/90'}`}>
@@ -73,13 +75,14 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                         申请人：{applyUser}
                     </div>
                 </div>
-                <div className="p-5">
+                <div className="p-5 max-desktop:p-2">
                     <div className={`overflow-hidden rounded-xl border ${isDark ? 'border-slate-700/80' : 'border-slate-200'}`}>
-                        <div className="grid grid-cols-[150px_minmax(0,1fr)]">
-                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
+                        <div className="grid grid-cols-[150px_minmax(0,1fr)] max-desktop:grid-cols-[80px_minmax(0,1fr)]">
+                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium
+                            max-desktop:min-h-[54px] max-desktop:px-3 max-desktop:py-2 max-desktop:text-[13px] ${labelCellClassName}`}>
                                 申请状态
                             </div>
-                            <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
+                            <div className={`flex items-center border-b px-4 py-2.5 max-desktop:px-2.5 max-desktop:py-2 ${valueCellClassName}`}>
                                 <Tag
                                     color={leaveApplyStatusColorMap[status]}
                                     variant='solid'
@@ -89,12 +92,13 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                                 </Tag>
                             </div>
 
-                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
+                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium
+                            max-desktop:min-h-[54px] max-desktop:px-3 max-desktop:py-2 max-desktop:text-[13px] ${labelCellClassName}`}>
                                 申请类别
                             </div>
-                            <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
+                            <div className={`flex items-center border-b px-4 py-2.5 max-desktop:px-2.5 max-desktop:py-2 ${valueCellClassName}`}>
                                 <Select
-                                    className="w-full max-w-[180px] text-center"
+                                    className="w-full max-w-[180px] text-center max-desktop:max-w-none"
                                     value={leaveApplyType}
                                     classNames={{popup: {listItem: 'text-center'}}}
                                     labelRender={(labelInValueType) => (
@@ -108,33 +112,38 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                                 />
                             </div>
 
-                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
+                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium max-desktop:min-h-[54px] max-desktop:px-3 max-desktop:py-2 max-desktop:text-[13px] ${labelCellClassName}`}>
                                 日期范围
                             </div>
-                            <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
+                            <div className={`flex items-center border-b px-4 py-2.5 max-desktop:px-2.5 max-desktop:py-2 ${valueCellClassName}`}>
                                 <RangePicker
-                                    className="w-full max-w-[350px]"
+                                    format={resolvedViewport === 'mobile' ? 'YY/M/D' : 'YYYY-MM-DD'}
+                                    className="w-full max-w-[350px] max-desktop:max-w-none"
+                                    classNames={{input: 'text-center'}}
                                     value={dateRange}
+                                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                                     disabled
                                 />
                             </div>
 
-                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
+                            <div className={`flex min-h-[60px] items-center border-b border-r px-4 py-3 text-sm font-medium
+                            max-desktop:min-h-[54px] max-desktop:px-3 max-desktop:py-2 max-desktop:text-[13px] ${labelCellClassName}`}>
                                 {isAskOff ? '请假人' : isShiftSchedule ? '换班对象' : '调整人员'}
                             </div>
-                            <div className={`flex items-center border-b px-4 py-2.5 ${valueCellClassName}`}>
+                            <div className={`flex items-center border-b px-4 py-2.5 max-desktop:px-2.5 max-desktop:py-2 ${valueCellClassName}`}>
                                 <Select
-                                    className="w-full max-w-[180px] text-center"
+                                    className="w-full max-w-[180px] text-center max-desktop:max-w-none"
                                     value={isAskOff ? applyUser : targetStaff}
                                     classNames={{popup: {listItem: 'text-center'}}}
                                     disabled
                                 />
                             </div>
 
-                            <div className={`flex flex-col min-h-[170px] justify-center border-r px-4 py-3 text-sm font-medium ${labelCellClassName}`}>
+                            <div className={`flex flex-col min-h-[170px] justify-center border-r px-4 py-3 text-sm font-medium
+                            max-desktop:min-h-[150px] max-desktop:px-3 max-desktop:py-2 max-desktop:text-[13px] ${labelCellClassName}`}>
                                 <div>申请理由</div>
                             </div>
-                            <div className={`flex items-center px-4 py-5 ${valueCellClassName}`}>
+                            <div className={`flex items-center px-4 pt-3 pb-5 max-desktop:px-2.5 ${valueCellClassName}`}>
                                 <TextArea
                                     rows={5}
                                     value={reason}
@@ -170,7 +179,8 @@ export default function LeaveApplyFormLoad({clickedLeaveApplyDetails}: ILeaveApp
                     />
                 )}
             </div>
-            <div className={`mt-6 flex items-center justify-end gap-2 border-t px-1 pt-4 text-xs ${
+            <div className={`mt-6 flex items-center justify-end gap-2 border-t px-1 pt-4 text-xs max-desktop:mt-4
+             ${
                 isDark
                     ? 'border-slate-700 text-slate-400'
                     : 'border-slate-200 text-slate-500'
