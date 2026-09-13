@@ -34,19 +34,19 @@ export default function DateJump({picker, current, setCurrent}: IDateJumpProps) 
     }
 
     const extraFooter = (
-        <div className="flex justify-between">
-            <Button type="default" onClick={handleJumpToToday} size="small">
+        <div className="flex justify-end items-center gap-2 p-2">
+            <Button onClick={handleJumpToToday} size="small" type='primary'>
                 选择今天
             </Button>
-            <Button type="default" onClick={() => setOpen(false)} size="small">
+            <Button onClick={() => setOpen(false)} size="small">
                 关闭
             </Button>
         </div>
     );
 
     return (
-        <Space>
-            <Button type="primary" onClick={handlePreClick} size="small">
+        <Space.Compact>
+            <Button type="primary" onClick={handlePreClick} size="small" className={'max-desktop:!text-[12px] max-desktop:!p-0.5'}>
                 {picker === 'month' ? '上个月' : '上一年'}
             </Button>
             <DatePicker
@@ -60,11 +60,17 @@ export default function DateJump({picker, current, setCurrent}: IDateJumpProps) 
                 allowClear={false}
                 renderExtraFooter={() => extraFooter}
                 size="small"
-                classNames={{input: 'text-center'}}
+                classNames={{
+                    popup: {
+                        root: '!left-1/2 !-translate-x-1/2',
+                        footer: '[&_.ant-picker-footer-extra]:!p-0'
+                    },
+                    input: 'text-center'
+                }}
             />
-            <Button type="primary" onClick={handleNexClick} size="small">
+            <Button type="primary" onClick={handleNexClick} size="small" className={'max-desktop:!text-[12px] max-desktop:!p-0.5'}>
                 {picker === 'month' ? '下个月' : '下一年'}
             </Button>
-        </Space>
+        </Space.Compact>
     )
 }

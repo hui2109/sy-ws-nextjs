@@ -13,8 +13,7 @@ export function MonthStatusBadge(monthStatus: string) {
         <Badge
             count={monthStatus}
             color={monthStatusColorMap[monthStatus] ?? 'blue'}
-            classNames={{indicator: '!rounded-lg !font-bold !text-[14px]'}}
-            size='medium'
+            classNames={{indicator: '!rounded-lg !font-bold !text-[14px] max-desktop:!text-[12px]'}}
         />
     );
 }

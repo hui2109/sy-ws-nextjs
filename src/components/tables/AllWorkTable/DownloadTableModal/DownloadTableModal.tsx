@@ -63,6 +63,7 @@ export default function DownloadTableModal({isModalOpen, onClose, allWorkTableRe
             cancelText="点错了"
             okButtonProps={{type: "primary"}}
             classNames={{body: 'min-h-3'}}
+            width={360}
         />
     );
 }

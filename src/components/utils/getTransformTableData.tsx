@@ -47,7 +47,11 @@ export function getTransformTableData(dbData: PersonDateBansMap, current: Dayjs)
     // 构建 columns
     const columns: ColumnsType<IBanTableRow> = [
         {
-            title: `${current.format('YYYY/M')}`,
+            title: (
+                <div className='max-desktop:!text-[12px]'>
+                    {current.format('YYYY/M')}
+                </div>
+            ),
             dataIndex: 'date',
             fixed: 'left',
             width: 60,
@@ -55,15 +59,19 @@ export function getTransformTableData(dbData: PersonDateBansMap, current: Dayjs)
                 const currDate = dayjs(text);
                 const xingqi = Weekdays[currDate.day()];
                 return (
-                    <div className='flex flex-col items-center justify-center gap-1 font-bold'>
+                    <div className='flex flex-col items-center justify-center font-bold max-desktop:!text-[12px]'>
                         <div>{currDate.date()}</div>
                         <div>{'(' + xingqi + ')'}</div>
                     </div>
                 )
             },
         },
-        ...sortedBanNames.map((banName) => ({
-            title: banName,
+        ...sortedBanNames.map(banName => ({
+            title: (
+                <div className='max-desktop:!text-[12px]'>
+                    {banName}
+                </div>
+            ),
             dataIndex: banName,
             render: (personNames: string[], record: IBanTableRow) => PeopleBadge(personNames, record, banName),
         })),

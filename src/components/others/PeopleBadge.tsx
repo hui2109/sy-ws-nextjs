@@ -11,29 +11,30 @@ export interface IBanTableRow {
 export function PeopleBadge(personNames: string[], record: IBanTableRow, banName: string) {
     const length = personNames.length;
     const currDate = dayjs(record.date);
+    const mobileText = 'max-desktop:!text-[11px]';
 
     switch (length) {
         case 0:
-            return <Badge count={'暂无排班'} color={'gray'} classNames={{indicator: '!rounded-lg !font-bold'}}/>
+            return <Badge count={'暂无排班'} color={'gray'} classNames={{indicator: `!rounded-lg !font-bold ${mobileText}`}}/>
         case 1:
             return (
-                <div className='flex flex-col items-center justify-center gap-1'>
-                    <Badge count={'1人'} color={'blue'} classNames={{indicator: '!rounded-lg !font-bold'}}/>
+                <div className={`flex flex-col items-center justify-center gap-1 ${mobileText}`}>
+                    <Badge count={'1人'} color={'blue'} classNames={{indicator: `!rounded-lg !font-bold ${mobileText}`}}/>
                     <div>{personNames[0]}</div>
                 </div>
             );
         case 2:
             return (
-                <div className='flex flex-col items-center justify-center gap-1'>
-                    <Badge count={'2人'} color={'green'} classNames={{indicator: '!rounded-lg !font-bold'}}/>
+                <div className={`flex flex-col items-center justify-center gap-1 ${mobileText}`}>
+                    <Badge count={'2人'} color={'green'} classNames={{indicator: `!rounded-lg !font-bold ${mobileText}`}}/>
                     <div>{personNames[0]}</div>
                     <div>{personNames[1]}</div>
                 </div>
             );
         case 3:
             return (
-                <div className='flex flex-col items-center justify-center gap-1'>
-                    <Badge count={'3人'} color={'gold'} classNames={{indicator: '!rounded-lg !font-bold'}}/>
+                <div className={`flex flex-col items-center justify-center gap-1 ${mobileText}`}>
+                    <Badge count={'3人'} color={'gold'} classNames={{indicator: `!rounded-lg !font-bold ${mobileText}`}}/>
                     <div>{personNames[0]}</div>
                     <div>{personNames[1]}</div>
                     <div>{personNames[2]}</div>
@@ -41,7 +42,7 @@ export function PeopleBadge(personNames: string[], record: IBanTableRow, banName
             )
         default:
             const popTitle = (
-                <div className={'font-bold bg-indigo-500 text-white p-3 rounded-tl-lg rounded-tr-lg text-center'}>
+                <div className={'font-bold bg-indigo-500 text-white p-3 rounded-tl-lg rounded-tr-lg text-center max-desktop:p-2'}>
                     {`${currDate.format('YYYY年M月D日')} ${banName} 班的所有人员`}
                 </div>
             );
@@ -52,8 +53,8 @@ export function PeopleBadge(personNames: string[], record: IBanTableRow, banName
             );
 
             return (
-                <div className='flex flex-col items-center justify-center gap-1'>
-                    <Badge count={`${length}人`} color={'magenta'} classNames={{indicator: '!rounded-lg !font-bold'}}/>
+                <div className={`flex flex-col items-center justify-center gap-1 ${mobileText}`}>
+                    <Badge count={`${length}人`} color={'magenta'} classNames={{indicator: `!rounded-lg !font-bold ${mobileText}`}}/>
                     <div>{personNames[0]}</div>
                     <div>{personNames[1]}</div>
                     <div>{personNames[2]}</div>
@@ -63,10 +64,10 @@ export function PeopleBadge(personNames: string[], record: IBanTableRow, banName
                         trigger="click"
                         classNames={{
                             container: '!p-0',
-                            root: '!max-w-[400px]'
+                            root: '!max-w-[400px] max-desktop:!max-w-[300px]'
                         }}
                     >
-                        <Badge count={'等等'} color={'purple'} classNames={{indicator: '!rounded-lg !font-bold'}} style={{cursor: 'pointer'}}/>
+                        <Badge count={'等等'} color={'purple'} classNames={{indicator: `!rounded-lg !font-bold ${mobileText}`}} style={{cursor: 'pointer'}}/>
                     </Popover>
                 </div>
             )
