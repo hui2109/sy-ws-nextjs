@@ -46,19 +46,20 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
 
             <Footer className={`fixed bottom-0 left-0 z-50 !flex !h-[64px] !w-full !p-0 border-t ${footerTheme}`}>
                 {mobileMenu.map(item =>
-                    <button
+                    <div
                         key={item.path}
-                        type="button"
                         onClick={() => router.push(item.path)}
                         className={`flex flex-1 flex-col items-center justify-center gap-1 border-0 bg-transparent ${activePath === item.path ? '!text-[#4978eb]' : menuText}`}
                     >
-                        <IconFont
-                            type={item.icon}
-                            useSvg={item.useSvg}
-                            className={`!text-xl ${item.iconClass}`}
-                        />
+                        <div className="flex h-6 w-6 items-center justify-center">
+                            <IconFont
+                                type={item.icon}
+                                useSvg={item.useSvg}
+                                className={`!text-xl !leading-none ${item.iconClass}`}
+                            />
+                        </div>
                         <span className="text-xs font-bold">{item.title}</span>
-                    </button>
+                    </div>
                 )}
             </Footer>
         </Layout>
