@@ -117,9 +117,10 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
     return (
         <Modal
             loading={!selectedCell}
+            width={360}
             title={(
                 <>
-                    <div className='flex items-center'>
+                    <div className='flex items-center max-desktop:text-[14px]'>
                         <div className={`font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
                             {`预约休假: ${selectedCell?.day.format("M月D日")} (${Weekdays[selectedCell?.day.day() ?? 0]}) 第`}
                         </div>

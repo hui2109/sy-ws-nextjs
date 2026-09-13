@@ -4,8 +4,10 @@ import useLeaveAppointmentTableData, {ILATableCellInfo} from "@/components/table
 import DateJump from "@/components/others/DateJump";
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import LeaveAppointmentModal from "@/components/tables/LeaveAppointmentTable/LeaveAppointmentModal";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 export default function LeaveAppointmentTable() {
+    const {resolvedViewport} = useAppContext();
     const [isLAModalOpen, setIsLAModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<ILATableCellInfo | null>(null);
     const handleLeaveAppointmentTableCellClick = useCallback((info: ILATableCellInfo) => {
@@ -15,22 +17,22 @@ export default function LeaveAppointmentTable() {
     const {dataSource, columns, loading} = useLeaveAppointmentTableData(handleLeaveAppointmentTableCellClick);
 
     return (
-        <div>
+        <div className='max-desktop:px-3 max-desktop:pb-4'>
             <Table
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 500}}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 260px)'}}
                 pagination={false}
                 title={() => <LeaveAppointmentTableTools/>}
                 footer={() => ''}
                 column={{align: 'center'}}
-                size={'large'}
+                size={resolvedViewport === 'mobile' ? "small" : 'large'}
                 bordered
                 classNames={{
-                    footer: '!p-2',
-                    title: '!p-3',
-                    body: {cell: '!p-3'}
+                    footer: '!p-2 max-desktop:!p-2',
+                    title: '!p-3 max-desktop:!p-2',
+                    header: {cell: 'max-desktop:!p-1'}
                 }}
             />
             <LeaveAppointmentModal
@@ -48,7 +50,7 @@ function LeaveAppointmentTableTools() {
     const {current, setCurrent} = useCurrentContext();
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center items-center'>
             <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
         </div>
     )

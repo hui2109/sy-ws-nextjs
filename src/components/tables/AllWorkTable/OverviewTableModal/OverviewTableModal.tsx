@@ -34,12 +34,15 @@ export default function OverviewTableModal({isModalOpen, onClose}: IOverviewTabl
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 'calc(100dvh - 220px)'}}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 190px)'}}
                 pagination={false}
                 column={{align: 'center'}}
                 size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                 bordered
-                classNames={{body: {cell: 'max-desktop:!p-1'}}}
+                classNames={{
+                    body: {cell: 'max-desktop:!p-1'},
+                    header: {cell: 'max-desktop:!p-1'}
+                }}
             />
         </Modal>
     );

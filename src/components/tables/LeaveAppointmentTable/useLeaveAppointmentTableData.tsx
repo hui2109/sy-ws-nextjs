@@ -65,16 +65,20 @@ export default function useLeaveAppointmentTableData(onCellClick: (info: ILATabl
     );
     const columns: TableColumnsType<LeaveAppointmentRow> = [
         {
-            title: current.format('YY年M月'),
+            title: (
+                <div className='max-desktop:!text-[12px]'>
+                    {current.format('YY年M月')}
+                </div>
+            ),
             dataIndex: 'date',
             key: 'date',
             render: (text: string) => {
                 const day = dayjs(text);
 
                 return (
-                    <div className="flex flex-col items-center font-bold">
-                        <span>{day.date()}</span>
-                        <span>({Weekdays[day.day()]})</span>
+                    <div className="flex flex-col items-center font-bold justify-center max-desktop:!text-[12px]">
+                        <div>{day.date()}</div>
+                        <div>({Weekdays[day.day()]})</div>
                     </div>
                 );
             },
@@ -82,7 +86,11 @@ export default function useLeaveAppointmentTableData(onCellClick: (info: ILATabl
         ...sequenceNumbers.map(seq => {
                 const dataIndex = `seq_${seq}` as SequenceKey;
                 return {
-                    title: seq,
+                    title: (
+                        <div className='max-desktop:!text-[12px]'>
+                            {seq}
+                        </div>
+                    ),
                     dataIndex,
                     render: (data: ILeaveAppointmentData | undefined) => {
                         if (!data) {
@@ -127,20 +135,21 @@ function LeaveAppointmentBadge({name, banName, color}: ILeaveAppointmentData) {
 
     return (
         <div className={`inline-flex flex-col items-center justify-center gap-1.5
-        rounded-xl border px-3 py-2
+        rounded-lg border px-3 py-2
         shadow-[0_4px_12px_rgba(15,23,42,0.12)]
         transition-all duration-200
         hover:-translate-y-0.5
         hover:shadow-[0_8px_20px_rgba(15,23,42,0.16)]
+        max-desktop:px-1 max-desktop:py-1 max-desktop:text-[12px] max-desktop:gap-0.5
         ${isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}`}>
-            <span className={`text-sm font-medium ${isDark ? 'text-slate-100' : 'text-slate-700'}`}>
+            <span className={`font-medium ${isDark ? 'text-slate-100' : 'text-slate-700'}`}>
               {name}
             </span>
 
             <Badge
                 count={banName}
                 color={color}
-                classNames={{indicator: '!rounded-lg !font-bold'}}
+                classNames={{indicator: '!rounded-lg !font-bold max-desktop:!text-[10px]'}}
             />
         </div>
     );

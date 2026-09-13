@@ -10,7 +10,7 @@ export default function LeaveSchedule() {
 
     return (
         <CurrentContext value={{current, setCurrent}}>
-            <div className='text-center text-2xl text-blue-600 font-bold mb-1'>
+            <div className='text-center text-2xl text-blue-600 font-bold mb-1 max-desktop:text-lg'>
                 {current.format('YYYY年M月')} 放疗技术组预约休假表
             </div>
             <LeaveAppointmentTable/>

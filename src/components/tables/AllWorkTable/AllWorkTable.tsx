@@ -25,7 +25,7 @@ export default function AllWorkTable() {
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 750}}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 280px)'}}
                 pagination={false}
                 title={() => resolvedViewport === "mobile"
                     ? <AllWorkTableToolsMobile allWorkTableRef={allWorkTableRef}/>
@@ -38,6 +38,7 @@ export default function AllWorkTable() {
                 classNames={{
                     footer: '!p-2 max-desktop:!p-2',
                     title: '!p-3 max-desktop:!p-2',
+                    header: {cell: 'max-desktop:!p-1'},
                 }}
             />
             <BanTypeInfoModal
