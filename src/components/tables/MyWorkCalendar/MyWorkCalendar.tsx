@@ -175,7 +175,7 @@ export default function MyWorkCalendar() {
                 fullCellRender={fullCellRender}
                 classNames={{
                     content: `[&_thead_tr_th]:text-center [&_thead_tr_th]:!px-2 [&_thead_tr_th]:!font-bold
-                        max-desktop:[&_thead_tr_th]:!px-0 max-desktop:[&_thead_tr_th]:!py-1 max-desktop:[&_thead_tr_th]:!text-[10px] max-desktop:[&_tbody_tr_td]:!py-1
+                        max-desktop:[&_thead_tr_th]:!px-0 max-desktop:[&_thead_tr_th]:!py-1 max-desktop:[&_thead_tr_th]:!text-[10px] max-desktop:[&_tbody_tr_td]:!py-1.5
                         ${isDark ? '[&_thead_tr_th]:!text-amber-400' : '[&_thead_tr_th]:!text-amber-600'}`
                 }}
                 headerRender={({value, onChange}) => {
