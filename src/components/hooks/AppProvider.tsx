@@ -27,11 +27,16 @@ interface IAppContext {
 export const AppContext = createContext<IAppContext | null>(null);
 
 export function AppProvider({initialUser, children}: { initialUser: string | null; children: React.ReactNode }) {
-    const [api, contextHolder] = notification.useNotification({placement: "topRight", showProgress: true, pauseOnHover: true, duration: 2.3});
     const [currentUser, setCurrentUser] = useState<string | null>(initialUser);
     const [currentTheme, setCurrentTheme] = useState<ThemeMode>('system');
     const [systemTheme, setSystemTheme] = useState<ResolvedTheme>('light');
     const [viewport, setViewport] = useState<ViewportType>(null);
+    const [api, contextHolder] = notification.useNotification({
+        placement: viewport === 'desktop' ? 'topRight' : 'top',
+        showProgress: true,
+        pauseOnHover: true,
+        duration: 2.3
+    });
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -85,19 +90,38 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
                     // 整体边框
                     colorBorderSecondary: '#303333',
                 } : {},
-                components: resolvedTheme === 'dark' ? {
-                    Table: {
-                        // Table 主体比 Card 再深一层
-                        colorBgContainer: '#181a1a',
-                        // 表头稍微亮于表体
-                        headerBg: '#202323',
-                        // hover 不要太亮
-                        rowHoverBg: '#232626',
-                        // 表格线
-                        borderColor: '#2b2e2e',
-                        headerSplitColor: '#2b2e2e',
-                    },
-                } : {}
+                components: {
+                    ...(resolvedTheme === 'dark' ? {
+                        Table: {
+                            // Table 主体比 Card 再深一层
+                            colorBgContainer: '#181a1a',
+                            // 表头稍微亮于表体
+                            headerBg: '#202323',
+                            // hover 不要太亮
+                            rowHoverBg: '#232626',
+                            // 表格线
+                            borderColor: '#2b2e2e',
+                            headerSplitColor: '#2b2e2e',
+                        },
+                    } : {}),
+                    ...(resolvedViewport === 'mobile' ? {
+                        Notification: {
+                            width: 300,
+                            fontSize: 13,
+                            fontSizeLG: 14,
+                            lineHeight: 1.45,
+                            lineHeightLG: 1.4,
+                            paddingMD: 12,
+                            paddingLG: 14,
+                            paddingContentHorizontalLG: 14,
+                            margin: 10,
+                            marginLG: 12,
+                            marginSM: 8,
+                            marginXS: 6,
+                            borderRadiusLG: 8,
+                        },
+                    } : {}),
+                }
             }}
         >
             <ThemeBackground>

@@ -47,7 +47,7 @@ export default function BanCountTable() {
                 column={{align: 'center'}}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 'calc(100dvh - 260px)'}}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 270px)'}}
                 pagination={false}
                 title={() => (
                     <div className="flex flex-col justify-center">
