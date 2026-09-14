@@ -1,4 +1,3 @@
-import React, {useEffect} from "react";
 import ClearTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/ClearTableModal/ClearTableModal";
 import SubmitTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/SubmitTableModal/SubmitTableModal";
 import AuditTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/AuditTableModal/AuditTableModal";
@@ -9,15 +8,11 @@ import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {ScheduleStatusMap} from "@/configs/general";
 
 export default function ScheduleTableSideMenuModals() {
-    const {isModalOpen, setIsModalOpen, modalKey} = useSTSideMenuModalContext();
+    const {isModalOpen, modalKey} = useSTSideMenuModalContext();
     const {monthStatus} = useScheduleTableContext();
     const isPublished = monthStatus === ScheduleStatusMap.PUBLISHED;
 
-    useEffect(() => {
-        if (!isPublished || (modalKey === 'hechapaiban' || modalKey === 'daochupaiban')) return;
-        setIsModalOpen(false);
-    }, [isPublished, setIsModalOpen, modalKey]);
-
+    if (isPublished && (modalKey !== 'hechapaiban' && modalKey !== 'daochupaiban')) return null;
     if (!isModalOpen) return null;
 
     switch (modalKey) {

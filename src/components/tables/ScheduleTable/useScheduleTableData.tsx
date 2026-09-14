@@ -14,6 +14,7 @@ import {MonthStatusBadge} from "@/components/others/MonthStatusBadge";
 import {getPersonRole} from "@/api/Person/getPersonRole";
 import {Role} from "@/prisma/generated/enums";
 import VacationIndicator from "@/components/others/VacationIndicator";
+import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
 
 export interface IScheduleTableTools {
     autoSchedule: boolean;
@@ -48,6 +49,7 @@ export default function useScheduleTableData(
     const [asyncState, setAsyncState] = useState<AsyncState | null>(null);
     const [banTypeColorMap, setBanTypeColorMap] = useState<Record<string, string> | null>(null);
     const [role, setRole] = useState<Role | null>(null);
+    const {setModalKey, setIsModalOpen} = useSTSideMenuModalContext();
 
     useEffect(() => {
         if (!currentUser) return;
@@ -78,6 +80,10 @@ export default function useScheduleTableData(
                 setAsyncState(prev => ({...prev, dbDataCurr, dbDataPrev: prev?.dbDataPrev ?? null}));
                 setLoading(false);
                 setMonthStatus(dbDataCurr.monthStatus)
+
+                // 修复点击下一个月时, 会弹出模态对话框的bug
+                setModalKey('');
+                setIsModalOpen(false);
             }
         });
 
@@ -85,7 +91,7 @@ export default function useScheduleTableData(
             isMounted = false;
             setLoading(true);
         };
-    }, [current, refreshKey, setMonthStatus]);
+    }, [current, refreshKey, setMonthStatus, setModalKey, setIsModalOpen]);
 
     // ✅ Effect 2：只管上月数据，当月数据变化时不重新请求上月
     useEffect(() => {
