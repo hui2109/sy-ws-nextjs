@@ -15,9 +15,9 @@ export default function VacationIndicator({date}: { date: Dayjs }) {
             <Tag
                 color={onHoliday ? "green" : "blue"}
                 variant='solid'
-                className="!absolute !flex !items-center !justify-center !h-4 !w-4 !rounded-full !text-[10px]
-                !font-bold !shadow-sm !z-10 !select-none !-top-3 !-right-3
-                max-desktop:!-top-1 max-desktop:!-right-1 max-desktop:!text-[9px]"
+                className="!absolute !flex !items-center !justify-center !h-4 !w-4 !rounded-full !text-[10px] whitespace-nowrap
+                    !font-bold !shadow-sm !z-10 !select-none !-top-3 !-right-3 !p-0 !m-0
+                    max-desktop:!h-3 max-desktop:!w-3 max-desktop:!-top-0.5 max-desktop:!-right-1 max-desktop:!text-[8px] max-desktop:!leading-none"
             >
                 {indicator}
             </Tag>

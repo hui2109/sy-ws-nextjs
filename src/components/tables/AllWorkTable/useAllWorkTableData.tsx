@@ -93,7 +93,6 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
                     <VacationIndicator date={day}/>
                 </div>
             ),
-            width: 50,
             dataIndex: index,
             render: (text: Array<string> | undefined) => {
                 if (!text) {
@@ -107,7 +106,7 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
                                 key={banType}
                                 count={banType}
                                 color={banTypeColorMap[banType]}
-                                classNames={{indicator: '!rounded-lg !font-bold max-desktop:!text-[10px]'}}
+                                classNames={{indicator: '!rounded-lg !font-bold max-desktop:!text-[9px]'}}
                             />
                         ))}
                     </div>
@@ -124,7 +123,6 @@ export default function useAllWorkTableData(onCellClick: (info: IWorkTableCellIn
         title: MonthStatusBadge(DBData.monthStatus),
         dataIndex: 'name',
         fixed: 'start',
-        width: 50,
         render: (text) => (
             <div className='font-bold max-desktop:text-[12px]'>{text}</div>
         ),

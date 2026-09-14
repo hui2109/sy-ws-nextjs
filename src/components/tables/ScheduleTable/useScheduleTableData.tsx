@@ -157,7 +157,7 @@ function getColumns(
         const index = day.format('YYYY-MM-DD');
         return {
             title: (
-                <div className='flex flex-col items-center font-bold relative'>
+                <div className='flex flex-col items-center font-bold relative max-desktop:text-[12px]'>
                     <span>{Weekdays[day.day()]}</span>
                     <span>{day.date()}</span>
                     <VacationIndicator date={day}/>
@@ -195,7 +195,7 @@ function getColumns(
                                 key={banType}
                                 count={banType}
                                 color={banTypeColorMap[banType]}
-                                classNames={{indicator: '!rounded-lg !font-bold'}}
+                                classNames={{indicator: '!rounded-lg !font-bold max-desktop:!text-[9px]'}}
                             />
                         ))}
                     </div>
@@ -239,9 +239,8 @@ function getColumns(
         title: MonthStatusBadge(monthStatus),
         dataIndex: 'name',
         fixed: 'start',
-        width: 80,
         render: (text) => (
-            <div className='font-bold'>{text}</div>
+            <div className='font-bold max-desktop:text-[12px]'>{text}</div>
         ),
     });
 

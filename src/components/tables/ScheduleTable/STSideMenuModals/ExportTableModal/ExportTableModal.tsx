@@ -5,7 +5,7 @@ import {Modal} from "antd";
 import {exportCurrentTable} from "@/components/utils/exportCurrentTable";
 
 export default function ExportTableModal() {
-    const {notification, currentTheme, setCurrentTheme, resolvedTheme} = useAppContext();
+    const {notification, currentTheme, setCurrentTheme, resolvedTheme, resolvedViewport} = useAppContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
     const {current, scheduleTableRef} = useScheduleTableContext();
 
@@ -53,6 +53,7 @@ export default function ExportTableModal() {
 
     return (
         <Modal
+            width={resolvedViewport === 'mobile' ? 360 : undefined}
             title={`确定要导出 ${current.format("YYYY年M月")} 的所有排班吗?`}
             closable={true}
             open={true}
@@ -60,7 +61,8 @@ export default function ExportTableModal() {
             onCancel={handleCancel}
             okText="确定导出"
             cancelText="点错了"
-            okButtonProps={{type: "primary"}}
+            okButtonProps={{type: "primary", size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
+            cancelButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
             classNames={{body: 'min-h-3'}}
         />
     );

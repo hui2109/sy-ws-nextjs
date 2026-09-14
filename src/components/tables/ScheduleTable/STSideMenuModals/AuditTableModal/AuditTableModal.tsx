@@ -5,7 +5,7 @@ import {useSTSideMenuModalContext} from "@/components/hooks/STSideMenuModalConte
 import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 
 export default function AuditTableModal() {
-    const {notification} = useAppContext();
+    const {notification, resolvedViewport} = useAppContext();
     const {setIsModalOpen} = useSTSideMenuModalContext();
     const {current, refresh} = useScheduleTableContext();
 
@@ -23,6 +23,7 @@ export default function AuditTableModal() {
     return (
         <>
             <Modal
+                width={resolvedViewport === 'mobile' ? 360 : undefined}
                 title={`确定要审核 ${current.format("YYYY年M月")} 的所有排班吗?`}
                 closable={true}
                 open={true}
@@ -30,7 +31,8 @@ export default function AuditTableModal() {
                 onCancel={handleCancel}
                 okText="确定审核"
                 cancelText="点错了"
-                okButtonProps={{color: 'green', variant: "solid"}}
+                okButtonProps={{color: 'green', variant: "solid", size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
+                cancelButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
                 classNames={{body: 'min-h-3'}}
             >
             </Modal>

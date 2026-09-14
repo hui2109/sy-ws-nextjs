@@ -7,8 +7,10 @@ import {IconFont, IconType} from "@/components/others/IconFont";
 import useScheduleTableData, {IScheduleCellInfo, IScheduleTableTools} from "@/components/tables/ScheduleTable/useScheduleTableData";
 import dayjs from "dayjs";
 import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 export default function ScheduleTable() {
+    const {resolvedViewport} = useAppContext();
     const {refresh, scheduleTableRef} = useScheduleTableContext();
     const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo>({name: '', day: dayjs(), bans: []});
@@ -22,12 +24,12 @@ export default function ScheduleTable() {
     const {dataSource, columns, loading} = useScheduleTableData(stToolStatus, handleScheduleTableCellClick);
 
     return (
-        <div ref={scheduleTableRef}>
+        <div ref={scheduleTableRef} className='max-desktop:px-3 max-desktop:pb-3'>
             <Table
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 750}}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 280px)'}}
                 pagination={false}
                 title={() =>
                     <ScheduleTableTools
@@ -36,12 +38,14 @@ export default function ScheduleTable() {
                     />}
                 footer={() => ''}
                 column={{align: 'center'}}
-                size={'large'}
+                size={resolvedViewport === 'mobile' ? "small" : 'large'}
                 bordered
                 classNames={{
                     footer: '!p-2',
-                    title: '!p-3',
+                    title: '!p-3 max-desktop:!p-2',
+                    header: {cell: 'max-desktop:!p-1'},
                 }}
+                className='rounded-lg overflow-hidden'
             />
             <SelectedCellContext value={{selectedCell, setSelectedCell}}>
                 <PaiBanModal
@@ -57,6 +61,7 @@ export default function ScheduleTable() {
 }
 
 function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: IScheduleTableTools, setStToolStatus: Dispatch<SetStateAction<IScheduleTableTools>> }) {
+    const {resolvedViewport} = useAppContext();
     const {current, setCurrent} = useScheduleTableContext();
     const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
 
@@ -82,8 +87,22 @@ function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: ISc
     return (
         <>
             <div className='flex justify-center items-center gap-2'>
-                <DateJump picker={"month"} current={current} setCurrent={setCurrent}/>
                 <Button
+                    className={'!text-[12px] !p-0.5'}
+                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
+                    color={stToolStatus.showPrevMonth ? 'volcano' : 'default'}
+                    variant={stToolStatus.showPrevMonth ? 'solid' : 'outlined'}
+                    onClick={() => setStToolStatus(prev => ({
+                        ...prev,
+                        showPrevMonth: !prev.showPrevMonth
+                    }))}
+                >
+                    显示上周期
+                </Button>
+                <DateJump picker={"month"} current={current} setCurrent={setCurrent} fullCompress={resolvedViewport === 'mobile'}/>
+                <Button
+                    className={'!text-[12px] !p-0.5'}
+                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                     color={stToolStatus.autoSchedule ? 'green' : 'default'}
                     variant={stToolStatus.autoSchedule ? 'solid' : 'outlined'}
                     onClick={() => setStToolStatus(prev => ({
@@ -94,16 +113,7 @@ function ScheduleTableTools({stToolStatus, setStToolStatus}: { stToolStatus: ISc
                     自动排班
                 </Button>
                 <Button
-                    color={stToolStatus.showPrevMonth ? 'volcano' : 'default'}
-                    variant={stToolStatus.showPrevMonth ? 'solid' : 'outlined'}
-                    onClick={() => setStToolStatus(prev => ({
-                        ...prev,
-                        showPrevMonth: !prev.showPrevMonth
-                    }))}
-                >
-                    显示上周期
-                </Button>
-                <Button
+                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                     color={stToolStatus.eraser ? 'magenta' : 'default'}
                     variant={stToolStatus.eraser ? 'solid' : 'outlined'}
                     icon={<IconFont type={IconType.xiangpica}/>}

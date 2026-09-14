@@ -10,10 +10,13 @@ interface IDateJumpProps {
     picker: Picker;
     current: Dayjs;
     setCurrent: Dispatch<SetStateAction<Dayjs>>;
+    fullCompress?: boolean;
 }
 
-export default function DateJump({picker, current, setCurrent}: IDateJumpProps) {
-    const format = picker === 'month' ? 'YYYY年M月' : 'YYYY年';
+export default function DateJump({picker, current, setCurrent, fullCompress = false}: IDateJumpProps) {
+    const format = picker === 'month'
+        ? fullCompress ? "YY年M月" : 'YYYY年M月'
+        : 'YYYY年';
     const [open, setOpen] = useState<boolean>(false);  // 控制弹出层
 
     function onChange(date: Dayjs | null): void {
@@ -65,7 +68,7 @@ export default function DateJump({picker, current, setCurrent}: IDateJumpProps) 
                         root: '!left-1/2 !-translate-x-1/2',
                         footer: '[&_.ant-picker-footer-extra]:!p-0'
                     },
-                    input: 'text-center'
+                    input: 'text-center whitespace-nowrap',
                 }}
             />
             <Button type="primary" onClick={handleNexClick} size="small" className={'max-desktop:!text-[12px] max-desktop:!p-0.5'}>

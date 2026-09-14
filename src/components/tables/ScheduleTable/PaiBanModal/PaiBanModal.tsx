@@ -13,6 +13,7 @@ export interface IPaiBanModalProps {
 }
 
 export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
+    const {resolvedViewport} = useAppContext();
     const {selectedCell} = useSelectedCellContext();
     const {resolvedTheme} = useAppContext();
 
@@ -30,7 +31,13 @@ export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
             open={isModalOpen}
             onOk={onClose}
             onCancel={onClose}
+            okText="确定"
             footer={(_, {OkBtn}) => <OkBtn/>}
+            classNames={{
+                body: 'min-h-3',
+                container: 'max-desktop:!p-4'
+            }}
+            okButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
         >
             <div className={'flex flex-col gap-4'}>
                 <ExpectTable/>

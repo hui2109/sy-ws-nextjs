@@ -7,12 +7,19 @@ export default function VacationTable() {
     return (
         <Table
             loading={loading}
+            column={{align: 'center'}}
             columns={columns}
             dataSource={dataSource}
             pagination={false}
-            column={{align: 'center'}}
+            footer={() => ''}
             size={"small"}
             bordered
+            classNames={{
+                footer: '!p-2',
+                body: {cell: 'max-desktop:!p-1'},
+                header: {cell: 'max-desktop:!p-1'}
+            }}
+            className='rounded-lg overflow-hidden'
         />
     );
 }
