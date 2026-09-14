@@ -68,12 +68,15 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
                         <Dropdown
                             key={item.path}
                             trigger={['click']}
-                            placement="top"
+                            placement="topRight"
                             arrow
                             menu={{
                                 items: statisticsMenuBar,
                                 selectedKeys: pathname.startsWith('/statistics/') ? [pathname] : [],
                                 onClick: ({key}) => router.push(key),
+                            }}
+                            classNames={{
+                                root: '!mr-2'
                             }}
                         >
                             {menuItem}
