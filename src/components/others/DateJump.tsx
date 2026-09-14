@@ -3,6 +3,7 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
 import {Button, DatePicker, Space} from 'antd';
 import dayjs, {Dayjs} from "dayjs";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 type Picker = 'month' | 'year';
 
@@ -14,6 +15,7 @@ interface IDateJumpProps {
 }
 
 export default function DateJump({picker, current, setCurrent, fullCompress = false}: IDateJumpProps) {
+    const {resolvedViewport} = useAppContext();
     const format = picker === 'month'
         ? fullCompress ? "YY年M月" : 'YYYY年M月'
         : 'YYYY年';
@@ -65,7 +67,7 @@ export default function DateJump({picker, current, setCurrent, fullCompress = fa
                 size="small"
                 classNames={{
                     popup: {
-                        root: '!left-1/2 !-translate-x-1/2',
+                        root: resolvedViewport === 'mobile' ? '!left-1/2 !-translate-x-1/2' : '',
                         footer: '[&_.ant-picker-footer-extra]:!p-0'
                     },
                     input: 'text-center whitespace-nowrap',

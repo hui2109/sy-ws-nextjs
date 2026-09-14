@@ -34,7 +34,7 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
                 column={{align: "center"}}
                 columns={renderedColumns as TableColumnsType<IRuleData>}
                 dataSource={tableData}
-                scroll={{x: "max-content", y: 'calc(100dvh - 260px)'}}
+                scroll={{x: "max-content", y: `calc(100dvh - ${resolvedViewport === "mobile" ? 260 : 330}px)`}}
                 pagination={false}
                 title={() => (
                     <div className="flex flex-col justify-center">

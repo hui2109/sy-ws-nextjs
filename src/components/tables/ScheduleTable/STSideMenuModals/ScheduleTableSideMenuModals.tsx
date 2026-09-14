@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ClearTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/ClearTableModal/ClearTableModal";
 import SubmitTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/SubmitTableModal/SubmitTableModal";
 import AuditTableModal from "@/components/tables/ScheduleTable/STSideMenuModals/AuditTableModal/AuditTableModal";
@@ -9,22 +9,26 @@ import {useScheduleTableContext} from "@/components/hooks/ScheduleTableContext";
 import {ScheduleStatusMap} from "@/configs/general";
 
 export default function ScheduleTableSideMenuModals() {
-    const {isModalOpen, modalKey} = useSTSideMenuModalContext();
+    const {isModalOpen, setIsModalOpen, modalKey} = useSTSideMenuModalContext();
     const {monthStatus} = useScheduleTableContext();
+    const isPublished = monthStatus === ScheduleStatusMap.PUBLISHED;
+
+    useEffect(() => {
+        if (!isPublished || (modalKey === 'hechapaiban' || modalKey === 'daochupaiban')) return;
+        setIsModalOpen(false);
+    }, [isPublished, setIsModalOpen, modalKey]);
 
     if (!isModalOpen) return null;
 
-    const canRender = monthStatus !== ScheduleStatusMap.PUBLISHED;
-
     switch (modalKey) {
         case 'qingkongpaiban':
-            return (canRender && <ClearTableModal/>);
+            return <ClearTableModal/>;
         case 'hechapaiban':
             return <CheckTableModal/>;
         case 'tijiaopaiban':
-            return (canRender && <SubmitTableModal/>);
+            return <SubmitTableModal/>;
         case 'shenhepaiban':
-            return (canRender && <AuditTableModal/>);
+            return <AuditTableModal/>;
         case 'daochupaiban':
             return <ExportTableModal/>;
         default:

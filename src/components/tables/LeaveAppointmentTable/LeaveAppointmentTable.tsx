@@ -22,7 +22,7 @@ export default function LeaveAppointmentTable() {
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 'calc(100dvh - 260px)'}}
+                scroll={{x: 'max-content', y: `calc(100dvh - ${resolvedViewport === "mobile" ? 260 : 330}px)`}}
                 pagination={false}
                 title={() => <LeaveAppointmentTableTools/>}
                 footer={() => ''}

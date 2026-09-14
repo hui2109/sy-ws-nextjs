@@ -36,7 +36,7 @@ export default function OverviewTableModal({isModalOpen, onClose}: IOverviewTabl
                 column={{align: 'center'}}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 'calc(100dvh - 190px)'}}
+                scroll={{x: 'max-content', y: `calc(100dvh - ${resolvedViewport === "mobile" ? 190 : 260}px)`}}
                 pagination={false}
                 footer={() => ''}
                 size={resolvedViewport === 'mobile' ? 'small' : 'middle'}

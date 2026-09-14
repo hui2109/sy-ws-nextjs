@@ -29,7 +29,7 @@ export default function ScheduleTable() {
                 loading={loading}
                 columns={columns}
                 dataSource={dataSource}
-                scroll={{x: 'max-content', y: 'calc(100dvh - 280px)'}}
+                scroll={{x: 'max-content', y: `calc(100dvh - ${resolvedViewport === "mobile" ? 280 : 350}px)`}}
                 pagination={false}
                 title={() =>
                     <ScheduleTableTools
