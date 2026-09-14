@@ -72,6 +72,35 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
         };
     }, []);
 
+    useEffect(() => {
+        const handleOffline = () => {
+            api.warning({
+                key: 'network-status',
+                title: '网络连接已断开',
+                description: '当前设备处于离线状态，部分功能暂时不可用。',
+                duration: 0,
+                closable: false
+            });
+        };
+
+        const handleOnline = () => {
+            api.success({
+                key: 'network-status',
+                title: '网络已恢复',
+                description: '网络连接已经恢复，可以继续使用。',
+                duration: 5,
+            });
+        };
+
+        window.addEventListener('offline', handleOffline);
+        window.addEventListener('online', handleOnline);
+
+        return () => {
+            window.removeEventListener('offline', handleOffline);
+            window.removeEventListener('online', handleOnline);
+        };
+    }, [api]);
+
     const resolvedTheme: ResolvedTheme = currentTheme === 'system' ? systemTheme : currentTheme;
     const resolvedViewport: ResolvedViewport = viewport ? viewport : 'mobile';
 
