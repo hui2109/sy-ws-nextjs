@@ -17,7 +17,7 @@ export default function LeaveAppointmentTable() {
     const {dataSource, columns, loading} = useLeaveAppointmentTableData(handleLeaveAppointmentTableCellClick);
 
     return (
-        <div className='max-desktop:px-3 max-desktop:pb-4'>
+        <div className='max-desktop:px-3 max-desktop:pb-3'>
             <Table
                 loading={loading}
                 columns={columns}
@@ -34,6 +34,7 @@ export default function LeaveAppointmentTable() {
                     title: '!p-3 max-desktop:!p-2',
                     header: {cell: 'max-desktop:!p-1'}
                 }}
+                className='rounded-lg overflow-hidden'
             />
             <LeaveAppointmentModal
                 isModalOpen={isLAModalOpen}

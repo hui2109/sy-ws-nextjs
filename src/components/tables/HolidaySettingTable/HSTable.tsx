@@ -20,46 +20,54 @@ interface IHSTableTools {
 }
 
 export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
+    const {resolvedViewport} = useAppContext();
     const [showHiddenRules, setShowHiddenRules] = useState(false);
     const {ruleData, tableData, renderedColumns, onChange, loading, resetTableState} = useHSTableData(showHiddenRules, isEditable);
 
     if (!ruleData || renderedColumns.length === 0) return null;
 
     return (
-        <Table
-            components={components}
-            loading={loading}
-            column={{align: "center"}}
-            columns={renderedColumns as TableColumnsType<IRuleData>}
-            dataSource={tableData}
-            scroll={{x: "max-content", y: 750}}
-            pagination={false}
-            title={() => (
-                <div className="flex flex-col justify-center">
-                    <div className="text-center text-2xl text-blue-600 font-bold mb-1">
-                        假期{isEditable ? "设置" : "统计"}表
+        <div className='max-desktop:px-3 max-desktop:pb-3'>
+            <Table
+                components={components}
+                loading={loading}
+                column={{align: "center"}}
+                columns={renderedColumns as TableColumnsType<IRuleData>}
+                dataSource={tableData}
+                scroll={{x: "max-content", y: 'calc(100dvh - 260px)'}}
+                pagination={false}
+                title={() => (
+                    <div className="flex flex-col justify-center">
+                        <div className="text-center text-2xl text-blue-600 font-bold mb-1 max-desktop:text-lg">
+                            假期{isEditable ? "设置" : "统计"}表
+                        </div>
+                        <HSTableTools
+                            tableData={tableData}
+                            ruleData={ruleData}
+                            showHiddenRules={showHiddenRules}
+                            setShowHiddenRules={setShowHiddenRules}
+                            isEditable={isEditable}
+                            resetTableState={resetTableState}
+                        />
                     </div>
-                    <HSTableTools
-                        tableData={tableData}
-                        ruleData={ruleData}
-                        showHiddenRules={showHiddenRules}
-                        setShowHiddenRules={setShowHiddenRules}
-                        isEditable={isEditable}
-                        resetTableState={resetTableState}
-                    />
-                </div>
-            )}
-            footer={() => ""}
-            size="large"
-            bordered
-            classNames={{footer: "!p-2", title: "!p-3"}}
-            onChange={onChange}
-        />
+                )}
+                footer={() => ""}
+                size={resolvedViewport === 'mobile' ? "small" : 'large'}
+                bordered
+                classNames={{
+                    footer: '!p-2 max-desktop:!p-2',
+                    title: '!p-3 max-desktop:!p-2',
+                    header: {cell: 'max-desktop:!p-1'},
+                }}
+                className='rounded-lg overflow-hidden'
+                onChange={onChange}
+            />
+        </div>
     );
 }
 
 function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules, isEditable, resetTableState}: IHSTableTools) {
-    const {notification} = useAppContext();
+    const {notification, resolvedViewport} = useAppContext();
     const {refresh} = useHSTableContext();
     const [isModifyHSModalOpen, setIsModifyHSModalOpen] = useState<boolean>(false);
     const [isNewHSModalOpen, setIsNewHSModalOpen] = useState<boolean>(false);
@@ -92,13 +100,14 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
     }
 
     return (
-        <div className="flex justify-end items-center gap-2">
+        <div className="flex justify-end items-center gap-1">
             <Checkbox checked={showHiddenRules} onChange={event => setShowHiddenRules(event.target.checked)}>
                 显示未启用规则
             </Checkbox>
 
             {isEditable && (
                 <Button
+                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                     color="magenta"
                     variant="solid"
                     onClick={() => {
@@ -112,6 +121,7 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
 
             {isEditable && (
                 <Button
+                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                     color="gold"
                     variant="solid"
                     onClick={() => {
@@ -124,6 +134,7 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
             )}
 
             <Button
+                size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                 color="green"
                 variant="solid"
                 onClick={() => {
@@ -136,6 +147,7 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
 
             {isEditable && (
                 <Button
+                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
                     color="blue"
                     variant="solid"
                     onClick={() => handleSave(ruleData)}

@@ -1,13 +1,14 @@
 "use client";
 
 import React from 'react';
-import {Layout, theme} from 'antd';
+import {Dropdown, Layout} from 'antd';
 import {AppName} from "@/configs/general";
 import {IconFont, IconType} from "@/components/others/IconFont";
 import {usePathname, useRouter} from 'next/navigation';
 import {useAppContext} from "@/components/hooks/AppProvider";
 import UserDropDown from "@/components/others/UserDropDown";
 import ThemeDropDown from "@/components/others/ThemeDropDown";
+import {statisticsMenuBar} from "@/configs/menuBar";
 
 const {Header, Content, Footer} = Layout;
 
@@ -24,7 +25,6 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
     const pathname = usePathname();
     const router = useRouter();
     const activePath = '/' + pathname.split('/')[1];
-    const {token: {colorBgContainer, borderRadiusLG}} = theme.useToken();
 
     const contentTheme = resolvedTheme === 'dark' ? '!bg-[#0f0f0f]' : '!bg-[#f5f5f5]';
     const footerTheme = resolvedTheme === 'dark'
@@ -46,22 +46,40 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
             <Content className={`pt-[64px] pb-[64px] ${contentTheme}`}>{children}</Content>
 
             <Footer className={`fixed bottom-0 left-0 z-50 !flex !h-[64px] !w-full !p-0 border-t ${footerTheme}`}>
-                {mobileMenu.map(item =>
-                    <div
-                        key={item.path}
-                        onClick={() => router.push(item.path)}
-                        className={`flex flex-1 flex-col items-center justify-center gap-1 border-0 bg-transparent ${activePath === item.path ? '!text-[#4978eb]' : menuText}`}
-                    >
-                        <div className="flex h-6 w-6 items-center justify-center">
-                            <IconFont
-                                type={item.icon}
-                                useSvg={item.useSvg}
-                                className={`!text-xl !leading-none ${item.iconClass}`}
-                            />
+                {mobileMenu.map(item => {
+                    const menuItem = (
+                        <div
+                            key={item.path}
+                            onClick={item.path === '/statistics' ? undefined : () => router.push(item.path)}
+                            className={`flex flex-1 flex-col items-center justify-center gap-1 border-0 bg-transparent ${activePath === item.path ? '!text-[#4978eb]' : menuText}`}
+                        >
+                            <div className="flex h-6 w-6 items-center justify-center">
+                                <IconFont
+                                    type={item.icon}
+                                    useSvg={item.useSvg}
+                                    className={`!text-xl !leading-none ${item.iconClass}`}
+                                />
+                            </div>
+                            <span className="text-xs font-bold">{item.title}</span>
                         </div>
-                        <span className="text-xs font-bold">{item.title}</span>
-                    </div>
-                )}
+                    );
+
+                    return item.path === '/statistics' ? (
+                        <Dropdown
+                            key={item.path}
+                            trigger={['click']}
+                            placement="top"
+                            arrow
+                            menu={{
+                                items: statisticsMenuBar,
+                                selectedKeys: pathname.startsWith('/statistics/') ? [pathname] : [],
+                                onClick: ({key}) => router.push(key),
+                            }}
+                        >
+                            {menuItem}
+                        </Dropdown>
+                    ) : menuItem;
+                })}
             </Footer>
         </Layout>
     );

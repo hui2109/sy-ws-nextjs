@@ -53,7 +53,7 @@ interface FilterOptions {
 const EMPTY_SORT_STATE: SortState = {columnKey: null, order: null};
 
 export default function useHSTableData(showHiddenRules: boolean, isEditable: boolean) {
-    const {currentUser} = useAppContext();
+    const {currentUser, resolvedViewport} = useAppContext();
     const {refreshKey} = useHSTableContext();
     const [loading, setLoading] = useState<boolean>(true);
     const [ruleData, setRuleData] = useState<IRuleData[] | null>(null);
@@ -149,6 +149,9 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 filters: filterOptions.startDates,
                 filteredValue: filterState.startDate ?? null,
                 editable: isEditable,
+                render: value => (
+                    resolvedViewport === 'mobile' ? dayjs(value).format('YY/M/D') : value
+                )
             },
             {
                 key: "endDate",
@@ -157,6 +160,9 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 filters: filterOptions.endDates,
                 filteredValue: filterState.endDate ?? null,
                 editable: isEditable,
+                render: value => (
+                    resolvedViewport === 'mobile' ? dayjs(value).format('YY/M/D') : value
+                )
             },
             {
                 key: "left_days",
@@ -207,7 +213,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
                 ),
             }] : []),
         ];
-    }, [banTypeColorMap, filterOptions, filterState, setRuleData, isEditable, nameRowSpanMap, sortState]);
+    }, [banTypeColorMap, filterOptions, filterState, setRuleData, isEditable, nameRowSpanMap, sortState, resolvedViewport]);
 
     const renderedColumns = useMemo(() => {
         if (columns.length === 0 || !validBanNames) return [];
