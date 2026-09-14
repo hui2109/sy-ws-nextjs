@@ -1,14 +1,17 @@
 "use client";
 
-import React from 'react';
-import {Dropdown, Layout} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Drawer, Dropdown, Layout, Menu} from 'antd';
 import {AppName} from "@/configs/general";
 import {IconFont, IconType} from "@/components/others/IconFont";
 import {usePathname, useRouter} from 'next/navigation';
 import {useAppContext} from "@/components/hooks/AppProvider";
+import {STSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
 import UserDropDown from "@/components/others/UserDropDown";
 import ThemeDropDown from "@/components/others/ThemeDropDown";
-import {statisticsMenuBar} from "@/configs/menuBar";
+import {scheduleToolsMenuBar, statisticsMenuBar} from "@/configs/menuBar";
+import {Role} from "@/prisma/generated/enums";
+import {getPersonRole} from "@/api/Person/getPersonRole";
 
 const {Header, Content, Footer} = Layout;
 
@@ -25,6 +28,10 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
     const pathname = usePathname();
     const router = useRouter();
     const activePath = '/' + pathname.split('/')[1];
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [modalKey, setModalKey] = useState<string>('');
+    const [role, setRole] = useState<Role | null>(null);
 
     const contentTheme = resolvedTheme === 'dark' ? '!bg-[#0f0f0f]' : '!bg-[#f5f5f5]';
     const footerTheme = resolvedTheme === 'dark'
@@ -32,18 +39,41 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
         : '!bg-white border-black/10 shadow-[0_-2px_8px_rgba(0,0,0,0.08)]';
     const menuText = resolvedTheme === 'dark' ? 'text-white/60' : 'text-gray-500';
 
+    useEffect(() => {
+        if (!currentUser) return;
+        let isMounted = true;
+
+        getPersonRole(currentUser).then(role => {
+            if (isMounted) {
+                setRole(role)
+            }
+        })
+
+        return () => {
+            isMounted = false;
+        };
+    }, [currentUser]);
+
     return (
         <Layout className={`min-h-dvh ${contentTheme}`}>
             <Header className="fixed top-0 left-0 z-50 flex !h-[50px] !w-full items-center justify-between !p-0 shadow-md">
                 {currentUser && <UserDropDown/>}
-                <div className="flex items-center mr-10">
+                <div
+                    onClick={() => role && role !== 'USER' && setDrawerOpen(true)}
+                    className="flex items-center mr-10
+                    max-desktop:cursor-pointer"
+                >
                     <IconFont type={IconType.wangzhantubiao} className="text-green-600 me-2"/>
                     <span className="text-pink-600 text-lg font-bold tracking-wide">{AppName}</span>
                 </div>
                 {currentUser && <ThemeDropDown/>}
             </Header>
 
-            <Content className={`pt-[64px] pb-[64px] ${contentTheme}`}>{children}</Content>
+            <Content className={`pt-[64px] pb-[64px] ${contentTheme}`}>
+                <STSideMenuModalContext value={{isModalOpen, setIsModalOpen, modalKey, setModalKey}}>
+                    {children}
+                </STSideMenuModalContext>
+            </Content>
 
             <Footer className={`fixed bottom-0 left-0 z-50 !flex !h-[64px] !w-full !p-0 border-t ${footerTheme}`}>
                 {mobileMenu.map(item => {
@@ -81,6 +111,34 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
                     ) : menuItem;
                 })}
             </Footer>
+
+            <Drawer
+                title="排班工具"
+                placement="left"
+                size={300}
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                closable={{placement: 'end'}}
+                classNames={{body: '!p-2'}}
+            >
+                <Menu
+                    mode="inline"
+                    selectedKeys={[pathname]}
+                    style={{height: '100%'}}
+                    items={scheduleToolsMenuBar}
+                    openKeys={['/scheduleTools/start']}
+                    onClick={({key}) => {
+                        if (key.startsWith('/')) {
+                            setDrawerOpen(false);
+                            router.push(key);
+                            return;
+                        }
+                        setIsModalOpen(true);
+                        setModalKey(key);
+                        setDrawerOpen(false);
+                    }}
+                />
+            </Drawer>
         </Layout>
     );
 };

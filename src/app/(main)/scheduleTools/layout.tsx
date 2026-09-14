@@ -5,6 +5,7 @@ import React, {ReactNode, useState} from "react";
 import {scheduleToolsMenuBar} from "@/configs/menuBar";
 import {usePathname} from "next/navigation";
 import {STSideMenuModalContext} from "@/components/hooks/STSideMenuModalContext";
+import {useAppContext} from "@/components/hooks/AppProvider";
 
 const {Sider, Content} = Layout;
 
@@ -13,8 +14,9 @@ export default function ScheduleToolsLayout({children}: { children: ReactNode })
     const pathname = usePathname();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [modalKey, setModalKey] = useState<string>('');
+    const {resolvedViewport} = useAppContext();
 
-    return (
+    return resolvedViewport === 'desktop' ? (
         <Layout style={{background: colorBgContainer, borderRadius: borderRadiusLG}}>
             <Sider style={{background: colorBgContainer}} width={180}>
                 <Menu
@@ -35,5 +37,5 @@ export default function ScheduleToolsLayout({children}: { children: ReactNode })
                 </STSideMenuModalContext>
             </Content>
         </Layout>
-    );
+    ) : children;
 }
