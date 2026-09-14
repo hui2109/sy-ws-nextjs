@@ -35,3 +35,42 @@ export async function getWSbyNameDateBanName(name: string, startDate: Date, endD
         }
     });
 }
+
+export async function getPublishedWSIndexRecords(names: string[], startDate: Date, endDate: Date, banNames: string[]) {
+    if (!names.length || !banNames.length) return [];
+
+    return prisma.scheduleAssignment.findMany({
+        where: {
+            person: {
+                name: {in: names}
+            },
+            workSchedule: {
+                status: "PUBLISHED",
+                workDate: {
+                    gte: dayjs.utc(startDate).toDate(),
+                    lte: dayjs.utc(endDate).toDate()
+                },
+                banType: {
+                    banName: {in: banNames}
+                }
+            }
+        },
+        select: {
+            person: {
+                select: {
+                    name: true
+                }
+            },
+            workSchedule: {
+                select: {
+                    workDate: true,
+                    banType: {
+                        select: {
+                            banName: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+}

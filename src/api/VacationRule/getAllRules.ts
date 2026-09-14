@@ -4,14 +4,77 @@ import "dotenv/config";
 import {prisma} from "@/prisma/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {getWSbyNameDateBanName} from "@/api/WorkSchedule/getWSbyNameDateBanName";
+import {getPublishedWSIndexRecords} from "@/api/WorkSchedule/getWSbyNameDateBanName";
 
 dayjs.extend(utc);
+
+type WSIndexRecord = Awaited<ReturnType<typeof getPublishedWSIndexRecords>>[number];
+
+function getWSIndexKey(name: string, banName: string) {
+    return `${name}\u0000${banName}`;
+}
+
+function getDateTimestamp(date: Date) {
+    return dayjs.utc(date).startOf('day').valueOf();
+}
+
+function lowerBound(values: number[], target: number) {
+    let left = 0;
+    let right = values.length;
+
+    while (left < right) {
+        const mid = Math.floor((left + right) / 2);
+        if (values[mid] < target) left = mid + 1;
+        else right = mid;
+    }
+
+    return left;
+}
+
+function upperBound(values: number[], target: number) {
+    let left = 0;
+    let right = values.length;
+
+    while (left < right) {
+        const mid = Math.floor((left + right) / 2);
+        if (values[mid] <= target) left = mid + 1;
+        else right = mid;
+    }
+
+    return left;
+}
+
+function buildWSDateIndex(records: WSIndexRecord[]) {
+    const index = new Map<string, number[]>();
+
+    records.forEach(record => {
+        const name = record.person.name;
+        const banName = record.workSchedule.banType.banName;
+        const key = getWSIndexKey(name, banName);
+        const dates = index.get(key) ?? [];
+
+        dates.push(getDateTimestamp(record.workSchedule.workDate));
+        index.set(key, dates);
+    });
+
+    index.forEach(dates => dates.sort((a, b) => a - b));
+    return index;
+}
+
+function countWSByRange(index: Map<string, number[]>, name: string, banName: string, startDate: Date, endDate: Date) {
+    const dates = index.get(getWSIndexKey(name, banName));
+    if (!dates?.length) return 0;
+
+    const start = getDateTimestamp(startDate);
+    const end = getDateTimestamp(endDate);
+    return upperBound(dates, end) - lowerBound(dates, start);
+}
 
 export default async function getAllRules(showHidden: boolean, isEditable: boolean, name?: string, need_lastJia: boolean = true) {
     const allVacationRules = await prisma.vacationRule.findMany({
         where: {
-            ...(name ? {person: {name}} : {})
+            ...(name ? {person: {name}} : {}),
+            ...(isEditable && !showHidden ? {isHidden: false} : {})
         },
         select: {
             id: true,
@@ -26,49 +89,75 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
             },
             banType: {
                 select: {
-                    banName: true,
+                    banName: true
                 }
             }
         }
     });
 
-    const rulesWithStats: Array<typeof allVacationRules[number] & { left_days: number; used_days: number }> = [];
-    const yearNameSet = new Set<string>();
-    let fake_rule_id = -1;
+    if (!allVacationRules.length) return [];
 
-    // 先提取每个规则所对应的 年份&&姓名 所组成的不重复集合
+    const yearNameMap = new Map<string, { year: number; name: string }>();
+    const nameSet = new Set<string>();
+    const banNameSet = new Set<string>();
+
     allVacationRules.forEach(rule => {
-        yearNameSet.add(`${dayjs.utc(rule.startDate).year()}&&${rule.person.name}`)
-    })
+        const year = dayjs.utc(rule.startDate).year();
+        yearNameMap.set(`${year}\u0000${rule.person.name}`, {year, name: rule.person.name});
+        nameSet.add(rule.person.name);
+        banNameSet.add(rule.banType.banName);
+    });
 
-    // 获取已有规则所对应的 已使用天数 及 剩余天数
-    for (const rule of allVacationRules) {
-        const WSRecords = await getWSbyNameDateBanName(rule.person.name, rule.startDate, rule.endDate, rule.banType.banName);
-        const used_days = WSRecords.length;
-        const left_days = rule.availableHalfDays / 2 - WSRecords.length;
-
-        rulesWithStats.push({...rule, left_days, used_days});
+    if (!isEditable) {
+        banNameSet.add('补假');
+        banNameSet.add('调休假');
+        if (need_lastJia) banNameSet.add('去年余假');
     }
 
-    // 以下均是不可编辑的数据
-    if (isEditable) return rulesWithStats.filter(rule => showHidden || !rule.isHidden);
+    const ruleStartTime = Math.min(...allVacationRules.map(rule => getDateTimestamp(rule.startDate)));
+    const ruleEndTime = Math.max(...allVacationRules.map(rule => getDateTimestamp(rule.endDate)));
+    let queryStartTime = ruleStartTime;
+    let queryEndTime = ruleEndTime;
+
+    if (!isEditable) {
+        const years = Array.from(yearNameMap.values(), item => item.year);
+        const minYear = Math.min(...years);
+        const maxYear = Math.max(...years);
+        queryStartTime = Math.min(queryStartTime, dayjs.utc(`${minYear}-01-01`).valueOf());
+        queryEndTime = Math.max(queryEndTime, dayjs.utc(`${maxYear}-12-31`).valueOf());
+    }
+
+    const WSRecords = await getPublishedWSIndexRecords(
+        Array.from(nameSet),
+        new Date(queryStartTime),
+        new Date(queryEndTime),
+        Array.from(banNameSet)
+    );
+    const WSDateIndex = buildWSDateIndex(WSRecords);
+
+    const rulesWithStats: Array<typeof allVacationRules[number] & { left_days: number; used_days: number }> = allVacationRules.map(rule => {
+        const used_days = countWSByRange(WSDateIndex, rule.person.name, rule.banType.banName, rule.startDate, rule.endDate);
+        const left_days = rule.availableHalfDays / 2 - used_days;
+        return {...rule, left_days, used_days};
+    });
+
+    if (isEditable) return rulesWithStats;
+
+    let fake_rule_id = -1;
+    const currentYear = dayjs().year();
 
     // 创建 调休假 所对应的规则
-    for (const yearName of Array(...yearNameSet)) {
-        const [year, name] = yearName.split('&&');
-
+    for (const {year, name} of yearNameMap.values()) {
         const startDate = dayjs.utc(`${year}-01-01`).toDate();
         const endDate = dayjs.utc(`${year}-12-31`).toDate();
-        const bu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '补假');
-        const tiao_xiu_jia = await getWSbyNameDateBanName(name, startDate, endDate, '调休假');
-
-        const availableHalfDays = bu_jia.length * 2;
-        const used_days = tiao_xiu_jia.length;
+        const buJiaDays = countWSByRange(WSDateIndex, name, '补假', startDate, endDate);
+        const used_days = countWSByRange(WSDateIndex, name, '调休假', startDate, endDate);
+        const availableHalfDays = buJiaDays * 2;
         const left_days = availableHalfDays / 2 - used_days;
-        const isHidden = Number(year) !== dayjs().year() || left_days === 0;
+        const isHidden = year !== currentYear || left_days === 0;
 
         rulesWithStats.push({
-            id: fake_rule_id,
+            id: fake_rule_id--,
             startDate,
             endDate,
             availableHalfDays,
@@ -78,31 +167,25 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
             used_days,
             left_days
         });
-        fake_rule_id--;
     }
 
-    // 不需要 去年余假 的情况下
     if (!need_lastJia) return rulesWithStats.filter(rule => showHidden || !rule.isHidden);
 
     // 创建 去年余假 所对应的规则
-    for (const yearName of Array(...yearNameSet)) {
-        const [year, name] = yearName.split('&&');
-
+    for (const {year, name} of yearNameMap.values()) {
         const startDate = dayjs.utc(`${year}-01-01`).toDate();
         const endDate = dayjs.utc(`${year}-01-31`).toDate();
-        const last_jia = await getWSbyNameDateBanName(name, startDate, endDate, '去年余假');
-
         const availableHalfDays = rulesWithStats
-            .filter(rule => dayjs(rule.startDate).year() === (startDate.getFullYear() - 1) && rule.person.name === name)
+            .filter(rule => dayjs.utc(rule.startDate).year() === year - 1 && rule.person.name === name)
             .reduce((sum, rule) => sum + rule.left_days, 0) * 2;
-        const used_days = last_jia.length;
+        const used_days = countWSByRange(WSDateIndex, name, '去年余假', startDate, endDate);
         const left_days = availableHalfDays / 2 - used_days;
-        const isHidden = Number(year) !== dayjs().year() || left_days === 0;
+        const isHidden = year !== currentYear || left_days === 0;
 
         if (!showHidden && isHidden) continue;
 
         rulesWithStats.push({
-            id: fake_rule_id,
+            id: fake_rule_id--,
             startDate,
             endDate,
             isHidden,
@@ -112,13 +195,7 @@ export default async function getAllRules(showHidden: boolean, isEditable: boole
             used_days,
             left_days
         });
-        fake_rule_id--;
     }
 
     return rulesWithStats.filter(rule => showHidden || !rule.isHidden);
 }
-
-// npx tsx src/api/VacationRule/getAllRules.ts
-// getAllRules(true).then((rules) => {
-//     console.log(rules);
-// });

@@ -95,6 +95,7 @@ model WorkSchedule {
   banType BanType @relation(fields: [banTypeId], references: [id])
 
   @@unique([workDate, banTypeId])
+  @@index([banTypeId, status, workDate])
 }
 
 model VacationRule {
@@ -214,4 +215,5 @@ model ScheduleAssignment {
   workSchedule WorkSchedule @relation(fields: [workScheduleId], references: [id], onDelete: Cascade)
 
   @@unique([personId, workScheduleId])
+  @@index([workScheduleId, personId])
 }
