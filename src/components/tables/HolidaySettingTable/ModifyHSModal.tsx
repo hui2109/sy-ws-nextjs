@@ -18,7 +18,7 @@ interface IModifyHSModal {
 }
 
 export default function ModifyHSModal({isModalOpen, onClose, tableData}: IModifyHSModal) {
-    const {resolvedTheme, notification} = useAppContext();
+    const {resolvedTheme, notification, resolvedViewport} = useAppContext();
     const {refresh} = useHSTableContext();
     const [fieldType, setFieldType] = useState<IModifyFieldType | null>(null);
     const [isEnabled, setIsEnabled] = useState<IIsEnabled | null>(null);
@@ -70,9 +70,15 @@ export default function ModifyHSModal({isModalOpen, onClose, tableData}: IModify
                 onClose();
             }}
             onCancel={onClose}
-            width={540}
+            width={resolvedViewport === 'mobile' ? 360 : 540}
             okText="确认修改"
             cancelText="取消"
+            okButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
+            cancelButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
+            classNames={{
+                body: 'min-h-3',
+                container: 'max-desktop:!p-4'
+            }}
             title={
                 <div className="flex items-center gap-3 py-1">
                     <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${isDark
@@ -98,7 +104,7 @@ export default function ModifyHSModal({isModalOpen, onClose, tableData}: IModify
                 </div>
             }
         >
-            <div className={`mt-3 grid grid-cols-[120px_minmax(0,1fr)] overflow-hidden rounded-xl border ${borderClass}`}>
+            <div className={`mt-3 grid grid-cols-[120px_minmax(0,1fr)] overflow-hidden rounded-xl border ${borderClass} max-desktop:grid-cols-[90px_minmax(0,1fr)]`}>
                 <div className={labelClass}>修改字段</div>
                 <div className={valueClass}>
                     <Select<IModifyFieldType>

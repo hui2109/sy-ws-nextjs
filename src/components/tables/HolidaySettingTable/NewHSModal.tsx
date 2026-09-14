@@ -22,7 +22,7 @@ interface INewHSModal {
 }
 
 export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
-    const {resolvedTheme, notification} = useAppContext();
+    const {resolvedTheme, notification, resolvedViewport} = useAppContext();
     const {refresh} = useHSTableContext();
     const [validStaffs, setValidStaffs] = useState<string[] | null>(null);
     const [validBanNames, setValidBanNames] = useState<string[] | null>(null);
@@ -99,9 +99,15 @@ export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
                 onClose();
             }}
             onCancel={onClose}
-            width={540}
+            width={resolvedViewport === 'mobile' ? 360 : 540}
             okText="确认新增"
             cancelText="取消"
+            okButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
+            cancelButtonProps={{size: resolvedViewport === 'mobile' ? 'small' : 'middle'}}
+            classNames={{
+                body: 'min-h-3',
+                container: 'max-desktop:!p-4'
+            }}
             title={
                 <div className="flex items-center gap-3 py-1">
                     <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${isDark
@@ -123,7 +129,7 @@ export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
                 </div>
             }
         >
-            <div className={`mt-3 grid grid-cols-[120px_minmax(0,1fr)] overflow-hidden rounded-xl border ${borderClass}`}>
+            <div className={`mt-3 grid grid-cols-[120px_minmax(0,1fr)] overflow-hidden rounded-xl border ${borderClass} max-desktop:grid-cols-[90px_minmax(0,1fr)]`}>
                 <div className={labelClass}>选择人员</div>
                 <div className={valueClass}>
                     <Select
@@ -188,9 +194,25 @@ export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
                 <div className={`${labelClass} border-t ${borderClass}`}>起止日期</div>
                 <div className={`${valueClass} border-t ${borderClass}`}>
                     <RangePicker
+                        format={resolvedViewport === 'mobile' ? 'YY/M/D' : 'YYYY-MM-DD'}
+                        className="w-full max-w-[350px] max-desktop:max-w-full"
+                        classNames={{
+                            input: 'text-center',
+                            popup: {
+                                root: resolvedViewport === 'mobile'
+                                    ? `!top-[20px] !left-1/2 !right-auto !-translate-x-1/2
+                                    [&_.ant-picker-panels]:!flex-col
+                                    [&_.ant-picker-panel-container]:!max-w-[calc(100vw-16px)]
+                                    [&_.ant-picker-panel-container]:!max-h-[calc(100dvh-40px)]
+                                    [&_.ant-picker-panel-container]:!overflow-y-auto`
+                                    : ''
+                            }
+                        }}
                         value={dateRange}
                         onChange={setDateRange}
-                        className="w-full max-w-[350px]"
+                        size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
+                        inputReadOnly={true}
+                        allowClear={false}
                     />
                 </div>
 

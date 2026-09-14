@@ -38,9 +38,20 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
                 pagination={false}
                 title={() => (
                     <div className="flex flex-col justify-center">
-                        <div className="text-center text-2xl text-blue-600 font-bold mb-1 max-desktop:text-lg">
-                            假期{isEditable ? "设置" : "统计"}表
+                        <div className="relative flex items-center justify-center mb-1">
+                            <div className="text-center text-2xl text-blue-600 font-bold max-desktop:text-lg">
+                                假期{isEditable ? "设置" : "统计"}表
+                            </div>
+                            {isEditable && (
+                                <Checkbox
+                                    checked={showHiddenRules}
+                                    onChange={event => setShowHiddenRules(event.target.checked)}
+                                    className="desktop:!hidden max-desktop:!flex max-desktop:!absolute max-desktop:right-0 max-desktop:top-1/2 max-desktop:-translate-y-1/2 max-desktop:!text-xs">
+                                    显示未启用规则
+                                </Checkbox>
+                            )}
                         </div>
+
                         <HSTableTools
                             tableData={tableData}
                             ruleData={ruleData}
@@ -100,37 +111,51 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
     }
 
     return (
-        <div className="flex justify-end items-center gap-1">
-            <Checkbox checked={showHiddenRules} onChange={event => setShowHiddenRules(event.target.checked)}>
-                显示未启用规则
-            </Checkbox>
-
-            {isEditable && (
-                <Button
-                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
-                    color="magenta"
-                    variant="solid"
-                    onClick={() => {
-                        handleSave(ruleData);
-                        setIsNewHSModalOpen(true);
-                    }}
+        <div className="flex flex-nowrap justify-end items-center gap-1">
+            {(!isEditable || resolvedViewport === 'desktop') && (
+                <Checkbox
+                    checked={showHiddenRules}
+                    onChange={event => setShowHiddenRules(event.target.checked)}
                 >
-                    新增规则
-                </Button>
+                    显示未启用规则
+                </Checkbox>
             )}
 
             {isEditable && (
-                <Button
-                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
-                    color="gold"
-                    variant="solid"
-                    onClick={() => {
-                        handleSave(ruleData);
-                        setIsModifyHSModalOpen(true);
-                    }}
-                >
-                    修改规则
-                </Button>
+                <>
+                    <Button
+                        size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
+                        color="magenta"
+                        variant="solid"
+                        onClick={() => {
+                            handleSave(ruleData);
+                            setIsNewHSModalOpen(true);
+                        }}
+                    >
+                        新增规则
+                    </Button>
+
+                    <Button
+                        size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
+                        color="gold"
+                        variant="solid"
+                        onClick={() => {
+                            handleSave(ruleData);
+                            setIsModifyHSModalOpen(true);
+                        }}
+                    >
+                        修改规则
+                    </Button>
+
+                    <Button
+                        size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
+                        color="blue"
+                        variant="solid"
+                        onClick={() => handleSave(ruleData)}
+                    >
+                        保存
+                    </Button>
+                </>
             )}
 
             <Button
@@ -145,17 +170,6 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
                 还原表格
             </Button>
 
-            {isEditable && (
-                <Button
-                    size={resolvedViewport === 'mobile' ? 'small' : 'middle'}
-                    color="blue"
-                    variant="solid"
-                    onClick={() => handleSave(ruleData)}
-                >
-                    保存
-                </Button>
-            )}
-
             <ModifyHSModal
                 isModalOpen={isModifyHSModalOpen}
                 onClose={() => setIsModifyHSModalOpen(false)}
@@ -167,5 +181,6 @@ function HSTableTools({tableData, ruleData, showHiddenRules, setShowHiddenRules,
                 onClose={() => setIsNewHSModalOpen(false)}
             />
         </div>
+
     );
 }

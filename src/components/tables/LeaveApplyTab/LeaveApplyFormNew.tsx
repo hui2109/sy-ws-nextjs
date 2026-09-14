@@ -331,7 +331,7 @@ export default function LeaveApplyFormNew() {
                                         input: 'text-center',
                                         popup: {
                                             root: resolvedViewport === 'mobile'
-                                                ? `!top-[20px] left-1/2 !-translate-x-1/2
+                                                ? `!top-[20px] !left-1/2 !right-auto !-translate-x-1/2
                                                 [&_.ant-picker-panels]:!flex-col
                                                 [&_.ant-picker-panel-container]:!max-w-[calc(100vw-16px)]
                                                 [&_.ant-picker-panel-container]:!max-h-[calc(100dvh-40px)]
