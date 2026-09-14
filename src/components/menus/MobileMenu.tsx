@@ -33,6 +33,12 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
     const [modalKey, setModalKey] = useState<string>('');
     const [role, setRole] = useState<Role | null>(null);
 
+    const drawerMenuBar = scheduleToolsMenuBar.map(item =>
+        item.key === '/scheduleTools/start'
+            ? {...item, onTitleClick: () => setDrawerOpen(false)}
+            : item
+    );
+
     const contentTheme = resolvedTheme === 'dark' ? '!bg-[#0f0f0f]' : '!bg-[#f5f5f5]';
     const footerTheme = resolvedTheme === 'dark'
         ? '!bg-[#1f1f1f] border-white/10 shadow-[0_-2px_10px_rgba(0,0,0,0.35)]'
@@ -125,16 +131,13 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
                     mode="inline"
                     selectedKeys={[pathname]}
                     style={{height: '100%'}}
-                    items={scheduleToolsMenuBar}
+                    items={drawerMenuBar}
                     openKeys={['/scheduleTools/start']}
                     onClick={({key}) => {
-                        if (key.startsWith('/')) {
-                            setDrawerOpen(false);
-                            router.push(key);
-                            return;
+                        if (!key.startsWith('/')) {
+                            setIsModalOpen(true);
+                            setModalKey(key);
                         }
-                        setIsModalOpen(true);
-                        setModalKey(key);
                         setDrawerOpen(false);
                     }}
                 />

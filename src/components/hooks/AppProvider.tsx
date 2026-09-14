@@ -121,6 +121,9 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
                             borderRadiusLG: 8,
                         },
                     } : {}),
+                    Menu: {
+                        subMenuItemBg: 'transparent',
+                    },
                 }
             }}
         >

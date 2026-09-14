@@ -26,8 +26,10 @@ export default function ScheduleToolsLayout({children}: { children: ReactNode })
                     items={scheduleToolsMenuBar}
                     openKeys={['/scheduleTools/start']}
                     onClick={({key}) => {
-                        setIsModalOpen(true);
-                        setModalKey(key);
+                        if (!key.startsWith('/')) {
+                            setIsModalOpen(true);
+                            setModalKey(key);
+                        }
                     }}
                 />
             </Sider>
