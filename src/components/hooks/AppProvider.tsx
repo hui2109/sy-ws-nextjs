@@ -76,12 +76,27 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
             theme={{
                 algorithm: resolvedTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
                 token: resolvedTheme === 'dark' ? {
-                    // 页面整体背景：柔和灰黑，避免纯黑带来的高对比刺激
-                    colorBgLayout: '#111111',
-                    // Card、Form、Table 等普通容器背景
-                    colorBgContainer: '#202121',
-                    // Modal、Dropdown、Popover 等浮层背景
-                    colorBgElevated: '#353a40',
+                    // 页面整体背景
+                    colorBgLayout: '#101111',
+                    // Card、Form 等普通容器
+                    colorBgContainer: '#1d1f1f',
+                    // Modal、Dropdown、Popover 等浮层
+                    colorBgElevated: '#292c2c',
+                    // 整体边框
+                    colorBorderSecondary: '#303333',
+                } : {},
+                components: resolvedTheme === 'dark' ? {
+                    Table: {
+                        // Table 主体比 Card 再深一层
+                        colorBgContainer: '#181a1a',
+                        // 表头稍微亮于表体
+                        headerBg: '#202323',
+                        // hover 不要太亮
+                        rowHoverBg: '#232626',
+                        // 表格线
+                        borderColor: '#2b2e2e',
+                        headerSplitColor: '#2b2e2e',
+                    },
                 } : {}
             }}
         >

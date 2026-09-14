@@ -55,7 +55,7 @@ export default function HSTable({isEditable = true}: { isEditable?: boolean }) {
                 size={resolvedViewport === 'mobile' ? "small" : 'large'}
                 bordered
                 classNames={{
-                    footer: '!p-2 max-desktop:!p-2',
+                    footer: '!p-2',
                     title: '!p-3 max-desktop:!p-2',
                     header: {cell: 'max-desktop:!p-1'},
                 }}

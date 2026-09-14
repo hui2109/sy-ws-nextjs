@@ -121,6 +121,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
             {
                 key: "name",
                 title: "姓名",
+                fixed: 'start',
                 dataIndex: "name",
                 filters: filterOptions.names,
                 filteredValue: filterState.name ?? null,
@@ -130,6 +131,7 @@ export default function useHSTableData(showHiddenRules: boolean, isEditable: boo
             {
                 key: "banName",
                 title: "假期类型",
+                fixed: 'start',
                 dataIndex: "banName",
                 filters: filterOptions.banNames,
                 filteredValue: filterState.banName ?? null,

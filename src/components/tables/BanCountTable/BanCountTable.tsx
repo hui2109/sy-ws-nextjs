@@ -17,7 +17,7 @@ interface IBanCountTableTools {
 }
 
 export default function BanCountTable() {
-    const {currentUser} = useAppContext();
+    const {currentUser, resolvedViewport} = useAppContext();
     const [currentYear, setCurrentYear] = useState<number>(dayjs().year());
     const [currentStaff, setCurrentStaff] = useState<string | null>(currentUser);
     const [validStaffs, setValidStaffs] = useState<string[] | null>(null);
@@ -41,39 +41,44 @@ export default function BanCountTable() {
     if (!validStaffs) return null;
 
     return (
-        <Table
-            loading={loading}
-            column={{align: 'center'}}
-            columns={columns}
-            dataSource={dataSource}
-            scroll={{x: 'max-content', y: 750}}
-            pagination={false}
-            title={() => (
-                <div className="flex flex-col justify-center">
-                    <div className="text-center text-2xl text-blue-600 font-bold mb-1">
-                        年度班次统计表
+        <div className='max-desktop:px-3 max-desktop:pb-3'>
+            <Table
+                loading={loading}
+                column={{align: 'center'}}
+                columns={columns}
+                dataSource={dataSource}
+                scroll={{x: 'max-content', y: 'calc(100dvh - 260px)'}}
+                pagination={false}
+                title={() => (
+                    <div className="flex flex-col justify-center">
+                        <div className="text-center text-2xl text-blue-600 font-bold mb-1 max-desktop:text-lg">
+                            年度班次统计表
+                        </div>
+                        <BanCountTableTools
+                            currentYear={currentYear}
+                            setCurrentYear={setCurrentYear}
+                            currentStaff={currentStaff}
+                            setCurrentStaff={setCurrentStaff}
+                            validStaffs={validStaffs}
+                        />
                     </div>
-                    <BanCountTableTools
-                        currentYear={currentYear}
-                        setCurrentYear={setCurrentYear}
-                        currentStaff={currentStaff}
-                        setCurrentStaff={setCurrentStaff}
-                        validStaffs={validStaffs}
-                    />
-                </div>
-            )}
-            footer={() => ''}
-            size={'large'}
-            bordered
-            classNames={{
-                footer: '!p-2',
-                title: '!p-3',
-            }}
-        />
+                )}
+                footer={() => ''}
+                size={resolvedViewport === 'mobile' ? "small" : 'large'}
+                bordered
+                classNames={{
+                    footer: '!p-2',
+                    title: '!p-3 max-desktop:!p-2',
+                    body: {cell: 'max-desktop:!p-2.5'}
+                }}
+                className='rounded-lg overflow-hidden'
+            />
+        </div>
     );
 }
 
 function BanCountTableTools({currentYear, setCurrentYear, currentStaff, setCurrentStaff, validStaffs}: IBanCountTableTools) {
+    const {resolvedViewport} = useAppContext();
     const yearOptions = Array.from({length: 20},
         (_, i) => {
             const optionYear = currentYear - 10 + i;
@@ -90,14 +95,19 @@ function BanCountTableTools({currentYear, setCurrentYear, currentStaff, setCurre
     return (
         <div className='flex justify-end items-center gap-1'>
             <Select
-                className="w-full max-w-[120px] text-center"
+                size={resolvedViewport === 'mobile' ? "small" : 'middle'}
+                className="w-full max-w-[120px] text-center max-desktop:max-w-[100px]"
                 value={currentYear}
                 options={yearOptions}
                 onChange={newYear => setCurrentYear(newYear)}
-                classNames={{popup: {listItem: 'text-center'}}}
+                classNames={{
+                    popup: {listItem: 'text-center'},
+                    root: '!py-0.5'
+                }}
             />
             <Select
-                className="w-full max-w-[120px] text-center"
+                size={resolvedViewport === 'mobile' ? "small" : 'middle'}
+                className="w-full max-w-[120px] text-center max-desktop:max-w-[100px]"
                 value={currentStaff}
                 onChange={newStaff => setCurrentStaff(newStaff)}
                 options={targetStaffOptions}
@@ -105,7 +115,10 @@ function BanCountTableTools({currentYear, setCurrentYear, currentStaff, setCurre
                     optionFilterProp: 'value',
                     filterSort: (optionA, optionB) => compareName(optionA.value, optionB.value)
                 }}
-                classNames={{popup: {listItem: 'text-center'}}}
+                classNames={{
+                    popup: {listItem: 'text-center'},
+                    root: '!py-0.5'
+                }}
             />
         </div>
     )

@@ -70,6 +70,7 @@ export default function useLeaveAppointmentTableData(onCellClick: (info: ILATabl
                     {current.format('YY年M月')}
                 </div>
             ),
+            fixed: 'start',
             dataIndex: 'date',
             key: 'date',
             render: (text: string) => {
