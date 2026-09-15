@@ -73,8 +73,11 @@ function countWSByRange(index: Map<string, number[]>, name: string, banName: str
 export default async function getAllRules(showHidden: boolean, isEditable: boolean, name?: string, need_lastJia: boolean = true) {
     const allVacationRules = await prisma.vacationRule.findMany({
         where: {
-            ...(name ? {person: {name}} : {}),
-            ...(isEditable && !showHidden ? {isHidden: false} : {})
+            ...(isEditable && !showHidden ? {isHidden: false} : {}),
+            person: {
+                isActive: true,
+                ...(name ? {name} : {}),
+            }
         },
         select: {
             id: true,

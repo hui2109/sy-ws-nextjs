@@ -35,7 +35,7 @@ export function AppProvider({initialUser, children}: { initialUser: string | nul
         placement: viewport === 'desktop' ? 'topRight' : 'top',
         showProgress: true,
         pauseOnHover: true,
-        duration: 2.3
+        duration: viewport === 'desktop' ? 2.3 : 5,
     });
 
     useEffect(() => {
