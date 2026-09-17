@@ -19,6 +19,7 @@ export const {
 } = createSerwistRoute({
     swSrc: "src/app/sw.ts",
     useNativeEsbuild: true,
+    globIgnores: ["public/avatars/**/*"],
     additionalPrecacheEntries: [
         {url: "/~offline", revision}
     ],
