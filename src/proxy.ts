@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {verifySessionToken} from "@/api/SessionToken/session";
 
-const PUBLIC_PATHS = ["/login", "/forget", "/~offline"];
+const PUBLIC_PATHS = ["/login", "/forget", "/~offline", "/.well-known/assetlinks.json"];
 
 export async function proxy(request: NextRequest) {
     const {pathname} = request.nextUrl;
@@ -29,6 +29,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff2?|ttf|map|webmanifest)$).*)",
+        "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2?|ttf|map|webmanifest)$).*)",
     ],
 };
