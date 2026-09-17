@@ -186,7 +186,7 @@ export default function MyWorkCalendar() {
                     const yearOptions = Array.from({length: 20}, (_, i) => {
                         const optionYear = value.year() - 10 + i;
                         return {
-                            label: `${optionYear} 年`,
+                            label: resolvedViewport === 'mobile' ? `${String(optionYear).substring(2)} 年` : `${optionYear} 年`,
                             value: optionYear,
                         };
                     });
@@ -228,7 +228,7 @@ export default function MyWorkCalendar() {
                                 <Select
                                     size={isMobile ? "small" : "middle"}
                                     className={`w-28
-                                        max-desktop:!w-[92px]
+                                        max-desktop:!w-[75px]
                                         max-desktop:[&_.ant-select-selector]:!px-1
                                         max-desktop:[&_.ant-select-selection-item]:!pr-3 max-desktop:[&_.ant-select-selection-item]:!text-[9px]
                                         max-desktop:[&_.ant-select-arrow]:!end-1`}
@@ -246,7 +246,7 @@ export default function MyWorkCalendar() {
                                 <Select
                                     size={isMobile ? "small" : "middle"}
                                     className={`w-24
-                                        max-desktop:!w-[80px]
+                                        max-desktop:!w-[65px]
                                         max-desktop:[&_.ant-select-selector]:!px-1
                                         max-desktop:[&_.ant-select-selection-item]:!pr-3 max-desktop:[&_.ant-select-selection-item]:!text-[9px]
                                         max-desktop:[&_.ant-select-arrow]:!end-1`}

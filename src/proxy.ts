@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {verifySessionToken} from "@/api/SessionToken/session";
 
-const PUBLIC_PATHS = ["/login", "/forget", "/~offline", "/.well-known/assetlinks.json"];
+const PUBLIC_PATHS = ["/login", "/forget", "/~offline"];
 
 export async function proxy(request: NextRequest) {
     const {pathname} = request.nextUrl;
