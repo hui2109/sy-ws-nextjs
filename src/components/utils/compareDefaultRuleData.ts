@@ -64,7 +64,7 @@ const BAN_NAME_PRIORITY = new Map<string, number>([
     ["去年余假", 4],
 ]);
 
-function compareBanName(a: string, b: string): number {
+export function compareBanName(a: string, b: string): number {
     const aPriority = BAN_NAME_PRIORITY.get(a) ?? 3;
     const bPriority = BAN_NAME_PRIORITY.get(b) ?? 3;
 

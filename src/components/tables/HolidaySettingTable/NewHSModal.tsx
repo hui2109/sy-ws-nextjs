@@ -11,6 +11,7 @@ import {getBanTypeColorMap} from "@/api/BanType/getBanTypeColorMap";
 import dayjs, {Dayjs} from "dayjs";
 import createRules from "@/api/VacationRule/createRules";
 import {useHSTableContext} from "@/components/hooks/HSTableContext";
+import {compareName} from "@/components/utils/compareDefaultRuleData";
 
 const {RangePicker} = DatePicker;
 
@@ -136,14 +137,13 @@ export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
                         value={selectedStaffs}
                         onChange={setSelectedStaffs}
                         placeholder="请选择员工"
-                        options={validStaffs.map(name => ({
+                        options={validStaffs.sort(compareName).map(name => ({
                             label: name,
                             value: name,
                         }))}
                         showSearch={resolvedViewport === 'mobile' ? false : {
                             optionFilterProp: 'value',
-                            filterSort: (optionA, optionB) =>
-                                (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),
+                            filterSort: (optionA, optionB) => compareName(optionA.value, optionB.value),
                         }}
                         mode="multiple"
                         popupRender={menu => (

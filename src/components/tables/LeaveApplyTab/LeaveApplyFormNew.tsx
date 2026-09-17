@@ -191,7 +191,7 @@ export default function LeaveApplyFormNew() {
     }
 
     const targetStaffOptions = validStaffs
-        ?.filter(staff => !isShiftSchedule || staff !== currentUser)
+        ?.filter(staff => !isShiftSchedule || staff !== currentUser).sort(compareName)
         .map(staff => ({
             label: staff,
             value: staff,

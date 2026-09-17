@@ -130,16 +130,18 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap, duplicateCheck,
     duplicateCheck: boolean;
     duplicateNum: number;
 }) {
-    const options = validBanNames.map((item: string) => ({
-        label: (
-            <Badge
-                count={item}
-                color={banTypeColorMap[item]}
-                classNames={{indicator: '!rounded-lg !font-bold'}}
-            />
-        ),
-        value: item,
-    }));
+    const options = validBanNames
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+        .map((item: string) => ({
+            label: (
+                <Badge
+                    count={item}
+                    color={banTypeColorMap[item]}
+                    classNames={{indicator: '!rounded-lg !font-bold'}}
+                />
+            ),
+            value: item,
+        }));
 
     const {resolvedViewport} = useAppContext();
     const [selectedValue, setSelectedValue] = useState<string | null>(null);

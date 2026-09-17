@@ -178,7 +178,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                                     });
                                 }}
                                 placeholder={resolvedViewport === 'mobile' ? '请选择' : '请选择调整后的排班'}
-                                options={validBanNames.map(banName => ({
+                                options={validBanNames.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())).map(banName => ({
                                     label: banName,
                                     value: banName,
                                 }))}

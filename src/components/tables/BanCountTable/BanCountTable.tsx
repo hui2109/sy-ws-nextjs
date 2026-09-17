@@ -87,7 +87,7 @@ function BanCountTableTools({currentYear, setCurrentYear, currentStaff, setCurre
                 value: optionYear,
             };
         });
-    const targetStaffOptions = validStaffs.map(staff => ({
+    const targetStaffOptions = validStaffs.sort(compareName).map(staff => ({
         label: staff,
         value: staff,
     }));

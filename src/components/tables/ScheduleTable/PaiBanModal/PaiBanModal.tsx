@@ -27,6 +27,7 @@ export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
                     <Divider classNames={{root: '!my-3'}}/>
                 </>
             )}
+            style={{top: 20}}
             closable={true}
             open={isModalOpen}
             onOk={onClose}
