@@ -141,6 +141,7 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap, duplicateCheck,
         value: item,
     }));
 
+    const {resolvedViewport} = useAppContext();
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const {notification} = useAppContext();
     const {selectedCell, setSelectedCell} = useSelectedCellContext();
@@ -149,7 +150,7 @@ function SelectBan({placeholder, validBanNames, banTypeColorMap, duplicateCheck,
     return (
         <Select
             value={selectedValue}
-            showSearch={{
+            showSearch={resolvedViewport === 'mobile' ? false : {
                 optionFilterProp: 'value',
                 filterSort: (optionA, optionB) =>
                     (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),

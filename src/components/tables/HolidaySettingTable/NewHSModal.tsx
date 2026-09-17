@@ -140,7 +140,7 @@ export default function NewHSModal({isModalOpen, onClose}: INewHSModal) {
                             label: name,
                             value: name,
                         }))}
-                        showSearch={{
+                        showSearch={resolvedViewport === 'mobile' ? false : {
                             optionFilterProp: 'value',
                             filterSort: (optionA, optionB) =>
                                 (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),

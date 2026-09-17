@@ -182,7 +182,7 @@ export default function LeaveApplyAskOffOrChangeScheduleTable(
                                     label: banName,
                                     value: banName,
                                 }))}
-                                showSearch={{
+                                showSearch={resolvedViewport === 'mobile' ? false : {
                                     optionFilterProp: 'value',
                                     filterSort: (optionA, optionB) =>
                                         (optionA?.value ?? '').toLowerCase().localeCompare((optionB?.value ?? '').toLowerCase()),

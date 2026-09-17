@@ -366,7 +366,7 @@ export default function LeaveApplyFormNew() {
                                         value={targetStaff}
                                         onChange={setTargetStaff}
                                         options={targetStaffOptions}
-                                        showSearch={{
+                                        showSearch={resolvedViewport === 'mobile' ? false : {
                                             optionFilterProp: 'value',
                                             filterSort: (optionA, optionB) => compareName(optionA.value, optionB.value)
                                         }}

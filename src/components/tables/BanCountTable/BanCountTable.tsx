@@ -111,7 +111,7 @@ function BanCountTableTools({currentYear, setCurrentYear, currentStaff, setCurre
                 value={currentStaff}
                 onChange={newStaff => setCurrentStaff(newStaff)}
                 options={targetStaffOptions}
-                showSearch={{
+                showSearch={resolvedViewport === 'mobile' ? false : {
                     optionFilterProp: 'value',
                     filterSort: (optionA, optionB) => compareName(optionA.value, optionB.value)
                 }}
