@@ -102,6 +102,7 @@ export default function useBanCountTableData(query_name: string | null, query_ye
                         count={value}
                         color={banTypeColorMap?.[banName]}
                         classNames={{indicator: '!rounded-lg !font-bold'}}
+                        overflowCount={999}
                     />
                 )
             },
