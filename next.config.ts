@@ -7,6 +7,19 @@ const nextConfig: NextConfig = {
             bodySizeLimit: "40mb",
         },
     },
+
+    async rewrites() {
+        return {
+            beforeFiles: [
+                {
+                    source: "/avatars/:filename",
+                    destination: "/avatar/:filename",
+                },
+            ],
+            afterFiles: [],
+            fallback: [],
+        };
+    },
 };
 
 export default withSerwist(nextConfig);

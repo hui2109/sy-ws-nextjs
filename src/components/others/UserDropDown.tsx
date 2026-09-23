@@ -187,6 +187,10 @@ export default function UserDropDown() {
                             src={currentAvatarUrl}
                             icon={!currentAvatarUrl ? <UserOutlined/> : undefined}
                             className="!bg-blue-600 ring-1 ring-white/20"
+                            onError={() => {
+                                setCurrentAvatarUrl(null);
+                                return false;
+                            }}
                         />
                         {avatarUploading && (
                             <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50">
