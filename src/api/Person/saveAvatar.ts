@@ -52,5 +52,10 @@ export async function saveAvatar(name: string, file: File) {
         });
     }
 
+    console.log("process.cwd():", process.cwd());
+    console.log("uploadDir:", uploadDir);
+    console.log("filePath:", filePath);
+    console.log("avatarUrl:", avatarUrl);
+
     return avatarUrl;
 }
