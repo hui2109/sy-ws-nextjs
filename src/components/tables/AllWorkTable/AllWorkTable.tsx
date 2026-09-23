@@ -147,6 +147,7 @@ function AllWorkTableToolsMobile({allWorkTableRef}: { allWorkTableRef: RefObject
                     size="small"
                     onClick={() => setIsDownloadModalOpen(true)}
                     className={'!text-[12px] !p-0.5'}
+                    disabled
                 >
                     下载排班
                 </Button>

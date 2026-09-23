@@ -134,7 +134,7 @@ export default function MobileMenu({children}: { children: React.ReactNode }) {
                     items={drawerMenuBar}
                     openKeys={['/scheduleTools/start']}
                     onClick={({key}) => {
-                        if (!key.startsWith('/') && pathname === '/scheduleTools/start') {
+                        if (!key.startsWith('/') && pathname === '/scheduleTools/start' && key !== 'daochupaiban') {
                             setIsModalOpen(true);
                             setModalKey(key);
                         }
