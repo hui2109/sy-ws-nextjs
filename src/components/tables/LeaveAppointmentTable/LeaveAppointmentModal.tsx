@@ -11,6 +11,8 @@ import deleteLeaveAppointments from "@/api/LeaveAppointment/deleteLeaveAppointme
 import {useCurrentContext} from "@/components/hooks/CurrentContext";
 import {filteredRelaxBanNames} from "@/components/utils/filteredRelaxBanNames";
 import {compareName} from "@/components/utils/compareDefaultRuleData";
+import {getPersonRole} from "@/api/Person/getPersonRole";
+import {Role} from "@/prisma/generated/enums";
 
 interface ILeaveAppointmentModal {
     isModalOpen: boolean;
@@ -28,6 +30,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
     const [validBanNames, setValidBanNames] = useState<Array<string>>([]);
     const [selectedStaff, setSelectedStaff] = useState<string | null>(currentUser);
     const [selectedBanName, setSelectedBanName] = useState<string | null>(null);
+    const [role, setRole] = useState<Role | null>(null);
 
     useEffect(() => {
         let isMounted = true;
@@ -46,6 +49,21 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
             isMounted = false;
         }
     }, []);
+
+    useEffect(() => {
+        if (!currentUser) return;
+        let isMounted = true;
+
+        getPersonRole(currentUser).then(role => {
+            if (isMounted) {
+                setRole(role);
+            }
+        })
+
+        return () => {
+            isMounted = false;
+        };
+    }, [currentUser]);
 
     function onOk() {
         if (!selectedCell || !selectedStaff || !selectedBanName || selectedCell?.name) return;
@@ -139,7 +157,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
             onCancel={onClose}
             footer={(_, {OkBtn}) => (
                 <div className='flex items-center justify-between'>
-                    {(selectedCell?.name && currentUser && selectedCell.name === currentUser) ?
+                    {(selectedCell?.name && currentUser && role && (selectedCell.name === currentUser || role === 'SUPERADMIN')) ?
                         <Popconfirm
                             title="确定要取消预约吗?"
                             onConfirm={() => {
@@ -213,7 +231,7 @@ export default function LeaveAppointmentModal({isModalOpen, onClose, selectedCel
                         }
                     </Col>
                 </Row>
-                {(!selectedCell?.name || (currentUser && selectedCell.name === currentUser)) ?
+                {(!selectedCell?.name || (currentUser && role && (selectedCell.name === currentUser || role === 'SUPERADMIN'))) ?
                     <Row align="middle" className="min-h-12">
                         <Col span={24} className="text-center font-bold">
                             <DuplicateCheck
