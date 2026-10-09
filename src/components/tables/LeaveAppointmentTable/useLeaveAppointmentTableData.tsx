@@ -8,6 +8,9 @@ import NullText from "@/components/others/NullText";
 import {Weekdays} from "@/configs/general";
 import dayjs, {Dayjs} from "dayjs";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import computeLATableCellClickable from "@/components/utils/computeLATableCellClickable";
+import {Role} from "@/prisma/generated/enums";
+import {getPersonRole} from "@/api/Person/getPersonRole";
 
 export interface ILATableCellInfo {
     sequence: number,
@@ -24,9 +27,11 @@ type LeaveAppointmentRow = {
 } & Record<SequenceKey, ILeaveAppointmentData>;
 
 export default function useLeaveAppointmentTableData(onCellClick: (info: ILATableCellInfo) => void) {
+    const {notification, currentUser} = useAppContext();
     const {current} = useCurrentContext();
     const [loading, setLoading] = useState<boolean>(true);
     const [LADateData, setLADateDate] = useState<Record<string, ILeaveAppointmentData> | null>(null);
+    const [role, setRole] = useState<Role | null>(null);
 
     useEffect(() => {
         let isMounted = true;
@@ -42,6 +47,21 @@ export default function useLeaveAppointmentTableData(onCellClick: (info: ILATabl
             setLoading(true);
         };
     }, [current]);
+
+    useEffect(() => {
+        if (!currentUser) return;
+        let isMounted = true;
+
+        getPersonRole(currentUser).then(role => {
+            if (isMounted) {
+                setRole(role);
+            }
+        })
+
+        return () => {
+            isMounted = false;
+        };
+    }, [currentUser]);
 
     if (!LADateData) return {dataSource: [], columns: [], loading};
 
@@ -112,14 +132,23 @@ export default function useLeaveAppointmentTableData(onCellClick: (info: ILATabl
                             style: {
                                 cursor: 'pointer',
                             },
-                            onClick: () =>
-                                onCellClick({
-                                    sequence: seq,
-                                    day: dayjs(record.key),
-                                    name: appointment?.name,
-                                    banName: appointment?.banName,
-                                    color: appointment?.color,
-                                }),
+                            onClick: () => {
+                                const day = dayjs(record.key)
+                                if (role && (computeLATableCellClickable(day) || role === 'SUPERADMIN')) {
+                                    onCellClick({
+                                        sequence: seq,
+                                        day: day,
+                                        name: appointment?.name,
+                                        banName: appointment?.banName,
+                                        color: appointment?.color,
+                                    })
+                                } else {
+                                    notification.warning({
+                                        title: '目前不可预约休假',
+                                        description: `${dayjs().month() < 6 ? '今年 6 月 15 号后可以预约下半年假期!' : '今年 12 月 15 号后可以预约明年上半年假期!'}`
+                                    })
+                                }
+                            },
                         };
                     },
                 };

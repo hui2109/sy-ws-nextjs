@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ConfigProvider, Layout, Menu, theme} from 'antd';
 import {AppName} from "@/configs/general";
 import {IconFont, IconType} from "@/components/others/IconFont";
@@ -11,6 +11,8 @@ import Link from "next/link";
 import {useAppContext} from "@/components/hooks/AppProvider";
 import UserDropDown from "@/components/others/UserDropDown";
 import ThemeDropDown from "@/components/others/ThemeDropDown";
+import {Role} from "@/prisma/generated/enums";
+import {getPersonRole} from "@/api/Person/getPersonRole";
 
 const {Header, Content, Footer} = Layout;
 
@@ -19,6 +21,22 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
     const {currentUser} = useAppContext();
     const pathname = usePathname();
     const currentYear = dayjs().year();
+    const [role, setRole] = useState<Role | null>(null);
+
+    useEffect(() => {
+        if (!currentUser) return;
+        let isMounted = true;
+
+        getPersonRole(currentUser).then(role => {
+            if (isMounted) {
+                setRole(role)
+            }
+        })
+
+        return () => {
+            isMounted = false;
+        };
+    }, [currentUser]);
 
     return (
         <Layout>
@@ -36,7 +54,7 @@ export default function DesktopMenu({children}: { children: React.ReactNode }): 
                             mode="horizontal"
                             selectedKeys={['/' + pathname.split('/')[1]]}
                             defaultSelectedKeys={['/scheduleTools']}
-                            items={topMenuBar}
+                            items={topMenuBar?.filter(item => role && (role !== 'USER' || item?.key !== '/scheduleTools'))}
                             style={{flex: 1, minWidth: 0, background: 'transparent'}}
                         />
                     </ConfigProvider>
