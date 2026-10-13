@@ -100,7 +100,7 @@ function EditableCell({title, editable, dataIndex, record, validBanNames, handle
                             size="small"
                             classNames={{input: 'text-center'}}
                             onChange={save}
-                            onBlur={() => setTimeout(() => setEditing(false), 500)}
+                            onBlur={() => setTimeout(() => setEditing(false), 5000)}
                         />
                     );
                     break;
@@ -113,7 +113,7 @@ function EditableCell({title, editable, dataIndex, record, validBanNames, handle
                             size="small"
                             classNames={{input: 'text-center'}}
                             onChange={save}
-                            onBlur={() => setTimeout(() => setEditing(false), 500)}
+                            onBlur={() => setTimeout(() => setEditing(false), 5000)}
                         />
                     );
                     break;
