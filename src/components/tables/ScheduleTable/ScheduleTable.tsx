@@ -4,16 +4,20 @@ import {Button, Table} from "antd";
 import PaiBanModal from "@/components/tables/ScheduleTable/PaiBanModal/PaiBanModal";
 import DateJump from "@/components/others/DateJump";
 import {IconFont, IconType} from "@/components/others/IconFont";
-import useScheduleTableData, {IScheduleCellInfo, IScheduleTableTools} from "@/components/tables/ScheduleTable/useScheduleTableData";
+import useScheduleTableData, {IScheduleCellInfo, IScheduleHeadInfo, IScheduleTableTools} from "@/components/tables/ScheduleTable/useScheduleTableData";
 import dayjs from "dayjs";
 import {SelectedCellContext} from "@/components/hooks/SelectedCellContext";
 import {useAppContext} from "@/components/hooks/AppProvider";
+import HeadPaiBanModal from "@/components/tables/ScheduleTable/HeadPBModal/HeadPaiBanModal";
+import {SelectedHeadContext} from "@/components/hooks/SelectedHeadContext";
 
 export default function ScheduleTable() {
     const {resolvedViewport} = useAppContext();
     const {refresh, scheduleTableRef} = useScheduleTableContext();
     const [isPaiBanModalOpen, setIsPaiBanModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<IScheduleCellInfo>({name: '', day: dayjs(), bans: []});
+    const [isHeadPaiBanModalOpen, setIsHeadPaiBanModalOpen] = useState(false);
+    const [selectedHead, setSelectedHead] = useState<IScheduleHeadInfo>({day: dayjs()});
     const [stToolStatus, setStToolStatus] = useState<IScheduleTableTools>({autoSchedule: false, showPrevMonth: false, eraser: false});
 
     const handleScheduleTableCellClick = useCallback((info: IScheduleCellInfo) => {
@@ -21,7 +25,12 @@ export default function ScheduleTable() {
         setIsPaiBanModalOpen(true);
     }, []);
 
-    const {dataSource, columns, loading} = useScheduleTableData(stToolStatus, handleScheduleTableCellClick);
+    const handleScheduleTableHeadClick = useCallback((info: IScheduleHeadInfo) => {
+        setSelectedHead(info);
+        setIsHeadPaiBanModalOpen(true);
+    }, []);
+
+    const {dataSource, columns, loading} = useScheduleTableData(stToolStatus, handleScheduleTableCellClick, handleScheduleTableHeadClick);
 
     return (
         <div ref={scheduleTableRef} className='max-desktop:px-3 max-desktop:pb-3'>
@@ -56,6 +65,14 @@ export default function ScheduleTable() {
                     }}
                 />
             </SelectedCellContext>
+            <SelectedHeadContext value={{selectedHead, setSelectedHead}}>
+                <HeadPaiBanModal
+                    isModalOpen={isHeadPaiBanModalOpen}
+                    onClose={() => {
+                        setIsHeadPaiBanModalOpen(false);
+                        refresh();
+                    }}/>
+            </SelectedHeadContext>
         </div>
     );
 }

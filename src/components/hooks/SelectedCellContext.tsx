@@ -1,11 +1,5 @@
 import {createContext, Dispatch, SetStateAction, useContext} from "react";
-import {Dayjs} from "dayjs";
-
-export interface IScheduleCellInfo {
-    name: string;
-    day: Dayjs;
-    bans: string[] | undefined;
-}
+import {IScheduleCellInfo} from "@/components/tables/ScheduleTable/useScheduleTableData";
 
 export const SelectedCellContext = createContext<{
     selectedCell: IScheduleCellInfo;

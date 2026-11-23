@@ -34,6 +34,10 @@ export interface IScheduleCellInfo {
     bans: string[] | undefined;
 }
 
+export interface IScheduleHeadInfo {
+    day: Dayjs;
+}
+
 type AsyncState = {
     dbDataCurr: Awaited<ReturnType<typeof getWSbyMonth>>;
     dbDataPrev: Awaited<ReturnType<typeof getWSbyMonth>> | null;
@@ -41,7 +45,8 @@ type AsyncState = {
 
 export default function useScheduleTableData(
     stToolStatus: IScheduleTableTools,
-    onCellClick: (info: IScheduleCellInfo) => void
+    onCellClick: (info: IScheduleCellInfo) => void,
+    onHeadClick: (info: IScheduleHeadInfo) => void,
 ): IScheduleTableData {
     const {currentUser, notification} = useAppContext();
     const {current, refreshKey, refresh, setMonthStatus} = useScheduleTableContext();
@@ -135,7 +140,7 @@ export default function useScheduleTableData(
     const {dbDataCurr, dbDataPrev} = asyncState;
     const {monthStatus} = dbDataCurr;
     const effectiveDbDataPrev = stToolStatus.showPrevMonth ? dbDataPrev : null;
-    const columns = getColumns(current, monthStatus, banTypeColorMap, effectiveDbDataPrev, stToolStatus.eraser, notification, refresh, onCellClick, role);
+    const columns = getColumns(current, monthStatus, banTypeColorMap, effectiveDbDataPrev, stToolStatus.eraser, notification, refresh, onCellClick, role, onHeadClick);
 
     return {dataSource, columns, loading};
 }
@@ -149,7 +154,8 @@ function getColumns(
     notification: NotificationInstance,
     refresh: () => void,
     onCellClick: (info: IScheduleCellInfo) => void,
-    role: Role
+    role: Role,
+    onHeadClick: (info: IScheduleHeadInfo) => void,
 ): TableColumnsType {
     const daysInMonth = Array.from(
         {length: date.daysInMonth()},
@@ -163,7 +169,10 @@ function getColumns(
         const index = day.format('YYYY-MM-DD');
         return {
             title: (
-                <div className='flex flex-col items-center font-bold relative max-desktop:text-[12px]'>
+                <div
+                    className='flex flex-col items-center font-bold relative max-desktop:text-[12px] cursor-pointer'
+                    onClick={() => onHeadClick({day: day})}
+                >
                     <span>{Weekdays[day.day()]}</span>
                     <span>{day.date()}</span>
                     <VacationIndicator date={day}/>

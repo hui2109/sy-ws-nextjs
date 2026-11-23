@@ -12,7 +12,7 @@ import {DuplicateCheck} from "@/components/others/DuplicateCheck";
 export interface IAddTableData {
     dataSource: {
         key: string,
-        already: string[] | undefined | string,
+        already: string[] | undefined | string | null,
         suggestion?: string,
         newBan?: string
     }[],

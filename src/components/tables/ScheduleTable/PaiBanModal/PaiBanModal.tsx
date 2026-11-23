@@ -13,9 +13,8 @@ export interface IPaiBanModalProps {
 }
 
 export default function PaiBanModal({isModalOpen, onClose}: IPaiBanModalProps) {
-    const {resolvedViewport} = useAppContext();
+    const {resolvedViewport, resolvedTheme} = useAppContext();
     const {selectedCell} = useSelectedCellContext();
-    const {resolvedTheme} = useAppContext();
 
     return (
         <Modal
