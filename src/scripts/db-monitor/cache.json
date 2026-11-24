@@ -1,0 +1,380 @@
+[
+  {
+    "workDate": "2026-11-29T00:00:00.000Z",
+    "banType": {
+      "banName": "休息"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-28T00:00:00.000Z",
+    "banType": {
+      "banName": "休息"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "3B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "3C"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "N1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "1A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "N2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "调休假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "S1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "1B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "3A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "2B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "放射假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "S2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-27T00:00:00.000Z",
+    "banType": {
+      "banName": "2A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "2B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "放射假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "调休假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "3A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "2A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "1A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "3C"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "S2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "3B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "1B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "S1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "N2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-26T00:00:00.000Z",
+    "banType": {
+      "banName": "N1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "2B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "3B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "1B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "N1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "N2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "放射假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "调休假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "1A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "3C"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "3A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "S1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "S2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-25T00:00:00.000Z",
+    "banType": {
+      "banName": "2A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "N1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "3A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "2B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "2A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "1B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "放射假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "S1"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "调休假"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "3C"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "N2"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "3B"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "1A"
+    },
+    "status": "PUBLISHED"
+  },
+  {
+    "workDate": "2026-11-24T00:00:00.000Z",
+    "banType": {
+      "banName": "S2"
+    },
+    "status": "PUBLISHED"
+  }
+]
